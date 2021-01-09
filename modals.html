@@ -1,0 +1,152 @@
+<div id="modal_window" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modal_window_title"></h4>
+                <div class="spinner-border text-primary" id="modal_window_spinner" role="status"><span class="sr-only"></div>
+            </div>
+            <div class="modal-body">
+                <div id="modal_window_message"></div>
+                <div class="progress mt-3">
+                    <div id="modal_window_progress" class="progress-bar progress-bar-striped progress-bar-animated"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="modal_window_yes" class="btn btn-primary"></button>
+                <button id="modal_window_no" class="btn btn-secondary"></button>
+                <button id="modal_window_close" class="btn btn-secondary"></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal_select" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-fluid modal-dialog-scrollable" role="document">
+        <div class="modal-content" style="background: #ffffff;">
+            <div class="p-3">
+                <div class="row">
+                    <div class="col-3 pr-1">
+                        <select class="form-control mt-1 ml-1" id="modal_select_category">
+                            <option value="-">---</option>
+                        </select>
+                    </div>
+                    <div class="col-4 pl-1 pr-1">
+                        <input type="search" class="form-control mt-1" style="width: calc(100% - 8px);" id="modal_select_keyword">
+                    </div>
+                    <div class="col-2 d-flex flex-row-reverse align-items-center p-0">
+                        <div class="custom-control custom-checkbox pl-1">
+                            <input class="custom-control-input" type="checkbox" id="modal_select_facility">
+                            <label class="custom-control-label" for="modal_select_facility" id="modal_select_facilityname"></label>
+                        </div>
+                    </div>
+                    <div class="col-3 d-flex flex-row-reverse align-items-center pr-1">
+                        <button class="btn btn-light mr-2 ml-2" onclick="DataList.filtered_deselect()"><i class="far fa-square"></i></button>
+                        <button class="btn btn-light ml-2" onclick="DataList.filtered_select()"><i class="fas fa-check-double"></i></button>
+                        <select class="form-control p-0" id="modal_select_size">
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="12">12</option>
+                            <option value="14">14</option>
+                            <option value="16">16</option>
+                            <option value="18">18</option>
+                            <option value="20">20</option>
+                            <option value="24">24</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <table class="table" id="modal_select_table"></table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="modal_select_ok"></button>
+                <button class="btn btn-secondary" id="modal_select_cancel"></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="PoiView_Modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document" data-keyboard="false">
+        <div class="modal-content shadow">
+            <span id="osmid" class="d-none"></span>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row mb-1 align-items-center">
+                        <div class="col-2 p-1" glot-model="modal_name"></div>
+                        <div class="col-9 p-1"><span id="name" class="font-weight-bold"></span></div>
+                        <button class="btn btn-success col-1 p-0" onclick="Takeaway.openmap($('#osmid').html())">
+                            <i class="fas fa-map-marked-alt"></i>
+                        </button>
+                    </div>
+                    <div class="row mb-1 align-items-center">
+                        <div class="col-2 p-1 text-break" glot-model="modal_category"></div>
+                        <div class="col-9 p-1">
+                            <img src="" class="icon mr-1" id="category-icon" /><span id="category"></span><span id="outdoor_seating"></span>
+                            <span id="copied" class="text-right text-nowrap" glot-model="modal_copied"></span>
+                        </div>
+                        <button type="button" class="btn btn-warning col-1 p-0" onclick="Takeaway.sharemap()">
+                            <i class="fas fa-clone"></i><span id="copied" class="text-right text-nowrap" glot-model="modal_copied"></span>
+                        </button>
+                    </div>
+                    <div class="row mb-1 align-items-center">
+                        <div class="col-2 p-1 text-break" glot-model="modal_cuisine"></div>
+                        <div class="col-9 p-1"><span id="cuisine"></span></div>
+                        <button type="button" class="btn col-1 p-0" id="modal_bookmark" style="display:none">
+                            <i class="fas fa-star"></i>
+                        </button>
+                    </div>
+                    <div class="row mb-1 align-items-center">
+                        <div class="col-2 p-1"></div>
+                        <button class="btn btn-secondary col-1 p-0 mr-2" id="website" onclick="Takeaway.opensite($('#osmid').html(),'website')">
+                            <i class="fas fa-home"></i>
+                        </button>
+                        <button class="btn btn-warning col-1 p-0 mr-2" id="sns_instagram" onclick="Takeaway.opensite($('#osmid').html(),'instagram')">
+                            <i class="fab fa-instagram"></i>
+                        </button>
+                        <button class="btn btn-info col-1 p-0 mr-2" id="sns_twitter" onclick="Takeaway.opensite($('#osmid').html(),'twitter')">
+                            <i class="fab fa-twitter"></i>
+                        </button>
+                        <button class="btn btn-primary col-1 p-0 mr-2" id="sns_facebook" onclick="Takeaway.opensite($('#osmid').html(),'facebook')">
+                            <i class="fab fa-facebook-f"></i>
+                        </button>
+                        <div class="col-6 p-1"><span id="phone"></span></div>
+                    </div>
+                    <div class="row mb-1 align-items-center">
+                        <div class="col-2 p-1 text-break" glot-model="modal_opening_hours"></div>
+                        <div class="col-10 p-1"><span id="opening_hours"></span></div>
+                    </div>
+                    <div class="row mb-1 align-items-center">
+                        <div class="col-2 p-1 text-break" glot-model="modal_delivery"></div>
+                        <div class="col-3 p-1"><span id="delivery"></span></div>
+                        <div class="col-3 p-1 text-break" glot-model="modal_takeaway"></div>
+                        <div class="col-4 p-1"><span id="takeaway"></span></div>
+                    </div>
+                    <div class="row mb-1 align-items-center">
+                        <div class="col-2 p-1 text-break" glot-model="modal_description"></div>
+                        <div class="col-10 p-1">
+                            <pre id="description" class="pb-2 mb-0"></pre>
+                            <span glot-model="modal_notice"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="container-fluid">
+                    <div class="row mb-1 align-items-center">
+                        <div class="col-8 p-1"><span glot-model="modal_update"></span><span id="timestamp"></span></div>
+                        <div class="col-4 p-1">
+                            <button class="btn btn-primary float-right" data-dismiss="modal">
+                                <i class="far fa-window-close"></i><span class="ml-2" glot-model="modal_close"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

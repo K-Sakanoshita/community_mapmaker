@@ -1,0 +1,125 @@
+{
+    "category": {
+        "amenity": {
+            "library": "library(landmark)",
+            "bar": "bar",
+            "bench": "bench",
+            "cafe": "cafe",
+            "drinking_water": "drinking water",
+            "fast_food": "fast food",
+            "food_court": "food court",
+            "ice_cream": "ice cream",
+            "pub": "pub",
+            "restaurant": "restaurant",
+            "vending_machine": "vending machine",
+            "place_of_worship": "place of worship"
+        },
+        "shop": {
+            "alcohol": "alcohol",
+            "bakery": "bakery",
+            "beverages": "beverages",
+            "brewing_supplies": "brewing supplies",
+            "butcher": "butcher",
+            "cheese": "cheese",
+            "chocolate": "chocolate",
+            "coffee": "coffee",
+            "confectionery": "confectionery",
+            "convenience": "convenience",
+            "deli": "deli",
+            "dairy": "dairy",
+            "farm": "farm",
+            "frozen_food": "frozen food",
+            "greengrocer": "greengrocer",
+            "health_food": "health food",
+            "ice_cream": "ice cream",
+            "pasta": "pasta",
+            "pastry": "pastry",
+            "seafood": "eafood",
+            "spices": "spices",
+            "tea": "tea",
+            "water": "water",
+            "wine": "wine",
+            "kiosk": "kiosk",
+            "supermarket": "supermarket",
+            "variety_store": "variety"
+        },
+        "species": {
+            "Cherry blossom": "sakura",
+            "Cerasus itosakura": "sakura",
+            "Cerasus × yedoensis": "sakura"
+        },
+        "natural": {
+            "tree": "tree"
+        },
+        "emergency": {
+            "fire_extinguisher": "extinguisher",
+            "fire_hydrant": "hydrant",
+            "defibrillator": "AED"
+        },
+        "highway": {
+            "traffic_signals": "traffic signals"
+        },
+        "social_facility": {
+            "shelter": "temporary sleeping"
+        },
+        "assembly_point:tsunami": {
+            "yes": "tsunami evacuation"
+        },
+        "attraction": {
+            "animal": "animal"
+        },
+        "playground": {
+            "structure": "structure",
+            "slide": "slide",
+            "climbingframe": "jungle gym",
+            "climbingwall": "climbingwall",
+            "balancebeam": "balancebeam",
+            "playhouse": "playhouse",
+            "sandpit": "sandpit",
+            "hopscotch": "hopscotch",
+            "teenshelter": "teenshelter",
+            "sledding": "sledding",
+            "youth_bench": "youth bench",
+            "map": "map",
+            "swing": "swing",
+            "basketswing": "basketswing",
+            "basketrotator": "asketrotator",
+            "aerialrotator": "aerialrotator",
+            "seesaw": "seesaw",
+            "springy": "springy",
+            "trampoline": "trampoline",
+            "roundabout": "roundabout",
+            "cushion": "cushion",
+            "zipwire": "zipwire",
+            "water": "water",
+            "splash_pad": "splash pad",
+            "horizontal_bar": "horizontal_bar",
+            "activitypanel": "activitypanel",
+            "exercise": "exercise"
+        },
+        "tourism": {
+            "viewpoint": "viewpoint",
+            "artwork": "artwork",
+            "information": "information"
+        },
+        "historic": {
+            "memorial": "memorial"
+        },
+        "information": {
+            "board": "board",
+            "terminal": "terminal",
+            "audioguide": "audioguide",
+            "map": "map",
+            "tactile_map": "tactile map",
+            "guidepost": "guidepost"
+        },
+        "man_made": {
+            "torii": "torii",
+            "lamp": "lantern"
+        },
+        "leisure":{
+            "pitch": "pitch",
+            "park": "park"
+        }
+    }
+}

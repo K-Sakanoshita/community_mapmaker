@@ -1,0 +1,166 @@
+{
+    "area": {
+        "bbox": [[34.64675,135.34508],[34.59518,135.49070]],
+        "overpass": "relation[\"name\"=\"住之江区\"][admin_level=8]"
+    },
+    "target": {
+        "park": {
+            "overpass": [
+                "relation[\"leisure\"=\"park\"]",
+                "relation[\"leisure\"=\"playground\"]",
+                "relation[\"leisure\"=\"pitch\"]",
+                "way[\"leisure\"=\"playground\"]",
+                "way[\"leisure\"=\"park\"]",
+                "way[\"leisure\"=\"pitch\"]"
+            ],
+            "tags": [
+                "leisure=park",
+                "leisure=playground",
+                "leisure=pitch"
+            ],
+            "views": [
+                "name",
+                "operator"
+            ]
+        },
+        "garden": {
+            "overpass": [
+                "way[\"leisure\"=\"garden\"]",
+                "way[\"landuse\"=\"grass\"]",
+                "way[\"natural\"=\"scrub\"]",
+                "way[\"landuse\"=\"farmland\"]",
+                "way[\"landuse\"=\"allotments\"]"
+            ],
+            "tags": [
+                "leisure=garden",
+                "landuse=grass",
+                "natural=scrub",
+                "landuse=farmland",
+                "landuse=allotments"
+            ],
+            "views": [
+                "name",
+                "operator"
+            ]
+        },
+        "wikipedia": {
+            "marker": "wikipedia.svg",
+            "api": "wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=&explaintext=&titles=",
+            "domain": "wikipedia.org",
+            "tag": "wikipedia",
+            "overpass": [
+                "node[\"wikipedia\"][\"public_transport\"!=\"stop_position\"]",
+                "way[\"wikipedia\"][!\"highway\"][!\"railway\"]",
+                "relation[\"wikipedia\"][!\"route\"][!\"highway\"][!\"railway\"][\"name:ja\"!=\"本州\"]"
+            ],
+            "tags": [
+                "wikipedia"
+            ]
+        }
+    },
+    "style": {
+        "background": {
+            "type": "background",
+            "color": "#000000",
+            "opacity": 0
+        },
+        "park": {
+            "zoom": 15,
+            "type": "area",
+            "color": "#f0ffd8",
+            "width": 1,
+            "dashArray": null
+        },
+        "garden": {
+            "zoom": 16,
+            "type": "area",
+            "color": "#d8ffb8",
+            "width": 1,
+            "dashArray": null
+        },
+        "river": {
+            "zoom": 10,
+            "type": "area",
+            "color": "#d0e8ff",
+            "width": 1,
+            "dashArray": null
+        },
+        "parking": {
+            "zoom": 15.5,
+            "type": "area",
+            "color": "#ffffe8",
+            "width": 1,
+            "dashArray": null
+        },
+        "forest": {
+            "zoom": 10,
+            "type": "area",
+            "color": "#b0f090",
+            "width": 1,
+            "dashArray": null
+        },
+        "pedestrian": {
+            "zoom": 15,
+            "type": "area",
+            "color": "#ede9e7",
+            "width": 1,
+            "dashArray": null
+        },
+        "railway": {
+            "zoom": 11,
+            "type": "line",
+            "color": "#909090",
+            "width": 1.5,
+            "dashArray": "12 4"
+        },
+        "highway_alley": {
+            "zoom": 16,
+            "type": "line",
+            "color": "#b9a89b",
+            "width": 0.5,
+            "dashArray": "4 2"
+        },
+        "highway_standard": {
+            "zoom": 14,
+            "type": "line",
+            "color": "#e0e0e0",
+            "width": 2.0,
+            "dashArray": null
+        },
+        "highway_primary": {
+            "zoom": 12,
+            "type": "line",
+            "color": "#f8e0c0",
+            "width": 3.0,
+            "dashArray": null
+        },
+        "highway_motorway": {
+            "zoom": 10,
+            "type": "line",
+            "color": "#f8d0a0",
+            "width": 4.0,
+            "dashArray": null
+        },
+        "building": {
+            "zoom": 15,
+            "type": "area",
+            "color": "#dcd3cd",
+            "width": 1,
+            "dashArray": null
+        },
+        "barrier": {
+            "zoom": 17,
+            "type": "line",
+            "color": "#b0b0b0",
+            "width": 1,
+            "dashArray": null
+        },
+        "station": {
+            "zoom": 14,
+            "type": "area",
+            "color": "#f8d8d8",
+            "width": 1,
+            "dashArray": null
+        }
+    }
+}
