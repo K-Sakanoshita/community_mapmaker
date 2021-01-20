@@ -28,6 +28,10 @@
     white-space: nowrap;
 }
 
+a{
+    color: black !important;
+}
+
 button, select {
     display: inline-block;
     cursor: pointer;

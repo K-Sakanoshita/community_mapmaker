@@ -1,4 +1,13 @@
 {
+    "tile": {
+        "OSM_Copyright": "<a href=\"https://openstreetmap.org\">&copy OpenStreetMap contributors</a>",
+        "OSM_Standard": "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        "GSI_Copyright": "<a href='https://www.gsi.go.jp/kikakuchousei/kikakuchousei40182.html' target='_blank'>国土地理院</a>",
+        "GSI_Standard": "https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png",
+        "GSI_Ortho": "https://cyberjapandata.gsi.go.jp/xyz/ort/{z}/{x}/{y}.jpg",
+        "Tiler_Copyright": "<a href=\"https://www.maptiler.com/copyright/\" target=\"_blank\">© MapTiler</a> <a href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\">© OpenStreetMap contributors</a>",
+        "Tiler_Style": "https://api.maptiler.com/maps/c9876a21-f16a-4a84-abc0-950badd4631e/style.json?key=Eq2IyrHsOEGFU1W1fvd7"
+    },
     "default": {
         "SplashImage": "image/splash.png",
         "DefaultCenter": [
@@ -13,12 +22,10 @@
         "MaxZoomLevel": 23,
         "FileName": "mapmaker",
         "SearchZoom": 16,
-        "OverPassServer": "https://overpass.nchc.org.tw/api/interpreter",
-        "_OverPassServer": "https://overpass.kumi.systems/api/interpreter",
-        "__OverPassServer": "https://overpass-api.de/api/interpreter",
+        "_OverPassServer": "https://overpass.nchc.org.tw/api/interpreter",
+        "__OverPassServer": "https://overpass.kumi.systems/api/interpreter",
+        "OverPassServer": "https://overpass-api.de/api/interpreter",
         "OverPassParams": "?data=[out:json][timeout:30]",
-        "Attribution": "<a href=\"https://www.maptiler.com/copyright/\" target=\"_blank\">© MapTiler</a> <a href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\">© OpenStreetMap contributors</a>",
-        "MapStyle": "https://api.maptiler.com/maps/371812ac-52d8-4ace-a720-a027cec01eac/style.json?key=Eq2IyrHsOEGFU1W1fvd7",
         "ColorDarken": 0.5,
         "Circle": {
             "radius": 8,
@@ -27,19 +34,6 @@
             "Opacity": 0.1,
             "fillOpacity": 0.1,
             "timer": 2000
-        },
-        "credit": {
-            "text": "© OpenStreetMap contributors",
-            "width": 170,
-            "height": 20,
-            "size": 12,
-            "anchor": "start",
-            "font": "Helvetica"
-        },
-        "Paper": {
-            "x": 210,
-            "y": 297,
-            "dpi": 150
         },
         "Icon": {
             "x": 20,
@@ -51,17 +45,13 @@
             "size": 12,
             "color": "black"
         },
-        "GoogleAnalytics": "UA-98610409-3"
+        "GoogleAnalytics": "UA-98610409-3",
+        "GoogleAppScript": "https://script.google.com/macros/s/AKfycbw04lv4R9tre_NR4bGPw8BM4QsEUzpMITFt87iMn50O0eVRyl--kp2hnw/exec"
     },
     "menu": [
         {
-            "glot-model": "address",
-            "linkto": "html:<div class='d-flex align-items-center'><input type='search' id='search_input' class='form-control w-100'></input><button class='btn btn-primary' onclick='CMapmaker.poi_search($(\"#search_input\").val())'></button></div>",
-            "divider": true
-        },
-        {
             "glot-model": "licence_title",
-            "linkto": "javascript:CMapmaker.licence()",
+            "linkto": "javascript:cMapmaker.licence()",
             "divider": false
         },
         {

@@ -122,7 +122,8 @@
         },
         "leisure":{
             "pitch": "information.svg",
-            "park": "information.svg"
+            "park": "information.svg",
+            "playground": "information.svg"
         }
     },
     "marker_append_files": [

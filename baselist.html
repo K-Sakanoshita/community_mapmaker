@@ -1,38 +1,31 @@
-<div id="baselist" class="row bg-white shadow-lg m-0 p-1">
-	<div class="row w-100 p-0 m-0">
-		<div class="col-11 p-2 d-flex align-items-center">
-			<button type="button" class="btn btn-sm float-right menu mr-2">
-				<i class="fas fa-angle-left fa-2x"></i>
+<div class="row m-1 p-1">
+	<div class="row p-0 m-0 bg-white shadow-lg rounded-top">
+		<div class="col-12 p-2 mr-2 d-flex align-items-center">
+			<button class="btn btn-sm float-right menu mr-2" id="test" onclick="cMapmaker.mode_change(event);">
+				<i class="fas fa-chevron-up" id="list_collapse_icon"></i>
 			</button>
-			<!-- img class="h1" src="image/mapmaker.svg" / -->
-			<a style="color: black" href="javascript:CMapmaker.licence()">
+			<button class="btn btn-sm float-right menu mr-2" data-toggle="dropdown" aria-expanded="true">
+				<i class="fas fa-bars text-black"></i>
+			</button>
+			<a href="javascript:cMapmaker.licence()">
 				<span class="title" glot-model="title"></span><br />
 				<span class="subtitle" glot-model="subtitle"></span>
 			</a>
-		</div>
-		<div class="col-1 d-flex flex-row-reverse pr-2">
-			<button type="button" class="btn btn-sm float-right menu" data-toggle="dropdown" aria-expanded="true">
-				<i class="fas fa-bars fa-2x text-black"></i>
-			</button>
-			<div class="dropdown-menu dropdown-menu-right" style="z-index: 1020" id="temp_menu">
+			<div class="dropdown-menu dropdown-menu-right" style="z-index: 1090" id="temp_menu">
 				<a class="dropdown-item"><span></span></a>
 				<span class="dropdown-item"></span>
 				<div class="dropdown-divider"></div>
 			</div>
 		</div>
 	</div>
-	<div class="col-10 p-0">
+	<div class="col-12 p-0 pt-1 m-0 mb-2 collapse show bg-white shadow-lg rounded-bottom rounded-end" id="list_collapse">
 		<div id="filterid" class="d-flex flex-column justify-content-center ml-1">
 			<div class="row">
 				<div class="col-4 pr-1">
 					<select class="form-control form-control-sm mt-1 ml-1" id="category_list"></select>
 				</div>
-				<div class="col-4 pl-1 pr-1">
-					<select class="form-control form-control-sm mt-1" id="delivery_list"></select>
-				</div>
-				<div class="col-4 pl-1">
-					<input type="text" class="form-control form-control-sm mt-1" style="width: calc(100% - 8px)"
-						id="keyword" />
+				<div class="col-8 pl-1">
+					<input type="text" class="form-control form-control-sm mt-1" style="width: calc(100% - 8px)" id="keyword" />
 				</div>
 			</div>
 		</div>

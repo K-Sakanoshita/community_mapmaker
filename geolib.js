@@ -1,184 +1,66 @@
+// Leaflet Control
+class Leaflet {
+    init() {
+        let def = Conf.default;
+        let osm_mono = L.tileLayer.colorFilter(Conf.tile.OSM_Standard, { maxNativeZoom: 19, maxZoom: 21, attribution: Conf.tile.OSM_Copyright, filter: Mono_Filter });
+        let osm_std = L.tileLayer(Conf.tile.OSM_Standard, { maxNativeZoom: 19, maxZoom: 21, attribution: Conf.tile.OSM_Copyright });
+        let osm_tiler = L.mapboxGL({ accessToken: '', style: Conf.tile.Tiler_Style, attribution: Conf.tile.Tiler_Copyright });
+        let t_pale = L.tileLayer(Conf.tile.GSI_Standard, { maxNativeZoom: 18, maxZoom: 21, attribution: Conf.tile.GSI_Copyright });
+        let t_ort = L.tileLayer(Conf.tile.GSI_Ortho, { maxNativeZoom: 18, maxZoom: 21, attribution: Conf.tile.GSI_Copyright });
+        let o_std_mini = L.tileLayer(Conf.tile.OSM_Standard, { attribution: Conf.tile.OSM_Copyright });
+        map = L.map('mapid', { doubleClickZoom: false, center: def.DefaultCenter, zoom: def.DefaultZoom, zoomSnap: def.ZoomSnap, zoomDelta: def.ZoomSnap, maxZoom: def.maxZoomLevel, layers: [osm_tiler] });
+        Control["minimap"] = new L.Control.MiniMap(o_std_mini, { toggleDisplay: true, width: 120, height: 120, zoomLevelOffset: -4 }).addTo(map);
+        new L.Hash(map);
+        let maps = {
+            "OpenStreetMap Maptiler": osm_tiler,
+            "OpenStreetMap Standard": osm_std,
+            "OpenStreetMap Monochrome": osm_mono,
+            "地理院地図 淡色": t_pale,
+            "地理院地図 オルソ": t_ort
+        };
+        Control["maps"] = L.control.layers(maps, null, { position: 'topright' }).addTo(map);
+        map.zoomControl.setPosition("topright");									// Make: Zoom control        
+    };
+
+    stop() {
+        ["dragging", "touchZoom", "touchZoom"].forEach(key => map[key].disable());
+        Control["maps"].remove(map);
+        Control["locate"].remove(map);
+        Control["minimap"].remove(map);
+        map.zoomControl.remove(map);
+        if (map.tap) map.tap.disable();
+        document.getElementById('mapid').style.cursor = 'default';
+    };
+
+    start() {
+        ["dragging", "touchZoom", "touchZoom"].forEach(key => map[key].enable());
+        Control["maps"].addTo(map);
+        Control["locate"].addTo(map);
+        Control["minimap"].addTo(map);
+        map.zoomControl.addTo(map);
+        if (map.tap) map.tap.enable();
+        document.getElementById('mapid').style.cursor = 'grab';
+    };
+
+    controlAdd(position, domid, html, css) {     // add leaflet control
+        let dom = L.control({ "position": position, "bubblingMouseEvents": false });
+        dom.onAdd = function () {
+            this.ele = L.DomUtil.create('div');
+            this.ele.id = domid;
+            this.ele.innerHTML = html;
+            this.ele.className = css;
+            return this.ele;
+        };
+        dom.addTo(map);
+    };
+
+};
+var leaflet = new Leaflet();
+
 // GeoJson Control
 var GeoCont = (function () {
 
     return {
-        set: (key, osmxml) => {
-            let org_geojson = osmtogeojson(osmxml, { flatProperties: true });
-            let fil_geojson = {	// node以外なのにPoint以外だとfalse(削除)
-                "features": org_geojson.features.filter((val) => { return (Conf.style[key].type !== "node") ? val.geometry.type !== "Point" : true; })
-            };
-            if (key == "river") fil_geojson = GeoCont.coastline_merge(fil_geojson.features);
-            Layers[key].geojson = fil_geojson.features;
-        },
-        coastline_merge: (geojson_s) => {
-            let etcs = [], cords = [], cord = [], delnum = 0, coasts_len = 0;
-            let LL = GeoCont.get_LL(), LLL = GeoCont.get_LLL();
-            var coasts = geojson_s.filter(geojson => {
-                if (geojson.properties.natural == "coastline") return true;
-                etcs.push(geojson);         // backup to etcs
-                return false;
-            });
-            if (coasts.length > 0) {
-                // GeoJsonの連結（最初と最後が同一位置のLineStringを合成）
-                do {
-                    found = false;
-                    coasts_len = coasts.length;
-                    for (let i = 0; i < coasts_len; i++) {
-                        if (coasts[i] !== undefined) {
-                            if (cord.length == 0) {
-                                cord = coasts[i].geometry.coordinates.length == 1 ? coasts[i].geometry.coordinates[0] : coasts[i].geometry.coordinates;
-                                delete coasts[i];
-                                delnum++;
-                            } else {
-                                let first_crd = cord[0];
-                                let last_crd = cord[cord.length - 1];
-                                let first_cst = coasts[i].geometry.coordinates[0];
-                                let last_cst = coasts[i].geometry.coordinates[coasts[i].geometry.coordinates.length - 1];
-                                if (first_crd[0] == last_cst[0] && first_crd[1] == last_cst[1]) {           // cordの前方
-                                    found = true;
-                                    cord = Basic.concatTwoDimensionalArray(coasts[i].geometry.coordinates, cord);   // 同位置がある時は結合
-                                    delete coasts[i];
-                                    delnum++;
-                                } else if (last_crd[0] == first_cst[0] && last_crd[1] == first_cst[1]) {    // cordの後方
-                                    found = true;
-                                    cord = Basic.concatTwoDimensionalArray(cord, coasts[i].geometry.coordinates);   // 同位置がある時は結合
-                                    delete coasts[i];
-                                    delnum++;
-                                };
-                            };
-                        };
-                    };
-                    if (found == false) {
-                        let clip_cord = GeoCont.bboxclip(cord, false);
-                        clip_cord = (clip_cord.length > 3) ? clip_cord : cord;  // 削りすぎた場合は元のデータを利用
-                        cords.push(clip_cord);
-                        cord = [];
-                    };
-                } while (delnum < coasts.length);
-                if (cord.length > 0) {
-                    let clip_cord = GeoCont.bboxclip(cord, false);
-                    clip_cord = (clip_cord.length > 3) ? clip_cord : cord;      // 削りすぎた場合は元のデータを利用
-                    cords.push(clip_cord);
-                };
-
-                // 東西南北の線上にあるGeoJsonを探索、結合する
-                for (let idx = 0; idx < cords.length; idx++) {
-                    if (cords[idx] !== undefined) {
-                        cord = cords[idx];
-                        let fcd = cord[0].concat(), fcd_d = "";
-                        let lcd = cord[cord.length - 1];                        // [0:経度lng,1:緯度lat]
-                        if (fcd[0] !== lcd[0] || fcd[1] !== lcd[1]) {           // no closed way(画面外側にCordを追加)
-                            fcd_d += (fcd[0] > LL.SE.lng) ? "S," : "";              // 東に居る→西方面(陸地は南) // fcdの位置から向かう方向を決定(左手の法則)
-                            fcd_d += (fcd[0] < LL.NW.lng) ? "N," : "";              // 西に居る→東方面(陸地は北)
-                            fcd_d += (fcd[1] > LL.NW.lat) ? "E," : "";              // 北に居る→南方面(陸地は東)
-                            fcd_d += (fcd[1] < LL.SE.lat) ? "W," : "";              // 南に居る→北方面(陸地は西)
-                            fcd_d = fcd_d.slice(0, -1).split(',');
-                            do {
-                                let near_idx;
-                                do {
-                                    near_idx = GeoCont.get_maxll(cord[0], cords, idx, fcd_d[0]);
-                                    if (near_idx !== false) {       // 海岸線にぶつかった
-                                        cord = Basic.concatTwoDimensionalArray(cord, cords[near_idx]);   // 取り込む
-                                        cords[idx] = cord;
-                                        delete cords[near_idx];
-                                        delnum++;
-                                    };
-                                } while (near_idx !== false);
-                                fcd_d = fcd_d.slice(1);
-                            } while (fcd_d.length > 0);
-                        }
-                    };
-                };
-
-                // 閉じていないGeoJsonを探してポリゴン化
-                let new_cords = [];
-                for (let idx = 0; idx < cords.length; idx++) {
-                    if (cords[idx] !== undefined) {
-                        cord = cords[idx];
-                        let fcd = cord[0].concat(), fcd_t = "", fcd_d = "", lcd_t = "", lcd_d = "", add_d = "";
-                        let lcd = cord[cord.length - 1];                    // [0:経度lng,1:緯度lat]
-                        if (fcd[0] !== lcd[0] || fcd[1] !== lcd[1]) {       // no closed way(画面外側にCordを追加)
-                            fcd_d += (fcd[1] > LL.NW.lat) ? "N" : "";
-                            fcd_d += (fcd[1] < LL.SE.lat) ? "S" : "";
-                            fcd_d += (fcd[0] < LL.NW.lng) ? "W" : "";
-                            fcd_d += (fcd[0] > LL.SE.lng) ? "E" : "";      // fcddが何処にあるか確認
-
-                            lcd_d += (lcd[1] > LL.NW.lat) ? "N" : "";
-                            lcd_d += (lcd[1] < LL.SE.lat) ? "S" : "";
-                            lcd_d += (lcd[0] < LL.NW.lng) ? "W" : "";
-                            lcd_d += (lcd[0] > LL.SE.lng) ? "E" : "";      // lcdが何処にあるか確認
-
-                            add_d += (fcd[0] < lcd[0]) ? "N" : "S";       // 左手の法則で東に向かうなら陸地は北側、それ以外は南側を追加
-                            add_d += (fcd[1] < lcd[1]) ? "W" : "E";       // 左手の法則で北に向かうなら陸地は西側、それ以外は東側を追加
-                            if (fcd_d !== lcd_d) {                        // fcdとlcdが別の領域にある場合
-                                let all_d = [fcd_d, lcd_d];
-                                if (fcd_d.indexOf("W") > -1 && lcd_d.indexOf("S") > -1) {
-                                    all_d.splice(1, 0, "N");
-                                } else if (fcd_d.indexOf("S") > -1 && lcd_d.indexOf("E") > -1) {
-                                    all_d.splice(1, 0, "N");
-                                } else if (fcd_d.indexOf("E") > -1 && lcd_d.indexOf("N") > -1) {
-                                    all_d.splice(1, 0, "S");
-                                } else if (fcd_d.indexOf("N") > -1 && lcd_d.indexOf("W") > -1) {
-                                    all_d.splice(1, 0, "S");
-                                };
-                                do {
-                                    let acord = fcd.concat();                                   // 始点はfcd
-                                    switch (all_d[0]) {
-                                        case "NW":
-                                            acord[0] = LLL.NW.lng;
-                                        case "N":
-                                            acord[1] = LLL.NW.lat;
-                                            if (add_d.indexOf("W") > -1) acord[0] = LLL.NW.lng;
-                                            if (add_d.indexOf("E") > -1) acord[0] = LLL.SE.lng;
-                                            break;
-                                        case "SE":
-                                            acord[0] = LLL.SE.lng;
-                                        case "S":
-                                            acord[1] = LLL.SE.lat;
-                                            if (add_d.indexOf("W") > -1) acord[0] = LLL.NW.lng;
-                                            if (add_d.indexOf("E") > -1) acord[0] = LLL.SE.lng;
-                                            break;
-                                        case "SW":
-                                            acord[1] = LLL.SE.lat;
-                                        case "W":
-                                            acord[0] = LLL.NW.lng;
-                                            if (add_d.indexOf("N") > -1) acord[1] = LLL.NW.lat;
-                                            if (add_d.indexOf("S") > -1) acord[1] = LLL.SE.lat;
-                                            break;
-                                        case "NE":
-                                            acord[1] = LLL.NW.lat;
-                                        case "E":
-                                            acord[0] = LLL.SE.lng;
-                                            if (add_d.indexOf("N") > -1) acord[1] = LLL.NW.lat;
-                                            if (add_d.indexOf("S") > -1) acord[1] = LLL.SE.lat;
-                                            break;
-                                    }
-                                    console.log("acord: unshift:" + acord);
-                                    cord.unshift(acord);
-                                    all_d = all_d.slice(1);
-                                } while (all_d.length > 0)
-                            };
-                        };
-                        cord.push(cord[0].concat());
-                        new_cords.push(cord);
-                    };
-                };
-
-                let coast = {
-                    "type": "FeatureCollection", "features": [{
-                        "type": "Feature", "properties": { "natural": "coastline" },
-                        "geometry": {
-                            "type": "Polygon",
-                            "coordinates": [[[LLL.NW.lng, LLL.NW.lat], [LLL.NW.lng, LLL.SE.lat], [LLL.SE.lng, LLL.SE.lat], [LLL.SE.lng, LLL.NW.lat]]]
-                        }
-                    }]
-                };
-                new_cords.forEach(cord => coast.features[0].geometry.coordinates.push(cord));
-                return { features: Object.assign(etcs, [coast]) };
-            }
-            return { features: etcs };
-        },
-
         // csv(「”」で囲われたカンマ区切りテキスト)をConf.markerのcolumns、tagsをもとにgeojsonへ変換
         csv2geojson: (csv, key) => {
             let tag_key = [], columns = Conf.target[key].columns;
@@ -266,7 +148,7 @@ var GeoCont = (function () {
                     break;
                 default:    // Polygon or MultiLineString or MultiPolygon
                     cords.forEach(cords1 => {
-                        let scords = type == "MultiPolygon"  ? cords1[0] : cords1;
+                        let scords = type == "MultiPolygon" ? cords1[0] : cords1;
                         scords.forEach(latlng => {
                             counts++;
                             lat += latlng[0];
@@ -322,9 +204,7 @@ var GeoCont = (function () {
             return `(${LL.SE.lat},${LL.NW.lng},${LL.NW.lat},${LL.SE.lng});`;
         },
 
-
         // Debug Code
-
         gcircle: (geojson) => { // view geojson in map
             let features = [], colors = ["#000000", "#800000", "#FF0080", "#008000", "#00FF00", "#000080", "#0000FF", "#800080", "#FF00FF", "#808000", "#FFFF00", "#008080", "#00FFFF", "#800080", "#FF00FF"];
             let timer = Conf.default.Circle.timer;
@@ -377,35 +257,6 @@ var GeoCont = (function () {
             LL = GeoCont.get_LLL();
             bcords = [[LL.NW.lat, LL.NW.lng], [LL.NW.lat, LL.SE.lng], [LL.SE.lat, LL.SE.lng], [LL.SE.lat, LL.NW.lng], [LL.NW.lat, LL.NW.lng]];
             L.polyline(bcords, { color: 'black', weight: 4 }).addTo(map);
-        },
-
-        cord_search: (target) => {    // search leyers
-            Object.keys(Conf.style).forEach(key => {
-                if (Layers[key].geojson !== undefined) {
-                    console.log("Search: " + key);
-                    Layers[key].geojson.forEach((geojson, gidx) => {
-                        let cords;
-                        if (geojson.features !== undefined) {
-                            geojson.features.forEach((feature, fidx) => {
-                                cords = feature.geometry.coordinates[0];
-                                check(cords, target, key, gidx, fidx);
-                            });
-                        } else {
-                            cords = geojson.geometry.coordinates[0];
-                            check(cords, target, key, gidx);
-                        };
-                    });
-                }
-            });
-
-            function check(cords, target, key, gidx, fidx) {
-                cords.forEach((cord, cidx) => {
-                    console.log(`check: [${cord[0]},${cord[1]}]`);
-                    if (target[0] == cord[0] && target[1] == cord[1]) {
-                        console.log(`found: Leyers[${key}].geojson[${gidx}]: ${fidx == undefined ? "" : "features[" + fidx + "]"}.geometry.coordinates[${cidx}]`);
-                    };
-                })
-            };
         }
     };
 })();

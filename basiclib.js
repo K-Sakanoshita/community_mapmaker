@@ -1,64 +1,82 @@
 // Basic Closure
-var Basic = (function () {
-    return {
-        getdate: () => {							                // Overpass Queryに付ける日付指定
-            let seldate = $("#Select_Date").val();
-            return seldate ? '[date:"' + (new Date(seldate)).toISOString() + '"]' : "";
-        },
-        dataURItoBlob: (dataURI) => {                               // DataURIからBlobへ変換（ファイルサイズ2MB超過対応）
-            const b64 = atob(dataURI.split(',')[1]);
-            const u8 = Uint8Array.from(b64.split(""), function (e) { return e.charCodeAt() });
-            return new Blob([u8], { type: "image/png" });
-        },
-        concatTwoDimensionalArray: (array1, array2, axis) => {      // 2次元配列の合成
-            if (axis != 1) axis = 0;
-            var array3 = [];
-            if (axis == 0) {    //　縦方向の結合
-                array3 = array1.slice();
-                for (var i = 0; i < array2.length; i++) {
-                    array3.push(array2[i]);
-                }
+class Basic {
+    getDate() {							                // Overpass Queryに付ける日付指定
+        let seldate = $("#Select_Date").val();
+        return seldate ? '[date:"' + (new Date(seldate)).toISOString() + '"]' : "";
+    }
+
+    formatDate(date, format) {
+        // date format
+        format = format.replace(/YYYY/g, date.getFullYear());
+        format = format.replace(/YY/g, date.getFullYear().toString().slice(-2));
+        format = format.replace(/MM/g, ('0' + (date.getMonth() + 1)).slice(-2));
+        format = format.replace(/DD/g, ('0' + date.getDate()).slice(-2));
+        format = format.replace(/hh/g, ('0' + date.getHours()).slice(-2));
+        format = format.replace(/mm/g, ('0' + date.getMinutes()).slice(-2));
+        format = format.replace(/ss/g, ('0' + date.getSeconds()).slice(-2));
+        return format;
+    }
+
+    dataURItoBlob(dataURI) {                               // DataURIからBlobへ変換（ファイルサイズ2MB超過対応）
+        const b64 = atob(dataURI.split(',')[1]);
+        const u8 = Uint8Array.from(b64.split(""), function (e) { return e.charCodeAt() });
+        return new Blob([u8], { type: "image/png" });
+    }
+    concatTwoDimensionalArray(array1, array2, axis) {      // 2次元配列の合成
+        if (axis != 1) axis = 0;
+        var array3 = [];
+        if (axis == 0) {    //　縦方向の結合
+            array3 = array1.slice();
+            for (var i = 0; i < array2.length; i++) {
+                array3.push(array2[i]);
             }
-            else {              //　横方向の結合
-                for (var i = 0; i < array1.length; i++) {
-                    array3[i] = array1[i].concat(array2[i]);
-                };
+        } else {              //　横方向の結合
+            for (var i = 0; i < array1.length; i++) {
+                array3[i] = array1[i].concat(array2[i]);
             };
-            return array3;
-        },
-        unicodeUnescape: (str) => {     // \uxxx形式→文字列変換
-            let result = "", strs = str.match(/\\u.{4}/ig);
-            if (!strs) return '';
-            for (var i = 0, len = strs.length; i < len; i++) {
-                result += String.fromCharCode(strs[i].replace('\\u', '0x'));
-            };
-            return result;
-        },
-        getWikipedia: (lang, url) => {      // get wikipedia contents
-            return new Promise((resolve, reject) => {
-                let encurl = encodeURI(url);
-                encurl = "https://" + lang + "." + Conf.target.wikipedia.api + encurl;
-                $.get({ url: encurl, dataType: "jsonp" }, function (data) {
-                    let key = Object.keys(data.query.pages);
-                    let text = data.query.pages[key].extract;
-                    console.log(text);
-                    resolve(text);
-                });
+        };
+        return array3;
+    }
+    unicodeUnescape(str) {     // \uxxx形式→文字列変換
+        let result = "", strs = str.match(/\\u.{4}/ig);
+        if (!strs) return '';
+        for (var i = 0, len = strs.length; i < len; i++) {
+            result += String.fromCharCode(strs[i].replace('\\u', '0x'));
+        };
+        return result;
+    }
+    uniq(array) {
+        let elems = new Map();
+        for (let elem of array) {
+            elems.set(elem, true); // 同じキーに何度も値を設定しても問題ない
+        };
+        return Array.from(elems.keys());
+    }
+    getWikipedia(lang, url) {      // get wikipedia contents
+        return new Promise((resolve, reject) => {
+            let encurl = encodeURI(url);
+            encurl = "https://" + lang + "." + Conf.target.wikipedia.api + encurl;
+            $.get({ url: encurl, dataType: "jsonp" }, function (data) {
+                let key = Object.keys(data.query.pages);
+                let text = data.query.pages[key].extract;
+                console.log(text);
+                resolve(text);
             });
-        },
-        isSmartPhone: () => {
-            if (window.matchMedia && window.matchMedia('(max-device-width: 640px)').matches) {
-                return true;
-            } else {
-                return false;
-            };
-        }
-    };
-})();
+        });
+    }
+    isSmartPhone() {
+        if (window.matchMedia && window.matchMedia('(max-device-width: 640px)').matches) {
+            return true;
+        } else {
+            return false;
+        };
+    }
+};
+var basic = new Basic();
 
 // Display Status(progress&message)
 var WinCont = (function () {
-    var modal_open = false, MW = "#modal_window", MS = "#modal_select";
+    var modal_open = false, MW = "#modal_window";
 
     return {
         splash: (mode) => {
@@ -75,7 +93,6 @@ var WinCont = (function () {
             if (p.mode.indexOf("yes") > -1) $(`${MW}_yes`).html(glot.get("button_yes")).on('click', p.callback_yes).show();
             if (p.mode.indexOf("no") > -1) $(`${MW}_no`).html(glot.get("button_no")).on('click', p.callback_no).show();
             if (p.mode.indexOf("close") > -1) $(`${MW}_close`).html(glot.get("button_close")).on('click', p.callback_close).show();
-
             $(MW).modal({ backdrop: false, keyboard: true });
             modal_open = true;
             $(MW).on('shown.bs.modal', () => { if (!modal_open) $(MW).modal('hide') }); // Open中にCloseされた時の対応
@@ -95,37 +112,6 @@ var WinCont = (function () {
             percent = percent == 0 ? 0.1 : percent;
             $(`${MW}_progress`).parent().show();
             $(`${MW}_progress`).css('width', parseInt(percent) + "%");
-        },
-        modal_select: (target) => { // View Poi Select List
-            return new Promise((resolve, reject) => {
-                DataList.init();
-                DataList.view_select(target);
-                $(`${MS}_facilityname`).html(glot.get("facilityname"));
-                $(`${MS}_size`).val(Conf.default.Text.size);
-                $(`${MS}_facility`).prop("checked", Conf.default.Text.view);
-                $(`${MS}_ok`).html(glot.get("button_ok")).one('click', () => {
-                    let pois = { geojson: [], targets: [], latlng: [], enable: [] };
-                    let alldata = DataList.table().rows().data().toArray();
-                    let selects = DataList.indexes();                   // 選択した行のリスト
-                    let sel_ids = selects.map(val => val.osmid).join("|");
-                    Marker.set_size($(`${MS}_size`).val(), $(`${MS}_facility`).prop("checked"));    // set font size & view
-                    alldata.forEach((val) => {
-                        let poi = PoiCont.get_osmid(val.osmid);
-                        let enable = sel_ids.indexOf(val.osmid) > -1 ? true : false;
-                        pois.geojson.push(poi.geojson);
-                        pois.targets.push(poi.targets);
-                        pois.latlng.push(poi.latlng);
-                        pois.enable.push(enable);
-                    });
-                    $(MS).modal('hide');
-                    resolve(pois);
-                });
-                $(`${MS}_cancel`).html(glot.get("button_cancel")).one('click', () => {
-                    $(MS).modal('hide');
-                    reject();
-                });
-                $(MS).modal({ backdrop: false, keyboard: true });
-            });
         },
         modal_close: () => {            // close modal window
             modal_open = false;
@@ -163,31 +149,12 @@ var WinCont = (function () {
             $('#' + domid + ' option').remove();
             $('#' + domid).append($('<option>').html("---").val("-"));
         },
-        domAdd: (id, parent_id) => {                         // leafletにcontrollを追加
-            let dom = document.getElementById(id);
-            if (dom == null) {
-                dom = document.createElement("div");
-                dom.id = id;
-                document.getElementById(parent_id).appendChild(dom);
-            };
-            return document.getElementById(id);             // domを返す
-        },
         window_resize: () => {
-            console.log("Window Width: " + window.innerWidth);
-            let use_H, magni = window.innerWidth < 768 ? 1 : 1;
-            $("#baselist").css("width", (window.innerWidth - 90));
-            switch (magni) {
-                case 1: // 横画面
-                    use_H = window.innerHeight - 40;
-                    $("#mapid").css("height", Math.round(use_H * magni) + "px");
-                    break;
-                default: // 縦画面
-                    use_H = window.innerHeight - 70;    // header + filtter height
-                    let map_H = Math.round(use_H * magni);
-                    $("#mapid").css("height", map_H + "px");
-                    break;
-            };
+            console.log("Window: resize.");
+            let mapWidth = basic.isSmartPhone() ? window.innerWidth - 20 : window.innerWidth;
+            mapWidth = mapWidth > 900 ? 900 : mapWidth;
+            if (typeof baselist !== "undefined") baselist.style.width = mapWidth + "px";
+            if (typeof mapid !== "undefined") mapid.style.height = window.innerHeight + "px";
         }
     };
 })();
-

@@ -119,7 +119,8 @@
         },
         "leisure":{
             "pitch": "pitch",
-            "park": "park"
+            "park": "park",
+            "playground": "playground"
         }
     }
 }

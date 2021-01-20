@@ -1,11 +1,7 @@
 {
 	"about": {
-		"ja": "まち歩きマップメーカーについて",
+		"ja": "サンプルマップについて",
 		"en": "about Town Walk Map Maker"
-	},
-	"about-bg": {
-		"ja": "ヘッダー部の背景画像について",
-		"en": "about background image of header"
 	},
 	"owner": {
 		"ja": "開発サイト",
@@ -16,12 +12,12 @@
 		"en": "about OpenStreetMap"
 	},
 	"title": {
-		"ja": "コミュニティマップメーカー",
-		"en": "Community Map Maker"
+		"ja": "サンプルマップ",
+		"en": "Sample Map"
 	},
 	"subtitle": {
-		"ja": "コミュニティ活動向けのオンラインマップを作ります",
-		"en": "Create an online map for community activities"
+		"ja": "サンプルマップ by Community Map Maker",
+		"en": "Sample Map by Community Map Maker"
 	},
 	"licence_title": {
 		"ja": "地図の利用規約",

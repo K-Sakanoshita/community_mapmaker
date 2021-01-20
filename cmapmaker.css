@@ -92,7 +92,6 @@ div.search {
 
 .menu {
 	color: white;
-	height: 50px;
 	margin: 5px 0px;
 	background-color: rgba(0, 48, 0, 0.4);
 	border: 0px;
@@ -105,17 +104,16 @@ p {
 
 span.title {
 	display: inline-block;
-	font-size: 18px !important;
+	font-size: 16px !important;
 	font-weight: bold;
-	padding: 0px 8px 0px 0px;
+	padding: 0px 4px 0px 0px;
 	margin: 0px 0px 0px 0px;
 }
 
 span.subtitle {
 	display: inline-block;
-	font-size: 12px !important;
-	font-weight: bold;
-	padding: 0px 4px 4px 0px;
+	font-size: 10px !important;
+	padding: 0px 0px 0px 0px;
 }
 
 span.icon {
@@ -136,10 +134,6 @@ span.icon {
 .modal-body {
 	font-size: 14px !important;
 	overflow-x: hidden;
-}
-
-.save_map {
-	display: none;
 }
 
 .leaflet-div-icon {
