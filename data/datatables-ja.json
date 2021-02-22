@@ -22,21 +22,48 @@
             "sSortDescending": ": 列を降順に並べ替えるにはアクティブにする"
         }
     },
-    "datatables_columns": [
+    "datatables_columns_osm": [
         {
-            "title": "名前",
-            "data": "name",
-            "width": "50%"
+            "title": "写真",
+            "data": "picture",
+            "width": "20%"
         },
         {
-            "title": "種類",
-            "data": "category",
+            "title": "名称",
+            "data": "name",
             "width": "30%"
         },
         {
-            "title": "ID",
-            "data": "osmid",
+            "title": "運営/管理",
+            "data": "operator",
             "width": "20%"
+        },
+        {
+            "title": "詳細",
+            "data": "description",
+            "width": "30%"
+        }
+    ],
+    "datatables_columns_googlesheet": [
+        {
+            "title": "写真",
+            "data": "picture",
+            "width": "20%"
+        },
+        {
+            "title": "名称",
+            "data": "name",
+            "width": "30%"
+        },
+        {
+            "title": "運営/管理",
+            "data": "operator",
+            "width": "20%"
+        },
+        {
+            "title": "詳細",
+            "data": "description",
+            "width": "30%"
         }
     ]
 }

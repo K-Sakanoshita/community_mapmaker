@@ -55,7 +55,7 @@ class Basic {
     getWikipedia(lang, url) {      // get wikipedia contents
         return new Promise((resolve, reject) => {
             let encurl = encodeURI(url);
-            encurl = "https://" + lang + "." + Conf.target.wikipedia.api + encurl;
+            encurl = "https://" + lang + "." + Conf.osm.wikipedia.api + encurl;
             $.get({ url: encurl, dataType: "jsonp" }, function (data) {
                 let key = Object.keys(data.query.pages);
                 let text = data.query.pages[key].extract;
@@ -71,6 +71,9 @@ class Basic {
             return false;
         };
     }
+    convLinkTag(url) {
+        return (/^(ftp|http|https):\/\/[^ "]+$/.test(url)) ? `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>` : "";
+    }
 };
 var basic = new Basic();
 
@@ -80,7 +83,7 @@ var WinCont = (function () {
 
     return {
         splash: (mode) => {
-            $("#splash_image").attr("src", Conf.local.SplashImage);
+            $("#splash_image").attr("src", Conf.local.splashImage);
             let act = mode ? { backdrop: 'static', keyboard: false } : 'hide';
             $('#Splash_Modal').modal(act);
         },
@@ -151,8 +154,8 @@ var WinCont = (function () {
         },
         window_resize: () => {
             console.log("Window: resize.");
-            let mapWidth = basic.isSmartPhone() ? window.innerWidth - 20 : window.innerWidth;
-            mapWidth = mapWidth > 900 ? 900 : mapWidth;
+            let mapWidth = basic.isSmartPhone() ? window.innerWidth - 20 : window.innerWidth * 0.3;
+            mapWidth = mapWidth < 320 ? 320 : mapWidth;
             if (typeof baselist !== "undefined") baselist.style.width = mapWidth + "px";
             if (typeof mapid !== "undefined") mapid.style.height = window.innerHeight + "px";
         }

@@ -157,3 +157,8 @@ table.dataTable tbody>tr.selected, table.dataTable tbody>tr>.selected {
 	background: rgba(0, 0, 0, 0.4);
 	z-index: 799;
 }
+
+.list{
+	max-width: 120px;
+	max-height: 120px;
+}

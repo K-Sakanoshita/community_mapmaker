@@ -1,52 +1,27 @@
 {
-    "tile": {
-        "OSM_Copyright": "<a href=\"https://openstreetmap.org\">&copy OpenStreetMap contributors</a>",
-        "OSM_Standard": "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-        "GSI_Copyright": "<a href='https://www.gsi.go.jp/kikakuchousei/kikakuchousei40182.html' target='_blank'>国土地理院</a>",
-        "GSI_Standard": "https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png",
-        "GSI_Ortho": "https://cyberjapandata.gsi.go.jp/xyz/ort/{z}/{x}/{y}.jpg",
-        "Tiler_Copyright": "<a href=\"https://www.maptiler.com/copyright/\" target=\"_blank\">© MapTiler</a> <a href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\">© OpenStreetMap contributors</a>",
-        "Tiler_Style": "https://api.maptiler.com/maps/c9876a21-f16a-4a84-abc0-950badd4631e/style.json?key=Eq2IyrHsOEGFU1W1fvd7"
-    },
+    "targets": [
+        "park",
+        "station",
+        "wikipedia",
+        "activity"
+    ],
     "default": {
-        "SplashImage": "image/splash.png",
-        "DefaultCenter": [
-            34.7075,
-            135.5018
+        "splashImage": "image/splash.png",
+        "mapcenter": [
+            34.6149,
+            135.4753
         ],
-        "DefaultZoom": 6,
-        "ZoomSnap": 0.25,
-        "MinZoomLevel": 10,
-        "IconViewZoom": 14,
-        "LimitZoomLevel": 15.5,
-        "MaxZoomLevel": 23,
-        "FileName": "mapmaker",
+        "zoom": 15,
+        "zoomSnap": 0.25,
+        "iconViewZoom": 15,
         "SearchZoom": 16,
-        "_OverPassServer": "https://overpass.nchc.org.tw/api/interpreter",
-        "__OverPassServer": "https://overpass.kumi.systems/api/interpreter",
-        "OverPassServer": "https://overpass-api.de/api/interpreter",
-        "OverPassParams": "?data=[out:json][timeout:30]",
-        "ColorDarken": 0.5,
-        "Circle": {
-            "radius": 8,
-            "color": "#000080",
-            "fillColor": "#0000A0",
-            "Opacity": 0.1,
-            "fillOpacity": 0.1,
-            "timer": 2000
-        },
-        "Icon": {
-            "x": 20,
-            "y": 20,
-            "scale": 1.66
-        },
-        "Text": {
-            "view": true,
-            "size": 12,
-            "color": "black"
-        },
-        "GoogleAnalytics": "UA-98610409-3",
-        "GoogleAppScript": "https://script.google.com/macros/s/AKfycbw04lv4R9tre_NR4bGPw8BM4QsEUzpMITFt87iMn50O0eVRyl--kp2hnw/exec"
+        "bookmark": true
+    },
+    "google": {
+        "Analytics": "UA-98610409-3",
+        "AppScript": "https://script.google.com/macros/s/AKfycbw04lv4R9tre_NR4bGPw8BM4QsEUzpMITFt87iMn50O0eVRyl--kp2hnw/exec",
+        "sheetName": "activity",
+        "targetName": "activity"
     },
     "menu": [
         {
@@ -69,15 +44,5 @@
             "linkto": "https://www.openstreetmap.org/about",
             "divider": false
         }
-    ],
-    "effect": {
-        "icon": {
-            "x": 0,
-            "y": 0
-        },
-        "text": {
-            "size": 12,
-            "view": true
-        }
-    }
+    ]
 }

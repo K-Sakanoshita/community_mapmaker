@@ -67,14 +67,6 @@
 		"ja": "地図を作るにはズームしてください。",
 		"en": "Zoom in to create a map."
 	},
-	"morezoom2": {
-		"ja": "ズームすると<br />地物が増えます。",
-		"en": "When you zoom in,<br />will see more objects."
-	},
-	"custommode": {
-		"ja": "編集中（ロック）",
-		"en": "Editing(locked)"
-	},
 	"line_weight": {
 		"ja": "輪郭線の太さ",
 		"en": "line weight"
@@ -298,5 +290,9 @@
 	"marker_noname": {
 		"ja": "(名称不明)",
 		"en": "(name unknown)"
+	},
+	"modal_close":{
+		"ja": "閉じる",
+		"en": "close"
 	}
 }

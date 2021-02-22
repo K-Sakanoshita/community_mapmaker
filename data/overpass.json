@@ -1,18 +1,5 @@
 {
-    "area": {
-        "bbox": [
-            [
-                34.64675,
-                135.34508
-            ],
-            [
-                34.59518,
-                135.49070
-            ]
-        ],
-        "overpass": "relation[\"name\"=\"住之江区\"][admin_level=8]"
-    },
-    "target": {
+    "osm": {
         "park": {
             "overpass": [
                 "relation[\"leisure\"=\"park\"]",
@@ -49,6 +36,19 @@
                 "operator"
             ]
         },
+        "station":{
+            "overpass": [
+                "node[\"public_transport\"=\"station\"]",
+                "way[\"public_transport\"=\"station\"]"
+            ],
+            "tags": [
+                "public_transport=station"
+            ],
+            "views": [
+                "name",
+                "operator"
+            ]
+        },
         "wikipedia": {
             "marker": "wikipedia.svg",
             "api": "wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=&explaintext=&titles=",
@@ -57,7 +57,7 @@
             "overpass": [
                 "node[\"wikipedia\"][\"public_transport\"!=\"stop_position\"]",
                 "way[\"wikipedia\"][!\"highway\"][!\"railway\"]",
-                "relation[\"wikipedia\"][!\"route\"][!\"highway\"][!\"railway\"][\"name:ja\"!=\"本州\"]"
+                "relation[\"wikipedia\"][!\"route\"][!\"highway\"][!\"railway\"][\"name:ja\"!=\"本州\"][\"area\"!=\"yes\"][!\"boundary\"]"
             ],
             "tags": [
                 "wikipedia"

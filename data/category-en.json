@@ -1,7 +1,7 @@
 {
     "category": {
         "amenity": {
-            "library": "library(landmark)",
+            "library": "library",
             "bar": "bar",
             "bench": "bench",
             "cafe": "cafe",
@@ -42,6 +42,95 @@
             "kiosk": "kiosk",
             "supermarket": "supermarket",
             "variety_store": "variety"
+        },
+        "cuisine": {
+            "american": "american",
+            "asian": "asian",
+            "barbecue": "barbecue",
+            "bbq": "barbecue",
+            "beef_bowl": "beef bowl",
+            "bento": "bento",
+            "bowl": "bowl",
+            "burger": "burger",
+            "cake": "cake",
+            "chicken": "chicken",
+            "chinese": "chinese",
+            "coffee": "coffee",
+            "coffee_shop": "coffee shop",
+            "crepe": "crepe",
+            "curry": "curry",
+            "donut": "donut",
+            "fish": "fish",
+            "fish_and_chips": "fish and chips",
+            "french": "french",
+            "fried_food": "fried food",
+            "german": "german",
+            "greek": "greek",
+            "gyoza": "gyoza",
+            "gyudon": "gyudon",
+            "ice_cream": "ice cream",
+            "indian": "indian",
+            "international": "international",
+            "italian": "italian",
+            "italian_pizza": "italian pizza",
+            "japanese": "japanese",
+            "kebab": "kebab",
+            "korean": "korean",
+            "local": "local",
+            "mexican": "mexican",
+            "noodle": "noodle",
+            "noodles": "noodle",
+            "okonomiyaki": "okonomiyaki",
+            "pancake": "pancake",
+            "pasta": "pasta",
+            "pizza": "pizza",
+            "ramen": "ramen",
+            "regional": "regional",
+            "sandwich": "sandwich",
+            "savory_pancakes": "savory pancakes",
+            "seafood": "seafood",
+            "soba": "soba",
+            "spanish": "spanish",
+            "steak": "steak",
+            "steak_house": "steak house",
+            "steamed_eel_rice": "steamed eel rice",
+            "sushi": "sushi",
+            "taiwanese": "taiwanese",
+            "takoyaki": "takoyaki",
+            "thai": "thai",
+            "tonkatsu": "tonkatsu",
+            "turkish": "turkish",
+            "udon": "udon",
+            "unagi": "unagi",
+            "vegetarian": "vegetarian",
+            "vietnamese": "vietnamese",
+            "western": "western",
+            "yakiniku": "yakiniku",
+            "yakitori": "yakitori"
+        },
+        "takeaway": {
+            "yes": "take out",
+            "no": "no take out",
+            "only": "take out only"
+        },
+        "delivery": {
+            "yes": "delivery",
+            "no": "no delivery",
+            "only": "delivery only"
+        },
+        "diet": {
+            "diet:pescetarian": "pescetarian",
+            "diet:vegetarian": "vegetarian",
+            "diet:lacto_vegetarian": "lacto vegetarian",
+            "diet:ovo_vegetarian": "ovo vegetarian",
+            "diet:vegan": "vegan",
+            "diet:fruitarian": "fruitarian",
+            "diet:raw": "raw",
+            "diet:gluten_free": "gluten free",
+            "diet:dairy_free": "dairy free",
+            "diet:lactose_free": "lactose free",
+            "diet:halal": "halal",
+            "diet:kosher": "kosher"
         },
         "species": {
             "Cherry blossom": "sakura",
@@ -117,10 +206,24 @@
             "torii": "torii",
             "lamp": "lantern"
         },
-        "leisure":{
+        "leisure": {
             "pitch": "pitch",
             "park": "park",
             "playground": "playground"
-        }
+        },
+        "suffix_covid19": "(provisional)",
+        "bookmarked": "Starred"
+    },
+    "opening_hours": {
+        "Mo": "Mo",
+        "Tu": "Tu",
+        "We": "We",
+        "Th": "Th",
+        "Fr": "Fr",
+        "Sa": "Sa",
+        "Su": "Su",
+        "PH": "PH",
+        "off": "Off",
+        "24\/7": "24/7"
     }
 }

@@ -8,7 +8,7 @@ class Leaflet {
         let t_pale = L.tileLayer(Conf.tile.GSI_Standard, { maxNativeZoom: 18, maxZoom: 21, attribution: Conf.tile.GSI_Copyright });
         let t_ort = L.tileLayer(Conf.tile.GSI_Ortho, { maxNativeZoom: 18, maxZoom: 21, attribution: Conf.tile.GSI_Copyright });
         let o_std_mini = L.tileLayer(Conf.tile.OSM_Standard, { attribution: Conf.tile.OSM_Copyright });
-        map = L.map('mapid', { doubleClickZoom: false, center: def.DefaultCenter, zoom: def.DefaultZoom, zoomSnap: def.ZoomSnap, zoomDelta: def.ZoomSnap, maxZoom: def.maxZoomLevel, layers: [osm_tiler] });
+        map = L.map('mapid', { doubleClickZoom: false, center: def.mapcenter, zoom: def.zoom, zoomSnap: def.zoomSnap, zoomDelta: def.zoomSnap, maxZoom: def.maxZoomLevel, layers: [osm_tiler] });
         Control["minimap"] = new L.Control.MiniMap(o_std_mini, { toggleDisplay: true, width: 120, height: 120, zoomLevelOffset: -4 }).addTo(map);
         new L.Hash(map);
         let maps = {
@@ -63,7 +63,7 @@ var GeoCont = (function () {
     return {
         // csv(「”」で囲われたカンマ区切りテキスト)をConf.markerのcolumns、tagsをもとにgeojsonへ変換
         csv2geojson: (csv, key) => {
-            let tag_key = [], columns = Conf.target[key].columns;
+            let tag_key = [], columns = Conf.osm[key].columns;
             let texts = csv.split(/\r\n|\r|\n/).filter(val => val !== "");
             cols = texts[0].split('","').map(col => col.replace(/^"|"$|/g, ''));
             for (let i = 0; i < cols.length; i++) {
@@ -84,8 +84,8 @@ var GeoCont = (function () {
                 Object.keys(tag_val).forEach((idx) => {
                     if (idx.slice(0, 1) !== "_") geojson.properties[idx] = tag_val[idx];
                 });
-                Object.keys(Conf.target[key].add_tag).forEach(tkey => {
-                    geojson.properties[tkey] = Conf.target[key].add_tag[tkey];
+                Object.keys(Conf.osm[key].add_tag).forEach(tkey => {
+                    geojson.properties[tkey] = Conf.osm[key].add_tag[tkey];
                 });
                 return geojson;
             });
@@ -207,7 +207,7 @@ var GeoCont = (function () {
         // Debug Code
         gcircle: (geojson) => { // view geojson in map
             let features = [], colors = ["#000000", "#800000", "#FF0080", "#008000", "#00FF00", "#000080", "#0000FF", "#800080", "#FF00FF", "#808000", "#FFFF00", "#008080", "#00FFFF", "#800080", "#FF00FF"];
-            let timer = Conf.default.Circle.timer;
+            let timer = Conf.style.Circle.timer;
             if (!Array.isArray(geojson)) {
                 if (geojson.features !== undefined) features = geojson.features;
             } else {
@@ -218,8 +218,8 @@ var GeoCont = (function () {
                 let geo = val.geometry;
                 let cords = geo.coordinates.length == 1 && geo.coordinates[0][0].length > 1 ? geo.coordinates[0] : geo.coordinates;
                 cords.forEach((latlng) => {
-                    Conf.default.Circle.radius = Math.pow(2, 21 - map.getZoom());
-                    let style = Conf.default.Circle;
+                    Conf.style.Circle.radius = Math.pow(2, 21 - map.getZoom());
+                    let style = Conf.style.Circle;
                     let color = idx % colors.length;
                     style.color = colors[color];
                     let circle = L.circle(L.latLng(latlng[1], latlng[0]), style).addTo(map);

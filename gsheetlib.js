@@ -3,10 +3,10 @@
 
 class GoogleSpreadSheet {
 
-	get(GET_Url) {					// サーバーからデータを収集する
+	get(GET_Url, sheetname) {					// サーバーからデータを収集する
 		return new Promise(function (resolve, reject) {
 			console.log("GoogleSpreadSheet: get start.")
-			$.ajax({ type: "get", url: GET_Url, dataType: "jsonp", cache: false, jsonpCallback: 'GDocReturn' }).then(function (json) {
+			$.ajax({ type: "get", url: GET_Url + '?sheet=' + sheetname, dataType: "jsonp", cache: false, jsonpCallback: 'GDocReturn' }).then(function (json) {
 				console.log("GoogleSpreadSheet: get end.")
 				resolve(json);
 			}, json => {
@@ -16,12 +16,12 @@ class GoogleSpreadSheet {
 		});
 	}
 
-	set(GET_Url, json, silent) {	// サーバーにデータを投稿する(1件)
+	set(GET_Url, json, sheetname, silent) {	// サーバーにデータを投稿する(1件)
 		return new Promise(function (resolve, reject) {
 			let jsonp = JSON.stringify([json]);
 			jsonp = jsonp.replace(/\?/g, '？');
 			jsonp = jsonp.replace(/\&/g, '＆');
-			$.ajax({ "type": "get", "url": GET_Url + '?json=' + jsonp, dataType: "jsonp", cache: false, jsonpCallback: 'GDocReturn' }).then(json => {
+			$.ajax({ "type": "get", "url": GET_Url + '?json=' + jsonp + '&sheet=' + sheetname, dataType: "jsonp", cache: false, jsonpCallback: 'GDocReturn' }).then(json => {
 				if (!silent) alert("POST_Ok");
 				resolve(json);
 			}, json => {

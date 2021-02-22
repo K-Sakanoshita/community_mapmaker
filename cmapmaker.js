@@ -7,7 +7,7 @@ var Layers = {};				// Layer Status,geojson,svglayer
 var Conf = {};					// Config Praams
 var Control = { "locate": "", "maps": "", "minimap": "" };		// leaflet control object
 const LANG = (window.navigator.userLanguage || window.navigator.language || window.navigator.browserLanguage).substr(0, 2) == "ja" ? "ja" : "en";
-const FILES = ["./baselist.html", "./modals.html", "./data/config.json", './data/target.json', `./data/category-${LANG}.json`, `data/datatables-${LANG}.json`, `./data/marker.json`];
+const FILES = ["./baselist.html", "./modals.html", "./data/config.json", './data/system.json', './data/overpass.json', `./data/category-${LANG}.json`, `data/datatables-${LANG}.json`, `./data/marker.json`];
 const glot = new Glottologist();
 const Mono_Filter = ['grayscale:90%', 'bright:85%', 'contrast:130%', 'sepia:15%'];;
 
@@ -19,7 +19,7 @@ $(document).ready(function () {
 	$.when.apply($, jqXHRs).always(function () {
 		let arg = {}, baselist = arguments[0][0];								// Get Menu HTML
 		$("#modals").html(arguments[1][0]);										// Make Modal HTML
-		for (let i = 2; i <= 6; i++) arg = Object.assign(arg, arguments[i][0]);	// Make Config Object
+		for (let i = 2; i <= 7; i++) arg = Object.assign(arg, arguments[i][0]);	// Make Config Object
 		Object.keys(arg).forEach(key1 => {
 			Conf[key1] = {};
 			Object.keys(arg[key1]).forEach((key2) => Conf[key1][key2] = arg[key1][key2]);
@@ -32,12 +32,12 @@ $(document).ready(function () {
 			Marker.init();								// Marker Initialize
 			WinCont.menu_make();
 			// Google Analytics
-			if (Conf.default.GoogleAnalytics !== "") {
+			if (Conf.google.Analytics !== "") {
 				$('head').append('<script async src="https://www.googletagmanager.com/gtag/js?id=' + Conf.default.GoogleAnalytics + '"></script>');
 				window.dataLayer = window.dataLayer || [];
 				function gtag() { dataLayer.push(arguments); };
 				gtag('js', new Date());
-				gtag('config', Conf.default.GoogleAnalytics);
+				gtag('config', Conf.google.Analytics);
 			};
 			glot.render();
 		});
@@ -45,8 +45,7 @@ $(document).ready(function () {
 });
 
 var cMapmaker = (function () {
-	var view_license = false, _status = "initialize"
-	var LL = {};
+	var view_license = false, _status = "initialize", last_modetime;
 
 	return {
 		// Initialize
@@ -55,20 +54,36 @@ var cMapmaker = (function () {
 			WinCont.window_resize();
 
 			// get GoogleSpreadSheet
-			gSpreadSheet.get(Conf.default.GoogleAppScript).then(json => poiCont.set_json(json));
+			gSpreadSheet.get(Conf.google.AppScript, Conf.google.sheetName).then(json => poiCont.set_json(json));
 
 			// initialize leaflet
 			leaflet.init();
 			leaflet.controlAdd("bottomleft", "zoomlevel", "");
 			leaflet.controlAdd("topleft", "baselist", baselist, "leaflet-control m-1");	// Make: base list
-			Control["locate"] = L.control.locate({ position: 'topright', strings: { title: glot.get("location") }, locateOptions: { maxZoom: 16 } }).addTo(map);
+			Control["locate"] = L.control.locate({ position: 'topright', strings: { title: glot.get("location") }, setView: "once", locateOptions: { maxZoom: 16 } }).addTo(map);
 			WinCont.window_resize();
-			cMapmaker.zoom_view();														// Zoom 
-			map.on('moveend', cMapmaker.event_move);             						// マップ移動時の処理
-			map.on('zoomend', () => cMapmaker.zoom_view());								// ズーム終了時に表示更新
-			$("#baselist").hover(
+			cmap_events.map_zoom();														// Zoom 
+			$("#dataid").hover(
 				() => { map.scrollWheelZoom.disable(); map.dragging.disable() },
-				() => { map.scrollWheelZoom.enable(); map.dragging.enable() });
+				() => { map.scrollWheelZoom.enable(); map.dragging.enable() }
+			);
+			cMapmaker.poi_get().then(() => {
+				//dataList.view(targets);
+				//DisplayStatus.splash(false);
+				if (location.search !== "") {    	// 引数がある場合
+					let osmid = location.search.replace(/[?&]fbclid.*/, '');    // facebook対策
+					osmid = osmid.replace('-', '/').replace('=', '/').slice(1);
+					// let tags = poiCont.get_osmid(osmid).geojson.properties;	// poi直リンク（あとで作る）
+					// if (tags !== undefined) cMapmaker.view(tags.id);
+				}
+				Object.values(Conf.targets).forEach(key => Marker.set(key));
+				map.on('moveend', () => cmap_events.map_move());             				// マップ移動時の処理
+				map.on('zoomend', () => cmap_events.map_zoom());							// ズーム終了時に表示更新
+				console.log("cmapmaker: initial end.");
+			});
+
+			// initialize last_modetime
+			last_modetime = Date.now();
 		},
 
 		// About license
@@ -81,67 +96,29 @@ var cMapmaker = (function () {
 		},
 
 		// mode_change
-		mode_change: (event, mode) => {
-			let params = { 'map': ['down', 'remove', 'start'], 'list': ['up', 'add', 'stop'] };
-			event.stopImmediatePropagation();
-			mode = !mode ? (list_collapse.classList.contains('show') ? 'map' : 'list') : mode;
-			console.log('mode_change: ' + mode);
-			list_collapse_icon.className = 'fas fa-chevron-' + params[mode][0];
-			list_collapse.classList[params[mode][1]]('show');
-			//leaflet[params[mode][2]]();
-			if (mode == "list") {
-				listTable.datalist_make("park");
+		mode_change: (mode) => {
+			if (_status !== "mode_change" && (last_modetime + 300) < Date.now()) {
+				_status = "mode_change";
+				let params = { 'map': ['down', 'remove', 'start'], 'list': ['up', 'add', 'stop'] };
+				mode = !mode ? (list_collapse.classList.contains('show') ? 'map' : 'list') : mode;
+				console.log('mode_change: ' + mode + ' : ' + last_modetime + " : " + Date.now());
+				list_collapse_icon.className = 'fas fa-chevron-' + params[mode][0];
+				list_collapse.classList[params[mode][1]]('show');
+				if (mode == "list") listTable.datalist_make(Object.values(Conf.targets));
+				last_modetime = Date.now();
+				_status = "normal";
 			};
 		},
 
-		event_move: (e) => {                // map.moveend発生時のイベント
-			console.log("cmapmaker: move event start.");
-			if (LL.busy > 1) return;					// 処理中の時は戻る
-			if (LL.busy == 1) clearTimeout(LL.id);		// no break and cancel old timer.
-
-			LL.busy = 1;
-			if (cMapmaker.status() == "initialize") {	// 初期イベント(移動)
-				LL.busy = 2;
-				cMapmaker.poi_get().then(() => {
-					//dataList.view(targets);
-					//DisplayStatus.splash(false);
-					if (location.search !== "") {    	// 引数がある場合
-						let osmid = location.search.replace(/[?&]fbclid.*/, '');    // facebook対策
-						osmid = osmid.replace('-', '/').replace('=', '/').slice(1);
-						// let tags = poiCont.get_osmid(osmid).geojson.properties;	// poi直リンク（あとで作る）
-						// if (tags !== undefined) cMapmaker.view(tags.id);
-					}
-					Object.keys(Conf.target).forEach(key => { Marker.set(key) });
-					console.log("cmapmaker: initial end.");
-					_status = "normal";
-					LL.busy = 0;
-				});
-			} else {
-				LL.id = setTimeout(() => {
-					LL.busy = 2;
-					cMapmaker.poi_get().then(() => {
-						console.log("cmapmaker: move event end.");
-						Object.keys(Conf.target).forEach(key => { Marker.set(key) });
-						LL.busy = 0;
-					});
-				}, 2000);
-			}
-		},
-
-		poi_get: (keys) => { 								// OSMとGoogle SpreadSheetからPoiを取得してリスト化
+		poi_get: (targets) => { 								// OSMとGoogle SpreadSheetからPoiを取得してリスト化
 			return new Promise((resolve, reject) => {
 				console.log("cMapmaker: poi_get start...");
-				var targets = [];
-				if (keys == undefined || keys == "") {
-					for (let key in Conf.target) targets.push(key);
-				} else {
-					targets = keys;
-				};
-				if (map.getZoom() < Conf.default.IconViewZoom) {
+				var keys = (targets !== undefined && targets !== "") ? targets : Object.values(Conf.targets);
+				if (map.getZoom() < Conf.default.iconViewZoom) {
 					console.log("cMapmaker: poi_get end(more zoom).");
 					resolve();
 				} else {
-					OvPassCnt.get(targets).then(ovanswer => {
+					OvPassCnt.get(keys).then(ovanswer => {
 						poiCont.all_clear();
 						poiCont.add_geojson(ovanswer);
 						// cMapmaker.update();
@@ -173,8 +150,8 @@ var cMapmaker = (function () {
 		poi_add: key => {
 			WinCont.modal_open({ "title": glot.get("loading_title"), "message": glot.get("loading_message"), "mode": "" });
 			WinCont.modal_spinner(true);
-			if (Conf.target[key].file !== undefined) {		// "file"がある場合
-				$.get(Conf.target[key].file).then((csv) => {
+			if (Conf.osm[key].file !== undefined) {		// "file"がある場合
+				$.get(Conf.osm[key].file).then((csv) => {
 					let geojsons = GeoCont.csv2geojson(csv, key);
 					let targets = geojsons.map(() => [key]);
 					poiset(key, { "geojson": geojsons, "targets": targets });
@@ -251,7 +228,7 @@ var cMapmaker = (function () {
 			let marker = Marker.get(target, osmid);
 			if (marker !== undefined) {
 				let wiki = marker.mapmaker_lang.split(':');
-				let url = encodeURI(`https://${wiki[0]}.${Conf.target.wikipedia.domain}/wiki/${wiki[1]}`);
+				let url = encodeURI(`https://${wiki[0]}.${Conf.osm.wikipedia.domain}/wiki/${wiki[1]}`);
 				let pix = map.latLngToLayerPoint(marker.getLatLng());
 				let ll2 = map.layerPointToLatLng(pix);
 				basic.getWikipedia(wiki[0], wiki[1]).then(text => Marker.qr_add(target, osmid, url, ll2, text));
@@ -259,19 +236,6 @@ var cMapmaker = (function () {
 		},
 
 		status: () => { return _status }, // ステータスを返す
-
-		// View Zoom Level & Status Comment
-		zoom_view: () => {
-			let nowzoom = map.getZoom();
-			let message = `${glot.get("zoomlevel")}${map.getZoom()} `;
-			if (nowzoom < Conf.default.MinZoomLevel) {
-				message += `<br>${glot.get("morezoom")}`;
-			} else {
-				if (nowzoom < Conf.default.LimitZoomLevel) message += `<br>${glot.get("morezoom2")}`;
-			};
-			message += `<br>${glot.get("custommode")}`;
-			$("#zoomlevel").html("<h2 class='zoom'>" + message + "</h2>");
-		},
 
 		// Try Again
 		all_clear: () => {
@@ -291,101 +255,49 @@ var cMapmaker = (function () {
 	}
 })();
 
-// listTable管理(イベントやPoi情報を表示)
-class ListTable {
+class cMapEvents {
 
 	constructor() {
-		this.table;
-		this.lock = false;
-		this.timeout = 0;
+		this.busy = false;
+		this.id = 0;
 	};
 
-	init() { // dataListに必要な初期化
-		function keyword_change() {        				// キーワード検索
-			if (this.timeout > 0) {
-				window.clearTimeout(this.timeout);
-				this.timeout = 0;
-			};
-			this.timeout = window.setTimeout(() => listTable.filter(keyword.value, 500));
+	map_move(e) {                					// map.moveend発生時のイベント
+		console.log("cmapmaker: move event start.");
+		if (this.busy > 1) return;					// 処理中の時は戻る
+		if (this.busy == 1) clearTimeout(this.id);	// no break and cancel old timer.
+		this.busy = 1;
+		this.id = setTimeout(() => {
+			this.busy = 2;
+			cMapmaker.poi_get().then(() => {
+				console.log("cmapmaker: move event end.");
+				Object.values(Conf.targets).forEach(key => Marker.set(key));
+				this.busy = 0;
+			});
+		}, 2000);
+	}
+
+	map_zoom() {				// View Zoom Level & Status Comment
+		let nowzoom = map.getZoom();
+		let message = `${glot.get("zoomlevel")}${map.getZoom()} `;
+		if (nowzoom < Conf.default.iconViewZoom) message += `<br>${glot.get("morezoom")}`;
+		$("#zoomlevel").html("<h2 class='zoom'>" + message + "</h2>");
+	}
+
+	detail_view(marker) {	// PopUpを表示
+		let target = marker.target.mapmaker_key;
+		switch (target) {
+			case "activity":
+				break;
+			case "wikipedia":
+				break;
+			default:
+				modal_takeout.view(marker);
+				break;
 		};
-		keyword.removeEventListener('change', keyword_change);
-		keyword.addEventListener('change', keyword_change);
-
-		function category_change() {        			// カテゴリ名でキーワード検索
-			let category = category_list.value;
-			listTable.filter(category == "-" ? "" : category);
-		};
-		keyword.removeEventListener('change', category_change);
-		keyword.addEventListener('change', category_change);
-	};
-
-	category_make(result) {    							// Poi種別リストを作成
-		WinCont.select_clear(`category_list`);
-		let pois = result.map(data => { return data.category });
-		pois = pois.filter((x, i, self) => { return self.indexOf(x) === i });
-		pois.map(poi => WinCont.select_add(`category_list`, poi, poi));
-	};
-
-	datalist_make(targets) {  							// リスト表示
-		this.lock = true;
-		if (this.table !== undefined) this.table.destroy();
-		let result = poiCont.list(targets);
-		this.table = $('#tableid').DataTable({
-			"columns": Object.keys(Conf.datatables_columns).map(function (key) { return Conf.datatables_columns[key] }),
-			"data": result,
-			"processing": true,
-			"filter": true,
-			"destroy": true,
-			"deferRender": true,
-			"dom": 't',
-			"language": Conf.datatables_lang,
-			"order": [],    // ソート禁止(行選択時にズレが生じる)
-			"ordering": true,
-			"orderClasses": false,
-			"paging": true,
-			"processing": false,
-			"pageLength": 100000,
-			"select": 'single',
-			scrollY: window.innerHeight * 0.4,
-			"scrollCollapse": true
-		});
-		$('#modal_select_table').css("width", "");
-		listTable.category_make(result);
-		// let osmids = result.filter(val => val.enable).map(val => val.osmid);
-		this.one_select([]);
-		this.table.draw();
-		this.table.off('select');
-		this.table.on('select', (e, dt, type, indexes) => {
-			e.stopPropagation();
-			if (type === 'row') {
-				var data = this.table.rows(indexes).data().pluck('osmid');
-				Marker.center(data[0]);
-			}
-		});
-		this.lock = false;
-	};
-
-	one_select(osmids) {
-		let alldata = this.table.rows().data().toArray();
-		let join_ids = osmids.join('|');
-		alldata.forEach((val, idx) => { if (join_ids.indexOf(val.osmid) > -1) this.table.row(idx).select() });
-	};
-
-	indexes() { // アイコンをクリックした時にデータを選択
-		let selects = this.table.rows('.selected').indexes();
-		selects = table.rows(selects).data();
-		return selects.toArray();
-	};
-
-	filter(keyword) {
-		console.log("ListTable: filter keyword: " + keyword);
-		this.table.search(keyword).draw();
-	};                		// キーワード検索
-	filtered() { this.table.rows({ filter: 'applied' }).data().toArray() }; 		// 現在の検索結果リスト
-	filtered_select() { this.table.rows({ filter: 'applied' }).select() };
-	filtered_deselect() { this.table.rows({ filter: 'applied' }).deselect() };
+	}
 };
-var listTable = new ListTable();
+var cmap_events = new cMapEvents();
 
 class FromControl {
 	// Google Spreadsheet Control Form
@@ -411,7 +323,7 @@ class FromControl {
 		};
 		$("#memo").val(json['メモ']);
 		$('#PoiEdit_Modal').modal({ backdrop: false, keyboard: false });
-	}
+	};
 
 	form_save(callback) {
 		let commit = {};
@@ -429,6 +341,6 @@ class FromControl {
 		};
 		$('#PoiEdit_Modal').modal("hide");
 		return;
-	}
-}
+	};
+};
 var form = new FromControl()	// Google Spreadsheet Control Form

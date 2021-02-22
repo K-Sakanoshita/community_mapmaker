@@ -24,8 +24,10 @@ var OvPassCnt = (function () {
 					let maparea = SE_lat + ',' + NW_lng + ',' + NW_lat + ',' + SE_lng;
 					LLc = { "SE": { "lat": SE_lat, "lng": SE_lng }, "NW": { "lat": NW_lat, "lng": NW_lng } }; // Save now LL(Cache area)
 					let query = "";
-					targets.forEach(key => { for (let idx in Conf.target[key].overpass) query += Conf.target[key].overpass[idx] + ";" });
-					let url = Conf.default.OverPassServer + `?data=[out:json][timeout:30][bbox:${maparea}];(${query});(._;>;);out body qt;`;
+					targets.forEach(key => {
+						if (Conf.osm[key] !== undefined) Conf.osm[key].overpass.forEach(val => query += val + ";");
+					});
+					let url = Conf.system.OverPassServer + `?data=[out:json][timeout:30][bbox:${maparea}];(${query});out body meta;>;out skel;`;
 					console.log("GET: " + url);
 					$.ajax({
 						"type": 'GET', "dataType": 'json', "url": url, "cache": false, "xhr": () => {
@@ -64,10 +66,10 @@ var OvPassCnt = (function () {
 					cidx = Cache.geojson.length - 1;
 				};
 
-				let keys = Object.keys(Conf.target).filter(key => Conf.target[key].file == undefined);
+				let keys = Object.keys(Conf.osm).filter(key => Conf.osm[key].file == undefined);
 				keys.forEach(val2 => {
 					var target = val2;
-					Conf.target[target].tags.forEach(function (tag) {
+					Conf.osm[target].tags.forEach(function (tag) {
 						let tag_kv = tag.split("=").concat([""]);
 						let tag_not = tag_kv[0].slice(-1) == "!" ? true : false;
 						tag_kv[0] = tag_kv[0].replace(/!/, "");
