@@ -2,116 +2,8 @@
     padding: 0px !important;
 }
 
-.accordion, .card {
-    width: 164px;
-    margin-bottom: 8px;
-    display: none;
-    overflow: visible !important;
-}
-
-.custom_map {
-    margin: 8px 0px 0px 0px;
-    background-color: #ffffff;
-    display: none;
-}
-
-.custom_group {
-    display: table;
-}
-
-.custom_label {
-    display: table-cell;
-    vertical-align: middle;
-    height: 18px;
-    width: 68px;
-    overflow: hidden;
-    white-space: nowrap;
-}
-
-a{
-    color: black !important;
-}
-
-button, select {
-    display: inline-block;
-    cursor: pointer;
-    color: #000000;
-    text-decoration: none;
-    background-color: #FFFFFF;
-    outline: none;
-    border: none;
-    border-radius: 2px;
-    box-shadow: 0px 1px 2px #999;
-}
-
-button:active {
-    box-shadow: none;
-    position: relative;
-    top: 4px;
-}
-
-.comm_button {
-    margin: 0px 0px 6px 0px;
-    padding: 0px 6px 0px 16px;
-    background-repeat: no-repeat;
-    background-size: 36px 36px;
-    background-position: 8px center;
-    height: 46px;
-    width: 164px;
-    align-items: center;
-}
-
-.mini_button {
-    margin: 0px;
-    padding: 0px 0px 0px 24px;
-    height: 28px;
-    width: 164px;
-    align-items: center;
-}
-
-.half_button {
-    margin: 0px 4px 6px 0px;
-    padding: 0px 6px 0px 12px;
-    height: 46px;
-    width: 80px;
-    align-items: center;
-}
-
-.minihalf_button {
-    margin: 0px;
-    padding: 0px;
-    height: 23px;
-    width: 74px;
-    align-items: center;
-}
-
-.del_button {
-    margin: 2px 2px 2px 2px;
-    padding: 0px 0px 0px 2px;
-    width: 28px;
-    height: 18px;
-    display: table-cell;
-    vertical-align: middle;
-    margin-left: 4px;
-}
-
-.color_button {
-    margin: 2px 2px 2px 2px;
-    padding: 0px 0px 0px 2px;
-    width: 38px;
-    height: 18px;
-    display: table-cell;
-    vertical-align: middle;
-    margin-left: 4px;
-}
-
-.drop_button {
-    background-repeat: no-repeat;
-    background-position: 8px center;
-    padding: 4px 4px 4px 38px !important;
-    margin: 2px 0px 2px 0px;
-    background-repeat: no-repeat;
-    background-size: 24px;
+.modal-title {
+    height: 2rem;
 }
 
 .bg-clear-old {
@@ -131,4 +23,62 @@ button:active {
     max-width: inherit !important;
     width: 98% !important;
     margin-left: 8px !important;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.attention {
+    display: flex;
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    top: -28px;
+    left: 12px;
+    animation: rotation 1.5s ease 0s 1 alternate none running;
+    animation-iteration-count: infinite;
+}
+
+@keyframes rotation {
+    0% {
+        transform: scale(1.0, 1.0) translate(0%, 0%);
+    }
+    15% {
+        transform: scale(0.9, 0.9) translate(0%, 5%);
+    }
+    30% {
+        transform: scale(1.3, 0.8) translate(0%, 10%);
+    }
+    50% {
+        transform: scale(0.8, 1.3) translate(0%, -10%);
+    }
+    70% {
+        transform: scale(1.1, 0.9) translate(0%, 5%);
+    }
+    100% {
+        transform: scale(1.0, 1.0) translate(0%, 0%);
+    }
+}
+
+h5[aria-expanded="false"]:before {
+    content: '';
+    display: inline-block;
+    background-image: url(./image/arrow-right.svg);
+    background-size: contain;
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+h5[aria-expanded="true"]:before {
+    content: '';
+    display: inline-block;
+    background-image: url(./image/arrow-down.svg);
+    background-size: contain;
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+    vertical-align: middle;
 }

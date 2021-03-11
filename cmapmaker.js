@@ -7,19 +7,17 @@ var Layers = {};				// Layer Status,geojson,svglayer
 var Conf = {};					// Config Praams
 var Control = { "locate": "", "maps": "", "minimap": "" };		// leaflet control object
 const LANG = (window.navigator.userLanguage || window.navigator.language || window.navigator.browserLanguage).substr(0, 2) == "ja" ? "ja" : "en";
-const FILES = ["./baselist.html", "./modals.html", "./data/config.json", './data/system.json', './data/overpass.json', `./data/category-${LANG}.json`, `data/datatables-${LANG}.json`, `./data/marker.json`];
+const FILES = ["./baselist.html", "./data/config.json", './data/system.json', './data/overpass.json', `./data/category-${LANG}.json`, `data/datatables-${LANG}.json`, `./data/marker.json`];
 const glot = new Glottologist();
-const Mono_Filter = ['grayscale:90%', 'bright:85%', 'contrast:130%', 'sepia:15%'];;
 
 // initialize
-$(document).ready(function () {
-	console.log("Welcome to MapMaker.");
+console.log("Welcome to MapMaker.");
+window.addEventListener("DOMContentLoaded", function () {
 	let jqXHRs = [];
 	for (let key in FILES) { jqXHRs.push($.get(FILES[key])) };
 	$.when.apply($, jqXHRs).always(function () {
 		let arg = {}, baselist = arguments[0][0];								// Get Menu HTML
-		$("#modals").html(arguments[1][0]);										// Make Modal HTML
-		for (let i = 2; i <= 7; i++) arg = Object.assign(arg, arguments[i][0]);	// Make Config Object
+		for (let i = 1; i <= 6; i++) arg = Object.assign(arg, arguments[i][0]);	// Make Config Object
 		Object.keys(arg).forEach(key1 => {
 			Conf[key1] = {};
 			Object.keys(arg[key1]).forEach((key2) => Conf[key1][key2] = arg[key1][key2]);
@@ -200,30 +198,6 @@ var cMapmaker = (function () {
 			};
 		},
 
-		// Image List and select
-		poi_marker_change: (target, osmid, filename) => {
-			switch (filename) {
-				case "":
-				case undefined:
-					let html = "", images = [];
-					Object.keys(Conf.marker_tag).forEach(key1 => {
-						Object.keys(Conf.marker_tag[key1]).forEach((key2) => {
-							let filename = Conf.marker_tag[key1][key2];
-							if (images.indexOf(filename) == -1) { images.push(filename) };
-						});
-					});
-					Object.assign(images, Conf.marker_append_files);
-					images.sort();
-					Object.keys(images).forEach(fidx => { html += `<a href="#" onclick="cMapmaker.poi_marker_change('${target}','${osmid}','${images[fidx]}')"><img class="iconx2" src="./image/${images[fidx]}"></a>` });
-					WinCont.modal_open({ "title": "", "message": html, "mode": "close", callback_close: WinCont.modal_close });
-					break;
-				default:
-					Marker.change_icon(target, osmid, filename);
-					WinCont.modal_close();
-					break;
-			};
-		},
-
 		qr_add: (target, osmid) => {
 			let marker = Marker.get(target, osmid);
 			if (marker !== undefined) {
@@ -285,17 +259,25 @@ class cMapEvents {
 	}
 
 	detail_view(marker) {	// PopUpを表示
-		let target = marker.target.mapmaker_key;
-		switch (target) {
-			case "activity":
-				break;
-			case "wikipedia":
-				break;
-			default:
-				modal_takeout.view(marker);
-				break;
+		// let target = marker.target.mapmaker_key;
+		let osmid = marker.target.mapmaker_id;
+		let tags = poiCont.get_osmid(osmid).geojson.properties;
+		let micon = marker.target.mapmaker_icon;
+		let title = `<img src="./image/${micon}">${tags.name == undefined ? glot.get("undefined") : tags.name}`;
+		let message = "";
+
+		// append wikipedia
+		if (tags.wikipedia !== undefined) {
+			message += modal_wikipedia.element();
+			modal_wikipedia.make(tags).then(html => modal_wikipedia.set_dom(html));
 		};
-	}
+
+		// append activity
+		let actlists = poiCont.get_actlist(marker.target.mapmaker_id);
+		if (actlists.length > 0) message += `<h5>${glot.get("activities")}</h5>` + modal_activities.make(actlists);
+
+		WinCont.modal_open({ "title": title, "message": message, "mode": "close", "callback_close": function () { WinCont.modal_close() } });
+	};
 };
 var cmap_events = new cMapEvents();
 

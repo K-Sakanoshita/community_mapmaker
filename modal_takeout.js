@@ -1,7 +1,28 @@
 class modal_Takeout {
     // modal view for Takeout
 
-    view(marker) {
+    constructor() {
+        this.html = ""
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', "./modal_takeout.html", true);
+        xhr.onerror = function () {
+            console.log("[error]modal_Takeout:");
+            console.log(xhr);
+        };
+        xhr.onload = function () {
+            if (xhr.status >= 200 && xhr.status < 400) {
+                console.log("[success]modal_Takeout:");
+                this.html = xhr.response;
+            } else {
+                console.log("[error]modal_Takeout:");
+                console.log(xhr);
+            };
+        }.bind(this);
+        xhr.send();
+    };
+
+    make(marker) {
+        $("#modals").html(this.html);
 
         let osmid = marker.target.mapmaker_id
         /*

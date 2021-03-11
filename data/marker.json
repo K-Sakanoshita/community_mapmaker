@@ -121,9 +121,12 @@
             "lamp": "lantern.svg"
         },
         "leisure":{
-            "pitch": "information.svg",
-            "park": "information.svg",
-            "playground": "information.svg"
+            "pitch": "playground.svg",
+            "park": "playground.svg",
+            "playground": "playground.svg"
+        },
+        "public_transport":{
+            "station": "station.svg"
         }
     },
     "marker_append_files": [

@@ -211,6 +211,9 @@
             "park": "park",
             "playground": "playground"
         },
+        "public_transport":{
+            "station": "station"
+        },
         "suffix_covid19": "(provisional)",
         "bookmarked": "Starred"
     },

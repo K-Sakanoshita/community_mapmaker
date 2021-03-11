@@ -35,17 +35,21 @@
 		"ja": "ズームレベル：",
 		"en": "Zoom Level: "
 	},
-	"selectdate": {
-		"ja": "（実験）日付指定：",
-		"en": "(TEST)Acquisition Date: "
+	"update": {
+		"ja": "更新日時: ",
+		"en": "Update: "
 	},
-	"makemap": {
-		"ja": "このエリアで<br />マップを作る",
-		"en": "Make a map<br />within this area"
+	"getdate": {
+		"ja": "取得日時: ",
+		"en": "Getdate: "
 	},
-	"controlmenu": {
-		"ja": "マップを編集",
-		"en": "Edit the map"
+	"eventdates": {
+		"ja": "開催期間: ",
+		"en": "Event Dates: "
+	},
+	"activities": {
+		"ja": "各種活動",
+		"en": "Activities"
 	},
 	"address": {
 		"ja": "住所",
@@ -191,7 +195,7 @@
 		"ja": "津波・洪水避難所(大阪市)",
 		"en": "Tsunami and flood shelters(OSAKA)"
 	},
-	"marker_wikipedia": {
+	"wikipedia": {
 		"ja": "Wikipedia",
 		"en": "Wikipedia"
 	},
@@ -287,12 +291,16 @@
 		"ja": "日本語に変更",
 		"en": "Change to Japanese"
 	},
-	"marker_noname": {
-		"ja": "(名称不明)",
-		"en": "(name unknown)"
-	},
-	"modal_close":{
+	"modal_close": {
 		"ja": "閉じる",
 		"en": "close"
+	},
+	"source_wikipedia": {
+		"ja": "(出典: Wikipedia)",
+		"en": "(Source: Wikipedia)"
+	},
+	"undefined": {
+		"ja": "(名称不明)",
+		"en": "(name unknown)"
 	}
 }

@@ -1,6 +1,8 @@
 // Leaflet Control
 class Leaflet {
     init() {
+        const Mono_Filter = ['grayscale:90%', 'bright:85%', 'contrast:130%', 'sepia:15%'];
+
         let def = Conf.default;
         let osm_mono = L.tileLayer.colorFilter(Conf.tile.OSM_Standard, { maxNativeZoom: 19, maxZoom: 21, attribution: Conf.tile.OSM_Copyright, filter: Mono_Filter });
         let osm_std = L.tileLayer(Conf.tile.OSM_Standard, { maxNativeZoom: 19, maxZoom: 21, attribution: Conf.tile.OSM_Copyright });
@@ -207,7 +209,7 @@ var GeoCont = (function () {
         // Debug Code
         gcircle: (geojson) => { // view geojson in map
             let features = [], colors = ["#000000", "#800000", "#FF0080", "#008000", "#00FF00", "#000080", "#0000FF", "#800080", "#FF00FF", "#808000", "#FFFF00", "#008080", "#00FFFF", "#800080", "#FF00FF"];
-            let timer = Conf.style.Circle.timer;
+            let timer = Conf.style.circle.timer;
             if (!Array.isArray(geojson)) {
                 if (geojson.features !== undefined) features = geojson.features;
             } else {
@@ -218,8 +220,8 @@ var GeoCont = (function () {
                 let geo = val.geometry;
                 let cords = geo.coordinates.length == 1 && geo.coordinates[0][0].length > 1 ? geo.coordinates[0] : geo.coordinates;
                 cords.forEach((latlng) => {
-                    Conf.style.Circle.radius = Math.pow(2, 21 - map.getZoom());
-                    let style = Conf.style.Circle;
+                    Conf.style.circle.radius = Math.pow(2, 21 - map.getZoom());
+                    let style = Conf.style.circle;
                     let color = idx % colors.length;
                     style.color = colors[color];
                     let circle = L.circle(L.latLng(latlng[1], latlng[0]), style).addTo(map);

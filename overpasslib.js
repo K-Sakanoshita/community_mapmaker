@@ -15,8 +15,8 @@ var OvPassCnt = (function () {
 					resolve(Cache);
 				} else {
 					Cache = { "geojson": [], "targets": [] };
-					let offset_lat = (LL.NW.lat - LL.SE.lat) / 4;
-					let offset_lng = (LL.SE.lng - LL.NW.lng) / 4;
+					let offset_lat = (LL.NW.lat - LL.SE.lat) / 2;
+					let offset_lng = (LL.SE.lng - LL.NW.lng) / 2;
 					let SE_lat = LL.SE.lat - offset_lat;
 					let SE_lng = LL.SE.lng + offset_lng;
 					let NW_lat = LL.NW.lat + offset_lat;
