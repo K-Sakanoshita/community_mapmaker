@@ -74,26 +74,35 @@ var poiCont = (function () {
 				let tags = node.properties;
 				let name = tags.name == undefined ? "-" : tags.name;
 				let category = poiCont.get_catname(tags);
+				
+				datas.push([node.id, "", category, name]);
+				/*
 				datas.push({
 					"osmid": node.id,
 					"name": name,
+					"date": "",
 					"category": category,
 					"picture": tags.image !== undefined ? tags.image : "",
 					"operator": tags.operator !== undefined ? tags.operator : "",
 					"description": tags.description !== undefined ? tags.description : ""
 				});
+				*/
 			});
 			if (targets.indexOf(Conf.google.targetName) > 0) {			// targets内にgooglesheetがある場合
 				adata.forEach((line) => {
 					if (line !== undefined) {
+						/*
 						datas.push({
 							"osmid": line.id,
+							"date": line.startdatetime,
 							"name": line.title,
 							"category": line.category,
 							"picture": `<img class="list" src="${line.picture_url}">`,
 							"operator": line.operator,
 							"description": basic.convLinkTag(line.detail_url)
 						});
+						*/
+						datas.push([line.id, line.startdatetime, line.category, line.title]);
 					};
 				});
 			};
@@ -332,7 +341,10 @@ class ListTable {
 		this.lock = true;
 		if (this.table !== undefined) this.table.destroy();
 		let result = poiCont.list(targets);
-		let columns = targets == Conf.google.sheetName ? Conf.datatables_columns_googlesheet : Conf.datatables_columns_osm;
+		let columns = JSON.parse(JSON.stringify(Conf.datatables.columns.common));
+		let tags = targets == Conf.google.sheetName ? Conf.datatables.columns.googlesheet : Conf.datatables.columns.osm;
+		//columns.forEach((col, idx) => col.data = tags[idx]);
+		//let columns = targets == Conf.google.sheetName ? Conf.datatables.columns.googlesheet : Conf.datatables.columns.osm;
 		this.table = $('#tableid').DataTable({
 			"columns": Object.keys(columns).map(function (key) { return columns[key] }),
 			"data": result,
@@ -341,7 +353,7 @@ class ListTable {
 			"destroy": true,
 			"deferRender": true,
 			"dom": 't',
-			"language": Conf.datatables_lang,
+			"language": Conf.datatables.lang,
 			"order": [],    // ソート禁止(行選択時にズレが生じる)
 			"ordering": true,
 			"orderClasses": false,
@@ -361,8 +373,8 @@ class ListTable {
 		this.table.on('select', (e, dt, type, indexes) => {
 			e.stopPropagation();
 			if (type === 'row') {
-				var data = this.table.rows(indexes).data().pluck('osmid');
-				Marker.center(data[0]);
+				var data = this.table.rows(indexes).data()[0][0];	// first line and first column
+				Marker.center(data);
 			}
 		});
 		this.lock = false;

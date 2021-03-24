@@ -68,8 +68,8 @@
 		"en": "Please enter the exact name of the town from the state to the town."
 	},
 	"morezoom": {
-		"ja": "地図を作るにはズームしてください。",
-		"en": "Zoom in to create a map."
+		"ja": "もっとズームしてください",
+		"en": "Please zoom more."
 	},
 	"line_weight": {
 		"ja": "輪郭線の太さ",

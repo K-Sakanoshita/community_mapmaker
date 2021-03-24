@@ -3,9 +3,7 @@
 
 // Global Variable
 var map;						// leaflet map object
-var Layers = {};				// Layer Status,geojson,svglayer
 var Conf = {};					// Config Praams
-var Control = { "locate": "", "maps": "", "minimap": "" };		// leaflet control object
 const LANG = (window.navigator.userLanguage || window.navigator.language || window.navigator.browserLanguage).substr(0, 2) == "ja" ? "ja" : "en";
 const FILES = ["./baselist.html", "./data/config.json", './data/system.json', './data/overpass.json', `./data/category-${LANG}.json`, `data/datatables-${LANG}.json`, `./data/marker.json`];
 const glot = new Glottologist();
@@ -55,10 +53,10 @@ var cMapmaker = (function () {
 			gSpreadSheet.get(Conf.google.AppScript, Conf.google.sheetName).then(json => poiCont.set_json(json));
 
 			// initialize leaflet
-			leaflet.init();
+			map = leaflet.init();
 			leaflet.controlAdd("bottomleft", "zoomlevel", "");
 			leaflet.controlAdd("topleft", "baselist", baselist, "leaflet-control m-1");	// Make: base list
-			Control["locate"] = L.control.locate({ position: 'topright', strings: { title: glot.get("location") }, setView: "once", locateOptions: { maxZoom: 16 } }).addTo(map);
+			leaflet.locateAdd();
 			WinCont.window_resize();
 			cmap_events.map_zoom();														// Zoom 
 			$("#dataid").hover(
@@ -73,8 +71,8 @@ var cMapmaker = (function () {
 					osmid = osmid.replace('-', '/').replace('=', '/').slice(1);
 					// let tags = poiCont.get_osmid(osmid).geojson.properties;	// poi直リンク（あとで作る）
 					// if (tags !== undefined) cMapmaker.view(tags.id);
-				}
-				Object.values(Conf.targets).forEach(key => Marker.set(key));
+				};
+				cMapmaker.poi_view();
 				map.on('moveend', () => cmap_events.map_move());             				// マップ移動時の処理
 				map.on('zoomend', () => cmap_events.map_zoom());							// ズーム終了時に表示更新
 				console.log("cmapmaker: initial end.");
@@ -93,7 +91,6 @@ var cMapmaker = (function () {
 			};
 		},
 
-		// mode_change
 		mode_change: (mode) => {
 			if (_status !== "mode_change" && (last_modetime + 300) < Date.now()) {
 				_status = "mode_change";
@@ -107,8 +104,18 @@ var cMapmaker = (function () {
 				_status = "normal";
 			};
 		},
+		
+		// Poiを表示させる
+		poi_view: () => {
+			if (map.getZoom() >= Conf.default.iconViewZoom) {
+				Object.values(Conf.targets).forEach(key => Marker.set(key));
+			}else{
+				Marker.all_clear();
+			};
+		},
 
-		poi_get: (targets) => { 								// OSMとGoogle SpreadSheetからPoiを取得してリスト化
+		// OSMとGoogle SpreadSheetからPoiを取得してリスト化
+		poi_get: (targets) => {
 			return new Promise((resolve, reject) => {
 				console.log("cMapmaker: poi_get start...");
 				var keys = (targets !== undefined && targets !== "") ? targets : Object.values(Conf.targets);
@@ -144,60 +151,6 @@ var cMapmaker = (function () {
 			})
 		},
 
-		// 情報（アイコンなど）を地図に追加
-		poi_add: key => {
-			WinCont.modal_open({ "title": glot.get("loading_title"), "message": glot.get("loading_message"), "mode": "" });
-			WinCont.modal_spinner(true);
-			if (Conf.osm[key].file !== undefined) {		// "file"がある場合
-				$.get(Conf.osm[key].file).then((csv) => {
-					let geojsons = GeoCont.csv2geojson(csv, key);
-					let targets = geojsons.map(() => [key]);
-					poiset(key, { "geojson": geojsons, "targets": targets });
-				});
-			} else {
-				OvPassCnt.get([key], true)
-					.then((ovasnswer) => {
-						if (ovasnswer == undefined) {
-							let modal = { "title": glot.get("nodata_title"), "message": glot.get("nodata_message"), "mode": "close", "callback_close": () => WinCont.modal_close() };
-							WinCont.modal_open(modal);
-						} else {
-							poiset(key, ovasnswer);
-						};
-					}).catch(() => {
-						let modal = { "title": glot.get("sverror_title"), "message": glot.get("sverror_message"), "mode": "close", "callback_close": () => cMapmaker.all_clear() };
-						WinCont.modal_open(modal);
-					})
-			};
-
-			function poiset(key, answer) {
-				let geojsons = { geojson: [], targets: [] };
-				answer.geojson.forEach((geojson, idx) => {
-					let geo = geojson.geometry;
-					let cords = geo.coordinates;
-					cords = GeoCont.multi2flat(cords, geo.type);
-					cords = GeoCont.flat2single(cords, geo.type);
-					cords = GeoCont.bboxclip([cords], true);
-					if (cords.length > 0) {
-						geojson.geometry.type = "Point";
-						geojson.geometry.coordinates = cords[0];
-						geojsons.geojson.push(geojson);
-						geojsons.targets.push(answer.targets[idx]);
-					};
-				});
-				poiCont.add_geojson(geojsons);
-			};
-		},
-
-		// delete poi
-		poi_del: (target, osmid) => {
-			let poi = poiCont.get_osmid(osmid);
-			if (poi !== undefined) {
-				poi.enable = false;
-				poiCont.set_geojson(poi);
-				Marker.delete(target, osmid);
-			};
-		},
-
 		qr_add: (target, osmid) => {
 			let marker = Marker.get(target, osmid);
 			if (marker !== undefined) {
@@ -226,7 +179,7 @@ var cMapmaker = (function () {
 				callback_no: () => WinCont.modal_close()
 			});
 		}
-	}
+	};
 })();
 
 class cMapEvents {
@@ -245,18 +198,18 @@ class cMapEvents {
 			this.busy = 2;
 			cMapmaker.poi_get().then(() => {
 				console.log("cmapmaker: move event end.");
-				Object.values(Conf.targets).forEach(key => Marker.set(key));
+				cMapmaker.poi_view();
 				this.busy = 0;
 			});
 		}, 2000);
-	}
+	};
 
 	map_zoom() {				// View Zoom Level & Status Comment
 		let nowzoom = map.getZoom();
 		let message = `${glot.get("zoomlevel")}${map.getZoom()} `;
 		if (nowzoom < Conf.default.iconViewZoom) message += `<br>${glot.get("morezoom")}`;
 		$("#zoomlevel").html("<h2 class='zoom'>" + message + "</h2>");
-	}
+	};
 
 	detail_view(marker) {	// PopUpを表示
 		// let target = marker.target.mapmaker_key;
@@ -283,7 +236,6 @@ var cmap_events = new cMapEvents();
 
 class FromControl {
 	// Google Spreadsheet Control Form
-
 	form_edit(json) {
 		listTable.select(json['OSMID']);
 		$("#osmid").html(json['OSMID']);
@@ -325,4 +277,5 @@ class FromControl {
 		return;
 	};
 };
-var form = new FromControl()	// Google Spreadsheet Control Form
+var form = new FromControl();	// Google Spreadsheet Control Form
+

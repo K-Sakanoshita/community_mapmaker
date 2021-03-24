@@ -27,7 +27,7 @@ class modal_Activities {
         let template = document.createElement("div");
         let result = "";
         template.innerHTML = this.html;
-        actlists.sort((a, b) => { return a.update > b.update ? -1 : 1 });   // sort by update.
+        actlists.sort((a, b) => { return a.updatetime > b.updatetime ? -1 : 1 });   // sort by update.
         actlists.forEach((act, idx) => {
             let clone = template.querySelector("div.body").cloneNode(true);
             let head = clone.querySelector("h5");
@@ -37,7 +37,7 @@ class modal_Activities {
             head.setAttribute("aria-expanded", idx == 0 ? "true" : "false");
             clone.querySelector("#collapse" + idx).classList[idx == 0 ? "add" : "remove"]("show");
             clone.querySelector("span").innerHTML = act.title;
-            body.innerHTML = "<div class='float-right'>" + glot.get("update") + " " + basic.formatDate(new Date(act.update), ymd) + "</div>" +
+            body.innerHTML = "<div class='float-right'>" + glot.get("update") + " " + basic.formatDate(new Date(act.updatetime), ymd) + "</div>" +
                 glot.get("eventdates") + basic.formatDate(new Date(act.startdatetime), ymd) + " - " + basic.formatDate(new Date(act.enddatetime), ymd) + "<br>" +
                 (act.detail_url !== "" ? `<a href="${act.detail_url}">${act.detail_url}</a>` : "") + "<br><br>" +
                 act.body.replace(/\r?\n/g, '<br>') + "<br>" +

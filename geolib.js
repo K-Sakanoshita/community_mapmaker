@@ -1,5 +1,10 @@
 // Leaflet Control
 class Leaflet {
+
+    constructor() {
+        this.Control = { "locate": "", "maps": "" };    // leaflet object
+    };
+
     init() {
         const Mono_Filter = ['grayscale:90%', 'bright:85%', 'contrast:130%', 'sepia:15%'];
 
@@ -9,10 +14,8 @@ class Leaflet {
         let osm_tiler = L.mapboxGL({ accessToken: '', style: Conf.tile.Tiler_Style, attribution: Conf.tile.Tiler_Copyright });
         let t_pale = L.tileLayer(Conf.tile.GSI_Standard, { maxNativeZoom: 18, maxZoom: 21, attribution: Conf.tile.GSI_Copyright });
         let t_ort = L.tileLayer(Conf.tile.GSI_Ortho, { maxNativeZoom: 18, maxZoom: 21, attribution: Conf.tile.GSI_Copyright });
-        let o_std_mini = L.tileLayer(Conf.tile.OSM_Standard, { attribution: Conf.tile.OSM_Copyright });
-        map = L.map('mapid', { doubleClickZoom: false, center: def.mapcenter, zoom: def.zoom, zoomSnap: def.zoomSnap, zoomDelta: def.zoomSnap, maxZoom: def.maxZoomLevel, layers: [osm_tiler] });
-        Control["minimap"] = new L.Control.MiniMap(o_std_mini, { toggleDisplay: true, width: 120, height: 120, zoomLevelOffset: -4 }).addTo(map);
-        new L.Hash(map);
+        let tmap = L.map('mapid', { doubleClickZoom: false, center: def.mapcenter, zoom: def.zoom, zoomSnap: def.zoomSnap, zoomDelta: def.zoomSnap, maxZoom: def.maxZoomLevel, layers: [osm_tiler] });
+        new L.Hash(tmap);
         let maps = {
             "OpenStreetMap Maptiler": osm_tiler,
             "OpenStreetMap Standard": osm_std,
@@ -20,15 +23,15 @@ class Leaflet {
             "地理院地図 淡色": t_pale,
             "地理院地図 オルソ": t_ort
         };
-        Control["maps"] = L.control.layers(maps, null, { position: 'topright' }).addTo(map);
-        map.zoomControl.setPosition("topright");									// Make: Zoom control        
+        this.Control["maps"] = L.control.layers(maps, null, { position: 'topright' }).addTo(tmap);
+        tmap.zoomControl.setPosition("topright");
+        return tmap;									// Make: Zoom control        
     };
 
     stop() {
         ["dragging", "touchZoom", "touchZoom"].forEach(key => map[key].disable());
-        Control["maps"].remove(map);
-        Control["locate"].remove(map);
-        Control["minimap"].remove(map);
+        this.Control["maps"].remove(map);
+        this.Control["locate"].remove(map);
         map.zoomControl.remove(map);
         if (map.tap) map.tap.disable();
         document.getElementById('mapid').style.cursor = 'default';
@@ -36,9 +39,8 @@ class Leaflet {
 
     start() {
         ["dragging", "touchZoom", "touchZoom"].forEach(key => map[key].enable());
-        Control["maps"].addTo(map);
-        Control["locate"].addTo(map);
-        Control["minimap"].addTo(map);
+        this.Control["maps"].addTo(map);
+        this.Control["locate"].addTo(map);
         map.zoomControl.addTo(map);
         if (map.tap) map.tap.enable();
         document.getElementById('mapid').style.cursor = 'grab';
@@ -54,6 +56,13 @@ class Leaflet {
             return this.ele;
         };
         dom.addTo(map);
+    };
+
+    locateAdd() {                               // add location
+        this.Control["locate"] = L.control.locate({
+            position: 'topright', strings: { title: glot.get("location") },
+            setView: "once", locateOptions: { maxZoom: 16 }
+        }).addTo(map);
     };
 
 };
