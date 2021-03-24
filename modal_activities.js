@@ -48,7 +48,7 @@ class modal_Activities {
                     chtml += "<b>" + glot.get("memorials_place") + "</b><br>" + act.place + "<br><br>";
                     chtml += "<b>" + glot.get("memorials_supply") + "</b><br>" + act.supply + "<br><br>";
                     chtml += "<b>" + glot.get("memorials_references") + "</b><br>" + act.references + "<br><br>";
-                    chtml += "<b>" + glot.get("memorials_reception") + "</b><br>" + act.reception + "<br><br>";
+                    chtml += "<b>" + glot.get("memorials_reception") + "</b><br>" + basic.formatDate(new Date(act.reception), ymd) + "<br><br>";
                     break;
                 default:    // event
                     chtml += act.startdatetime == "" ? "" : glot.get("eventdates") + basic.formatDate(new Date(act.startdatetime), ymd) + " - " + basic.formatDate(new Date(act.enddatetime), ymd) + "<br>"
