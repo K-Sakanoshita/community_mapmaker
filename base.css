@@ -19,6 +19,10 @@
     background: transparent url("./image/transparent.png") !important;
 }
 
+.leaflet-container a{
+    color: initial !important;
+}
+
 .modal-dialog-fluid {
     max-width: inherit !important;
     width: 98% !important;

@@ -1,6 +1,6 @@
 {
 	"about": {
-		"ja": "サンプルマップについて",
+		"ja": "大阪思い出のこしマップについて",
 		"en": "about Town Walk Map Maker"
 	},
 	"owner": {
@@ -12,24 +12,24 @@
 		"en": "about OpenStreetMap"
 	},
 	"title": {
-		"ja": "サンプルマップ",
-		"en": "Sample Map"
+		"ja": "大阪思い出のこしマップ",
+		"en": "Osaka Memories Map"
 	},
 	"subtitle": {
-		"ja": "サンプルマップ by Community Map Maker",
-		"en": "Sample Map by Community Map Maker"
+		"ja": "大阪思い出のこしマップ by Community Map Maker",
+		"en": "Osaka Memories Map by Community Map Maker"
 	},
 	"licence_title": {
-		"ja": "地図の利用規約",
-		"en": "Terms of Use for Maps"
+		"ja": "利用規約",
+		"en": "Terms of Use"
 	},
 	"licence_message": {
-		"ja": "地図は <a href=\"https://creativecommons.org/licenses/by/4.0/deed.ja\" target='_blank'>CC BY 4.0</a> ライセンスで提供します。<br>簡単に書くと、以下の条件を守る限り商用も含めて自由に使えます。<br><ul class='mt-3'><li>表示:「© OpenStreetMap contributors」を地図の何処かに表示すること</li></li></ul>上記の条件を守れば、商用利用も含めて自由に使えます。",
-		"en": "Maps are provided under a <a href=\"https://creativecommons.org/licenses/by/4.0/\" target='_blank'>CC BY 4.0</a> license.<br>In brief, you can use it freely, including for commercial purposes, as long as you keep the following conditions.<br><ul class='mt-3'><li>View: place \"© OpenStreetMap contributors\" somewhere on the map crisis</li></ul>You can use it freely, including commercial use, as long as you comply with the above conditions."
+		"ja": "大阪市立図書館の「思い出のこし」は <a href=\"https://creativecommons.org/licenses/by/4.0/deed.ja\" target='_blank'>CC BY 4.0</a> ライセンスで <a href=\"https://www.oml.city.osaka.lg.jp/?page_id=1301#_11176\"target='_blank'>公開</a> されています。<br>",
+		"en": "The \"Omoide nokoshi\" of the Osaka Municipal Library is <a href=\"https://www.oml.city.osaka.lg.jp/?page_id=1301#_11176\"target='_blank'>released</a> under a <a href=\"https://creativecommons.org/licenses/by/4.0/deed.ja\" target='_blank'>CC BY 4.0</a> license."
 	},
 	"more_message": {
-		"ja": "<hr>道路や建物が無い時は<a href=\"https://wiki.openstreetmap.org/wiki/JA:%E5%88%9D%E5%BF%83%E8%80%85%E3%82%AC%E3%82%A4%E3%83%89\" target='_blank'>OpenStreetMapを編集</a>してみてください。<br>描いた地図は様々に活用され将来に残ります。",
-		"en": "<hr>If you don't have a road or a building, <a href=\"https://wiki.openstreetmap.org/wiki/Beginners%27_guide\" target='_blank'>you can edit OpenStreetMap</a>.<br>Your edited map will be used for many activities and will be preserved for future use."
+		"ja": "",
+		"en": ""
 	},
 	"zoomlevel": {
 		"ja": "ズームレベル：",
@@ -51,6 +51,42 @@
 		"ja": "各種活動",
 		"en": "Activities"
 	},
+	"memorials": {
+		"ja": "思い出など",
+		"en": "Memorials"
+	},
+	"memorials_title": {
+		"ja": "タイトル",
+		"en": "Title"
+	},
+	"memorials_author": {
+		"ja": "投稿者",
+		"en": "Author"
+	},
+	"memorials_date": {
+		"ja": "いつ頃",
+		"en": "Date"
+	},
+	"memorials_memorial": {
+		"ja": "思い出",
+		"en": "Memorial"
+	},
+	"memorials_place": {
+		"ja": "場所",
+		"en": "Place"
+	},
+	"memorials_supply": {
+		"ja": "補足・追加情報",
+		"en": "Supplementary / additional information"
+	},
+	"memorials_references": {
+		"ja": "参考文献",
+		"en": "References"
+	},
+	"memorials_reception": {
+		"ja": "受付日",
+		"en": "Reception date"
+	},
 	"address": {
 		"ja": "住所",
 		"en": "Address"
@@ -58,14 +94,6 @@
 	"search": {
 		"ja": "検索",
 		"en": "Search"
-	},
-	"addressnotfound_title": {
-		"ja": "住所が見つかりません",
-		"en": "Address not found"
-	},
-	"addressnotfound_body": {
-		"ja": "都道府県から町名まで正確に入力ください（町名まで必要）",
-		"en": "Please enter the exact name of the town from the state to the town."
 	},
 	"morezoom": {
 		"ja": "もっとズームしてください",

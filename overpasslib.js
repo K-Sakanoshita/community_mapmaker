@@ -9,19 +9,29 @@ var OvPassCnt = (function () {
 		get: function (targets, poi, progress) {
 			let LL = GeoCont.get_LL();
 			return new Promise((resolve, reject) => {
-				if (LL.NW.lat < LLc.NW.lat && LL.NW.lng > LLc.NW.lng &&
-					LL.SE.lat > LLc.SE.lat && LL.NW.lat < LLc.NW.lat) {
+				if ((LL.NW.lat < LLc.NW.lat && LL.NW.lng > LLc.NW.lng &&
+					LL.SE.lat > LLc.SE.lat && LL.NW.lat < LLc.NW.lat) || Conf.default.bbox !== "") {
 					console.log("OvPassCnt: Cache Hit.");       // Within Cache range
 					resolve(Cache);
 				} else {
 					Cache = { "geojson": [], "targets": [] };
+					let SE_lat, SE_lng, NW_lat, NW_lng, maparea;
 					let offset_lat = (LL.NW.lat - LL.SE.lat) / 2;
 					let offset_lng = (LL.SE.lng - LL.NW.lng) / 2;
-					let SE_lat = LL.SE.lat - offset_lat;
-					let SE_lng = LL.SE.lng + offset_lng;
-					let NW_lat = LL.NW.lat + offset_lat;
-					let NW_lng = LL.NW.lng - offset_lng;
-					let maparea = SE_lat + ',' + NW_lng + ',' + NW_lat + ',' + SE_lng;
+					if (Conf.default.bbox !== "") {
+						let latlng = Conf.default.bbox.split(',');
+						SE_lat = latlng[0];
+						NW_lng = latlng[1];
+						NW_lat = latlng[2];
+						SE_lng = latlng[3];
+						maparea = Conf.default.bbox;
+					} else {
+						SE_lat = LL.SE.lat - offset_lat;
+						SE_lng = LL.SE.lng + offset_lng;
+						NW_lat = LL.NW.lat + offset_lat;
+						NW_lng = LL.NW.lng - offset_lng;
+						maparea = SE_lat + ',' + NW_lng + ',' + NW_lat + ',' + SE_lng;
+					}
 					LLc = { "SE": { "lat": SE_lat, "lng": SE_lng }, "NW": { "lat": NW_lat, "lng": NW_lng } }; // Save now LL(Cache area)
 					let query = "";
 					targets.forEach(key => {
@@ -98,6 +108,18 @@ var OvPassCnt = (function () {
 			});
 			//console.log(geojson);
 			return geojson;
+		},
+
+		// ローカルosmjsonをキャッシュに取り込む
+		set_osmjson: (osmjson) => {
+			let geojson = osmtogeojson(osmjson, { flatProperties: true });
+			OvPassCnt.set_targets(geojson.features);
+			let latlng = Conf.default.bbox.split(',')
+			let SE_lat = latlng[0];
+			let NW_lng = latlng[1];
+			let NW_lat = latlng[2];
+			let SE_lng = latlng[3];
+			LLc = { "SE": { "lat": SE_lat, "lng": SE_lng }, "NW": { "lat": NW_lat, "lng": NW_lng } }; // Save now LL(Cache area)
 		}
 	}
 })();

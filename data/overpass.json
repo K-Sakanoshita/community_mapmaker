@@ -1,5 +1,19 @@
 {
     "osm": {
+        "library": {
+            "overpass": [
+                "relation[\"amenity\"=\"library\"]",
+                "way[\"amenity\"=\"library\"]",
+                "node[\"amenity\"=\"library\"]"
+            ],
+            "tags": [
+                "amenity=library"
+            ],
+            "views": [
+                "name",
+                "operator"
+            ]
+        },
         "park": {
             "overpass": [
                 "relation[\"leisure\"=\"park\"]",

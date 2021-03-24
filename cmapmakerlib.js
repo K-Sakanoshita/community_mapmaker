@@ -332,7 +332,7 @@ class ListTable {
 
 	category_make(result) {    							// Poi種別リストを作成
 		WinCont.select_clear(`category_list`);
-		let pois = result.map(data => { return data.category });
+		let pois = result.map(data => { return data[2] });
 		pois = pois.filter((x, i, self) => { return self.indexOf(x) === i });
 		pois.map(poi => WinCont.select_add(`category_list`, poi, poi));
 	};

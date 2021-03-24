@@ -37,11 +37,14 @@ window.addEventListener("DOMContentLoaded", function () {
 			};
 			glot.render();
 		});
+
+
+
 	});
 });
 
 var cMapmaker = (function () {
-	var view_license = false, _status = "initialize", last_modetime;
+	var view_license = false, _status = "initialize", last_modetime = 0;
 
 	return {
 		// Initialize
@@ -50,7 +53,10 @@ var cMapmaker = (function () {
 			WinCont.window_resize();
 
 			// get GoogleSpreadSheet
-			gSpreadSheet.get(Conf.google.AppScript, Conf.google.sheetName).then(json => poiCont.set_json(json));
+			gSpreadSheet.get(Conf.google.AppScript, Conf.google.sheetName).then(json => {
+				poiCont.set_json(json);
+				cmap_events.map_move();
+			});
 
 			// initialize leaflet
 			map = leaflet.init();
@@ -63,23 +69,43 @@ var cMapmaker = (function () {
 				() => { map.scrollWheelZoom.disable(); map.dragging.disable() },
 				() => { map.scrollWheelZoom.enable(); map.dragging.enable() }
 			);
-			cMapmaker.poi_get().then(() => {
-				//dataList.view(targets);
-				//DisplayStatus.splash(false);
-				if (location.search !== "") {    	// 引数がある場合
-					let osmid = location.search.replace(/[?&]fbclid.*/, '');    // facebook対策
-					osmid = osmid.replace('-', '/').replace('=', '/').slice(1);
-					// let tags = poiCont.get_osmid(osmid).geojson.properties;	// poi直リンク（あとで作る）
-					// if (tags !== undefined) cMapmaker.view(tags.id);
-				};
-				cMapmaker.poi_view();
-				map.on('moveend', () => cmap_events.map_move());             				// マップ移動時の処理
-				map.on('zoomend', () => cmap_events.map_zoom());							// ズーム終了時に表示更新
-				console.log("cmapmaker: initial end.");
+			cMapmaker.static_check().then(() => {		// static mode check(load local osmjson)
+				cMapmaker.poi_get().then(() => {		// get poidata(osm & google)
+					//dataList.view(targets);
+					//DisplayStatus.splash(false);
+					if (location.search !== "") {    	// 引数がある場合
+						let osmid = location.search.replace(/[?&]fbclid.*/, '');    // facebook対策
+						osmid = osmid.replace('-', '/').replace('=', '/').slice(1);
+						// let tags = poiCont.get_osmid(osmid).geojson.properties;	// poi直リンク（あとで作る）
+						// if (tags !== undefined) cMapmaker.view(tags.id);
+					};
+					cMapmaker.poi_view();
+					map.on('moveend', () => cmap_events.map_move());             				// マップ移動時の処理
+					map.on('zoomend', () => cmap_events.map_zoom());							// ズーム終了時に表示更新
+					console.log("cmapmaker: initial end.");
+				});
 			});
 
 			// initialize last_modetime
+			cMapmaker.mode_change("map");
 			last_modetime = Date.now();
+		},
+
+		// check static osm mode
+		static_check: () => {
+			return new Promise((resolve, reject) => {
+				if (Conf.static.osmjson == "") {
+					resolve();
+				} else {
+					$.ajax({ "type": 'GET', "dataType": 'json', "url": Conf.static.osmjson, "cache": false }).done(function (data) {
+						OvPassCnt.set_osmjson(data);
+						resolve();
+					}).fail(function (jqXHR, statusText, errorThrown) {
+						console.log(statusText);
+						reject(jqXHR, statusText, errorThrown);
+					});;
+				}
+			})
 		},
 
 		// About license
@@ -104,12 +130,12 @@ var cMapmaker = (function () {
 				_status = "normal";
 			};
 		},
-		
+
 		// Poiを表示させる
 		poi_view: () => {
 			if (map.getZoom() >= Conf.default.iconViewZoom) {
 				Object.values(Conf.targets).forEach(key => Marker.set(key));
-			}else{
+			} else {
 				Marker.all_clear();
 			};
 		},
@@ -136,19 +162,6 @@ var cMapmaker = (function () {
 					}); */
 				};
 			});
-		},
-
-		// Search Address(Japan Only)
-		poi_search: (keyword) => {
-			getLatLng(keyword, (latnng) => {
-				map.setZoom(Conf.default.SearchZoom);
-				map.panTo(latnng);
-			}, () => {
-				WinCont.modal_open({
-					title: glot.get("addressnotfound_title"), message: glot.get("addressnotfound_body"),
-					mode: "close", callback_close: () => { WinCont.modal_close() }
-				});
-			})
 		},
 
 		qr_add: (target, osmid) => {
@@ -227,7 +240,7 @@ class cMapEvents {
 
 		// append activity
 		let actlists = poiCont.get_actlist(marker.target.mapmaker_id);
-		if (actlists.length > 0) message += `<h5>${glot.get("activities")}</h5>` + modal_activities.make(actlists);
+		if (actlists.length > 0) message += modal_activities.make(actlists);
 
 		WinCont.modal_open({ "title": title, "message": message, "mode": "close", "callback_close": function () { WinCont.modal_close() } });
 	};
