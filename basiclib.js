@@ -83,7 +83,7 @@ var WinCont = (function () {
 
     return {
         splash: (mode) => {
-            $("#splash_image").attr("src", Conf.local.splashImage);
+            $("#splash_image").attr("src", Conf.splash.url);
             let act = mode ? { backdrop: 'static', keyboard: false } : 'hide';
             $('#Splash_Modal').modal(act);
         },
@@ -92,13 +92,13 @@ var WinCont = (function () {
             $(`${MW}_title`).html(p.title);
             $(`${MW}_message`).html(p.message);
             [`${MW}_yes`, `${MW}_no`, `${MW}_close`].forEach(id => $(id).hide());
-            $(`${MW}_progress`).parent().hide();
             if (p.mode.indexOf("yes") > -1) $(`${MW}_yes`).html(glot.get("button_yes")).on('click', p.callback_yes).show();
             if (p.mode.indexOf("no") > -1) $(`${MW}_no`).html(glot.get("button_no")).on('click', p.callback_no).show();
             if (p.mode.indexOf("close") > -1) $(`${MW}_close`).html(glot.get("button_close")).on('click', p.callback_close).show();
             $(MW).modal({ backdrop: false, keyboard: true });
             modal_open = true;
             $(MW).on('shown.bs.modal', () => { if (!modal_open) $(MW).modal('hide') }); // Open中にCloseされた時の対応
+            $(MW).on('hidden.bs.modal', () => p.callback_close());                        // "x" click
         },
         modal_text: (text, append) => {
             let newtext = append ? $(`${MW}_message`).html() + text : text;
@@ -113,12 +113,11 @@ var WinCont = (function () {
         },
         modal_progress: percent => {
             percent = percent == 0 ? 0.1 : percent;
-            $(`${MW}_progress`).parent().show();
             $(`${MW}_progress`).css('width', parseInt(percent) + "%");
         },
         modal_close: () => {            // close modal window
             modal_open = false;
-            WinCont.modal_progress(0);
+            // WinCont.modal_progress(0);
             $(`${MW}`).modal('hide');
             [`${MW}_yes`, `${MW}_no`, `${MW}_close`].forEach(id => $(id).off('click'));
         },

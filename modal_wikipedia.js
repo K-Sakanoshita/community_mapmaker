@@ -1,12 +1,12 @@
 class modal_Wikipedia {
     // make modal html for Wikipedia
 
-    // return elements
+    // return elements(Before processing)
     element() {
         return `<h5>${glot.get("wikipedia")}</h5><div class="mb-3" id="modal_wikipedia"></div>`;
     };
 
-    // make html
+    // make html(After processing)
     make(tags) {
         return new Promise((resolve, reject) => {
             let wiki = tags.wikipedia.split(':');

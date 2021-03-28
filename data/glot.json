@@ -1,7 +1,7 @@
 {
 	"about": {
 		"ja": "大阪思い出のこしマップについて",
-		"en": "about Town Walk Map Maker"
+		"en": "about Osaka Memories Map"
 	},
 	"owner": {
 		"ja": "開発サイト",
@@ -24,12 +24,12 @@
 		"en": "Terms of Use"
 	},
 	"licence_message": {
-		"ja": "大阪市立図書館の「思い出のこし」は <a href=\"https://creativecommons.org/licenses/by/4.0/deed.ja\" target='_blank'>CC BY 4.0</a> ライセンスで <a href=\"https://www.oml.city.osaka.lg.jp/?page_id=1301#_11176\"target='_blank'>公開</a> されています。<br>",
-		"en": "The \"Omoide nokoshi\" of the Osaka Municipal Library is <a href=\"https://www.oml.city.osaka.lg.jp/?page_id=1301#_11176\"target='_blank'>released</a> under a <a href=\"https://creativecommons.org/licenses/by/4.0/deed.ja\" target='_blank'>CC BY 4.0</a> license."
+		"ja": "大阪市立図書館の「思い出のこし」のデータは <a href=\"https://creativecommons.org/licenses/by/4.0/deed.ja\" target='_blank'>CC BY 4.0</a> ライセンスで <a href=\"https://www.oml.city.osaka.lg.jp/?page_id=1301#_11176\"target='_blank'>公開</a> されています。<br>",
+		"en": "The \"Omoide nokoshi\" data of the Osaka Municipal Library is <a href=\"https://www.oml.city.osaka.lg.jp/?page_id=1301#_11176\"target='_blank'>released</a> under a <a href=\"https://creativecommons.org/licenses/by/4.0/deed.ja\" target='_blank'>CC BY 4.0</a> license."
 	},
 	"more_message": {
-		"ja": "",
-		"en": ""
+		"ja": "スプラッシュ画像: <a href=\"http://image.oml.city.osaka.lg.jp/archive/detail?cls=ancient&pkey=n0067001\">大阪市立図書館デジタルアーカイブ 大阪市大観</a>",
+		"en": "Splash Image: <a href=\"http://image.oml.city.osaka.lg.jp/archive/detail?cls=ancient&pkey=n0067001\">Osaka Municipal Library Digital Archive Osakashi daikan</a>"
 	},
 	"zoomlevel": {
 		"ja": "ズームレベル：",
@@ -54,6 +54,10 @@
 	"memorials": {
 		"ja": "思い出など",
 		"en": "Memorials"
+	},
+	"memorials_link": {
+		"ja": "シェア用リンク",
+		"en": "Link for sharing"
 	},
 	"memorials_title": {
 		"ja": "タイトル",
@@ -87,10 +91,6 @@
 		"ja": "受付日",
 		"en": "Reception date"
 	},
-	"address": {
-		"ja": "住所",
-		"en": "Address"
-	},
 	"search": {
 		"ja": "検索",
 		"en": "Search"
@@ -98,10 +98,6 @@
 	"morezoom": {
 		"ja": "もっとズームしてください",
 		"en": "Please zoom more."
-	},
-	"line_weight": {
-		"ja": "輪郭線の太さ",
-		"en": "line weight"
 	},
 	"all_select": {
 		"ja": "全て選択",
@@ -323,6 +319,10 @@
 		"ja": "閉じる",
 		"en": "close"
 	},
+	"modal_popover_copied": {
+		"ja": "クリップボードにコピーしました",
+		"en": "Clipboard to clipboard"
+	},
 	"source_wikipedia": {
 		"ja": "(出典: Wikipedia)",
 		"en": "(Source: Wikipedia)"
@@ -330,5 +330,13 @@
 	"undefined": {
 		"ja": "(名称不明)",
 		"en": "(name unknown)"
+	},
+	"tags_website": {
+		"ja": "ホームページ",
+		"en": "Web Site"
+	},
+	"tags_phone":{
+		"ja":"電話番号",
+		"en":"telephone"
 	}
 }

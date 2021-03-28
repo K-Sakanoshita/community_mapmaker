@@ -11,7 +11,7 @@
         "GSI_Standard": "https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png",
         "GSI_Ortho": "https://cyberjapandata.gsi.go.jp/xyz/ort/{z}/{x}/{y}.jpg",
         "Tiler_Copyright": "<a href=\"https://www.maptiler.com/copyright/\" target=\"_blank\">© MapTiler</a> <a href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\">© OpenStreetMap contributors</a>",
-        "Tiler_Style": "https://api.maptiler.com/maps/c9876a21-f16a-4a84-abc0-950badd4631e/style.json?key=Eq2IyrHsOEGFU1W1fvd7"
+        "Tiler_Style": "https://api.maptiler.com/maps/2e4db38a-b862-444d-bcfe-fefe51429073/style.json?key=Eq2IyrHsOEGFU1W1fvd7"
     },
     "effect": {
         "icon": {

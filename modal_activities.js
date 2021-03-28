@@ -21,7 +21,7 @@ class modal_Activities {
         xhr.send();
     };
 
-    make(actlists) {
+    make(actlists, openid) {
         let ymd = "YYYY/MM/DD hh:mm";
         let tModal = document.createElement("div");
         let template = document.createElement("div");
@@ -33,22 +33,30 @@ class modal_Activities {
             let head = clone.querySelector("h5");
             let body = clone.querySelector("div.card-body");
             let chtml;
+            let openflag = (act.id == openid) || (!openid && idx == 0) ? true : false;
             clone.querySelector("div.collapse").id = "collapse" + idx;
             head.setAttribute("data-target", "#collapse" + idx);
-            head.setAttribute("aria-expanded", idx == 0 ? "true" : "false");
-            clone.querySelector("#collapse" + idx).classList[idx == 0 ? "add" : "remove"]("show");
+            head.setAttribute("aria-expanded", openflag ? "true" : "false");
+            if (openflag && openid !== undefined) head.setAttribute("id", "modal_" + openid);
+            clone.querySelector("#collapse" + idx).classList[openflag ? "add" : "remove"]("show");
             clone.querySelector("span").innerHTML = act.title;
             chtml = "<div class='float-right'>" + glot.get("update") + " " + basic.formatDate(new Date(act.updatetime), ymd) + "</div>";
             switch (act.id.split('/')[0]) {
                 case "memorial":
                     memorial = true;
-                    chtml += "<b>" + glot.get("memorials_title") + "</b><br>" + act.title + "<br>";
-                    chtml += "<b>" + glot.get("memorials_author") + "</b><br>" + act.author + "<br><br>";
-                    chtml += "<b>" + glot.get("memorials_memorial") + "</b><br>" + act.body.replace(/\r?\n/g, '<br>') + "<br><br>";
-                    chtml += "<b>" + glot.get("memorials_place") + "</b><br>" + act.place + "<br><br>";
-                    chtml += "<b>" + glot.get("memorials_supply") + "</b><br>" + act.supply + "<br><br>";
-                    chtml += "<b>" + glot.get("memorials_references") + "</b><br>" + act.references + "<br><br>";
-                    chtml += "<b>" + glot.get("memorials_reception") + "</b><br>" + basic.formatDate(new Date(act.reception), ymd) + "<br><br>";
+                    chtml += "<strong>" + glot.get("memorials_link") + ":</strong> ";
+                    chtml += `
+                    <button type="button" class="btn btn-warning pl-3 pr-3 pt-0 pb-0"
+                     data-toggle="popover" data-content="${glot.get("modal_popover_copied")}" onclick="cMapmaker.url_share('${act.id}')">
+                        <i class="fas fa-clone"></i>
+                    </button><br><br>`;
+                    chtml += "<strong>" + glot.get("memorials_title") + "</strong><br>" + act.title + "<br><br>";
+                    chtml += "<strong>" + glot.get("memorials_author") + "</strong><br>" + act.author + "<br><br>";
+                    chtml += "<strong>" + glot.get("memorials_memorial") + "</strong><br>" + act.body.replace(/\r?\n/g, '<br>') + "<br><br>";
+                    chtml += "<strong>" + glot.get("memorials_place") + "</strong><br>" + act.place + "<br><br>";
+                    chtml += "<strong>" + glot.get("memorials_supply") + "</strong><br>" + act.supply + "<br><br>";
+                    chtml += "<strong>" + glot.get("memorials_references") + "</strong><br>" + act.references + "<br><br>";
+                    chtml += "<strong>" + glot.get("memorials_reception") + "</strong><br>" + basic.formatDate(new Date(act.reception), ymd) + "<br><br>";
                     break;
                 default:    // event
                     chtml += act.startdatetime == "" ? "" : glot.get("eventdates") + basic.formatDate(new Date(act.startdatetime), ymd) + " - " + basic.formatDate(new Date(act.enddatetime), ymd) + "<br>"

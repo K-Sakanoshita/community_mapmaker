@@ -6,990 +6,990 @@
     "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
   },
   "elements": [
-
-{
-  "type": "node",
-  "id": 962912042,
-  "lat": 34.6677248,
-  "lon": 135.4588339,
-  "timestamp": "2019-11-10T16:19:46Z",
-  "version": 7,
-  "changeset": 76872815,
-  "user": "higa4",
-  "uid": 162590,
-  "tags": {
-    "amenity": "library",
-    "name": "大阪市立港図書館",
-    "source": "Bing,2008-03; survey",
-    "wikidata": "Q11440621",
-    "wikipedia": "ja:大阪市立港図書館"
-  }
-},
-{
-  "type": "node",
-  "id": 1080511584,
-  "lat": 34.7338715,
-  "lon": 135.5197021,
-  "timestamp": "2020-04-28T18:58:15Z",
-  "version": 4,
-  "changeset": 84286281,
-  "user": "Wish_F",
-  "uid": 6972989,
-  "tags": {
-    "amenity": "library",
-    "name": "大阪市立東淀川図書館",
-    "name:en": "Higashiyodogawa Library",
-    "name:ja": "大阪市立東淀川図書館",
-    "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
-    "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
-    "source": "Bing",
-    "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
-    "wikidata": "Q11440556",
-    "wikipedia": "ja:大阪市立東淀川図書館"
-  }
-},
-{
-  "type": "node",
-  "id": 1422989538,
-  "lat": 34.6063695,
-  "lon": 135.4750788,
-  "timestamp": "2018-03-14T22:05:52Z",
-  "version": 3,
-  "changeset": 57192247,
-  "user": "adivik2000",
-  "uid": 250196,
-  "tags": {
-    "amenity": "library",
-    "level": "3",
-    "name": "大阪市立住之江図書館",
-    "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
-    "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
-    "source": "KSJ2",
-    "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
-    "wikidata": "Q11440325"
-  }
-},
-{
-  "type": "node",
-  "id": 1422989558,
-  "lat": 34.7157018,
-  "lon": 135.5085878,
-  "timestamp": "2019-11-10T16:19:40Z",
-  "version": 5,
-  "changeset": 76872815,
-  "user": "higa4",
-  "uid": 162590,
-  "tags": {
-    "KSJ2:ADS": "本庄東3-8-2",
-    "KSJ2:AdminArea": "大阪府大阪市北区",
-    "KSJ2:PubFacAdmin": "市区町村",
-    "amenity": "library",
-    "name": "大阪市立北図書館",
-    "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
-    "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
-    "source": "KSJ2",
-    "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
-    "wheelchair": "yes",
-    "wikidata": "Q11440356",
-    "wikipedia": "ja:大阪市立北図書館"
-  }
-},
-{
-  "type": "node",
-  "id": 1422989579,
-  "lat": 34.7031980,
-  "lon": 135.5446590,
-  "timestamp": "2019-11-10T16:19:41Z",
-  "version": 3,
-  "changeset": 76872815,
-  "user": "higa4",
-  "uid": 162590,
-  "tags": {
-    "amenity": "library",
-    "name": "大阪市立城東図書館",
-    "name:ja": "大阪市立城東図書館",
-    "name:zh": "大阪市立城东图书馆",
-    "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
-    "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
-    "source": "KSJ2",
-    "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
-    "wikidata": "Q11440403",
-    "wikipedia": "ja:大阪市立城東図書館"
-  }
-},
-{
-  "type": "node",
-  "id": 1422989598,
-  "lat": 34.6508700,
-  "lon": 135.4721110,
-  "timestamp": "2019-11-10T16:19:41Z",
-  "version": 2,
-  "changeset": 76872815,
-  "user": "higa4",
-  "uid": 162590,
-  "tags": {
-    "KSJ2:ADS": "千島2-6-15",
-    "KSJ2:AdminArea": "大阪府大阪市大正区",
-    "KSJ2:PubFacAdmin": "市区町村",
-    "amenity": "library",
-    "name": "大阪市立大正図書館",
-    "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
-    "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
-    "source": "KSJ2",
-    "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
-    "wikidata": "Q11440428",
-    "wikipedia": "ja:大阪市立大正図書館"
-  }
-},
-{
-  "type": "node",
-  "id": 1422989610,
-  "lat": 34.6717368,
-  "lon": 135.5079145,
-  "timestamp": "2019-11-10T16:19:42Z",
-  "version": 6,
-  "changeset": 76872815,
-  "user": "higa4",
-  "uid": 162590,
-  "tags": {
-    "amenity": "library",
-    "level": "3",
-    "name": "大阪市立島之内図書館",
-    "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
-    "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
-    "source": "KSJ2",
-    "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
-    "wheelchair": "yes",
-    "wikidata": "Q11440463",
-    "wikipedia": "ja:大阪市立島之内図書館"
-  }
-},
-{
-  "type": "node",
-  "id": 1422989613,
-  "lat": 34.6244950,
-  "lon": 135.5591850,
-  "timestamp": "2019-11-10T16:19:42Z",
-  "version": 2,
-  "changeset": 76872815,
-  "user": "higa4",
-  "uid": 162590,
-  "tags": {
-    "KSJ2:ADS": "平野東1-8-2",
-    "KSJ2:AdminArea": "大阪府大阪市平野区",
-    "KSJ2:PubFacAdmin": "市区町村",
-    "amenity": "library",
-    "name": "大阪市立平野図書館",
-    "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
-    "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
-    "source": "KSJ2",
-    "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
-    "wikidata": "Q11440484",
-    "wikipedia": "ja:大阪市立平野図書館"
-  }
-},
-{
-  "type": "node",
-  "id": 1422989637,
-  "lat": 34.7212790,
-  "lon": 135.5424360,
-  "timestamp": "2019-11-10T16:19:43Z",
-  "version": 2,
-  "changeset": 76872815,
-  "user": "higa4",
-  "uid": 162590,
-  "tags": {
-    "KSJ2:ADS": "中宮1-11-14",
-    "KSJ2:AdminArea": "大阪府大阪市旭区",
-    "KSJ2:PubFacAdmin": "市区町村",
-    "amenity": "library",
-    "name": "大阪市立旭図書館",
-    "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
-    "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
-    "source": "KSJ2",
-    "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
-    "wikidata": "Q11440525",
-    "wikipedia": "ja:大阪市立旭図書館"
-  }
-},
-{
-  "type": "node",
-  "id": 1422989642,
-  "lat": 34.6203460,
-  "lon": 135.5274950,
-  "timestamp": "2019-11-10T16:19:43Z",
-  "version": 2,
-  "changeset": 76872815,
-  "user": "higa4",
-  "uid": 162590,
-  "tags": {
-    "KSJ2:ADS": "東田辺2-11-28",
-    "KSJ2:AdminArea": "大阪府大阪市東住吉区",
-    "KSJ2:PubFacAdmin": "市区町村",
-    "amenity": "library",
-    "name": "大阪市立東住吉図書館",
-    "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
-    "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
-    "source": "KSJ2",
-    "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
-    "wikidata": "Q11440548",
-    "wikipedia": "ja:大阪市立東住吉図書館"
-  }
-},
-{
-  "type": "node",
-  "id": 1422989661,
-  "lat": 34.6858650,
-  "lon": 135.4571110,
-  "timestamp": "2019-11-10T16:19:45Z",
-  "version": 3,
-  "changeset": 76872815,
-  "user": "higa4",
-  "uid": 162590,
-  "tags": {
-    "amenity": "library",
-    "level": "2",
-    "name": "大阪市立此花図書館",
-    "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
-    "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
-    "source": "KSJ2",
-    "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
-    "wikidata": "Q11440594",
-    "wikipedia": "ja:大阪市立此花図書館"
-  }
-},
-{
-  "type": "node",
-  "id": 1422989678,
-  "lat": 34.7160840,
-  "lon": 135.4811928,
-  "timestamp": "2019-11-10T16:19:45Z",
-  "version": 3,
-  "changeset": 76872815,
-  "user": "higa4",
-  "uid": 162590,
-  "tags": {
-    "amenity": "library",
-    "name": "大阪市立淀川図書館",
-    "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
-    "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
-    "source": "KSJ2",
-    "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
-    "wikidata": "Q11440610",
-    "wikipedia": "ja:大阪市立淀川図書館"
-  }
-},
-{
-  "type": "node",
-  "id": 1422989688,
-  "lat": 34.6531856,
-  "lon": 135.5397764,
-  "timestamp": "2019-11-10T16:19:46Z",
-  "version": 3,
-  "changeset": 76872815,
-  "user": "higa4",
-  "uid": 162590,
-  "tags": {
-    "amenity": "library",
-    "name": "大阪市立生野図書館",
-    "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
-    "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
-    "source": "KSJ2",
-    "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
-    "wikidata": "Q11440645",
-    "wikipedia": "ja:大阪市立生野図書館"
-  }
-},
-{
-  "type": "node",
-  "id": 1422989700,
-  "lat": 34.6913097,
-  "lon": 135.4731586,
-  "timestamp": "2019-11-10T16:19:47Z",
-  "version": 4,
-  "changeset": 76872815,
-  "user": "higa4",
-  "uid": 162590,
-  "tags": {
-    "amenity": "library",
-    "level": "2",
-    "name": "大阪市立福島図書館",
-    "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
-    "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
-    "source": "KSJ2",
-    "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
-    "wikidata": "Q11440674",
-    "wikipedia": "ja:大阪市立福島図書館"
-  }
-},
-{
-  "type": "node",
-  "id": 1422989717,
-  "lat": 34.6346220,
-  "lon": 135.4948870,
-  "timestamp": "2019-11-10T16:19:47Z",
-  "version": 3,
-  "changeset": 76872815,
-  "user": "higa4",
-  "uid": 162590,
-  "tags": {
-    "amenity": "library",
-    "name": "大阪市立西成図書館",
-    "name:en": "Nishinari Public Library",
-    "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
-    "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
-    "source": "KSJ2",
-    "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
-    "wikidata": "Q11440713",
-    "wikipedia": "ja:大阪市立西成図書館"
-  }
-},
-{
-  "type": "node",
-  "id": 1422989722,
-  "lat": 34.7112720,
-  "lon": 135.4547490,
-  "timestamp": "2019-11-10T16:19:47Z",
-  "version": 2,
-  "changeset": 76872815,
-  "user": "higa4",
-  "uid": 162590,
-  "tags": {
-    "KSJ2:ADS": "御幣島2-1-10",
-    "KSJ2:AdminArea": "大阪府大阪市西淀川区",
-    "KSJ2:PubFacAdmin": "市区町村",
-    "amenity": "library",
-    "name": "大阪市立西淀川図書館",
-    "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
-    "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
-    "source": "KSJ2",
-    "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
-    "wikidata": "Q11440714",
-    "wikipedia": "ja:大阪市立西淀川図書館"
-  }
-},
-{
-  "type": "node",
-  "id": 1422989729,
-  "lat": 34.7010030,
-  "lon": 135.5278820,
-  "timestamp": "2019-11-10T16:19:48Z",
-  "version": 3,
-  "changeset": 76872815,
-  "user": "higa4",
-  "uid": 162590,
-  "tags": {
-    "KSJ2:ADS": "中野町2-16-25",
-    "KSJ2:AdminArea": "大阪府大阪市都島区",
-    "KSJ2:PubFacAdmin": "市区町村",
-    "amenity": "library",
-    "name": "大阪市立都島図書館",
-    "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
-    "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
-    "source": "KSJ2",
-    "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
-    "wheelchair": "yes",
-    "wikidata": "Q11440735",
-    "wikipedia": "ja:大阪市立都島図書館"
-  }
-},
-{
-  "type": "node",
-  "id": 1422989747,
-  "lat": 34.6408910,
-  "lon": 135.5104550,
-  "timestamp": "2019-11-10T16:19:48Z",
-  "version": 3,
-  "changeset": 76872815,
-  "user": "higa4",
-  "uid": 162590,
-  "tags": {
-    "KSJ2:ADS": "阿倍野筋4-19-118",
-    "KSJ2:AdminArea": "大阪府大阪市阿倍野区",
-    "KSJ2:PubFacAdmin": "市区町村",
-    "amenity": "library",
-    "name": "大阪市立阿倍野図書館",
-    "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
-    "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
-    "source": "KSJ2",
-    "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
-    "wheelchair": "yes",
-    "wikidata": "Q11440766",
-    "wikipedia": "ja:大阪市立阿倍野図書館"
-  }
-},
-{
-  "type": "node",
-  "id": 1422989779,
-  "lat": 34.7043040,
-  "lon": 135.5734890,
-  "timestamp": "2019-11-10T16:19:49Z",
-  "version": 2,
-  "changeset": 76872815,
-  "user": "higa4",
-  "uid": 162590,
-  "tags": {
-    "KSJ2:ADS": "横堤5-3-15",
-    "KSJ2:AdminArea": "大阪府大阪市鶴見区",
-    "KSJ2:PubFacAdmin": "市区町村",
-    "amenity": "library",
-    "name": "大阪市立鶴見図書館",
-    "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
-    "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
-    "source": "KSJ2",
-    "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
-    "wikidata": "Q11440796",
-    "wikipedia": "ja:大阪市立鶴見図書館"
-  }
-},
-{
-  "type": "node",
-  "id": 4406518743,
-  "lat": 34.6681061,
-  "lon": 135.5414729,
-  "timestamp": "2020-11-09T19:08:18Z",
-  "version": 4,
-  "changeset": 93815846,
-  "user": "Diego Sanguinetti",
-  "uid": 309382,
-  "tags": {
-    "addr:block_number": "2",
-    "addr:city": "大阪市",
-    "addr:housenumber": "17",
-    "addr:neighbourhood": "三丁目",
-    "addr:postcode": "537-0014",
-    "addr:province": "大阪府",
-    "addr:quarter": "大今里西",
-    "addr:suburb": "東成区",
-    "amenity": "library",
-    "contact:fax": "+81-6-6972-0278",
-    "contact:phone": "+81-6-6972-0727",
-    "contact:website": "http://www.oml.city.osaka.lg.jp/?page_id=151",
-    "level": "7",
-    "name": "東成図書館",
-    "name:en": "Osaka Municipal Higashinari Library",
-    "opening_hours": "Tu-Fri 10:00-19:00; Th[3] off; Sa-Su,PH,Jul 21-Aug-31 Mo 10:00-17:00; Dec 29-Dec 31,Jan 1-Jan 4 off",
-    "operator": "大阪市立図書館",
-    "source": "local knowledge",
-    "wikidata": "Q11440552",
-    "wikipedia": "ja:大阪市立東成図書館"
-  }
-},
-{
-  "type": "node",
-  "id": 7318541928,
-  "lat": 34.6930485,
-  "lon": 135.5064386,
-  "timestamp": "2020-03-22T10:30:22Z",
-  "version": 1,
-  "changeset": 82479209,
-  "user": "mds878",
-  "uid": 563872,
-  "tags": {
-    "amenity": "library",
-    "name": "こども本の森 中之島"
-  }
-},
-{
-  "type": "node",
-  "id": 7639856140,
-  "lat": 34.6586522,
-  "lon": 135.4960957,
-  "timestamp": "2020-06-21T09:07:27Z",
-  "version": 1,
-  "changeset": 86929503,
-  "user": "K_Sakanoshita",
-  "uid": 389520,
-  "tags": {
-    "amenity": "library",
-    "int_name": "Naniwa Public Library",
-    "name": "大阪市立浪速図書館",
-    "wikidata": "Q11440604",
-    "wikipedia": "ja:大阪市立浪速図書館"
-  }
-},
-{
-  "type": "way",
-  "id": 261672826,
-  "timestamp": "2019-11-10T16:19:42Z",
-  "version": 8,
-  "changeset": 76872815,
-  "user": "higa4",
-  "uid": 162590,
-  "nodes": [
-    2672717266,
-    2672717262,
-    2672717247,
-    2672717243,
-    2672717230,
-    2672717232,
-    2672717266
-  ],
-  "tags": {
-    "addr:city": "大阪市",
-    "addr:housenumber": "4-47",
-    "addr:postcode": "543-0037",
-    "addr:province": "大阪府",
-    "addr:quarter": "上之宮町",
-    "addr:street": "上之宮町",
-    "addr:suburb": "天王寺区",
-    "amenity": "library",
-    "building": "yes",
-    "internet_access": "wlan",
-    "internet_access:ssid": "Osaka Free Wi-Fi Lite",
-    "name": "大阪市立天王寺図書館",
-    "note": "公衆無線LANサービス http://www.oml.city.osaka.lg.jp/?page_id=1591#_9226 【OsakaFreeWi-Fi Liteの接続方法について】 ご利用の際はメールアドレス入力が必要です。 ※30分ごとにリセットされますので、継続利用する際は、同じ手順を繰り返してください。　 　また、1つのメールアドレスにつき、１日に８回（４時間/１日）まで利用できます。 ※英語で表記されることがありますが、日本語等に切り替えることができます。",
-    "source": "GSI/KIBAN 2500;NARO",
-    "source_ref": "http://wiki.osm.org/wiki/GSI_KIBAN",
-    "website": "https://www.oml.city.osaka.lg.jp/?page_id=146",
-    "wikidata": "Q11440449",
-    "wikipedia": "ja:大阪市立天王寺図書館"
-  }
-},
-{
-  "type": "way",
-  "id": 271460788,
-  "timestamp": "2020-05-03T11:18:20Z",
-  "version": 8,
-  "changeset": 84559246,
-  "user": "K_Sakanoshita",
-  "uid": 389520,
-  "nodes": [
-    2764222352,
-    5409822612,
-    5458736593,
-    5409822611,
-    2764222355,
-    5440480107,
-    5440487389,
-    5440487330,
-    2764222358,
-    2764222362,
-    2764222365,
-    2764222369,
-    2764222371,
-    5409822613,
-    5409822614,
-    2764222374,
-    2764222352
-  ],
-  "tags": {
-    "alt_name": "辰巳商会中央図書館",
-    "amenity": "library",
-    "building": "yes",
-    "building:levels": "5",
-    "building:levels:underground": "6",
-    "name": "大阪市立中央図書館",
-    "wheelchair": "yes",
-    "wikidata": "Q11440289",
-    "wikipedia": "ja:大阪市立中央図書館"
-  }
-},
-{
-  "type": "way",
-  "id": 271460800,
-  "timestamp": "2018-05-31T06:53:03Z",
-  "version": 2,
-  "changeset": 59418594,
-  "user": "daysofwild",
-  "uid": 7086382,
-  "nodes": [
-    2764222460,
-    2764222462,
-    2764222464,
-    2764222466,
-    2764222468,
-    2764222471,
-    2764222473,
-    5653112896,
-    3087209618,
-    2764222460
-  ],
-  "tags": {
-    "amenity": "library",
-    "building": "civic",
-    "name": "住吉図書館",
-    "source": "Bing,2011-4"
-  }
-},
-{
-  "type": "node",
-  "id": 2006319823,
-  "lat": 34.7160996,
-  "lon": 135.4181296
-},
-{
-  "type": "node",
-  "id": 2006319840,
-  "lat": 34.7161605,
-  "lon": 135.4178928
-},
-{
-  "type": "node",
-  "id": 2006319847,
-  "lat": 34.7162674,
-  "lon": 135.4179335
-},
-{
-  "type": "node",
-  "id": 2006319880,
-  "lat": 34.7164595,
-  "lon": 135.4179879
-},
-{
-  "type": "node",
-  "id": 2006319882,
-  "lat": 34.7162718,
-  "lon": 135.4179164
-},
-{
-  "type": "node",
-  "id": 2006319898,
-  "lat": 34.7165061,
-  "lon": 135.4182843
-},
-{
-  "type": "node",
-  "id": 2006319910,
-  "lat": 34.7164530,
-  "lon": 135.4180134
-},
-{
-  "type": "node",
-  "id": 2006319934,
-  "lat": 34.7165648,
-  "lon": 135.4180560
-},
-{
-  "type": "node",
-  "id": 2291259959,
-  "lat": 34.6932949,
-  "lon": 135.5034505
-},
-{
-  "type": "node",
-  "id": 2291259960,
-  "lat": 34.6933101,
-  "lon": 135.5029871
-},
-{
-  "type": "node",
-  "id": 2291259965,
-  "lat": 34.6934494,
-  "lon": 135.5030664
-},
-{
-  "type": "node",
-  "id": 2291259966,
-  "lat": 34.6934518,
-  "lon": 135.5029939
-},
-{
-  "type": "node",
-  "id": 2291259981,
-  "lat": 34.6936007,
-  "lon": 135.5030737
-},
-{
-  "type": "node",
-  "id": 2291259983,
-  "lat": 34.6936045,
-  "lon": 135.5029601
-},
-{
-  "type": "node",
-  "id": 2291260014,
-  "lat": 34.6937308,
-  "lon": 135.5030767
-},
-{
-  "type": "node",
-  "id": 2291260016,
-  "lat": 34.6937344,
-  "lon": 135.5029664
-},
-{
-  "type": "node",
-  "id": 2291260035,
-  "lat": 34.6938757,
-  "lon": 135.5030838
-},
-{
-  "type": "node",
-  "id": 2291260036,
-  "lat": 34.6938778,
-  "lon": 135.5030207
-},
-{
-  "type": "node",
-  "id": 2291260037,
-  "lat": 34.6937114,
-  "lon": 135.5033388
-},
-{
-  "type": "node",
-  "id": 2291260038,
-  "lat": 34.6939220,
-  "lon": 135.5033485
-},
-{
-  "type": "node",
-  "id": 2291260043,
-  "lat": 34.6939932,
-  "lon": 135.5033520
-},
-{
-  "type": "node",
-  "id": 2291260044,
-  "lat": 34.6940039,
-  "lon": 135.5030268
-},
-{
-  "type": "node",
-  "id": 2672717230,
-  "lat": 34.6614241,
-  "lon": 135.5223312
-},
-{
-  "type": "node",
-  "id": 2672717232,
-  "lat": 34.6614318,
-  "lon": 135.5219094
-},
-{
-  "type": "node",
-  "id": 2672717243,
-  "lat": 34.6615905,
-  "lon": 135.5223423
-},
-{
-  "type": "node",
-  "id": 2672717247,
-  "lat": 34.6615932,
-  "lon": 135.5220999
-},
-{
-  "type": "node",
-  "id": 2672717262,
-  "lat": 34.6616640,
-  "lon": 135.5221024
-},
-{
-  "type": "node",
-  "id": 2672717266,
-  "lat": 34.6616651,
-  "lon": 135.5219103
-},
-{
-  "type": "node",
-  "id": 2764222352,
-  "lat": 34.6740695,
-  "lon": 135.4857843
-},
-{
-  "type": "node",
-  "id": 2764222355,
-  "lat": 34.6740616,
-  "lon": 135.4865978
-},
-{
-  "type": "node",
-  "id": 2764222358,
-  "lat": 34.6738889,
-  "lon": 135.4865862
-},
-{
-  "type": "node",
-  "id": 2764222362,
-  "lat": 34.6738861,
-  "lon": 135.4866473
-},
-{
-  "type": "node",
-  "id": 2764222365,
-  "lat": 34.6734547,
-  "lon": 135.4866183
-},
-{
-  "type": "node",
-  "id": 2764222369,
-  "lat": 34.6734715,
-  "lon": 135.4862474
-},
-{
-  "type": "node",
-  "id": 2764222371,
-  "lat": 34.6736622,
-  "lon": 135.4862602
-},
-{
-  "type": "node",
-  "id": 2764222374,
-  "lat": 34.6737435,
-  "lon": 135.4857624
-},
-{
-  "type": "node",
-  "id": 2764222460,
-  "lat": 34.6049878,
-  "lon": 135.5004450
-},
-{
-  "type": "node",
-  "id": 2764222462,
-  "lat": 34.6049890,
-  "lon": 135.5010926
-},
-{
-  "type": "node",
-  "id": 2764222464,
-  "lat": 34.6047673,
-  "lon": 135.5010870
-},
-{
-  "type": "node",
-  "id": 2764222466,
-  "lat": 34.6047669,
-  "lon": 135.5010179
-},
-{
-  "type": "node",
-  "id": 2764222468,
-  "lat": 34.6046428,
-  "lon": 135.5010188
-},
-{
-  "type": "node",
-  "id": 2764222471,
-  "lat": 34.6046413,
-  "lon": 135.5006886
-},
-{
-  "type": "node",
-  "id": 2764222473,
-  "lat": 34.6046939,
-  "lon": 135.5006883
-},
-{
-  "type": "node",
-  "id": 2771712967,
-  "lat": 34.6937060,
-  "lon": 135.5034707
-},
-{
-  "type": "node",
-  "id": 3087209618,
-  "lat": 34.6046927,
-  "lon": 135.5004493
-},
-{
-  "type": "node",
-  "id": 3798831012,
-  "lat": 34.7374972,
-  "lon": 135.5847021
-},
-{
-  "type": "node",
-  "id": 3798831013,
-  "lat": 34.7375074,
-  "lon": 135.5849728
-},
-{
-  "type": "node",
-  "id": 3798831030,
-  "lat": 34.7377938,
-  "lon": 135.5846855
-},
-{
-  "type": "node",
-  "id": 3798831032,
-  "lat": 34.7378040,
-  "lon": 135.5849562
-},
-{
-  "type": "node",
-  "id": 5409822611,
-  "lat": 34.6740936,
-  "lon": 135.4858950
-},
-{
-  "type": "node",
-  "id": 5409822612,
-  "lat": 34.6740646,
-  "lon": 135.4858930
-},
-{
-  "type": "node",
-  "id": 5409822613,
-  "lat": 34.6736669,
-  "lon": 135.4861585
-},
-{
-  "type": "node",
-  "id": 5409822614,
-  "lat": 34.6737253,
-  "lon": 135.4861625
-},
-{
-  "type": "node",
-  "id": 5440480107,
-  "lat": 34.6739907,
-  "lon": 135.4865930
-},
-{
-  "type": "node",
-  "id": 5440487330,
-  "lat": 34.6739191,
-  "lon": 135.4865882
-},
-{
-  "type": "node",
-  "id": 5440487389,
-  "lat": 34.6739438,
-  "lon": 135.4865899
-},
-{
-  "type": "node",
-  "id": 5458736593,
-  "lat": 34.6740785,
-  "lon": 135.4858940
-},
-{
-  "type": "node",
-  "id": 5653112896,
-  "lat": 34.6046934,
-  "lon": 135.5005943
-},
-{
-  "type": "node",
-  "id": 6872687527,
-  "lat": 34.7163621,
-  "lon": 135.4182295
-},
-{
-  "type": "node",
-  "id": 8414876146,
-  "lat": 34.7375988,
-  "lon": 135.5849948
-},
-{
-  "type": "node",
-  "id": 8414876147,
-  "lat": 34.7377071,
-  "lon": 135.5849887
-},
-{
-  "type": "node",
-  "id": 8414876148,
-  "lat": 34.7377061,
-  "lon": 135.5849617
-},
-{
-  "type": "node",
-  "id": 8414876149,
-  "lat": 34.7375977,
-  "lon": 135.5849678
-}
-
+    {
+      "type": "node",
+      "id": 962912042,
+      "lat": 34.6677248,
+      "lon": 135.4588339,
+      "timestamp": "2019-11-10T16:19:46Z",
+      "version": 7,
+      "changeset": 76872815,
+      "user": "higa4",
+      "uid": 162590,
+      "tags": {
+        "amenity": "library",
+        "name": "大阪市立港図書館",
+        "source": "Bing,2008-03; survey",
+        "wikidata": "Q11440621",
+        "wikipedia": "ja:大阪市立港図書館"
+      }
+    },
+    {
+      "type": "node",
+      "id": 1080511584,
+      "lat": 34.7338715,
+      "lon": 135.5197021,
+      "timestamp": "2020-04-28T18:58:15Z",
+      "version": 4,
+      "changeset": 84286281,
+      "user": "Wish_F",
+      "uid": 6972989,
+      "tags": {
+        "amenity": "library",
+        "name": "大阪市立東淀川図書館",
+        "name:en": "Higashiyodogawa Library",
+        "name:ja": "大阪市立東淀川図書館",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
+        "source": "Bing",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "wikidata": "Q11440556",
+        "wikipedia": "ja:大阪市立東淀川図書館"
+      }
+    },
+    {
+      "type": "node",
+      "id": 1422989538,
+      "lat": 34.6063695,
+      "lon": 135.4750788,
+      "timestamp": "2018-03-14T22:05:52Z",
+      "version": 3,
+      "changeset": 57192247,
+      "user": "adivik2000",
+      "uid": 250196,
+      "tags": {
+        "amenity": "library",
+        "level": "3",
+        "name": "大阪市立住之江図書館",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "wikidata": "Q11440325"
+      }
+    },
+    {
+      "type": "node",
+      "id": 1422989558,
+      "lat": 34.7157018,
+      "lon": 135.5085878,
+      "timestamp": "2019-11-10T16:19:40Z",
+      "version": 5,
+      "changeset": 76872815,
+      "user": "higa4",
+      "uid": 162590,
+      "tags": {
+        "KSJ2:ADS": "本庄東3-8-2",
+        "KSJ2:AdminArea": "大阪府大阪市北区",
+        "KSJ2:PubFacAdmin": "市区町村",
+        "amenity": "library",
+        "name": "大阪市立北図書館",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "wheelchair": "yes",
+        "wikidata": "Q11440356",
+        "wikipedia": "ja:大阪市立北図書館"
+      }
+    },
+    {
+      "type": "node",
+      "id": 1422989579,
+      "lat": 34.7031980,
+      "lon": 135.5446590,
+      "timestamp": "2019-11-10T16:19:41Z",
+      "version": 3,
+      "changeset": 76872815,
+      "user": "higa4",
+      "uid": 162590,
+      "tags": {
+        "amenity": "library",
+        "name": "大阪市立城東図書館",
+        "name:ja": "大阪市立城東図書館",
+        "name:zh": "大阪市立城东图书馆",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "wikidata": "Q11440403",
+        "wikipedia": "ja:大阪市立城東図書館"
+      }
+    },
+    {
+      "type": "node",
+      "id": 1422989598,
+      "lat": 34.6508700,
+      "lon": 135.4721110,
+      "timestamp": "2019-11-10T16:19:41Z",
+      "version": 2,
+      "changeset": 76872815,
+      "user": "higa4",
+      "uid": 162590,
+      "tags": {
+        "KSJ2:ADS": "千島2-6-15",
+        "KSJ2:AdminArea": "大阪府大阪市大正区",
+        "KSJ2:PubFacAdmin": "市区町村",
+        "amenity": "library",
+        "name": "大阪市立大正図書館",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "wikidata": "Q11440428",
+        "wikipedia": "ja:大阪市立大正図書館"
+      }
+    },
+    {
+      "type": "node",
+      "id": 1422989610,
+      "lat": 34.6717368,
+      "lon": 135.5079145,
+      "timestamp": "2019-11-10T16:19:42Z",
+      "version": 6,
+      "changeset": 76872815,
+      "user": "higa4",
+      "uid": 162590,
+      "tags": {
+        "amenity": "library",
+        "level": "3",
+        "name": "大阪市立島之内図書館",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "wheelchair": "yes",
+        "wikidata": "Q11440463",
+        "wikipedia": "ja:大阪市立島之内図書館"
+      }
+    },
+    {
+      "type": "node",
+      "id": 1422989613,
+      "lat": 34.6244950,
+      "lon": 135.5591850,
+      "timestamp": "2019-11-10T16:19:42Z",
+      "version": 2,
+      "changeset": 76872815,
+      "user": "higa4",
+      "uid": 162590,
+      "tags": {
+        "KSJ2:ADS": "平野東1-8-2",
+        "KSJ2:AdminArea": "大阪府大阪市平野区",
+        "KSJ2:PubFacAdmin": "市区町村",
+        "amenity": "library",
+        "name": "大阪市立平野図書館",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "wikidata": "Q11440484",
+        "wikipedia": "ja:大阪市立平野図書館"
+      }
+    },
+    {
+      "type": "node",
+      "id": 1422989637,
+      "lat": 34.7212790,
+      "lon": 135.5424360,
+      "timestamp": "2019-11-10T16:19:43Z",
+      "version": 2,
+      "changeset": 76872815,
+      "user": "higa4",
+      "uid": 162590,
+      "tags": {
+        "KSJ2:ADS": "中宮1-11-14",
+        "KSJ2:AdminArea": "大阪府大阪市旭区",
+        "KSJ2:PubFacAdmin": "市区町村",
+        "amenity": "library",
+        "name": "大阪市立旭図書館",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "wikidata": "Q11440525",
+        "wikipedia": "ja:大阪市立旭図書館"
+      }
+    },
+    {
+      "type": "node",
+      "id": 1422989642,
+      "lat": 34.6203460,
+      "lon": 135.5274950,
+      "timestamp": "2019-11-10T16:19:43Z",
+      "version": 2,
+      "changeset": 76872815,
+      "user": "higa4",
+      "uid": 162590,
+      "tags": {
+        "KSJ2:ADS": "東田辺2-11-28",
+        "KSJ2:AdminArea": "大阪府大阪市東住吉区",
+        "KSJ2:PubFacAdmin": "市区町村",
+        "amenity": "library",
+        "name": "大阪市立東住吉図書館",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "wikidata": "Q11440548",
+        "wikipedia": "ja:大阪市立東住吉図書館"
+      }
+    },
+    {
+      "type": "node",
+      "id": 1422989661,
+      "lat": 34.6858650,
+      "lon": 135.4571110,
+      "timestamp": "2019-11-10T16:19:45Z",
+      "version": 3,
+      "changeset": 76872815,
+      "user": "higa4",
+      "uid": 162590,
+      "tags": {
+        "amenity": "library",
+        "level": "2",
+        "name": "大阪市立此花図書館",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "wikidata": "Q11440594",
+        "wikipedia": "ja:大阪市立此花図書館"
+      }
+    },
+    {
+      "type": "node",
+      "id": 1422989678,
+      "lat": 34.7160840,
+      "lon": 135.4811928,
+      "timestamp": "2019-11-10T16:19:45Z",
+      "version": 3,
+      "changeset": 76872815,
+      "user": "higa4",
+      "uid": 162590,
+      "tags": {
+        "amenity": "library",
+        "name": "大阪市立淀川図書館",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "wikidata": "Q11440610",
+        "wikipedia": "ja:大阪市立淀川図書館"
+      }
+    },
+    {
+      "type": "node",
+      "id": 1422989688,
+      "lat": 34.6531856,
+      "lon": 135.5397764,
+      "timestamp": "2019-11-10T16:19:46Z",
+      "version": 3,
+      "changeset": 76872815,
+      "user": "higa4",
+      "uid": 162590,
+      "tags": {
+        "amenity": "library",
+        "name": "大阪市立生野図書館",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "wikidata": "Q11440645",
+        "wikipedia": "ja:大阪市立生野図書館"
+      }
+    },
+    {
+      "type": "node",
+      "id": 1422989700,
+      "lat": 34.6913097,
+      "lon": 135.4731586,
+      "timestamp": "2019-11-10T16:19:47Z",
+      "version": 4,
+      "changeset": 76872815,
+      "user": "higa4",
+      "uid": 162590,
+      "tags": {
+        "amenity": "library",
+        "level": "2",
+        "name": "大阪市立福島図書館",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "wikidata": "Q11440674",
+        "wikipedia": "ja:大阪市立福島図書館"
+      }
+    },
+    {
+      "type": "node",
+      "id": 1422989717,
+      "lat": 34.6346220,
+      "lon": 135.4948870,
+      "timestamp": "2019-11-10T16:19:47Z",
+      "version": 3,
+      "changeset": 76872815,
+      "user": "higa4",
+      "uid": 162590,
+      "tags": {
+        "amenity": "library",
+        "name": "大阪市立西成図書館",
+        "name:en": "Nishinari Public Library",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "wikidata": "Q11440713",
+        "wikipedia": "ja:大阪市立西成図書館"
+      }
+    },
+    {
+      "type": "node",
+      "id": 1422989722,
+      "lat": 34.7112720,
+      "lon": 135.4547490,
+      "timestamp": "2019-11-10T16:19:47Z",
+      "version": 2,
+      "changeset": 76872815,
+      "user": "higa4",
+      "uid": 162590,
+      "tags": {
+        "KSJ2:ADS": "御幣島2-1-10",
+        "KSJ2:AdminArea": "大阪府大阪市西淀川区",
+        "KSJ2:PubFacAdmin": "市区町村",
+        "amenity": "library",
+        "name": "大阪市立西淀川図書館",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "wikidata": "Q11440714",
+        "wikipedia": "ja:大阪市立西淀川図書館"
+      }
+    },
+    {
+      "type": "node",
+      "id": 1422989729,
+      "lat": 34.7010030,
+      "lon": 135.5278820,
+      "timestamp": "2019-11-10T16:19:48Z",
+      "version": 3,
+      "changeset": 76872815,
+      "user": "higa4",
+      "uid": 162590,
+      "tags": {
+        "KSJ2:ADS": "中野町2-16-25",
+        "KSJ2:AdminArea": "大阪府大阪市都島区",
+        "KSJ2:PubFacAdmin": "市区町村",
+        "amenity": "library",
+        "name": "大阪市立都島図書館",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "wheelchair": "yes",
+        "wikidata": "Q11440735",
+        "wikipedia": "ja:大阪市立都島図書館"
+      }
+    },
+    {
+      "type": "node",
+      "id": 1422989747,
+      "lat": 34.6408910,
+      "lon": 135.5104550,
+      "timestamp": "2019-11-10T16:19:48Z",
+      "version": 3,
+      "changeset": 76872815,
+      "user": "higa4",
+      "uid": 162590,
+      "tags": {
+        "KSJ2:ADS": "阿倍野筋4-19-118",
+        "KSJ2:AdminArea": "大阪府大阪市阿倍野区",
+        "KSJ2:PubFacAdmin": "市区町村",
+        "amenity": "library",
+        "name": "大阪市立阿倍野図書館",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "wheelchair": "yes",
+        "wikidata": "Q11440766",
+        "wikipedia": "ja:大阪市立阿倍野図書館"
+      }
+    },
+    {
+      "type": "node",
+      "id": 1422989779,
+      "lat": 34.7043040,
+      "lon": 135.5734890,
+      "timestamp": "2019-11-10T16:19:49Z",
+      "version": 2,
+      "changeset": 76872815,
+      "user": "higa4",
+      "uid": 162590,
+      "tags": {
+        "KSJ2:ADS": "横堤5-3-15",
+        "KSJ2:AdminArea": "大阪府大阪市鶴見区",
+        "KSJ2:PubFacAdmin": "市区町村",
+        "amenity": "library",
+        "name": "大阪市立鶴見図書館",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "wikidata": "Q11440796",
+        "wikipedia": "ja:大阪市立鶴見図書館"
+      }
+    },
+    {
+      "type": "node",
+      "id": 4406518743,
+      "lat": 34.6681061,
+      "lon": 135.5414729,
+      "timestamp": "2020-11-09T19:08:18Z",
+      "version": 4,
+      "changeset": 93815846,
+      "user": "Diego Sanguinetti",
+      "uid": 309382,
+      "tags": {
+        "addr:block_number": "2",
+        "addr:city": "大阪市",
+        "addr:housenumber": "17",
+        "addr:neighbourhood": "三丁目",
+        "addr:postcode": "537-0014",
+        "addr:province": "大阪府",
+        "addr:quarter": "大今里西",
+        "addr:suburb": "東成区",
+        "amenity": "library",
+        "contact:fax": "+81-6-6972-0278",
+        "contact:phone": "+81-6-6972-0727",
+        "contact:website": "http://www.oml.city.osaka.lg.jp/?page_id=151",
+        "level": "7",
+        "name": "東成図書館",
+        "name:en": "Osaka Municipal Higashinari Library",
+        "opening_hours": "Tu-Fri 10:00-19:00; Th[3] off; Sa-Su,PH,Jul 21-Aug-31 Mo 10:00-17:00; Dec 29-Dec 31,Jan 1-Jan 4 off",
+        "operator": "大阪市立図書館",
+        "source": "local knowledge",
+        "wikidata": "Q11440552",
+        "wikipedia": "ja:大阪市立東成図書館"
+      }
+    },
+    {
+      "type": "node",
+      "id": 7318541928,
+      "lat": 34.6930485,
+      "lon": 135.5064386,
+      "timestamp": "2020-03-22T10:30:22Z",
+      "version": 1,
+      "changeset": 82479209,
+      "user": "mds878",
+      "uid": 563872,
+      "tags": {
+        "amenity": "library",
+        "name": "こども本の森 中之島"
+      }
+    },
+    {
+      "type": "node",
+      "id": 7639856140,
+      "lat": 34.6586522,
+      "lon": 135.4960957,
+      "timestamp": "2020-06-21T09:07:27Z",
+      "version": 1,
+      "changeset": 86929503,
+      "user": "K_Sakanoshita",
+      "uid": 389520,
+      "tags": {
+        "amenity": "library",
+        "int_name": "Naniwa Public Library",
+        "name": "大阪市立浪速図書館",
+        "wikidata": "Q11440604",
+        "wikipedia": "ja:大阪市立浪速図書館"
+      }
+    },
+    {
+      "type": "way",
+      "id": 261672826,
+      "timestamp": "2019-11-10T16:19:42Z",
+      "version": 8,
+      "changeset": 76872815,
+      "user": "higa4",
+      "uid": 162590,
+      "nodes": [
+        2672717266,
+        2672717262,
+        2672717247,
+        2672717243,
+        2672717230,
+        2672717232,
+        2672717266
+      ],
+      "tags": {
+        "addr:city": "大阪市",
+        "addr:housenumber": "4-47",
+        "addr:postcode": "543-0037",
+        "addr:province": "大阪府",
+        "addr:quarter": "上之宮町",
+        "addr:street": "上之宮町",
+        "addr:suburb": "天王寺区",
+        "amenity": "library",
+        "building": "yes",
+        "internet_access": "wlan",
+        "internet_access:ssid": "Osaka Free Wi-Fi Lite",
+        "name": "大阪市立天王寺図書館",
+        "note": "公衆無線LANサービス http://www.oml.city.osaka.lg.jp/?page_id=1591#_9226 【OsakaFreeWi-Fi Liteの接続方法について】 ご利用の際はメールアドレス入力が必要です。 ※30分ごとにリセットされますので、継続利用する際は、同じ手順を繰り返してください。　 　また、1つのメールアドレスにつき、１日に８回（４時間/１日）まで利用できます。 ※英語で表記されることがありますが、日本語等に切り替えることができます。",
+        "source": "GSI/KIBAN 2500;NARO",
+        "source_ref": "http://wiki.osm.org/wiki/GSI_KIBAN",
+        "website": "https://www.oml.city.osaka.lg.jp/?page_id=146",
+        "wikidata": "Q11440449",
+        "wikipedia": "ja:大阪市立天王寺図書館"
+      }
+    },
+    {
+      "type": "way",
+      "id": 271460788,
+      "timestamp": "2020-05-03T11:18:20Z",
+      "version": 8,
+      "changeset": 84559246,
+      "user": "K_Sakanoshita",
+      "uid": 389520,
+      "nodes": [
+        2764222352,
+        5409822612,
+        5458736593,
+        5409822611,
+        2764222355,
+        5440480107,
+        5440487389,
+        5440487330,
+        2764222358,
+        2764222362,
+        2764222365,
+        2764222369,
+        2764222371,
+        5409822613,
+        5409822614,
+        2764222374,
+        2764222352
+      ],
+      "tags": {
+        "alt_name": "辰巳商会中央図書館",
+        "amenity": "library",
+        "building": "yes",
+        "building:levels": "5",
+        "building:levels:underground": "6",
+        "name": "大阪市立中央図書館",
+        "wheelchair": "yes",
+        "wikidata": "Q11440289",
+        "phone": "06-6539-3300",
+        "website": "https://www.oml.city.osaka.lg.jp/",
+        "wikipedia": "ja:大阪市立中央図書館"
+      }
+    },
+    {
+      "type": "way",
+      "id": 271460800,
+      "timestamp": "2018-05-31T06:53:03Z",
+      "version": 2,
+      "changeset": 59418594,
+      "user": "daysofwild",
+      "uid": 7086382,
+      "nodes": [
+        2764222460,
+        2764222462,
+        2764222464,
+        2764222466,
+        2764222468,
+        2764222471,
+        2764222473,
+        5653112896,
+        3087209618,
+        2764222460
+      ],
+      "tags": {
+        "amenity": "library",
+        "building": "civic",
+        "name": "住吉図書館",
+        "source": "Bing,2011-4"
+      }
+    },
+    {
+      "type": "node",
+      "id": 2006319823,
+      "lat": 34.7160996,
+      "lon": 135.4181296
+    },
+    {
+      "type": "node",
+      "id": 2006319840,
+      "lat": 34.7161605,
+      "lon": 135.4178928
+    },
+    {
+      "type": "node",
+      "id": 2006319847,
+      "lat": 34.7162674,
+      "lon": 135.4179335
+    },
+    {
+      "type": "node",
+      "id": 2006319880,
+      "lat": 34.7164595,
+      "lon": 135.4179879
+    },
+    {
+      "type": "node",
+      "id": 2006319882,
+      "lat": 34.7162718,
+      "lon": 135.4179164
+    },
+    {
+      "type": "node",
+      "id": 2006319898,
+      "lat": 34.7165061,
+      "lon": 135.4182843
+    },
+    {
+      "type": "node",
+      "id": 2006319910,
+      "lat": 34.7164530,
+      "lon": 135.4180134
+    },
+    {
+      "type": "node",
+      "id": 2006319934,
+      "lat": 34.7165648,
+      "lon": 135.4180560
+    },
+    {
+      "type": "node",
+      "id": 2291259959,
+      "lat": 34.6932949,
+      "lon": 135.5034505
+    },
+    {
+      "type": "node",
+      "id": 2291259960,
+      "lat": 34.6933101,
+      "lon": 135.5029871
+    },
+    {
+      "type": "node",
+      "id": 2291259965,
+      "lat": 34.6934494,
+      "lon": 135.5030664
+    },
+    {
+      "type": "node",
+      "id": 2291259966,
+      "lat": 34.6934518,
+      "lon": 135.5029939
+    },
+    {
+      "type": "node",
+      "id": 2291259981,
+      "lat": 34.6936007,
+      "lon": 135.5030737
+    },
+    {
+      "type": "node",
+      "id": 2291259983,
+      "lat": 34.6936045,
+      "lon": 135.5029601
+    },
+    {
+      "type": "node",
+      "id": 2291260014,
+      "lat": 34.6937308,
+      "lon": 135.5030767
+    },
+    {
+      "type": "node",
+      "id": 2291260016,
+      "lat": 34.6937344,
+      "lon": 135.5029664
+    },
+    {
+      "type": "node",
+      "id": 2291260035,
+      "lat": 34.6938757,
+      "lon": 135.5030838
+    },
+    {
+      "type": "node",
+      "id": 2291260036,
+      "lat": 34.6938778,
+      "lon": 135.5030207
+    },
+    {
+      "type": "node",
+      "id": 2291260037,
+      "lat": 34.6937114,
+      "lon": 135.5033388
+    },
+    {
+      "type": "node",
+      "id": 2291260038,
+      "lat": 34.6939220,
+      "lon": 135.5033485
+    },
+    {
+      "type": "node",
+      "id": 2291260043,
+      "lat": 34.6939932,
+      "lon": 135.5033520
+    },
+    {
+      "type": "node",
+      "id": 2291260044,
+      "lat": 34.6940039,
+      "lon": 135.5030268
+    },
+    {
+      "type": "node",
+      "id": 2672717230,
+      "lat": 34.6614241,
+      "lon": 135.5223312
+    },
+    {
+      "type": "node",
+      "id": 2672717232,
+      "lat": 34.6614318,
+      "lon": 135.5219094
+    },
+    {
+      "type": "node",
+      "id": 2672717243,
+      "lat": 34.6615905,
+      "lon": 135.5223423
+    },
+    {
+      "type": "node",
+      "id": 2672717247,
+      "lat": 34.6615932,
+      "lon": 135.5220999
+    },
+    {
+      "type": "node",
+      "id": 2672717262,
+      "lat": 34.6616640,
+      "lon": 135.5221024
+    },
+    {
+      "type": "node",
+      "id": 2672717266,
+      "lat": 34.6616651,
+      "lon": 135.5219103
+    },
+    {
+      "type": "node",
+      "id": 2764222352,
+      "lat": 34.6740695,
+      "lon": 135.4857843
+    },
+    {
+      "type": "node",
+      "id": 2764222355,
+      "lat": 34.6740616,
+      "lon": 135.4865978
+    },
+    {
+      "type": "node",
+      "id": 2764222358,
+      "lat": 34.6738889,
+      "lon": 135.4865862
+    },
+    {
+      "type": "node",
+      "id": 2764222362,
+      "lat": 34.6738861,
+      "lon": 135.4866473
+    },
+    {
+      "type": "node",
+      "id": 2764222365,
+      "lat": 34.6734547,
+      "lon": 135.4866183
+    },
+    {
+      "type": "node",
+      "id": 2764222369,
+      "lat": 34.6734715,
+      "lon": 135.4862474
+    },
+    {
+      "type": "node",
+      "id": 2764222371,
+      "lat": 34.6736622,
+      "lon": 135.4862602
+    },
+    {
+      "type": "node",
+      "id": 2764222374,
+      "lat": 34.6737435,
+      "lon": 135.4857624
+    },
+    {
+      "type": "node",
+      "id": 2764222460,
+      "lat": 34.6049878,
+      "lon": 135.5004450
+    },
+    {
+      "type": "node",
+      "id": 2764222462,
+      "lat": 34.6049890,
+      "lon": 135.5010926
+    },
+    {
+      "type": "node",
+      "id": 2764222464,
+      "lat": 34.6047673,
+      "lon": 135.5010870
+    },
+    {
+      "type": "node",
+      "id": 2764222466,
+      "lat": 34.6047669,
+      "lon": 135.5010179
+    },
+    {
+      "type": "node",
+      "id": 2764222468,
+      "lat": 34.6046428,
+      "lon": 135.5010188
+    },
+    {
+      "type": "node",
+      "id": 2764222471,
+      "lat": 34.6046413,
+      "lon": 135.5006886
+    },
+    {
+      "type": "node",
+      "id": 2764222473,
+      "lat": 34.6046939,
+      "lon": 135.5006883
+    },
+    {
+      "type": "node",
+      "id": 2771712967,
+      "lat": 34.6937060,
+      "lon": 135.5034707
+    },
+    {
+      "type": "node",
+      "id": 3087209618,
+      "lat": 34.6046927,
+      "lon": 135.5004493
+    },
+    {
+      "type": "node",
+      "id": 3798831012,
+      "lat": 34.7374972,
+      "lon": 135.5847021
+    },
+    {
+      "type": "node",
+      "id": 3798831013,
+      "lat": 34.7375074,
+      "lon": 135.5849728
+    },
+    {
+      "type": "node",
+      "id": 3798831030,
+      "lat": 34.7377938,
+      "lon": 135.5846855
+    },
+    {
+      "type": "node",
+      "id": 3798831032,
+      "lat": 34.7378040,
+      "lon": 135.5849562
+    },
+    {
+      "type": "node",
+      "id": 5409822611,
+      "lat": 34.6740936,
+      "lon": 135.4858950
+    },
+    {
+      "type": "node",
+      "id": 5409822612,
+      "lat": 34.6740646,
+      "lon": 135.4858930
+    },
+    {
+      "type": "node",
+      "id": 5409822613,
+      "lat": 34.6736669,
+      "lon": 135.4861585
+    },
+    {
+      "type": "node",
+      "id": 5409822614,
+      "lat": 34.6737253,
+      "lon": 135.4861625
+    },
+    {
+      "type": "node",
+      "id": 5440480107,
+      "lat": 34.6739907,
+      "lon": 135.4865930
+    },
+    {
+      "type": "node",
+      "id": 5440487330,
+      "lat": 34.6739191,
+      "lon": 135.4865882
+    },
+    {
+      "type": "node",
+      "id": 5440487389,
+      "lat": 34.6739438,
+      "lon": 135.4865899
+    },
+    {
+      "type": "node",
+      "id": 5458736593,
+      "lat": 34.6740785,
+      "lon": 135.4858940
+    },
+    {
+      "type": "node",
+      "id": 5653112896,
+      "lat": 34.6046934,
+      "lon": 135.5005943
+    },
+    {
+      "type": "node",
+      "id": 6872687527,
+      "lat": 34.7163621,
+      "lon": 135.4182295
+    },
+    {
+      "type": "node",
+      "id": 8414876146,
+      "lat": 34.7375988,
+      "lon": 135.5849948
+    },
+    {
+      "type": "node",
+      "id": 8414876147,
+      "lat": 34.7377071,
+      "lon": 135.5849887
+    },
+    {
+      "type": "node",
+      "id": 8414876148,
+      "lat": 34.7377061,
+      "lon": 135.5849617
+    },
+    {
+      "type": "node",
+      "id": 8414876149,
+      "lat": 34.7375977,
+      "lon": 135.5849678
+    }
   ]
 }

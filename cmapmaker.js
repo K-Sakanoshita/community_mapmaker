@@ -24,6 +24,7 @@ window.addEventListener("DOMContentLoaded", function () {
 		window.onresize = WinCont.window_resize;      	// 画面サイズに合わせたコンテンツ表示切り替え
 		glot.import("./data/glot.json").then(() => {	// Multi-language support
 			// document.title = glot.get("title");		// Title(no change / Google検索で日本語表示させたいので)
+			WinCont.splash(true);
 			cMapmaker.init(baselist);					// Mapmaker Initialize
 			Marker.init();								// Marker Initialize
 			WinCont.menu_make();
@@ -37,9 +38,6 @@ window.addEventListener("DOMContentLoaded", function () {
 			};
 			glot.render();
 		});
-
-
-
 	});
 });
 
@@ -52,12 +50,6 @@ var cMapmaker = (function () {
 			// Set Window Size(mapidのサイズ指定が目的)
 			WinCont.window_resize();
 
-			// get GoogleSpreadSheet
-			gSpreadSheet.get(Conf.google.AppScript, Conf.google.sheetName).then(json => {
-				poiCont.set_json(json);
-				cmap_events.map_move();
-			});
-
 			// initialize leaflet
 			map = leaflet.init();
 			leaflet.controlAdd("bottomleft", "zoomlevel", "");
@@ -69,26 +61,29 @@ var cMapmaker = (function () {
 				() => { map.scrollWheelZoom.disable(); map.dragging.disable() },
 				() => { map.scrollWheelZoom.enable(); map.dragging.enable() }
 			);
-			cMapmaker.static_check().then(() => {		// static mode check(load local osmjson)
-				cMapmaker.poi_get().then(() => {		// get poidata(osm & google)
-					//dataList.view(targets);
-					//DisplayStatus.splash(false);
-					if (location.search !== "") {    	// 引数がある場合
-						let osmid = location.search.replace(/[?&]fbclid.*/, '');    // facebook対策
-						osmid = osmid.replace('-', '/').replace('=', '/').slice(1);
-						// let tags = poiCont.get_osmid(osmid).geojson.properties;	// poi直リンク（あとで作る）
-						// if (tags !== undefined) cMapmaker.view(tags.id);
-					};
-					cMapmaker.poi_view();
-					map.on('moveend', () => cmap_events.map_move());             				// マップ移動時の処理
-					map.on('zoomend', () => cmap_events.map_zoom());							// ズーム終了時に表示更新
-					console.log("cmapmaker: initial end.");
+
+			// get GoogleSpreadSheet
+			gSpreadSheet.get(Conf.google.AppScript, Conf.google.sheetName).then(json => {
+				poiCont.set_json(json);
+				cMapmaker.static_check().then(() => {		// static mode check(load local osmjson)
+					cMapmaker.poi_get().then(() => {		// get poidata(osm & google)
+						cMapmaker.poi_view();
+						WinCont.splash(false)
+						if (location.search !== "") {    	// 引数がある場合
+							let osmid = location.search.replace(/[?&]fbclid.*/, '');    // facebook対策
+							let param = osmid.replace('-', '/').replace('=', '/').slice(1).split('.');
+							cMapmaker.detail_view(param[0], param[1]);
+						};
+						map.on('moveend', () => cmap_events.map_move());             				// マップ移動時の処理
+						map.on('zoomend', () => cmap_events.map_zoom());							// ズーム終了時に表示更新
+						cmap_events.map_move();
+						console.log("cmapmaker: initial end.");
+					});
 				});
 			});
 
 			// initialize last_modetime
 			cMapmaker.mode_change("map");
-			last_modetime = Date.now();
 		},
 
 		// check static osm mode
@@ -117,6 +112,7 @@ var cMapmaker = (function () {
 			};
 		},
 
+		// mode change(list or map)
 		mode_change: (mode) => {
 			if (_status !== "mode_change" && (last_modetime + 300) < Date.now()) {
 				_status = "mode_change";
@@ -125,7 +121,10 @@ var cMapmaker = (function () {
 				console.log('mode_change: ' + mode + ' : ' + last_modetime + " : " + Date.now());
 				list_collapse_icon.className = 'fas fa-chevron-' + params[mode][0];
 				list_collapse.classList[params[mode][1]]('show');
-				if (mode == "list") listTable.datalist_make(Object.values(Conf.targets));
+				if (mode == "list") {
+					listTable.init();
+					listTable.datalist_make(Object.values(Conf.targets))
+				};
 				last_modetime = Date.now();
 				_status = "normal";
 			};
@@ -152,7 +151,6 @@ var cMapmaker = (function () {
 					OvPassCnt.get(keys).then(ovanswer => {
 						poiCont.all_clear();
 						poiCont.add_geojson(ovanswer);
-						// cMapmaker.update();
 						console.log("cMapmaker: poi_get end(success).");
 						resolve();
 					}) /* .catch((jqXHR, statusText, errorThrown) => {
@@ -176,6 +174,64 @@ var cMapmaker = (function () {
 		},
 
 		status: () => { return _status }, // ステータスを返す
+
+		detail_view: (osmid, openid) => {	// PopUpを表示(marker,openid=actlst.id)
+			let tags = poiCont.get_osmid(osmid).geojson.properties;
+			let micon = tags.mapmaker_icon;
+			let title = `<img src="./image/${micon}">${tags.name == undefined ? glot.get("undefined") : tags.name}`;
+			let message = "";
+			WinCont.modal_progress(0);
+
+			// append OSM Tags(仮…テイクアウトなど判別した上で最終的には分ける)
+			message += modal_osmbasic.make(tags);
+
+			// append wikipedia
+			if (tags.wikipedia !== undefined) {
+				message += modal_wikipedia.element();
+				WinCont.modal_progress(100);
+				modal_wikipedia.make(tags).then(html => {
+					modal_wikipedia.set_dom(html);
+					WinCont.modal_progress(0);
+				});
+			};
+
+			// append activity
+			let actlists = poiCont.get_actlist(osmid);
+			if (actlists.length > 0) message += modal_activities.make(actlists, openid);
+
+			history.replaceState('', '', location.pathname + "?" + osmid + (!openid ? "" : "." + openid) + location.hash);
+
+			WinCont.modal_open({
+				"title": title, "message": message, "mode": "close", "callback_close": () => {
+					WinCont.modal_close();
+					history.replaceState('', '', location.pathname + location.hash);
+				}
+			});
+			if (openid !== undefined) document.getElementById("modal_" + openid).scrollIntoView();
+
+			// set PopUp
+			$('[data-toggle="popover"]').popover();
+		},
+
+		url_share: (openid) => {
+			function execCopy(string) {
+				// ClipBord Copy
+				let pre = document.createElement('pre');
+				pre.style.webkitUserSelect = 'auto';
+				pre.style.userSelect = 'auto';
+
+				let text = document.createElement("div");
+				text.appendChild(pre).textContent = string;
+				text.style.position = 'fixed';
+				text.style.right = '200%';
+				document.body.appendChild(text);
+				document.getSelection().selectAllChildren(text);
+				let copy = document.execCommand("copy");
+				document.body.removeChild(text);
+				return copy;
+			};
+			execCopy(location.protocol + location.hostname + location.pathname + location.search + (!openid ? "" : "." + openid) + location.hash);
+		},
 
 		// Try Again
 		all_clear: () => {
@@ -222,27 +278,6 @@ class cMapEvents {
 		let message = `${glot.get("zoomlevel")}${map.getZoom()} `;
 		if (nowzoom < Conf.default.iconViewZoom) message += `<br>${glot.get("morezoom")}`;
 		$("#zoomlevel").html("<h2 class='zoom'>" + message + "</h2>");
-	};
-
-	detail_view(marker) {	// PopUpを表示
-		// let target = marker.target.mapmaker_key;
-		let osmid = marker.target.mapmaker_id;
-		let tags = poiCont.get_osmid(osmid).geojson.properties;
-		let micon = marker.target.mapmaker_icon;
-		let title = `<img src="./image/${micon}">${tags.name == undefined ? glot.get("undefined") : tags.name}`;
-		let message = "";
-
-		// append wikipedia
-		if (tags.wikipedia !== undefined) {
-			message += modal_wikipedia.element();
-			modal_wikipedia.make(tags).then(html => modal_wikipedia.set_dom(html));
-		};
-
-		// append activity
-		let actlists = poiCont.get_actlist(marker.target.mapmaker_id);
-		if (actlists.length > 0) message += modal_activities.make(actlists);
-
-		WinCont.modal_open({ "title": title, "message": message, "mode": "close", "callback_close": function () { WinCont.modal_close() } });
 	};
 };
 var cmap_events = new cMapEvents();

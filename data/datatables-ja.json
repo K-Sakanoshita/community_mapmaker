@@ -11,7 +11,7 @@
             "sLoadingRecords": "読み込み中...",
             "sProcessing": "処理中...",
             "sSearch": "検索:",
-            "sZeroRecords": "一致する店舗/施設がありません",
+            "sZeroRecords": "見つかりません",
             "oPaginate": {
                 "sFirst": "先頭",
                 "sLast": "最終",
@@ -30,16 +30,16 @@
                     "visible": false
                 },
                 {
-                    "title": "日付",
-                    "width": "20%"
+                    "title": "時期/日付",
+                    "width": "35%"
                 },
                 {
                     "title": "種類",
-                    "width": "30%"
+                    "width": "20%"
                 },
                 {
                     "title": "名称",
-                    "width": "50%"
+                    "width": "45%"
                 }
             ],
             "osm": [

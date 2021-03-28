@@ -74,35 +74,12 @@ var poiCont = (function () {
 				let tags = node.properties;
 				let name = tags.name == undefined ? "-" : tags.name;
 				let category = poiCont.get_catname(tags);
-				
-				datas.push([node.id, "", category, name]);
-				/*
-				datas.push({
-					"osmid": node.id,
-					"name": name,
-					"date": "",
-					"category": category,
-					"picture": tags.image !== undefined ? tags.image : "",
-					"operator": tags.operator !== undefined ? tags.operator : "",
-					"description": tags.description !== undefined ? tags.description : ""
-				});
-				*/
+				datas.push([node.id, "-", category, name]);
 			});
 			if (targets.indexOf(Conf.google.targetName) > 0) {			// targets内にgooglesheetがある場合
 				adata.forEach((line) => {
 					if (line !== undefined) {
-						/*
-						datas.push({
-							"osmid": line.id,
-							"date": line.startdatetime,
-							"name": line.title,
-							"category": line.category,
-							"picture": `<img class="list" src="${line.picture_url}">`,
-							"operator": line.operator,
-							"description": basic.convLinkTag(line.detail_url)
-						});
-						*/
-						datas.push([line.id, line.startdatetime, line.category, line.title]);
+						datas.push([line.id, line.date2, line.category, line.title]);
 					};
 				});
 			};
@@ -204,18 +181,13 @@ var Marker = (function () {				// Marker closure
 		center: (poiid) => {								// Map move to PoiId & Zoom(config)
 			let circle, poi = poiCont.get_osmid(poiid);
 			let zoomlv = Conf.default.iconViewZoom >= map.getZoom() ? Conf.default.iconViewZoom : map.getZoom();
-			if (poi !== undefined) {
+			if (poi !== undefined) {	// poi = osmid
 				map.flyTo(poi.latlng, zoomlv, { animate: true, easeLinearity: 0.1, duration: 0.5 });
-				if (poi.latlng.lat.length == undefined) {		// latlngが複数ある場合はcircleなし
-					circle = L.circle(poi.latlng, Conf.style.circle).addTo(map);
-					setTimeout(() => map.removeLayer(circle), Conf.style.circle.timer);
-				};
-			} else {
+			} else {					// poi = actid
 				poi = poiCont.get_actid(poiid);
-				let latlng = { lat: poi.lat, lng: poi.lng };
-				map.flyTo(latlng, zoomlv, { animate: true, easeLinearity: 0.1, duration: 0.5 });
-				circle = L.circle(latlng, Conf.style.circle).addTo(map);
-				setTimeout(() => map.removeLayer(circle), Conf.style.circle.timer);
+				let osmid = poiCont.get_osmid(poi.osmid);
+				map.flyTo(osmid.latlng, zoomlv, { animate: true, easeLinearity: 0.1, duration: 0.5 });
+				cMapmaker.detail_view(poi.osmid,poiid);
 				console.log("event")
 			}
 		},
@@ -274,11 +246,12 @@ var Marker = (function () {				// Marker closure
 				let span_width = name !== "" ? name.length * Conf.effect.text.size : 0;
 				let icon = L.divIcon({ "className": "", "iconSize": [iconsize[0] + span_width, iconsize[1]], "iconAnchor": [iconsize[0] / 2, iconsize[1] / 2], "html": html + "</div>" });
 				let marker = L.marker(new L.LatLng(params.poi.latlng.lat, params.poi.latlng.lng), { icon: icon, draggable: false });
-				marker.addTo(map).on('click', e => { cmap_events.detail_view(e) });
+				marker.addTo(map).on('click', e => { cMapmaker.detail_view(e.target.mapmaker_id) });
 				marker.mapmaker_id = params.poi.geojson.id;
 				marker.mapmaker_key = params.target;
 				marker.mapmaker_lang = params.langname;
-				marker.mapmaker_icon = icon_name;
+				// marker.mapmaker_icon = icon_name;
+				tags.mapmaker_icon = icon_name;		// tagにも紛れ込ませる(detail_viewで利用)
 				resolve([marker]);
 			} else if (tags.wikipedia !== undefined) {	// wikipedia
 				icon_name = params.filename == undefined ? Conf.osm.wikipedia.marker : params.filename;
@@ -291,11 +264,12 @@ var Marker = (function () {				// Marker closure
 				if (name !== "" && Conf.effect.text.view) html = `${html}<span class="icon" style="font-size: ${Conf.effect.text.size}px">${name}</span>`;
 				let icon = L.divIcon({ "className": "", "iconSize": [200 * Conf.style.Icon.scale, Conf.effect.icon.y], "iconAnchor": [Conf.effect.icon.x / 2, Conf.effect.icon.y / 2], "html": html + "</div>" });
 				let marker = L.marker(new L.LatLng(params.poi.latlng.lat, params.poi.latlng.lng), { icon: icon, draggable: false });
-				marker.addTo(map).on('click', e => { cmap_events.detail_view(e) });
+				marker.addTo(map).on('click', e => { cMapmaker.detail_view(e.target.mapmaker_id) });
 				marker.mapmaker_id = params.poi.geojson.id;
 				marker.mapmaker_key = params.target;
 				marker.mapmaker_lang = tags[Conf.osm.wikipedia.tag];
-				marker.mapmaker_icon = icon_name;
+				// marker.mapmaker_icon = icon_name;
+				tags.mapmaker_icon = icon_name;		// tagにも紛れ込ませる(detail_viewで利用)
 				resolve([marker]);
 			};
 		});
@@ -326,8 +300,8 @@ class ListTable {
 			let category = category_list.value;
 			listTable.filter(category == "-" ? "" : category);
 		};
-		keyword.removeEventListener('change', category_change);
-		keyword.addEventListener('change', category_change);
+		category_list.removeEventListener('change', category_change);
+		category_list.addEventListener('change', category_change);
 	};
 
 	category_make(result) {    							// Poi種別リストを作成
@@ -342,7 +316,7 @@ class ListTable {
 		if (this.table !== undefined) this.table.destroy();
 		let result = poiCont.list(targets);
 		let columns = JSON.parse(JSON.stringify(Conf.datatables.columns.common));
-		let tags = targets == Conf.google.sheetName ? Conf.datatables.columns.googlesheet : Conf.datatables.columns.osm;
+		// let tags = targets == Conf.google.sheetName ? Conf.datatables.columns.googlesheet : Conf.datatables.columns.osm;
 		//columns.forEach((col, idx) => col.data = tags[idx]);
 		//let columns = targets == Conf.google.sheetName ? Conf.datatables.columns.googlesheet : Conf.datatables.columns.osm;
 		this.table = $('#tableid').DataTable({

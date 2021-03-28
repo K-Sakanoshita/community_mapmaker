@@ -44,6 +44,7 @@
   <script defer src="./modal_takeout.js"></script>
   <script defer src="./modal_activities.js"></script>
   <script defer src="./modal_wikipedia.js"></script>
+  <script defer src="./modal_osmbasic.js"></script>
 </head>
 
 <body>
@@ -55,8 +56,18 @@
     </article>
 
   </div>
-  <div id="modals"></div>
-  <div id="colors"></div>
+  <div id="Splash_Modal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document" data-keyboard="false">
+      <div class="modal-content">
+        <div class="modal-body">
+          <img src="" style="width: 100%;float: none !important" id="splash_image"><br>
+          <div class="d-flex justify-content-center mt-2">
+            <div class="spinner-border text-primary mx-auto" role="status"> <span class="sr-only">Loading...</span> </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div id="modal_window" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
@@ -69,10 +80,8 @@
           <div class="spinner-border text-primary" id="modal_window_spinner" role="status"><span class="sr-only"></div>
         </div>
         <div class="modal-body">
+          <div id="modal_window_progress" class="progress-bar progress-bar-striped progress-bar-animated mb-2" style="height: 2px" role="progressbar"></div>
           <div id="modal_window_message"></div>
-          <div class="progress mt-3">
-            <div id="modal_window_progress" class="progress-bar progress-bar-striped progress-bar-animated"></div>
-          </div>
         </div>
         <div class="modal-footer">
           <button id="modal_window_yes" class="btn btn-primary"></button>

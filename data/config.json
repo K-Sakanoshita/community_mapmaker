@@ -9,10 +9,22 @@
             34.6977,
             135.5043
         ],
-        "bbox": "34.59135,135.38456,34.74399,135.58787",
-        "zoom": 14,
+        "_maxbounds":"",
+        "maxbounds": [
+            [
+                34.52000,
+                135.37000
+            ],
+            [
+                34.80000,
+                135.67000
+            ]
+        ],
+        "zoom": 13,
+        "minzoom": 12,
+        "maxzoom": 16,
         "zoomSnap": 0.5,
-        "iconViewZoom": 13,
+        "iconViewZoom": 12,
         "bookmark": true
     },
     "google": {
@@ -21,7 +33,11 @@
         "sheetName": "activity",
         "targetName": "activity"
     },
+    "splash": {
+        "url": "./image/splash.jpg"
+    },
     "static": {
+        "_osmjson": "",
         "osmjson": "./data/osaka_city_library.json"
     },
     "menu": [
@@ -32,12 +48,12 @@
         },
         {
             "glot-model": "about",
-            "linkto": "https://medium.com/@K_Sakanoshita/ea38ce4fd10",
+            "linkto": "https://www.oml.city.osaka.lg.jp/index.php?page_id=1301",
             "divider": false
         },
         {
             "glot-model": "owner",
-            "linkto": "https://github.com/K-Sakanoshita/mapmaker",
+            "linkto": "https://github.com/K-Sakanoshita/community_mapmaker",
             "divider": true
         },
         {
