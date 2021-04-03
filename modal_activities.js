@@ -44,19 +44,19 @@ class modal_Activities {
             switch (act.id.split('/')[0]) {
                 case "memorial":
                     memorial = true;
-                    chtml += "<strong>" + glot.get("memorials_link") + ":</strong> ";
+                    chtml += "<strong>" + glot.get("memories_link") + ":</strong> ";
                     chtml += `
                     <button type="button" class="btn btn-warning pl-3 pr-3 pt-0 pb-0"
                      data-toggle="popover" data-content="${glot.get("modal_popover_copied")}" onclick="cMapmaker.url_share('${act.id}')">
                         <i class="fas fa-clone"></i>
                     </button><br><br>`;
-                    chtml += "<strong>" + glot.get("memorials_title") + "</strong><br>" + act.title + "<br><br>";
-                    chtml += "<strong>" + glot.get("memorials_author") + "</strong><br>" + act.author + "<br><br>";
-                    chtml += "<strong>" + glot.get("memorials_memorial") + "</strong><br>" + act.body.replace(/\r?\n/g, '<br>') + "<br><br>";
-                    chtml += "<strong>" + glot.get("memorials_place") + "</strong><br>" + act.place + "<br><br>";
-                    chtml += "<strong>" + glot.get("memorials_supply") + "</strong><br>" + act.supply + "<br><br>";
-                    chtml += "<strong>" + glot.get("memorials_references") + "</strong><br>" + act.references + "<br><br>";
-                    chtml += "<strong>" + glot.get("memorials_reception") + "</strong><br>" + basic.formatDate(new Date(act.reception), ymd) + "<br><br>";
+                    chtml += "<strong>" + glot.get("memories_title") + "</strong><br>" + act.title + "<br><br>";
+                    chtml += "<strong>" + glot.get("memories_author") + "</strong><br>" + act.author + "<br><br>";
+                    chtml += "<strong>" + glot.get("memories_memorial") + "</strong><br>" + act.body.replace(/\r?\n/g, '<br>') + "<br><br>";
+                    chtml += "<strong>" + glot.get("memories_place") + "</strong><br>" + act.place + "<br><br>";
+                    chtml += "<strong>" + glot.get("memories_supply") + "</strong><br>" + act.supply + "<br><br>";
+                    chtml += "<strong>" + glot.get("memories_references") + "</strong><br>" + act.references + "<br><br>";
+                    chtml += "<strong>" + glot.get("memories_reception") + "</strong><br>" + basic.formatDate(new Date(act.reception), ymd) + "<br><br>";
                     break;
                 default:    // event
                     chtml += act.startdatetime == "" ? "" : glot.get("eventdates") + basic.formatDate(new Date(act.startdatetime), ymd) + " - " + basic.formatDate(new Date(act.enddatetime), ymd) + "<br>"
@@ -69,7 +69,7 @@ class modal_Activities {
         });
         tModal.remove();
         template.remove();
-        return `<h5>${glot.get(memorial ? "memorials" : "activities")}</h5>` + result;  // 1件でもあれば「思い出」
+        return `<h5>${glot.get(memorial ? "memories" : "activities")}</h5>` + result;  // 1件でもあれば「思い出」
     };
 }
 var modal_activities = new modal_Activities();

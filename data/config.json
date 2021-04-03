@@ -1,16 +1,16 @@
 {
     "targets": [
-        "library",
+        "park",
+        "wikipedia",
         "activity"
     ],
     "default": {
-        "splashImage": "image/splash.png",
         "mapcenter": [
             34.6977,
             135.5043
         ],
-        "_maxbounds":"",
-        "maxbounds": [
+        "maxbounds": "",
+        "_maxbounds": [
             [
                 34.52000,
                 135.37000
@@ -21,24 +21,25 @@
             ]
         ],
         "zoom": 13,
-        "minzoom": 12,
-        "maxzoom": 16,
+        "pc_minzoom": 10,
+        "phone_minzoom": 9,
+        "maxzoom": 20,
         "zoomSnap": 0.5,
-        "iconViewZoom": 12,
+        "iconViewZoom": 8,
         "bookmark": true
     },
     "google": {
-        "Analytics": "UA-98610409-3",
-        "AppScript": "https://script.google.com/macros/s/AKfycbw04lv4R9tre_NR4bGPw8BM4QsEUzpMITFt87iMn50O0eVRyl--kp2hnw/exec",
+        "Analytics": "",
+        "AppScript": "https://script.google.com/macros/s/AKfycbyknNKqOCnBqovC2IrTTZJNHdhlV9f6hJ0psxbu00kwxvBA_XmkoupAi_TTSLQrEjR-pg/exec",
         "sheetName": "activity",
         "targetName": "activity"
     },
     "splash": {
-        "url": "./image/splash.jpg"
+        "url": ""
     },
     "static": {
-        "_osmjson": "",
-        "osmjson": "./data/osaka_city_library.json"
+        "osmjson": "",
+        "_osmjson": "./data/osaka_city_library.json"
     },
     "menu": [
         {

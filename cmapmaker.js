@@ -230,7 +230,7 @@ var cMapmaker = (function () {
 				document.body.removeChild(text);
 				return copy;
 			};
-			execCopy(location.protocol + location.hostname + location.pathname + location.search + (!openid ? "" : "." + openid) + location.hash);
+			execCopy(location.protocol + "//" + location.hostname + location.pathname + "?" + param[0] + (!openid ? "" : "." + openid) + location.hash);
 		},
 
 		// Try Again

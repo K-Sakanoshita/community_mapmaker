@@ -12,7 +12,8 @@
             "pub": "bar.svg",
             "restaurant": "restaurant.svg",
             "vending_machine": "vending.svg",
-            "place_of_worship": "information3.svg"
+            "place_of_worship": "information3.svg",
+            "post_box":"post_box.svg"
         },
         "shop": {
             "alcohol": "bar.svg",
@@ -123,7 +124,8 @@
         "leisure":{
             "pitch": "playground.svg",
             "park": "playground.svg",
-            "playground": "playground.svg"
+            "playground": "playground.svg",
+            "amusement_arcade": "Input-gaming.svg"
         },
         "public_transport":{
             "station": "station.svg"

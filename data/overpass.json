@@ -14,10 +14,65 @@
                 "operator"
             ]
         },
+        "museum": {
+            "overpass": [
+                "node[\"tourism\"=\"museum\"]",
+                "way[\"tourism\"=\"museum\"]"
+            ],
+            "tags": [
+                "tourism=museum"
+            ],
+            "view": [
+                "name",
+                "operator"
+            ]
+        },
+        "gallery": {
+            "overpass": [
+                "node[\"tourism\"=\"gallery\"]",
+                "way[\"tourism\"=\"gallery\"]"
+            ],
+            "tags": [
+                "tourism=gallery"
+            ],
+            "view": [
+                "name",
+                "operator"
+            ]
+        },
+        "theatre": {
+            "overpass": [
+                "node[\"amenity\"=\"theatre\"]",
+                "way[\"amenity\"=\"theatre\"]"
+            ],
+            "tags": [
+                "amenity=theatre"
+            ],
+            "view": [
+                "name",
+                "operator"
+            ]
+        },
+        "centre": {
+            "overpass": [
+                "node[\"amenity\"=\"arts_centre\"]",
+                "way[\"amenity\"=\"arts_centre\"]",
+                "node[\"amenity\"=\"community_centre\"]",
+                "way[\"amenity\"=\"community_centre\"]"
+            ],
+            "tags": [
+                "amenity=community_centre",
+                "amenity=arts_centre"
+            ],
+            "view": [
+                "name",
+                "operator"
+            ]
+        },
         "park": {
             "overpass": [
-                "relation[\"leisure\"=\"park\"]",
-                "relation[\"leisure\"=\"playground\"]",
+                "node[\"leisure\"=\"park\"]",
+                "node[\"leisure\"=\"playground\"]",
                 "way[\"leisure\"=\"playground\"]",
                 "way[\"leisure\"=\"park\"]"
             ],
@@ -50,7 +105,33 @@
                 "operator"
             ]
         },
-        "station":{
+        "castle": {
+            "overpass": [
+                "node[\"histric\"=\"castle\"]",
+                "way[\"histric\"=\"castle\"]"
+            ],
+            "tags": [
+                "histric=castle"
+            ],
+            "views": [
+                "name",
+                "operator"
+            ]
+        },
+        "amusement_arcade": {
+            "overpass": [
+                "node[\"leisure\"=\"amusement_arcade\"]",
+                "way[\"leisure\"=\"amusement_arcade\"]"
+            ],
+            "tags": [
+                "leisure=amusement_arcade"
+            ],
+            "views": [
+                "name",
+                "operator"
+            ]
+        },
+        "station": {
             "overpass": [
                 "node[\"public_transport\"=\"station\"]",
                 "way[\"public_transport\"=\"station\"]"
@@ -59,6 +140,32 @@
                 "public_transport=station"
             ],
             "views": [
+                "name",
+                "operator"
+            ]
+        },
+        "vending_machine": {
+            "overpass": [
+                "node[\"amenity\"=\"vending_machine\"]",
+                "way[\"amenity\"=\"vending_machine\"]"
+            ],
+            "tags": [
+                "amenity=vending_machine"
+            ],
+            "view": [
+                "name",
+                "operator"
+            ]
+        },
+        "post_box": {
+            "overpass": [
+                "node[\"amenity\"=\"post_box\"]",
+                "way[\"amenity\"=\"post_box\"]"
+            ],
+            "tags": [
+                "amenity=post_box"
+            ],
+            "view": [
                 "name",
                 "operator"
             ]

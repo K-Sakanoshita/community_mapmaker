@@ -12,7 +12,8 @@
             "pub": "pub",
             "restaurant": "restaurant",
             "vending_machine": "vending machine",
-            "place_of_worship": "place of worship"
+            "place_of_worship": "place of worship",
+            "post_box":"POST box"
         },
         "shop": {
             "alcohol": "alcohol",
@@ -192,7 +193,8 @@
             "information": "information"
         },
         "historic": {
-            "memorial": "memorial"
+            "memorial": "memorial",
+            "castle":"castle"
         },
         "information": {
             "board": "board",
@@ -209,7 +211,8 @@
         "leisure": {
             "pitch": "pitch",
             "park": "park",
-            "playground": "playground"
+            "playground": "playground",
+            "amusement_arcade": "amusement arcade"
         },
         "public_transport":{
             "station": "station"

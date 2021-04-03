@@ -12,7 +12,8 @@
             "pub": "パブ/居酒屋",
             "restaurant": "レストラン",
             "vending_machine": "自動販売機",
-            "place_of_worship": "宗教施設"
+            "place_of_worship": "宗教施設",
+            "post_box":"郵便ポスト"
         },
         "shop": {
             "alcohol": "酒屋",
@@ -192,7 +193,8 @@
             "information": "案内"
         },
         "historic": {
-            "memorial": "石碑"
+            "memorial": "石碑",
+            "castle": "お城"
         },
         "information": {
             "board": "掲示板",
@@ -206,12 +208,13 @@
             "torii": "鳥居",
             "lamp": "灯籠"
         },
-        "leisure":{
+        "leisure": {
             "pitch": "グラウンド",
             "park": "公園",
-            "playground": "児童公園"
+            "playground": "児童公園",
+            "amusement_arcade": "ゲームセンター"
         },
-        "public_transport":{
+        "public_transport": {
             "station": "鉄道駅"
         },
         "suffix_covid19": "(暫定)",

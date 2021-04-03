@@ -1,6 +1,6 @@
 {
 	"about": {
-		"ja": "大阪思い出のこしマップについて",
+		"ja": "サンプルマップ",
 		"en": "about Osaka Memories Map"
 	},
 	"owner": {
@@ -12,12 +12,12 @@
 		"en": "about OpenStreetMap"
 	},
 	"title": {
-		"ja": "大阪思い出のこしマップ",
-		"en": "Osaka Memories Map"
+		"ja": "サンプルマップ",
+		"en": "Sample Map"
 	},
 	"subtitle": {
-		"ja": "大阪思い出のこしマップ by Community Map Maker",
-		"en": "Osaka Memories Map by Community Map Maker"
+		"ja": "サンプルマップ by Community Map Maker",
+		"en": "Sample Map by Community Map Maker"
 	},
 	"licence_title": {
 		"ja": "利用規約",
@@ -51,43 +51,43 @@
 		"ja": "各種活動",
 		"en": "Activities"
 	},
-	"memorials": {
+	"memories": {
 		"ja": "思い出など",
 		"en": "Memorials"
 	},
-	"memorials_link": {
+	"memories_link": {
 		"ja": "シェア用リンク",
 		"en": "Link for sharing"
 	},
-	"memorials_title": {
+	"memories_title": {
 		"ja": "タイトル",
 		"en": "Title"
 	},
-	"memorials_author": {
+	"memories_author": {
 		"ja": "投稿者",
 		"en": "Author"
 	},
-	"memorials_date": {
+	"memories_date": {
 		"ja": "いつ頃",
 		"en": "Date"
 	},
-	"memorials_memorial": {
+	"memories_memorial": {
 		"ja": "思い出",
 		"en": "Memorial"
 	},
-	"memorials_place": {
+	"memories_place": {
 		"ja": "場所",
 		"en": "Place"
 	},
-	"memorials_supply": {
+	"memories_supply": {
 		"ja": "補足・追加情報",
 		"en": "Supplementary / additional information"
 	},
-	"memorials_references": {
+	"memories_references": {
 		"ja": "参考文献",
 		"en": "References"
 	},
-	"memorials_reception": {
+	"memories_reception": {
 		"ja": "受付日",
 		"en": "Reception date"
 	},

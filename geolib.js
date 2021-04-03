@@ -9,8 +9,8 @@ class Leaflet {
         const Mono_Filter = ['grayscale:90%', 'bright:85%', 'contrast:130%', 'sepia:15%'];
 
         let def = Conf.default;
-        let params = { maxZoom: def.maxzoom, minZoom: def.minzoom};
-        if (def.maxbounds !== "") params = Object.assign(params,{maxBounds: def.maxbounds});
+        let params = { maxZoom: def.maxzoom, minZoom: (basic.isSmartPhone() ? def.phone_minzoom : def.pc_minzoom) };
+        if (def.maxbounds !== "") params = Object.assign(params, { maxBounds: def.maxbounds });
         let osm_mono = L.tileLayer.colorFilter(Conf.tile.OSM_Standard, { maxNativeZoom: 19, attribution: Conf.tile.OSM_Copyright, filter: Mono_Filter });
         let osm_std = L.tileLayer(Conf.tile.OSM_Standard, { maxNativeZoom: 19, attribution: Conf.tile.OSM_Copyright });
         let osm_tiler = L.mapboxGL({ accessToken: '', style: Conf.tile.Tiler_Style, attribution: Conf.tile.Tiler_Copyright });
