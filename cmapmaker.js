@@ -65,22 +65,22 @@ var cMapmaker = (function () {
 			// get GoogleSpreadSheet
 			gSpreadSheet.get(Conf.google.AppScript, Conf.google.sheetName).then(json => {
 				poiCont.set_json(json);
-				cMapmaker.static_check().then(() => {		// static mode check(load local osmjson)
-					cMapmaker.poi_get().then(() => {		// get poidata(osm & google)
-						cMapmaker.poi_view();
-						WinCont.splash(false)
-						if (location.search !== "") {    	// 引数がある場合
-							let osmid = location.search.replace(/[?&]fbclid.*/, '');    // facebook対策
-							let param = osmid.replace('-', '/').replace('=', '/').slice(1).split('.');
-							cMapmaker.detail_view(param[0], param[1]);
-						};
-						map.on('moveend', () => cmap_events.map_move());             				// マップ移動時の処理
-						map.on('zoomend', () => cmap_events.map_zoom());							// ズーム終了時に表示更新
-						cmap_events.map_move();
-						console.log("cmapmaker: initial end.");
-					});
-				});
-			});
+				return cMapmaker.static_check();
+			}).then(() => {		// static mode check(load local osmjson)
+				return cMapmaker.poi_get();
+			}).then(() => {		// get poidata(osm & google)
+				WinCont.splash(false);
+				if (location.search !== "") {    	// 引数がある場合
+					let search = location.search.replace(/[?&]fbclid.*/, '').replace(/%2F/g, '/');    // facebook対策
+					let param = search.replace('-', '/').replace('=', '/').slice(1).split('.');
+					history.replaceState('', '', location.pathname + search + location.hash);
+					if (param[0] !== "") cMapmaker.detail_view(param[0], param[1]);
+				};
+				map.on('moveend', () => cmap_events.map_move());             				// マップ移動時の処理
+				map.on('zoomend', () => cmap_events.map_zoom());							// ズーム終了時に表示更新
+				cMapmaker.poi_view();
+				console.log("cmapmaker: initial end.");
+			});;
 
 			// initialize last_modetime
 			cMapmaker.mode_change("map");
@@ -176,7 +176,8 @@ var cMapmaker = (function () {
 		status: () => { return _status }, // ステータスを返す
 
 		detail_view: (osmid, openid) => {	// PopUpを表示(marker,openid=actlst.id)
-			let tags = poiCont.get_osmid(osmid).geojson.properties;
+			let osmobj = poiCont.get_osmid(osmid);
+			let tags = osmobj == undefined ? {} : osmobj.geojson.properties;
 			let micon = tags.mapmaker_icon;
 			let title = `<img src="./image/${micon}">${tags.name == undefined ? glot.get("undefined") : tags.name}`;
 			let message = "";
@@ -230,6 +231,8 @@ var cMapmaker = (function () {
 				document.body.removeChild(text);
 				return copy;
 			};
+			let osmid = location.search.replace(/[?&]fbclid.*/, '');    // facebook対策
+			let param = osmid.replace('-', '%2F').replace('=', '%2F').slice(1).split('.');
 			execCopy(location.protocol + "//" + location.hostname + location.pathname + "?" + param[0] + (!openid ? "" : "." + openid) + location.hash);
 		},
 

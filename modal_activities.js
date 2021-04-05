@@ -41,15 +41,15 @@ class modal_Activities {
             clone.querySelector("#collapse" + idx).classList[openflag ? "add" : "remove"]("show");
             clone.querySelector("span").innerHTML = act.title;
             chtml = "<div class='float-right'>" + glot.get("update") + " " + basic.formatDate(new Date(act.updatetime), ymd) + "</div>";
+            chtml += "<strong>" + glot.get("memories_link") + ":</strong> ";
+            chtml += `
+            <button type="button" class="btn btn-warning pl-3 pr-3 pt-0 pb-0"
+             data-toggle="popover" data-content="${glot.get("modal_popover_copied")}" onclick="cMapmaker.url_share('${act.id}')">
+                <i class="fas fa-clone"></i>
+            </button><br><br>`;
             switch (act.id.split('/')[0]) {
                 case "memorial":
                     memorial = true;
-                    chtml += "<strong>" + glot.get("memories_link") + ":</strong> ";
-                    chtml += `
-                    <button type="button" class="btn btn-warning pl-3 pr-3 pt-0 pb-0"
-                     data-toggle="popover" data-content="${glot.get("modal_popover_copied")}" onclick="cMapmaker.url_share('${act.id}')">
-                        <i class="fas fa-clone"></i>
-                    </button><br><br>`;
                     chtml += "<strong>" + glot.get("memories_title") + "</strong><br>" + act.title + "<br><br>";
                     chtml += "<strong>" + glot.get("memories_author") + "</strong><br>" + act.author + "<br><br>";
                     chtml += "<strong>" + glot.get("memories_memorial") + "</strong><br>" + act.body.replace(/\r?\n/g, '<br>') + "<br><br>";

@@ -10,7 +10,7 @@ var OvPassCnt = (function () {
 			let LL = GeoCont.get_LL();
 			return new Promise((resolve, reject) => {
 				if ((LL.NW.lat < LLc.NW.lat && LL.NW.lng > LLc.NW.lng &&
-					LL.SE.lat > LLc.SE.lat && LL.NW.lat < LLc.NW.lat) || Conf.default.maxbounds !== "") {
+					LL.SE.lat > LLc.SE.lat && LL.NW.lat < LLc.NW.lat) || Conf.static.osmjson !== "") {
 					console.log("OvPassCnt: Cache Hit.");       // Within Cache range
 					resolve(Cache);
 				} else {
@@ -18,8 +18,8 @@ var OvPassCnt = (function () {
 					let SE_lat, SE_lng, NW_lat, NW_lng, maparea;
 					let offset_lat = (LL.NW.lat - LL.SE.lat) / 2;
 					let offset_lng = (LL.SE.lng - LL.NW.lng) / 2;
-					if (Conf.default.maxbounds.length > 1) {
-						let latlng = Conf.default.maxbounds;
+					if (Conf.static.osmbounds.length > 1) {
+						let latlng = Conf.static.osmbounds;
 						SE_lat = latlng[0][0];
 						NW_lng = latlng[0][1];
 						NW_lat = latlng[1][0];
@@ -113,7 +113,7 @@ var OvPassCnt = (function () {
 		set_osmjson: (osmjson) => {
 			let geojson = osmtogeojson(osmjson, { flatProperties: true });
 			OvPassCnt.set_targets(geojson.features);
-			let latlng = Conf.default.maxbounds;
+			let latlng = Conf.static.osmbounds;
 			let SE_lat = latlng[0][0];
 			let NW_lng = latlng[0][1];
 			let NW_lat = latlng[1][0];

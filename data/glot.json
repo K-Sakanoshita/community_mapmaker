@@ -1,7 +1,7 @@
 {
 	"about": {
-		"ja": "サンプルマップ",
-		"en": "about Osaka Memories Map"
+		"ja": "住之江区イベント情報マップについて",
+		"en": "about Suminoe event information map"
 	},
 	"owner": {
 		"ja": "開発サイト",
@@ -12,8 +12,8 @@
 		"en": "about OpenStreetMap"
 	},
 	"title": {
-		"ja": "サンプルマップ",
-		"en": "Sample Map"
+		"ja": "住之江区イベント情報マップ",
+		"en": "Suminoe Event Map"
 	},
 	"subtitle": {
 		"ja": "サンプルマップ by Community Map Maker",
@@ -306,14 +306,6 @@
 	"marker_change": {
 		"ja": "アイコンを変更",
 		"en": "Change Icon"
-	},
-	"marker_to_en": {
-		"ja": "英語に変更",
-		"en": "Change to English"
-	},
-	"marker_to_ja": {
-		"ja": "日本語に変更",
-		"en": "Change to Japanese"
 	},
 	"modal_close": {
 		"ja": "閉じる",

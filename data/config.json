@@ -2,6 +2,7 @@
     "targets": [
         "park",
         "wikipedia",
+        "centre",
         "activity"
     ],
     "default": {
@@ -9,8 +10,8 @@
             34.6977,
             135.5043
         ],
-        "maxbounds": "",
-        "_maxbounds": [
+        "_maxbounds": "",
+        "maxbounds": [
             [
                 34.52000,
                 135.37000
@@ -20,12 +21,12 @@
                 135.67000
             ]
         ],
-        "zoom": 13,
-        "pc_minzoom": 10,
-        "phone_minzoom": 9,
+        "zoom": 14,
+        "pc_minzoom": 12,
+        "phone_minzoom": 11,
         "maxzoom": 20,
         "zoomSnap": 0.5,
-        "iconViewZoom": 8,
+        "iconViewZoom": 14,
         "bookmark": true
     },
     "google": {
@@ -39,7 +40,18 @@
     },
     "static": {
         "osmjson": "",
-        "_osmjson": "./data/osaka_city_library.json"
+        "osmbounds": [],
+        "_osmjson": "./data/osaka_city_library.json",
+        "_osmbounds": [
+            [
+                34.52000,
+                135.37000
+            ],
+            [
+                34.80000,
+                135.67000
+            ]
+        ]
     },
     "menu": [
         {
