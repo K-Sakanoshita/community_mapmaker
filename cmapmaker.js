@@ -44,13 +44,13 @@ class CMapMaker {
 	};
 
 	init(baselist) {	// Initialize
-	winCont.window_resize();			// Set Window Size(mapidのサイズ指定が目的)
+		winCont.window_resize();			// Set Window Size(mapidのサイズ指定が目的)
 		winCont.splash(true);
 		Marker.init();						// Marker Initialize
 		leaflet.init();						// Leaflet Initialize
 		Promise.all([
 			gSpreadSheet.get(Conf.google.AppScript, Conf.google.sheetName),
-			cMapmaker.poi_get(),			// get_zoomなどleafletの情報が必要なためleaflet.init後に実行
+			cMapmaker.poi_get(),		// get_zoomなどleafletの情報が必要なためleaflet.init後に実行
 			cMapmaker.static_check()
 		]).then(results => {
 			leaflet.controlAdd("bottomleft", "zoomlevel", "");
@@ -82,7 +82,7 @@ class CMapMaker {
 	}
 
 	static_check() {	// check static osm mode
-	return new Promise((resolve, reject) => {
+		return new Promise((resolve, reject) => {
 			if (Conf.static.osmjson == "") {
 				resolve();
 			} else {
@@ -98,12 +98,12 @@ class CMapMaker {
 	}
 
 	licence() {				// About license
-	let msg = { msg: glot.get("licence_message") + glot.get("more_message"), ttl: glot.get("licence_title") };
+		let msg = { msg: glot.get("licence_message") + glot.get("more_message"), ttl: glot.get("licence_title") };
 		winCont.modal_open({ "title": msg.ttl, "message": msg.msg, "mode": "close", callback_close: winCont.modal_close });
 	}
 
 	mode_change(mode) {		// mode change(list or map)
-	if (this.status !== "mode_change" && (this.last_modetime + 300) < Date.now()) {
+		if (this.status !== "mode_change" && (this.last_modetime + 300) < Date.now()) {
 			this.status = "mode_change";
 			let params = { 'map': ['down', 'remove', 'start'], 'list': ['up', 'add', 'stop'] };
 			mode = !mode ? (list_collapse.classList.contains('show') ? 'map' : 'list') : mode;
@@ -120,7 +120,7 @@ class CMapMaker {
 	}
 
 	poi_view() {			// Poiを表示させる
-	console.log("cMapmaker: PoiView");
+		console.log("cMapmaker: PoiView");
 		if (map.getZoom() >= Conf.default.iconViewZoom) {
 			Object.values(Conf.targets).forEach(key => Marker.set(key));
 		} else {
@@ -129,7 +129,7 @@ class CMapMaker {
 	}
 
 	poi_get(targets) {		// OSMとGoogle SpreadSheetからPoiを取得してリスト化
-	return new Promise((resolve, reject) => {
+		return new Promise((resolve, reject) => {
 			console.log("cMapmaker: PoiGet start");
 			winCont.spinner(true);
 			var keys = (targets !== undefined && targets !== "") ? targets : Object.values(Conf.targets);

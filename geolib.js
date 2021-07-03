@@ -9,7 +9,7 @@ class Leaflet {
         this.Control = { "locate": "", "maps": "" };    // leaflet object
     };
 
-    init(callback) {
+    init() {
 
         const Mono_Filter = ['grayscale:90%', 'bright:85%', 'contrast:130%', 'sepia:15%'];
 
@@ -37,7 +37,7 @@ class Leaflet {
             map.on('load', resolve());
             let lhash = L.Hash.parseHash(location.hash);
             if (def.keep_view || lhash == false) {
-                map.setView(def.keep_default_view, def.zoom);   // setView is the last
+                map.setView(def.default_view, def.zoom);   // setView is the last
             } else {
                 map.setView(lhash.center,lhash.zoom);
             }
