@@ -13,7 +13,8 @@
             "restaurant": "restaurant.svg",
             "vending_machine": "vending.svg",
             "place_of_worship": "information3.svg",
-            "post_box":"post_box.svg"
+            "post_box": "post_box.svg",
+            "community_centre": "information3.svg"
         },
         "shop": {
             "alcohol": "bar.svg",
@@ -121,13 +122,13 @@
             "torii": "torii.svg",
             "lamp": "lantern.svg"
         },
-        "leisure":{
+        "leisure": {
             "pitch": "playground.svg",
             "park": "playground.svg",
             "playground": "playground.svg",
             "amusement_arcade": "Input-gaming.svg"
         },
-        "public_transport":{
+        "public_transport": {
             "station": "station.svg"
         }
     },

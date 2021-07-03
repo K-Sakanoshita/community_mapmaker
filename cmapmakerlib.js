@@ -14,7 +14,7 @@ var poiCont = (function () {
 			return basic.uniq(target);
 		},
 		all_clear: () => { pdata = { geojson: [], targets: [], enable: [] } },
-		set_json: (json) => { adata = json; },				// set GoogleSpreadSheetから帰ってきたJson
+		set_actjson: (json) => { adata = json; },			// set GoogleSpreadSheetから帰ってきたJson
 		add_geojson: (pois) => {      						// add geojson pois / pois: {geojson: [],targets: []}
 			if (pois.enable == undefined) pois.enable = [];
 			pois.geojson.forEach((val1, idx1) => {			// 既存Poiに追加
@@ -31,11 +31,11 @@ var poiCont = (function () {
 		},
 		set_geojson: (poi) => {								// add_geojsonのサブ機能
 			let cidx = pdata.geojson.findIndex((val) => val.id == poi.geojson.id);
-			if (cidx === -1) {       	                   // 無い時は追加
+			if (cidx === -1) {       	                   	// 無い時は追加
 				pdata.geojson.push(poi.geojson);
 				cidx = pdata.geojson.length - 1;
 			};
-			if (pdata.targets[cidx] == undefined) {  	// targetが無い時は追加
+			if (pdata.targets[cidx] == undefined) {  		// targetが無い時は追加
 				pdata.targets[cidx] = poi.targets;
 			} else {
 				pdata.targets[cidx] = Object.assign(pdata.targets[cidx], poi.targets);
@@ -76,10 +76,10 @@ var poiCont = (function () {
 				let category = poiCont.get_catname(tags);
 				datas.push([node.id, "-", category, name]);
 			});
-			if (targets.indexOf(Conf.google.targetName) > 0) {			// targets内にgooglesheetがある場合
+			if (targets.indexOf(Conf.google.targetName) > -1) {			// targets内にgooglesheetがある場合
 				adata.forEach((line) => {
 					if (line !== undefined) {
-						datas.push([line.id, line.date2, line.category, line.title]);
+						datas.push([line.id, basic.formatDate(new Date(line.updatetime), "YYYY/MM/DD"), line.category, line.title]);
 					};
 				});
 			};
@@ -179,16 +179,24 @@ var Marker = (function () {				// Marker closure
 		},
 
 		center: (poiid) => {								// Map move to PoiId & Zoom(config)
-			let circle, poi = poiCont.get_osmid(poiid);
+			let poi = poiCont.get_osmid(poiid);
 			let zoomlv = Conf.default.iconViewZoom >= map.getZoom() ? Conf.default.iconViewZoom : map.getZoom();
 			if (poi !== undefined) {	// poi = osmid
 				map.flyTo(poi.latlng, zoomlv, { animate: true, easeLinearity: 0.1, duration: 0.5 });
 			} else {					// poi = actid
 				poi = poiCont.get_actid(poiid);
 				let osmid = poiCont.get_osmid(poi.osmid);
-				map.flyTo(osmid.latlng, zoomlv, { animate: true, easeLinearity: 0.1, duration: 0.5 });
-				cMapmaker.detail_view(poi.osmid,poiid);
-				console.log("event")
+				if (osmid !== undefined) {	// Found Poi
+					map.flyTo(osmid.latlng, zoomlv, { animate: true, easeLinearity: 0.1, duration: 0.5 });
+					cMapmaker.detail_view(poi.osmid, poiid);
+				} else {						// Not Found Poi
+					OvPassCnt.get_osmid(poi.osmid).then((geojson) => {
+						poiCont.add_geojson(geojson);
+						osmid = poiCont.get_osmid(poi.osmid);
+						map.flyTo(osmid.latlng, zoomlv, { animate: true, easeLinearity: 0.1, duration: 0.5 });
+						cMapmaker.detail_view(poi.osmid, poiid);
+					});
+				};
 			}
 		},
 
@@ -233,7 +241,11 @@ var Marker = (function () {				// Marker closure
 			name = (name == "" || name == undefined) ? "" : name;
 
 			let keyn = categorys.find(key => tags[key] !== undefined);
-			let keyv = (keyn !== undefined) ? Conf.marker_tag[keyn][tags[keyn]] : undefined;
+			try {
+				var keyv = (keyn !== undefined) ? Conf.marker_tag[keyn][tags[keyn]] : undefined;
+			} catch {
+				console.log("name" + ": " + keyn + "=" + tags[keyn]);
+			};
 			let actlists = poiCont.get_actlist(params.poi.geojson.id);
 			let iconsize = actlists.length > 0 ? [Conf.effect.icon.x * 2, Conf.effect.icon.y * 2] : [Conf.effect.icon.x, Conf.effect.icon.y];
 			if (keyn !== undefined && keyv !== undefined) {	// in category
@@ -305,10 +317,10 @@ class ListTable {
 	};
 
 	category_make(result) {    							// Poi種別リストを作成
-		WinCont.select_clear(`category_list`);
+		winCont.select_clear(`category_list`);
 		let pois = result.map(data => { return data[2] });
 		pois = pois.filter((x, i, self) => { return self.indexOf(x) === i });
-		pois.map(poi => WinCont.select_add(`category_list`, poi, poi));
+		pois.map(poi => winCont.select_add(`category_list`, poi, poi));
 	};
 
 	datalist_make(targets) {  							// リスト表示

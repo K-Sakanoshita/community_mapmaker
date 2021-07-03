@@ -36,6 +36,7 @@
   <script defer src="./lib/osmtogeojson.js"></script>
   <script defer src="./lib/leaflet-hash.js"></script>
   <script defer src="./basiclib.js"></script>
+  <script defer src="./wincont.js"></script>
   <script defer src="./geolib.js"></script>
   <script defer src="./gsheetlib.js"></script>
   <script defer src="./cmapmaker.js"></script>
@@ -49,14 +50,13 @@
 
 <body>
   <div id="container">
-    <div id="Progress_Bar" class="progress-bar progress-bar-striped progress-bar-animated" style="height: 2px" role="progressbar"></div>
 
     <article id="article">
       <div id="mapid"></div>
     </article>
 
   </div>
-  <div id="Splash_Modal" class="modal" tabindex="-1" role="dialog">
+  <div id="modal_splash" class="modal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document" data-keyboard="false">
       <div class="modal-content">
         <div class="modal-body">
@@ -73,11 +73,16 @@
     <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
       <div class="modal-content">
         <div class="modal-header">
+          <div class="dropdown">
+            <button type="button" class="btn btn-sm float-right menu mr-2" data-toggle="dropdown" aria-expanded="true" id="modal_menu">
+              <i class="fas fa-bars text-black"></i>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="modal_menu" style="z-index: 1090" id="temp_menu2"></div>
+          </div>
           <h4 class="modal-title" id="modal_window_title"></h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
-          <div class="spinner-border text-primary" id="modal_window_spinner" role="status"><span class="sr-only"></div>
         </div>
         <div class="modal-body">
           <div id="modal_window_progress" class="progress-bar progress-bar-striped progress-bar-animated mb-2" style="height: 2px" role="progressbar"></div>

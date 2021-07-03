@@ -23,6 +23,11 @@
     color: initial !important;
 }
 
+.leaflet-touch .leaflet-control-layers-toggle{
+    width: 30px !important;
+    height: 30px !important;
+}
+
 .modal-dialog-fluid {
     max-width: inherit !important;
     width: 98% !important;

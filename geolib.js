@@ -1,36 +1,48 @@
 // Leaflet Control
+
+// Global Variable
+var map;						// leaflet map object
+
 class Leaflet {
 
     constructor() {
         this.Control = { "locate": "", "maps": "" };    // leaflet object
     };
 
-    init() {
+    init(callback) {
+
         const Mono_Filter = ['grayscale:90%', 'bright:85%', 'contrast:130%', 'sepia:15%'];
 
-        let def = Conf.default;
-        let params = { maxZoom: def.maxzoom, minZoom: (basic.isSmartPhone() ? def.phone_minzoom : def.pc_minzoom) };
-        if (def.maxbounds !== "") params = Object.assign(params, { maxBounds: def.maxbounds });
-        let osm_mono = L.tileLayer.colorFilter(Conf.tile.OSM_Standard, { maxNativeZoom: 19, attribution: Conf.tile.OSM_Copyright, filter: Mono_Filter });
-        let osm_std = L.tileLayer(Conf.tile.OSM_Standard, { maxNativeZoom: 19, attribution: Conf.tile.OSM_Copyright });
-        let osm_tiler = L.mapboxGL({ accessToken: '', style: Conf.tile.Tiler_Style, attribution: Conf.tile.Tiler_Copyright });
-        let t_pale = L.tileLayer(Conf.tile.GSI_Standard, { maxNativeZoom: 18, attribution: Conf.tile.GSI_Copyright });
-        let t_ort = L.tileLayer(Conf.tile.GSI_Ortho, { maxNativeZoom: 18, attribution: Conf.tile.GSI_Copyright });
-        let deftile = navigator.userAgent.indexOf("FB") > 0 ? osm_mono : osm_tiler;
-        let tmap = L.map('mapid', Object.assign(params, {
-            doubleClickZoom: false, center: def.mapcenter, zoom: def.zoom, zoomSnap: def.zoomSnap, zoomDelta: def.zoomSnap, layers: [deftile]
-        }));
-        new L.Hash(tmap);
-        let maps = {
-            "OpenStreetMap Maptiler": osm_tiler,
-            "OpenStreetMap Standard": osm_std,
-            "OpenStreetMap Monochrome": osm_mono,
-            "地理院地図 淡色": t_pale,
-            "地理院地図 オルソ": t_ort
-        };
-        this.Control["maps"] = L.control.layers(maps, null, { position: 'topright' }).addTo(tmap);
-        tmap.zoomControl.setPosition("topright");
-        return tmap;									// Make: Zoom control        
+        return new Promise((resolve, reject) => {
+            let def = Conf.default;
+            let params = { maxZoom: def.maxzoom, minZoom: (basic.isSmartPhone() ? def.phone_minzoom : def.pc_minzoom) };
+            if (def.maxbounds !== "") params = Object.assign(params, { maxBounds: def.maxbounds });
+            let osm_mono = L.tileLayer.colorFilter(Conf.tile.OSM_Standard, { maxNativeZoom: 19, attribution: Conf.tile.OSM_Copyright, filter: Mono_Filter });
+            let osm_std = L.tileLayer(Conf.tile.OSM_Standard, { maxNativeZoom: 19, attribution: Conf.tile.OSM_Copyright });
+            let osm_tiler = L.mapboxGL({ accessToken: '', style: Conf.tile.Tiler_Style, attribution: Conf.tile.Tiler_Copyright });
+            let t_pale = L.tileLayer(Conf.tile.GSI_Standard, { maxNativeZoom: 18, attribution: Conf.tile.GSI_Copyright });
+            let t_ort = L.tileLayer(Conf.tile.GSI_Ortho, { maxNativeZoom: 18, attribution: Conf.tile.GSI_Copyright });
+            let deftile = navigator.userAgent.indexOf("FB") > 0 ? osm_mono : osm_tiler;
+            map = L.map('mapid', Object.assign(params, { doubleClickZoom: false, zoomSnap: def.zoomSnap, zoomDelta: def.zoomSnap, layers: [deftile] }));
+            new L.Hash(map);
+            let maps = {
+                "OpenStreetMap Maptiler": osm_tiler,
+                "OpenStreetMap Standard": osm_std,
+                "OpenStreetMap Monochrome": osm_mono,
+                "地理院地図 淡色": t_pale,
+                "地理院地図 オルソ": t_ort
+            };
+            this.Control["maps"] = L.control.layers(maps, null, { position: 'topright' }).addTo(map);
+            map.zoomControl.setPosition("topright");
+            map.on('load', resolve());
+            let lhash = L.Hash.parseHash(location.hash);
+            if (def.keep_view || lhash == false) {
+                map.setView(def.keep_default_view, def.zoom);   // setView is the last
+            } else {
+                map.setView(lhash.center,lhash.zoom);
+            }
+        });
+
     };
 
     stop() {
@@ -263,6 +275,11 @@ var GeoCont = (function () {
                 }]
             };
             GeoCont.gcircle(geojson);
+        },
+
+        box_write: () => {  // view box
+            let bcords = Conf.default.maxbounds;
+            L.polyline(bcords, { color: 'red', weight: 4 }).addTo(map);
         },
 
         bbox_write: () => { // view maparea

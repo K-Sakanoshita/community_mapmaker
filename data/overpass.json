@@ -118,6 +118,19 @@
                 "operator"
             ]
         },
+        "worship": {
+            "overpass": [
+                "node[\"amenity\"=\"place_of_worship\"]",
+                "way[\"amenity\"=\"place_of_worship\"]"
+            ],
+            "tags": [
+                "amenity=place_of_worship"
+            ],
+            "views": [
+                "name",
+                "religion"
+            ]
+        },
         "amusement_arcade": {
             "overpass": [
                 "node[\"leisure\"=\"amusement_arcade\"]",

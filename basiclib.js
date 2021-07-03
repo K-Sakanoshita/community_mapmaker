@@ -7,13 +7,17 @@ class Basic {
 
     formatDate(date, format) {
         // date format
-        format = format.replace(/YYYY/g, date.getFullYear());
-        format = format.replace(/YY/g, date.getFullYear().toString().slice(-2));
-        format = format.replace(/MM/g, ('0' + (date.getMonth() + 1)).slice(-2));
-        format = format.replace(/DD/g, ('0' + date.getDate()).slice(-2));
-        format = format.replace(/hh/g, ('0' + date.getHours()).slice(-2));
-        format = format.replace(/mm/g, ('0' + date.getMinutes()).slice(-2));
-        format = format.replace(/ss/g, ('0' + date.getSeconds()).slice(-2));
+        try {
+            format = format.replace(/YYYY/g, date.getFullYear());
+            format = format.replace(/YY/g, date.getFullYear().toString().slice(-2));
+            format = format.replace(/MM/g, ('0' + (date.getMonth() + 1)).slice(-2));
+            format = format.replace(/DD/g, ('0' + date.getDate()).slice(-2));
+            format = format.replace(/hh/g, ('0' + date.getHours()).slice(-2));
+            format = format.replace(/mm/g, ('0' + date.getMinutes()).slice(-2));
+            format = format.replace(/ss/g, ('0' + date.getSeconds()).slice(-2));
+        } catch {
+            format = "";
+        };
         return format;
     }
 
@@ -76,87 +80,3 @@ class Basic {
     }
 };
 var basic = new Basic();
-
-// Display Status(progress&message)
-var WinCont = (function () {
-    var modal_open = false, MW = "#modal_window";
-
-    return {
-        splash: (mode) => {
-            $("#splash_image").attr("src", Conf.splash.url);
-            let act = mode ? { backdrop: 'static', keyboard: false } : 'hide';
-            $('#Splash_Modal').modal(act);
-        },
-        modal_open: p => {   // open modal window(p: title,message,mode(yes no close),callback_yes,callback_no,callback_close)
-            $(`${MW}_spinner`).hide();
-            $(`${MW}_title`).html(p.title);
-            $(`${MW}_message`).html(p.message);
-            [`${MW}_yes`, `${MW}_no`, `${MW}_close`].forEach(id => $(id).hide());
-            if (p.mode.indexOf("yes") > -1) $(`${MW}_yes`).html(glot.get("button_yes")).on('click', p.callback_yes).show();
-            if (p.mode.indexOf("no") > -1) $(`${MW}_no`).html(glot.get("button_no")).on('click', p.callback_no).show();
-            if (p.mode.indexOf("close") > -1) $(`${MW}_close`).html(glot.get("button_close")).on('click', p.callback_close).show();
-            $(MW).modal({ backdrop: false, keyboard: true });
-            modal_open = true;
-            $(MW).on('shown.bs.modal', () => { if (!modal_open) $(MW).modal('hide') }); // Open中にCloseされた時の対応
-            $(MW).on('hidden.bs.modal', () => p.callback_close());                        // "x" click
-        },
-        modal_text: (text, append) => {
-            let newtext = append ? $(`${MW}_message`).html() + text : text;
-            $(`${MW}_message`).html(newtext);
-        },
-        modal_spinner: view => {
-            if (view) {
-                $(`${MW}_spinner`).show();
-            } else {
-                $(`${MW}_spinner`).hide();
-            };
-        },
-        modal_progress: percent => {
-            percent = percent == 0 ? 0.1 : percent;
-            $(`${MW}_progress`).css('width', parseInt(percent) + "%");
-        },
-        modal_close: () => {            // close modal window
-            modal_open = false;
-            // WinCont.modal_progress(0);
-            $(`${MW}`).modal('hide');
-            [`${MW}_yes`, `${MW}_no`, `${MW}_close`].forEach(id => $(id).off('click'));
-        },
-        menu_make: () => {
-            Object.keys(Conf.menu).forEach(key => {
-                let link, confkey = Conf.menu[key];
-                if (confkey.linkto.indexOf("html:") > -1) {
-                    $("#temp_menu>span:first").html(confkey.linkto.substring(5));
-                    link = $("#temp_menu>span:first").clone();
-                } else {
-                    $("#temp_menu>a:first").attr("href", confkey.linkto);
-                    $("#temp_menu>a:first").attr("target", "");
-                    if (confkey.linkto.indexOf("javascript:") == -1) $("#temp_menu>a:first").attr("target", "_blank");
-                    $("#temp_menu>a>span:first").attr("glot-model", confkey["glot-model"]);
-                    link = $("#temp_menu>a:first").clone();
-                };
-                $("#temp_menu").append(link);
-                if (confkey["divider"]) $("#temp_menu>div:first").clone().appendTo($("#temp_menu"));
-            });
-            $("#temp_menu>a:first").remove();
-            $("#temp_menu>span:first").remove();
-            $("#temp_menu>div:first").remove();
-        },
-        select_add: (domid, text, value) => {
-            let option = document.createElement("option");
-            option.text = text;
-            option.value = value;
-            document.getElementById(domid).appendChild(option);
-        },
-        select_clear: (domid) => {
-            $('#' + domid + ' option').remove();
-            $('#' + domid).append($('<option>').html("---").val("-"));
-        },
-        window_resize: () => {
-            console.log("Window: resize.");
-            let mapWidth = basic.isSmartPhone() ? window.innerWidth - 20 : window.innerWidth * 0.3;
-            mapWidth = mapWidth < 320 ? 320 : mapWidth;
-            if (typeof baselist !== "undefined") baselist.style.width = mapWidth + "px";
-            if (typeof mapid !== "undefined") mapid.style.height = window.innerHeight + "px";
-        }
-    };
-})();

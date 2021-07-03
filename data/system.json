@@ -1,8 +1,8 @@
 {
     "system": {
         "_OverPassServer": "https://overpass.nchc.org.tw/api/interpreter",
-        "OverPassServer": "https://overpass.kumi.systems/api/interpreter",
-        "__OverPassServer": "https://overpass-api.de/api/interpreter"
+        "__OverPassServer": "https://overpass.kumi.systems/api/interpreter",
+        "OverPassServer": "https://overpass-api.de/api/interpreter"
     },
     "tile": {
         "OSM_Copyright": "<a href=\"https://openstreetmap.org\">&copy OpenStreetMap contributors</a>",
@@ -12,6 +12,10 @@
         "GSI_Ortho": "https://cyberjapandata.gsi.go.jp/xyz/ort/{z}/{x}/{y}.jpg",
         "Tiler_Copyright": "<a href=\"https://www.maptiler.com/copyright/\" target=\"_blank\">© MapTiler</a> <a href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\">© OpenStreetMap contributors</a>",
         "Tiler_Style": "https://api.maptiler.com/maps/2e4db38a-b862-444d-bcfe-fefe51429073/style.json?key=Eq2IyrHsOEGFU1W1fvd7"
+    },
+    "menu_list": {
+        "template":"<a class='dropdown-item'><span></span></a><span class='dropdown-item'></span>",
+        "divider":"<div class='dropdown-divider'></div>"
     },
     "effect": {
         "icon": {

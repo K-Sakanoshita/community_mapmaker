@@ -1,14 +1,16 @@
 {
     "targets": [
         "park",
+        "worship",
         "wikipedia",
         "centre",
         "activity"
     ],
     "default": {
-        "mapcenter": [
-            34.6977,
-            135.5043
+        "keep_default_view": false,
+        "default_view": [
+            34.61765,
+            135.46604
         ],
         "_maxbounds": "",
         "maxbounds": [
@@ -17,11 +19,11 @@
                 135.37000
             ],
             [
-                34.80000,
-                135.67000
+                34.72000,
+                135.51236
             ]
         ],
-        "zoom": 14,
+        "zoom": 13,
         "pc_minzoom": 12,
         "phone_minzoom": 11,
         "maxzoom": 20,
@@ -54,6 +56,28 @@
         ]
     },
     "menu": [
+        {
+            "glot-model": "licence_title",
+            "linkto": "javascript:cMapmaker.licence()",
+            "divider": false
+        },
+        {
+            "glot-model": "about",
+            "linkto": "https://www.oml.city.osaka.lg.jp/index.php?page_id=1301",
+            "divider": false
+        },
+        {
+            "glot-model": "owner",
+            "linkto": "https://github.com/K-Sakanoshita/community_mapmaker",
+            "divider": true
+        },
+        {
+            "glot-model": "openstreetmap",
+            "linkto": "https://www.openstreetmap.org/about",
+            "divider": false
+        }
+    ],
+    "detail_menu": [
         {
             "glot-model": "licence_title",
             "linkto": "javascript:cMapmaker.licence()",

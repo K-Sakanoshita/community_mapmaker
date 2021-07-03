@@ -63,6 +63,25 @@ var OvPassCnt = (function () {
 			});
 		},
 
+		get_osmid: (query) => { 	// 指定したIDを取得
+			return new Promise((resolve, reject) => {
+				let params = query.split("/");
+				let url = Conf.system.OverPassServer + `?data=[out:json][timeout:30];${params[0]}(${params[1]});out body meta;>;out skel;`;
+				console.log("GET: " + url);
+				$.ajax({ "type": 'GET', "dataType": 'json', "url": url, "cache": false }).done(function (osmxml) {
+					console.log("OvPassCnt.get: done.");
+					if (osmxml.elements.length == 0) { resolve(); return };
+					let geojson = osmtogeojson(osmxml, { flatProperties: true });
+					OvPassCnt.set_targets(geojson.features);
+					console.log("OvPassCnt: Cache Update");
+					resolve(Cache);
+				}).fail(function (jqXHR, statusText, errorThrown) {
+					console.log(statusText);
+					reject(jqXHR, statusText, errorThrown);
+				});
+			})
+		},
+
 		set_targets: (geojson) => {    // geojsonからtargetsを割り振る
 			console.log("set_targets: " + geojson.length);
 			geojson.forEach((val1) => {
