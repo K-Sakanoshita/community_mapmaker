@@ -31,6 +31,50 @@
 		"ja": "スプラッシュ画像: <a href=\"http://image.oml.city.osaka.lg.jp/archive/detail?cls=ancient&pkey=n0067001\">大阪市立図書館デジタルアーカイブ 大阪市大観</a>",
 		"en": "Splash Image: <a href=\"http://image.oml.city.osaka.lg.jp/archive/detail?cls=ancient&pkey=n0067001\">Osaka Municipal Library Digital Archive Osakashi daikan</a>"
 	},
+	"activity_add": {
+		"ja": "情報追加",
+		"en": "Add information"
+	},
+	"activity_edit": {
+		"ja": "情報編集",
+		"en": "Edit information"
+	},
+	"act_category": {
+		"ja": "カテゴリ",
+		"en": "Category"
+	},
+	"act_name": {
+		"ja": "名前",
+		"en": "Name"
+	},
+	"act_rubi": {
+		"ja": "名前（よみ）",
+		"en": "Name(easy)"
+	},
+	"act_memo": {
+		"ja": "説明",
+		"en": "Detail"
+	},
+	"act_detail_url": {
+		"ja": "詳細URL",
+		"en": "Detail URL"
+	},
+	"act_official_url": {
+		"ja": "公式URL",
+		"en": "Official URL"
+	},
+	"act_picture_url1": {
+		"ja": "写真URL1",
+		"en": "Picture URL1"
+	},
+	"act_picture_url2": {
+		"ja": "写真URL2",
+		"en": "Picture URL2"
+	},
+	"act_picture_url3": {
+		"ja": "写真URL3",
+		"en": "Picture URL3"
+	},
 	"zoomlevel": {
 		"ja": "ズームレベル：",
 		"en": "Zoom Level: "
@@ -327,8 +371,8 @@
 		"ja": "ホームページ",
 		"en": "Web Site"
 	},
-	"tags_phone":{
-		"ja":"電話番号",
-		"en":"telephone"
+	"tags_phone": {
+		"ja": "電話番号",
+		"en": "telephone"
 	}
 }

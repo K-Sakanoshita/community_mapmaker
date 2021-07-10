@@ -1,10 +1,7 @@
 // Display Status(progress&message)
 class WinCont {
 
-    constructor() {
-        this.modal_mode = false;
-        Object.defineProperty(this, 'MW', { value: "#modal_window" });
-    }
+    constructor() { this.modal_mode = false }
 
     splash(mode) {
         $("#splash_image").attr("src", Conf.splash.url);
@@ -22,35 +19,52 @@ class WinCont {
     }
 
     modal_open(p) {   // open modal window(p: title,message,mode(yes no close),callback_yes,callback_no,callback_close)
-        let MW = winCont.MW;
-        $(`${MW}_title`).html(p.title);
-        $(`${MW}_message`).html(p.message);
-        [`${MW}_yes`, `${MW}_no`, `${MW}_close`].forEach(id => $(id).hide());
-        if (p.mode.indexOf("yes") > -1) $(`${MW}_yes`).html(glot.get("button_yes")).on('click', p.callback_yes).show();
-        if (p.mode.indexOf("no") > -1) $(`${MW}_no`).html(glot.get("button_no")).on('click', p.callback_no).show();
-        if (p.mode.indexOf("close") > -1) $(`${MW}_close`).html(glot.get("button_close")).on('click', p.callback_close).show();
+        let MW = "modal_window";
+        document.getElementById(`${MW}_title`).innerHTML = p.title;
+        document.getElementById(`${MW}_message`).innerHTML = p.message;
+        document.getElementById(`${MW}_menu`).hidden = p.menu ? false : true;
+        let delEvents = function (keyn) {
+            let dom = document.getElementById(`${MW}_${keyn}`);
+            dom.removeEventListener("click", function () { p[`callback_${keyn}`]() });
+        };
+        let addButton = function (keyn) {
+            let dom = document.getElementById(`${MW}_${keyn}`);
+            dom.hidden = true;
+            if (p.mode.indexOf(keyn) > -1) {
+                dom.innerHTML = glot.get(`button_${keyn}`);
+                dom.removeEventListener("click", function () { p[`callback_${keyn}`]() });
+                dom.addEventListener("click", function () { p[`callback_${keyn}`]() });
+                dom.hidden = false;
+            };
+        };
+        ["yes", "no", "close"].forEach(keyn => addButton(keyn));
         winCont.modal_progress(0);
-        $(winCont.MW).modal({ backdrop: false, keyboard: true });
+        $(`#${MW}`).modal({ backdrop: false, keyboard: true });
         winCont.modal_mode = true;
-        $(winCont.MW).on('shown.bs.modal', () => { if (!winCont.modal_mode) $(winCont.MW).modal('hide') }); // Open中にCloseされた時の対応
-        $(winCont.MW).on('hidden.bs.modal', () => p.callback_close());                        // "x" click
+        $(`#${MW}`).on('shown.bs.modal', () => {
+            ["yes", "no", "close"].forEach(keyn => delEvents(keyn));
+            if (!winCont.modal_mode) $(`#${MW}`).modal('hide')
+        });                 // Open中にCloseされた時の対応
+        $(`#${MW}`).on('hidden.bs.modal', () => {
+            ["yes", "no", "close"].forEach(keyn => delEvents(keyn));
+            p[`callback_${p.callback_close ? "close" : "no"}`]();
+        });    // "x" click
     }
 
     modal_text(text, append) {
         let newtext = append ? $(`${MW}_message`).html() + text : text;
-        $(`${winCont.MW}_message`).html(newtext);
+        $(`#modal_window_message`).html(newtext);
     }
 
     modal_progress(percent) {
         percent = percent == 0 ? 0.1 : percent;
-        $(`${winCont.MW}_progress`).css('width', parseInt(percent) + "%");
+        $(`#modal_window_progress`).css('width', parseInt(percent) + "%");
     }
 
     modal_close() {            // close modal window(note: change this)
         winCont.modal_mode = false;
-        let MW = winCont.MW;
-        $(`${MW}`).modal('hide');
-        [`${MW}_yes`, `${MW} _no`, `${MW}_close`].forEach(id => $(id).off('click'));
+        $(`#modal_window`).modal('hide');
+        [`#modal_window_yes`, `#modal_window_no`, `#modal_window_close`].forEach(id => $(id).off('click'));
     }
 
     menu_make(menulist, domid) {

@@ -50,7 +50,7 @@ class CMapMaker {
 		leaflet.init();						// Leaflet Initialize
 		Promise.all([
 			gSpreadSheet.get(Conf.google.AppScript, Conf.google.sheetName),
-			cMapmaker.poi_get(),		// get_zoomなどleafletの情報が必要なためleaflet.init後に実行
+			cMapmaker.poi_get(),			// get_zoomなどleafletの情報が必要なためleaflet.init後に実行
 			cMapmaker.static_check()
 		]).then(results => {
 			leaflet.controlAdd("bottomleft", "zoomlevel", "");
@@ -66,7 +66,7 @@ class CMapMaker {
 			cMapmaker.poi_view();
 			winCont.window_resize();
 			cMapmaker.mode_change("map");												// initialize last_modetime
-			winCont.menu_make(Conf.menu, "temp_menu");
+			winCont.menu_make(Conf.menu, "main_menu");
 			glot.render();
 			if (location.search !== "") {    	// 引数がある場合
 				let search = location.search.replace(/[?&]fbclid.*/, '').replace(/%2F/g, '/');   // facebook対策
@@ -97,12 +97,12 @@ class CMapMaker {
 		})
 	}
 
-	licence() {				// About license
+	licence() {			// About license
 		let msg = { msg: glot.get("licence_message") + glot.get("more_message"), ttl: glot.get("licence_title") };
-		winCont.modal_open({ "title": msg.ttl, "message": msg.msg, "mode": "close", callback_close: winCont.modal_close });
+		winCont.modal_open({ "title": msg.ttl, "message": msg.msg, "mode": "close", callback_close: winCont.modal_close, "menu": false });
 	}
 
-	mode_change(mode) {		// mode change(list or map)
+	mode_change(mode) {	// mode change(list or map)
 		if (this.status !== "mode_change" && (this.last_modetime + 300) < Date.now()) {
 			this.status = "mode_change";
 			let params = { 'map': ['down', 'remove', 'start'], 'list': ['up', 'add', 'stop'] };
@@ -171,7 +171,7 @@ class CMapMaker {
 		let micon = tags.mapmaker_icon;
 		let title = `<img src="./image/${micon}">${tags.name == undefined ? glot.get("undefined") : tags.name}`;
 		let message = "";
-		winCont.menu_make(Conf.detail_menu, "temp_menu2");
+		winCont.menu_make(Conf.detail_menu, "modal_menu");
 		winCont.modal_progress(0);
 
 		// append OSM Tags(仮…テイクアウトなど判別した上で最終的には分ける)
@@ -195,7 +195,7 @@ class CMapMaker {
 			"title": title, "message": message, "mode": "close", "callback_close": () => {
 				winCont.modal_close();
 				history.replaceState('', '', location.pathname + location.hash);
-			}
+			}, "menu": true
 		});
 		if (openid !== undefined) document.getElementById("modal_" + openid).scrollIntoView();
 
@@ -257,7 +257,68 @@ class cMapEvents {
 }
 var cmap_events = new cMapEvents();
 
-class FormControl {
+class Activity {
+
+	// edit activity
+	edit(p) {			// p {osmid: undefined時はnew,mode: "new" or "edit" or "delete"}
+		let title = glot.get(p.new ? "activity_add" : "activity_edit");
+		let gt = {};
+		["category", "name", "rubi", "memo", "detail_url", "official_url", "picture_url1", "picture_url2", "picture_url3"]
+			.forEach(key => { gt[`act_${key}`] = glot.get(`act_${key}`) });
+
+		let message = `
+		<div class="container">
+			<div class="row mb-1 align-items-center">
+				<div class="col-2 p-1">${gt.act_category}</div>
+				<div class="col-10 p-1"><select id="act_category" class="form-control form-control-sm"></select></div>
+			</div>
+			<div class="row mb-1 align-items-center">
+				<div class="col-2 p-1">${gt.act_name}</div>
+				<div class="col-10 p-1"><input type="text" id="act_name" maxlength="40" class="form-control form-control-sm"></div>
+			</div>
+			<div class="row mb-1 align-items-center">
+				<div class="col-2 p-1">${gt.act_rubi}</div>
+				<div class="col-10 p-1"><input type="text" id="act_rubi" maxlength="40" class="form-control form-control-sm"></div>
+			</div>
+			<div class="row mb-1 align-items-center">
+				<div class="col-2 p-1">${gt.act_memo}</div>
+				<div class="col-10 p-1"><textarea id="act_memo" rows="8" class="form-control form-control-sm"></textarea></div>
+			</div>
+			<div class="row mb-1 align-items-center">
+				<div class="col-2 p-1">${gt.act_detail_url}</div>
+				<div class="col-10 p-1"><input type="url" id="act_detail_url" class="form-control form-control-sm"></div>
+			</div>
+			<div class="row mb-1 align-items-center">
+				<div class="col-2 p-1">${gt.act_official_url}</div>
+				<div class="col-10 p-1"><input type="url" id="act_official_url" class="form-control form-control-sm"></div>
+			</div>
+			<div class="row mb-1 align-items-center">
+				<div class="col-2 p-1">${gt.act_picture_url1}</div>
+				<div class="col-10 p-1"><input type="url" id="act_picture_url1" value="https://" class="form-control form-control-sm"></div>
+			</div>
+			<div class="row mb-1 align-items-center">
+				<div class="col-2 p-1">${gt.act_picture_url2}</div>
+				<div class="col-10 p-1"><input type="url" id="act_picture_url2" value="https://" class="form-control form-control-sm"></div>
+			</div>
+			<div class="row mb-1 align-items-center">
+				<div class="col-2 p-1">${gt.act_picture_url3}</div>
+				<div class="col-10 p-1"><input type="url" id="act_picture_url3" value="https://" class="form-control form-control-sm"></div>
+			</div>
+			<div class="row mb-1 align-items-center">
+				<div class="col-12 p-1"><h4>この内容で登録しますか？</h4></div>
+			</div>
+		</div>
+		`;
+
+		winCont.modal_progress(0);
+		winCont.modal_open({
+			"title": title, "message": message, "mode": "yes,no", "menu": true,
+			"callback_no": () => { winCont.modal_close() }, "callback_yes": () => {
+				console.log("save");
+			}
+		});
+	}
+
 	// Google Spreadsheet Control Form
 	form_edit(json) {
 		listTable.select(json['OSMID']);
@@ -300,4 +361,4 @@ class FormControl {
 		return;
 	};
 };
-var form = new FormControl();	// Google Spreadsheet Control Form
+var activity = new Activity();	// Google Spreadsheet Control Form

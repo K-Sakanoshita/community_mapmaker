@@ -79,23 +79,13 @@
     ],
     "detail_menu": [
         {
-            "glot-model": "licence_title",
+            "glot-model": "activity_add",
             "linkto": "javascript:cMapmaker.licence()",
             "divider": false
         },
         {
-            "glot-model": "about",
-            "linkto": "https://www.oml.city.osaka.lg.jp/index.php?page_id=1301",
-            "divider": false
-        },
-        {
-            "glot-model": "owner",
-            "linkto": "https://github.com/K-Sakanoshita/community_mapmaker",
-            "divider": true
-        },
-        {
-            "glot-model": "openstreetmap",
-            "linkto": "https://www.openstreetmap.org/about",
+            "glot-model": "activity_edit",
+            "linkto": "javascript:cMapmaker.licence()",
             "divider": false
         }
     ]
