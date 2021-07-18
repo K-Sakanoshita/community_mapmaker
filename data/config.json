@@ -31,7 +31,7 @@
         "zoom": 15,
         "pc_minzoom": 13,
         "phone_minzoom": 12,
-        "maxzoom": 18,
+        "maxzoom": 19,
         "zoomSnap": 0.5,
         "iconViewZoom": 14,
         "bookmark": true

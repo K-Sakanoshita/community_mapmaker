@@ -22,7 +22,7 @@ class Leaflet {
             let osm_tiler = L.mapboxGL({ accessToken: '', style: Conf.tile.Tiler_Style, attribution: Conf.tile.Tiler_Copyright });
             let t_pale = L.tileLayer(Conf.tile.GSI_Standard, { maxNativeZoom: 18, attribution: Conf.tile.GSI_Copyright });
             let t_ort = L.tileLayer(Conf.tile.GSI_Ortho, { maxNativeZoom: 18, attribution: Conf.tile.GSI_Copyright });
-            let deftile = navigator.userAgent.indexOf("FB") > 0 ? osm_mono : osm_tiler;
+            let deftile = navigator.userAgent.indexOf("FB") > 0 ? osm_mono : osm_tiler; // facebook対策(内蔵ブラウザだとMaptilerが出ない)
             map = L.map('mapid', Object.assign(params, { doubleClickZoom: false, zoomSnap: def.zoomSnap, zoomDelta: def.zoomSnap, layers: [deftile] }));
             new L.Hash(map);
             let maps = {
