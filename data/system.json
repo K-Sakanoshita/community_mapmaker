@@ -36,14 +36,14 @@
             "fillOpacity": 0.1,
             "timer": 2000
         },
-        "Icon": {
-            "x": 30,
-            "y": 30,
-            "scale": 1.66
+        "icon": {
+            "x": 40,
+            "y": 60,
+            "scale": 1.4
         },
-        "Text": {
+        "text": {
             "view": true,
-            "size": 12,
+            "size": 14,
             "color": "black"
         }
     }

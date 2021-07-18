@@ -1,59 +1,65 @@
 {
     "targets": [
+        "takeout",
+        "library",
+        "museum",
+        "disaster",
         "park",
         "worship",
         "wikipedia",
         "centre",
+        "station",
         "activity"
     ],
     "default": {
         "keep_default_view": false,
         "default_view": [
-            34.61765,
-            135.46604
+            35.00372,
+            135.94746
         ],
         "_maxbounds": "",
         "maxbounds": [
             [
-                34.52000,
-                135.37000
+                35.09545,
+                135.86492
             ],
             [
-                34.72000,
-                135.51236
+                34.94088,
+                136.11914
             ]
         ],
-        "zoom": 13,
-        "pc_minzoom": 12,
-        "phone_minzoom": 11,
-        "maxzoom": 20,
+        "zoom": 15,
+        "pc_minzoom": 13,
+        "phone_minzoom": 12,
+        "maxzoom": 18,
         "zoomSnap": 0.5,
         "iconViewZoom": 14,
         "bookmark": true
     },
     "google": {
         "Analytics": "",
-        "AppScript": "https://script.google.com/macros/s/AKfycbyknNKqOCnBqovC2IrTTZJNHdhlV9f6hJ0psxbu00kwxvBA_XmkoupAi_TTSLQrEjR-pg/exec",
+        "AppScript": "https://script.google.com/macros/s/AKfycby_E4W1SQrp8y6gkXOPksd7mCDv505Z3leIv3RWDBh5bnhNoKo8S1PmmkBGR630AoM4yA/exec",
+        "_AppScript": "https://script.google.com/macros/s/AKfycbyknNKqOCnBqovC2IrTTZJNHdhlV9f6hJ0psxbu00kwxvBA_XmkoupAi_TTSLQrEjR-pg/exec",
         "sheetName": "activity",
         "targetName": "activity"
     },
     "splash": {
-        "url": ""
+        "url": "./image/splash.png"
     },
     "static": {
         "osmjson": "",
         "osmbounds": [],
         "_osmjson": "./data/osaka_city_library.json",
-        "_osmbounds": [
-            [
-                34.52000,
-                135.37000
-            ],
-            [
-                34.80000,
-                135.67000
-            ]
-        ]
+        "_osmbounds": {
+            "NW": {
+                "lat": 34.80000,
+                "lng": 135.37000
+            },
+            "SE": {
+                "lat": 34.52000,
+                "lng": 135.67000
+            }
+        }
     },
     "menu": [
         {
@@ -79,14 +85,12 @@
     ],
     "detail_menu": [
         {
-            "glot-model": "activity_add",
-            "linkto": "javascript:cMapmaker.licence()",
-            "divider": false
-        },
-        {
-            "glot-model": "activity_edit",
-            "linkto": "javascript:cMapmaker.licence()",
+            "glot-model": "act_add",
+            "linkto": "javascript:activity.edit()",
             "divider": false
         }
-    ]
+    ],
+    "detail_view": {
+        "openfirst": false
+    }
 }

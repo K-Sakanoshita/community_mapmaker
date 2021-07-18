@@ -31,6 +31,7 @@
             "farm": "farm",
             "frozen_food": "frozen food",
             "greengrocer": "greengrocer",
+            "gift": "gift",
             "health_food": "health food",
             "ice_cream": "ice cream",
             "pasta": "pasta",
@@ -213,6 +214,9 @@
             "park": "park",
             "playground": "playground",
             "amusement_arcade": "amusement arcade"
+        },
+        "railway": {
+            "station": "station"
         },
         "public_transport":{
             "station": "station"

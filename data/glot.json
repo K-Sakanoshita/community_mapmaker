@@ -1,7 +1,7 @@
 {
 	"about": {
-		"ja": "住之江区イベント情報マップについて",
-		"en": "about Suminoe event information map"
+		"ja": "くさつお宝マップついて",
+		"en": "about Kusatsu Treasure Map"
 	},
 	"owner": {
 		"ja": "開発サイト",
@@ -12,12 +12,12 @@
 		"en": "about OpenStreetMap"
 	},
 	"title": {
-		"ja": "住之江区イベント情報マップ",
-		"en": "Suminoe Event Map"
+		"ja": "くさつお宝マップ",
+		"en": "Kusatsu Treasure Map"
 	},
 	"subtitle": {
-		"ja": "サンプルマップ by Community Map Maker",
-		"en": "Sample Map by Community Map Maker"
+		"ja": "開発中 by Community Map Maker",
+		"en": "devmap by Community Map Maker"
 	},
 	"licence_title": {
 		"ja": "利用規約",
@@ -31,12 +31,12 @@
 		"ja": "スプラッシュ画像: <a href=\"http://image.oml.city.osaka.lg.jp/archive/detail?cls=ancient&pkey=n0067001\">大阪市立図書館デジタルアーカイブ 大阪市大観</a>",
 		"en": "Splash Image: <a href=\"http://image.oml.city.osaka.lg.jp/archive/detail?cls=ancient&pkey=n0067001\">Osaka Municipal Library Digital Archive Osakashi daikan</a>"
 	},
-	"activity_add": {
-		"ja": "情報追加",
+	"act_add": {
+		"ja": "追加",
 		"en": "Add information"
 	},
-	"activity_edit": {
-		"ja": "情報編集",
+	"act_edit": {
+		"ja": "編集",
 		"en": "Edit information"
 	},
 	"act_category": {
@@ -80,7 +80,7 @@
 		"en": "Zoom Level: "
 	},
 	"update": {
-		"ja": "更新日時: ",
+		"ja": "更新日: ",
 		"en": "Update: "
 	},
 	"getdate": {
@@ -95,13 +95,17 @@
 		"ja": "各種活動",
 		"en": "Activities"
 	},
+	"children": {
+		"ja": "くさつお宝マップ",
+		"en": "Kusatsu Treasure Map"
+	},
 	"memories": {
 		"ja": "思い出など",
 		"en": "Memorials"
 	},
 	"memories_link": {
-		"ja": "シェア用リンク",
-		"en": "Link for sharing"
+		"ja": "シェア",
+		"en": "sharing"
 	},
 	"memories_title": {
 		"ja": "タイトル",
@@ -374,5 +378,9 @@
 	"tags_phone": {
 		"ja": "電話番号",
 		"en": "telephone"
+	},
+	"tags_type": {
+		"ja": "施設種別",
+		"en": "Facility type"
 	}
 }

@@ -31,6 +31,7 @@
             "farm": "農場直売店",
             "frozen_food": "冷凍食品専門店",
             "greengrocer": "八百屋",
+            "gift": "土産屋",
             "health_food": "健康食品店",
             "ice_cream": "アイスクリーム店",
             "pasta": "パスタ専門店",
@@ -213,6 +214,9 @@
             "park": "公園",
             "playground": "児童公園",
             "amusement_arcade": "ゲームセンター"
+        },
+        "railway": {
+            "station": "鉄道駅"
         },
         "public_transport": {
             "station": "鉄道駅"

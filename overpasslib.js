@@ -1,143 +1,139 @@
 "use strict";
-
 // OverPass Server Control(With easy cache)
-var OvPassCnt = (function () {
-	var Cache = { "geojson": [], "targets": [] };   // Cache variable
-	var LLc = { "NW": { "lat": 0, "lng": 0 }, "SE": { "lat": 0, "lng": 0 } }; // latlng cache area
+class OverPassControl {
 
-	return {
-		get: function (targets, poi, progress) {
-			let LL = GeoCont.get_LL();
-			return new Promise((resolve, reject) => {
-				if ((LL.NW.lat < LLc.NW.lat && LL.NW.lng > LLc.NW.lng &&
-					LL.SE.lat > LLc.SE.lat && LL.NW.lat < LLc.NW.lat) || Conf.static.osmjson !== "") {
-					console.log("OvPassCnt: Cache Hit.");       // Within Cache range
-					resolve(Cache);
-				} else {
-					Cache = { "geojson": [], "targets": [] };
-					let SE_lat, SE_lng, NW_lat, NW_lng, maparea;
-					let offset_lat = (LL.NW.lat - LL.SE.lat) / 2;
-					let offset_lng = (LL.SE.lng - LL.NW.lng) / 2;
-					if (Conf.static.osmbounds.length > 1) {
-						let latlng = Conf.static.osmbounds;
-						SE_lat = latlng[0][0];
-						NW_lng = latlng[0][1];
-						NW_lat = latlng[1][0];
-						SE_lng = latlng[1][1];
-					} else {
-						SE_lat = LL.SE.lat - offset_lat;
-						SE_lng = LL.SE.lng + offset_lng;
-						NW_lat = LL.NW.lat + offset_lat;
-						NW_lng = LL.NW.lng - offset_lng;
-					}
-					maparea = SE_lat + ',' + NW_lng + ',' + NW_lat + ',' + SE_lng;
-					LLc = { "SE": { "lat": SE_lat, "lng": SE_lng }, "NW": { "lat": NW_lat, "lng": NW_lng } }; // Save now LL(Cache area)
-					let query = "";
-					targets.forEach(key => {
-						if (Conf.osm[key] !== undefined) Conf.osm[key].overpass.forEach(val => query += val + ";");
-					});
-					let url = Conf.system.OverPassServer + `?data=[out:json][timeout:30][bbox:${maparea}];(${query});out body meta;>;out skel;`;
-					console.log("GET: " + url);
-					$.ajax({
-						"type": 'GET', "dataType": 'json', "url": url, "cache": false, "xhr": () => {
-							var xhr = new window.XMLHttpRequest();
-							xhr.addEventListener("progress", function (evt) {
-								console.log("OvPassCnt.get: Progress: " + evt.loaded);
-								if (progress !== undefined) progress(evt.loaded);
-							}, false);
-							return xhr;
-						}
-					}).done(function (data) {
-						console.log("OvPassCnt.get: done.");
-						if (data.elements.length == 0) { resolve(); return };
-						let osmxml = data;
-						let geojson = osmtogeojson(osmxml, { flatProperties: true });
-						OvPassCnt.set_targets(geojson.features);
-						console.log("OvPassCnt: Cache Update");
-						resolve(Cache);
-					}).fail(function (jqXHR, statusText, errorThrown) {
-						console.log(statusText);
-						reject(jqXHR, statusText, errorThrown);
-					});
+	constructor() {
+		this.Cache = { "geojson": [], "targets": [] };   // Cache variable
+		this.LLc = {};
+		this.CacheZoom = 14;
+	}
+
+	get(targets, poi, progress) {
+		return new Promise((resolve, reject) => {
+			var LL = GeoCont.get_LL();
+			let CT = GeoCont.ll2tile(map.getBounds().getCenter(), OvPassCnt.CacheZoom);
+			console.log("Check:" + CT.tileX + "." + CT.tileY);
+			if (OvPassCnt.LLc[CT.tileX + "." + CT.tileY] !== void 0 || Conf.static.osmjson !== "") {
+				console.log("OvPassCnt: Cache Hit.");       // Within Cache range
+				resolve(OvPassCnt.Cache);
+			} else {
+				let tileNW = GeoCont.ll2tile(LL.NW, OvPassCnt.CacheZoom);	// 緯度経度→タイル座標(左上、右下)→緯度経度
+				let tileSE = GeoCont.ll2tile(LL.SE, OvPassCnt.CacheZoom);
+				let NW = GeoCont.tile2ll(tileNW, OvPassCnt.CacheZoom, "NW");
+				let SE = GeoCont.tile2ll(tileSE, OvPassCnt.CacheZoom, "SE");
+				GeoCont.box_write(NW, SE);
+				let maparea = SE.lat + ',' + NW.lng + ',' + NW.lat + ',' + SE.lng;
+				for (let y = tileNW.tileY; y < tileSE.tileY; y++) {
+					for (let x = tileNW.tileX; x < tileSE.tileX; x++) {
+						OvPassCnt.LLc[x + "." + y] = true;
+					};
 				};
-			});
-		},
-
-		get_osmid: (query) => { 	// 指定したIDを取得
-			return new Promise((resolve, reject) => {
-				let params = query.split("/");
-				let url = Conf.system.OverPassServer + `?data=[out:json][timeout:30];${params[0]}(${params[1]});out body meta;>;out skel;`;
+				let query = "";
+				targets.forEach(key => {
+					if (Conf.osm[key] !== undefined) Conf.osm[key].overpass.forEach(val => query += val + ";");
+				});
+				let url = Conf.system.OverPassServer + `?data=[out:json][timeout:30][bbox:${maparea}];(${query});out body meta;>;out skel;`;
 				console.log("GET: " + url);
-				$.ajax({ "type": 'GET', "dataType": 'json', "url": url, "cache": false }).done(function (osmxml) {
+				$.ajax({
+					"type": 'GET', "dataType": 'json', "url": url, "cache": false, "xhr": () => {
+						var xhr = new window.XMLHttpRequest();
+						xhr.addEventListener("progress", function (evt) {
+							console.log("OvPassCnt.get: Progress: " + evt.loaded);
+							if (progress !== undefined) progress(evt.loaded);
+						}, false);
+						return xhr;
+					}
+				}).done(function (data) {
 					console.log("OvPassCnt.get: done.");
-					if (osmxml.elements.length == 0) { resolve(); return };
+					if (data.elements.length == 0) { resolve(); return };
+					let osmxml = data;
 					let geojson = osmtogeojson(osmxml, { flatProperties: true });
 					OvPassCnt.set_targets(geojson.features);
 					console.log("OvPassCnt: Cache Update");
-					resolve(Cache);
+					resolve(OvPassCnt.Cache);
 				}).fail(function (jqXHR, statusText, errorThrown) {
 					console.log(statusText);
 					reject(jqXHR, statusText, errorThrown);
 				});
-			})
-		},
+			};
+		});
+	}
 
-		set_targets: (geojson) => {    // geojsonからtargetsを割り振る
-			console.log("set_targets: " + geojson.length);
-			geojson.forEach((val1) => {
-				let cidx = Cache.geojson.findIndex(function (val2) {
-					if (val2.properties.id == val1.properties.id)
-						return true;
-				});
-				if (cidx === -1) { // キャッシュが無い時は更新
-					Cache.geojson.push(val1);
-					cidx = Cache.geojson.length - 1;
-				};
+	get_osmid(query) {
+		return new Promise((resolve, reject) => {
+			let params = query.split("/");
+			let url = Conf.system.OverPassServer + `?data=[out:json][timeout:30];${params[0]}(${params[1]});out body meta;>;out skel;`;
+			console.log("GET: " + url);
+			$.ajax({ "type": 'GET', "dataType": 'json', "url": url, "cache": false }).done(function (osmxml) {
+				console.log("OvPassCnt.get: done.");
+				if (osmxml.elements.length == 0) { resolve(); return };
+				let geojson = osmtogeojson(osmxml, { flatProperties: true });
+				OvPassCnt.set_targets(geojson.features);
+				console.log("OvPassCnt: Cache Update");
+				resolve(OvPassCnt.Cache);
+			}).fail(function (jqXHR, statusText, errorThrown) {
+				console.log(statusText);
+				reject(jqXHR, statusText, errorThrown);
+			});
+		})
+	}
 
-				let keys = Object.keys(Conf.osm).filter(key => Conf.osm[key].file == undefined);
-				keys.forEach(val2 => {
-					var target = val2;
-					Conf.osm[target].tags.forEach(function (tag) {
-						let tag_kv = tag.split("=").concat([""]);
-						let tag_not = tag_kv[0].slice(-1) == "!" ? true : false;
-						tag_kv[0] = tag_kv[0].replace(/!/, "");
-						if (val1.properties[tag_kv[0]] !== undefined) { // タグがある場合
-							if ((val1.properties[tag_kv[0]] == tag_kv[1] ^ tag_not) || tag_kv[1] == "") {
-								if (Cache.targets[cidx] == undefined) { // 
-									Cache.targets[cidx] = [target];
-								} else if (Cache.targets[cidx].indexOf(target) === -1) {
-									Cache.targets[cidx].push(target);
-								};
+	set_targets(geojson) {
+		console.log("set_targets: " + geojson.length);
+		geojson.forEach((val1) => {
+			let cidx = OvPassCnt.Cache.geojson.findIndex(function (val2) {
+				if (val2.properties.id == val1.properties.id)
+					return true;
+			});
+			if (cidx === -1) { // キャッシュが無い時は更新
+				OvPassCnt.Cache.geojson.push(val1);
+				cidx = OvPassCnt.Cache.geojson.length - 1;
+			};
+
+			let keys = Object.keys(Conf.osm).filter(key => Conf.osm[key].file == undefined);
+			keys.forEach(val2 => {
+				var target = val2;
+				Conf.osm[target].tags.forEach(function (tag) {
+					let tag_kv = tag.split("=").concat([""]);
+					let tag_not = tag_kv[0].slice(-1) == "!" ? true : false;
+					tag_kv[0] = tag_kv[0].replace(/!/, "");
+					if (val1.properties[tag_kv[0]] !== undefined) { // タグがある場合
+						if ((val1.properties[tag_kv[0]] == tag_kv[1] ^ tag_not) || tag_kv[1] == "") {
+							if (OvPassCnt.Cache.targets[cidx] == undefined) { // 
+								OvPassCnt.Cache.targets[cidx] = [target];
+							} else if (OvPassCnt.Cache.targets[cidx].indexOf(target) === -1) {
+								OvPassCnt.Cache.targets[cidx].push(target);
 							};
 						};
-					});
+					};
 				});
 			});
-		},
-
-		// ovanswerから指定したtargetのgeojsonを返す
-		get_target: (ovanswer, target) => {
-			let geojson = ovanswer.geojson.filter(function (val, gidx) {
-				let found = false;
-				for (let tidx in ovanswer.targets[gidx]) {
-					if (ovanswer.targets[gidx][tidx] == target) { found = true; break };
-				};
-				return found;
-			});
-			//console.log(geojson);
-			return geojson;
-		},
-
-		// ローカルosmjsonをキャッシュに取り込む
-		set_osmjson: (osmjson) => {
-			let geojson = osmtogeojson(osmjson, { flatProperties: true });
-			OvPassCnt.set_targets(geojson.features);
-			let latlng = Conf.static.osmbounds;
-			let SE_lat = latlng[0][0];
-			let NW_lng = latlng[0][1];
-			let NW_lat = latlng[1][0];
-			let SE_lng = latlng[1][1];
-			LLc = { "SE": { "lat": SE_lat, "lng": SE_lng }, "NW": { "lat": NW_lat, "lng": NW_lng } }; // Save now LL(Cache area)
-		}
+		});
 	}
-})();
+
+	get_target(ovanswer, target) {
+		let geojson = ovanswer.geojson.filter(function (val, gidx) {
+			let found = false;
+			for (let tidx in ovanswer.targets[gidx]) {
+				if (ovanswer.targets[gidx][tidx] == target) { found = true; break };
+			};
+			return found;
+		});
+		return geojson;
+	}
+
+	set_osmjson(osmjson) {		// set Static osmjson
+		let geojson = osmtogeojson(osmjson, { flatProperties: true });
+		OvPassCnt.set_targets(geojson.features);
+		let latlng = Conf.static.osmbounds;
+		let tileNW = GeoCont.ll2tile(latlng.NW, OvPassCnt.CacheZoom);
+		let tileSE = GeoCont.ll2tile(latlng.SE, OvPassCnt.CacheZoom);
+		for (let y = tileNW.tileY; y <= tileSE.tileY; y++) {
+			for (let x = tileNW.tileX; x <= tileSE.tileX; x++) {
+				OvPassCnt.LLc[x + "." + y] = true;
+			};
+		};
+	}
+
+}
+var OvPassCnt = new OverPassControl();

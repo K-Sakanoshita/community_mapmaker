@@ -107,11 +107,11 @@ var poiCont = (function () {
 })();
 
 var Marker = (function () {				// Marker closure
-	var markers = {}, SvgIcon = {};		// SVGアイコン連想配列(filename,svg text)
+	var markers = {} //, SvgIcon = {};		// SVGアイコン連想配列(filename,svg text)
 
 	return {
 		init: () => {
-			Marker.set_size(Conf.style.Text.size, Conf.style.Text.view);
+			/*
 			let jqXHRs = [], keys = [];			// SVGファイルをSvgIconへ読み込む
 			Object.keys(Conf.marker_tag).forEach(key1 => {
 				Object.keys(Conf.marker_tag[key1]).forEach((key2) => {
@@ -126,13 +126,14 @@ var Marker = (function () {				// Marker closure
 				let xs = new XMLSerializer();
 				for (let key in keys) SvgIcon[keys[key]] = xs.serializeToString(arguments[key][0]);
 			});
+			*/
 		},
 		markers: () => {
 			return markers;
 		},
-		images: () => {							// SvgIcon(svgを返す)
-			return SvgIcon;
-		},
+		//images: () => {							// SvgIcon(svgを返す)
+		//	return SvgIcon;
+		//},
 		set: (target) => {						// Poi表示
 			console.log("Marker.set: " + target);
 			Marker.delete(target);
@@ -200,14 +201,6 @@ var Marker = (function () {				// Marker closure
 			}
 		},
 
-		set_size: (size, view) => {
-			let icon_xy = Math.ceil(size * Conf.style.Icon.scale);
-			Conf.effect.text.size = size;		// set font size 
-			Conf.effect.text.view = view;
-			Conf.effect.icon.x = icon_xy;		// set icon size
-			Conf.effect.icon.y = icon_xy;
-		},
-
 		all_clear: () => Object.keys(markers).forEach((target) => Marker.delete(target)),	// all delete
 
 		delete: (target, osmid) => {														// Marker delete * don't set pdata
@@ -247,7 +240,7 @@ var Marker = (function () {				// Marker closure
 				console.log("name" + ": " + keyn + "=" + tags[keyn]);
 			};
 			let actlists = poiCont.get_actlist(params.poi.geojson.id);
-			let iconsize = actlists.length > 0 ? [Conf.effect.icon.x * 2, Conf.effect.icon.y * 2] : [Conf.effect.icon.x, Conf.effect.icon.y];
+			let iconsize = actlists.length > 0 ? [Conf.style.icon.x * Conf.style.icon.scale, Conf.style.icon.y * Conf.style.icon.scale] : [Conf.style.icon.x, Conf.style.icon.y];
 			if (keyn !== undefined && keyv !== undefined) {	// in category
 				icon_name = params.filename == undefined ? Conf.marker_tag[keyn][tags[keyn]] : params.filename;
 				let html = `<div class="d-flex align-items-center">`;
@@ -262,24 +255,6 @@ var Marker = (function () {				// Marker closure
 				marker.mapmaker_id = params.poi.geojson.id;
 				marker.mapmaker_key = params.target;
 				marker.mapmaker_lang = params.langname;
-				// marker.mapmaker_icon = icon_name;
-				tags.mapmaker_icon = icon_name;		// tagにも紛れ込ませる(detail_viewで利用)
-				resolve([marker]);
-			} else if (tags.wikipedia !== undefined) {	// wikipedia
-				icon_name = params.filename == undefined ? Conf.osm.wikipedia.marker : params.filename;
-				try {
-					name = tags[Conf.osm.wikipedia.tag].split(':')[1];
-				} catch {
-					console.log(tags[Conf.osm.wikipedia.tag]);
-				};
-				let html = `<div class="d-flex"><img style="width: ${Conf.effect.icon.x}px; height: ${Conf.effect.icon.y}px;" src="./image/${icon_name}" icon-name="${name}">`;
-				if (name !== "" && Conf.effect.text.view) html = `${html}<span class="icon" style="font-size: ${Conf.effect.text.size}px">${name}</span>`;
-				let icon = L.divIcon({ "className": "", "iconSize": [200 * Conf.style.Icon.scale, Conf.effect.icon.y], "iconAnchor": [Conf.effect.icon.x / 2, Conf.effect.icon.y / 2], "html": html + "</div>" });
-				let marker = L.marker(new L.LatLng(params.poi.latlng.lat, params.poi.latlng.lng), { icon: icon, draggable: false });
-				marker.addTo(map).on('click', e => { cMapmaker.detail_view(e.target.mapmaker_id) });
-				marker.mapmaker_id = params.poi.geojson.id;
-				marker.mapmaker_key = params.target;
-				marker.mapmaker_lang = tags[Conf.osm.wikipedia.tag];
 				// marker.mapmaker_icon = icon_name;
 				tags.mapmaker_icon = icon_name;		// tagにも紛れ込ませる(detail_viewで利用)
 				resolve([marker]);

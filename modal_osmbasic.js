@@ -2,6 +2,7 @@ class modal_OSMbasic {
     // make modal html for OSM basic tags
 
     make(tags) {
+        let catname = poiCont.get_catname(tags);
         let elements = 0;
         let html = `<div class="d-flex justify-content-between mb-3">`;
         if (tags.website !== undefined) {
@@ -15,6 +16,12 @@ class modal_OSMbasic {
             html += `<div class="flex-row"><strong>${glot.get("tags_phone")}:</strong> ${tags.phone}</div>`;
             elements++;
         };
+
+        if (catname !== undefined) {
+            html += `<div class="flex-row"><strong>${glot.get("tags_type")}:</strong> ${catname}</div>`;
+            elements++;
+        };
+
         return elements > 0 ? html + "</div>" : "";
     };
 }

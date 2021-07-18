@@ -1,5 +1,45 @@
 {
     "osm": {
+        "takeout": {
+            "overpass": [
+                "way[\"takeaway\"]",
+                "node[\"takeaway\"]",
+                "way[\"takeaway:covid19\"]",
+                "node[\"takeaway:covid19\"]",
+                "node[\"shop\"=\"greengrocer\"]",
+                "way[\"shop\"=\"greengrocer\"]",
+                "node[\"shop\"=\"gift\"]",
+                "way[\"shop\"=\"gift\"]",
+                "node[\"shop\"=\"bakery\"]",
+                "way[\"shop\"=\"bakery\"]",
+                "node[\"shop\"=\"deli\"]",
+                "way[\"shop\"=\"deli\"]"
+            ],
+            "tags": [
+                "takeaway",
+                "shop"
+            ],
+            "views": [
+                "name",
+                "operator"
+            ]
+        },
+        "disaster": {
+            "overpass": [
+                "way[\"social_facility\"=\"shelter\"]",
+                "node[\"social_facility\"=\"shelter\"]",
+                "way[\"emergency\"]",
+                "node[\"emergency\"]"
+            ],
+            "tags": [
+                "social_facility=shelter",
+                "emergency"
+            ],
+            "views": [
+                "name",
+                "operator"
+            ]
+        },
         "library": {
             "overpass": [
                 "relation[\"amenity\"=\"library\"]",
@@ -22,7 +62,7 @@
             "tags": [
                 "tourism=museum"
             ],
-            "view": [
+            "views": [
                 "name",
                 "operator"
             ]
@@ -35,7 +75,7 @@
             "tags": [
                 "tourism=gallery"
             ],
-            "view": [
+            "views": [
                 "name",
                 "operator"
             ]
@@ -48,7 +88,7 @@
             "tags": [
                 "amenity=theatre"
             ],
-            "view": [
+            "views": [
                 "name",
                 "operator"
             ]
@@ -64,7 +104,7 @@
                 "amenity=community_centre",
                 "amenity=arts_centre"
             ],
-            "view": [
+            "views": [
                 "name",
                 "operator"
             ]
@@ -147,10 +187,13 @@
         "station": {
             "overpass": [
                 "node[\"public_transport\"=\"station\"]",
-                "way[\"public_transport\"=\"station\"]"
+                "way[\"public_transport\"=\"station\"]",
+                "node[\"railway\"=\"station\"]",
+                "way[\"railway\"=\"station\"]"
             ],
             "tags": [
-                "public_transport=station"
+                "public_transport=station",
+                "railway=station"
             ],
             "views": [
                 "name",
@@ -165,7 +208,7 @@
             "tags": [
                 "amenity=vending_machine"
             ],
-            "view": [
+            "views": [
                 "name",
                 "operator"
             ]
@@ -178,7 +221,7 @@
             "tags": [
                 "amenity=post_box"
             ],
-            "view": [
+            "views": [
                 "name",
                 "operator"
             ]
@@ -195,6 +238,9 @@
             ],
             "tags": [
                 "wikipedia"
+            ],
+            "views": [
+                "name"
             ]
         }
     }

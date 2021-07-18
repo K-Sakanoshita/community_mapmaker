@@ -39,7 +39,7 @@ class Leaflet {
             if (def.keep_view || lhash == false) {
                 map.setView(def.default_view, def.zoom);   // setView is the last
             } else {
-                map.setView(lhash.center,lhash.zoom);
+                map.setView(lhash.center, lhash.zoom);
             }
         });
 
@@ -222,6 +222,32 @@ var GeoCont = (function () {
             return LL;
         },
 
+        ll2tile: (ll, zoom) => {
+            const maxLat = 85.05112878;     // 最大緯度
+            zoom = parseInt(zoom);
+            lat = parseFloat(ll.lat);       // 緯度
+            lng = parseFloat(ll.lng);       // 経度
+            let pixelX = parseInt(Math.pow(2, zoom + 7) * (lng / 180 + 1));
+            let tileX = parseInt(pixelX / 256);
+            let pixelY = parseInt((Math.pow(2, zoom + 7) / Math.PI) * ((-1 * Math.atanh(Math.sin((Math.PI / 180) * lat))) + Math.atanh(Math.sin((Math.PI / 180) * maxLat))));
+            let tileY = parseInt(pixelY / 256);
+            return { tileX, tileY };
+        },
+
+        tile2ll: (tt, zoom, direction) => {
+            const maxLat = 85.05112878;     // 最大緯度
+            zoom = parseInt(zoom);
+            if (direction == "SE") {
+                tt.tileX++;
+                tt.tileY++;
+            }
+            let pixelX = parseInt(tt.tileX * 256); // タイル座標X→ピクセル座標Y
+            let pixelY = parseInt(tt.tileY * 256); // タイル座標Y→ピクセル座標Y
+            let lng = 180 * (pixelX / Math.pow(2, zoom + 7) - 1);
+            let lat = (180 / Math.PI) * (Math.asin(Math.tanh((-1 * Math.PI / Math.pow(2, zoom + 7) * pixelY) + Math.atanh(Math.sin(Math.PI / 180 * maxLat)))));
+            return { lat, lng };
+        },
+
         get_maparea: (mode) => {	// OverPassクエリのエリア指定
             let LL;
             if (mode == "LLL") {
@@ -277,8 +303,8 @@ var GeoCont = (function () {
             GeoCont.gcircle(geojson);
         },
 
-        box_write: () => {  // view box
-            let bcords = Conf.default.maxbounds;
+        box_write: (NW, SE) => {  // view box
+            let bcords = [[NW.lat, NW.lng], [NW.lat, SE.lng], [SE.lat, SE.lng], [SE.lat, NW.lng],[NW.lat, NW.lng]];
             L.polyline(bcords, { color: 'red', weight: 4 }).addTo(map);
         },
 

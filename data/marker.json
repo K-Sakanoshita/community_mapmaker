@@ -1,48 +1,49 @@
 {
     "marker_tag": {
         "amenity": {
-            "library": "library.svg",
-            "bar": "bentou.svg",
+            "library": "library-round.svg",
+            "bar": "red-takeout.png",
             "bench": "bench.svg",
-            "cafe": "cafe.svg",
+            "cafe": "red-takeout.png",
             "drinking_water": "water.svg",
-            "fast_food": "fastfood.svg",
-            "food_court": "fastfood.svg",
-            "ice_cream": "confectionery.svg",
-            "pub": "bar.svg",
-            "restaurant": "restaurant.svg",
+            "fast_food": "red-gohan.png",
+            "food_court": "red-gohan.png",
+            "ice_cream": "red-takeout.png",
+            "pub": "red-takeout.png",
+            "restaurant": "red-gohan.png",
             "vending_machine": "vending.svg",
-            "place_of_worship": "information3.svg",
+            "place_of_worship": "purple-meishyo.png",
             "post_box": "post_box.svg",
-            "community_centre": "information3.svg"
+            "community_centre": "green-taiken.png"
         },
         "shop": {
-            "alcohol": "bar.svg",
-            "bakery": "bakery.svg",
+            "alcohol": "red-takeout.png",
+            "bakery": "red-takeout.png",
             "beverages": "water.svg",
-            "brewing_supplies": "bar.svg",
-            "butcher": "bentou.svg",
-            "cheese": "bentou.svg",
-            "chocolate": "confectionery.svg",
-            "coffee": "cafe.svg",
-            "confectionery": "confectionery.svg",
-            "convenience": "bentou.svg",
-            "deli": "bentou.svg",
-            "dairy": "bentou.svg",
-            "farm": "bentou.svg",
-            "frozen_food": "deli.svg",
-            "greengrocer": "bentou.svg",
-            "health_food": "bentou.svg",
-            "ice_cream": "confectionery.svg",
-            "pasta": "bentou.svg",
-            "pastry": "pastry.svg",
-            "seafood": "bentou.svg",
-            "spices": "bentou.svg",
-            "tea": "cafe.svg",
+            "brewing_supplies": "red-takeout.png",
+            "butcher": "red-takeout.png",
+            "cheese": "red-takeout.png",
+            "chocolate": "red-takeout.png",
+            "coffee": "red-takeout.png",
+            "confectionery": "red-takeout.png",
+            "convenience": "red-takeout.png",
+            "deli": "red-takeout.png",
+            "dairy": "red-takeout.png",
+            "farm": "red-takeout.png",
+            "frozen_food": "red-takeout.png",
+            "greengrocer": "red-tyokubaijyo.png",
+            "gift": "red-omiyage.png",
+            "health_food": "red-takeout.png",
+            "ice_cream": "red-takeout.png",
+            "pasta": "red-takeout.png",
+            "pastry": "red-takeout.png",
+            "seafood": "red-takeout.png",
+            "spices": "red-takeout.png",
+            "tea": "red-takeout.png",
             "water": "water.svg",
-            "wine": "bar.svg",
-            "kiosk": "bentou.svg",
-            "supermarket": "bentou.svg",
+            "wine": "red-takeout.png",
+            "kiosk": "red-takeout.png",
+            "supermarket": "red-takeout.png",
             "variety_store": "shops.svg"
         },
         "species": {
@@ -54,9 +55,9 @@
             "tree": "tree.svg"
         },
         "emergency": {
-            "fire_extinguisher": "fire_extinguisher.svg",
-            "fire_hydrant": "fire_hydrant.svg",
-            "defibrillator": "aed.svg"
+            "fire_extinguisher": "orange-bousai.png",
+            "fire_hydrant": "orange-bousai.png",
+            "defibrillator": "orange-bousai.png"
         },
         "highway": {
             "traffic_signals": "signal.svg"
@@ -103,9 +104,10 @@
             "exercise": "playground.svg"
         },
         "tourism": {
-            "viewpoint": "star.svg",
+            "viewpoint": "star-round.svg",
             "artwork": "artwork.svg",
-            "information": "information.svg"
+            "information": "information.svg",
+            "museum":"green-taiken.png"
         },
         "historic": {
             "memorial": "memorial.svg"
@@ -123,13 +125,16 @@
             "lamp": "lantern.svg"
         },
         "leisure": {
-            "pitch": "playground.svg",
-            "park": "playground.svg",
-            "playground": "playground.svg",
+            "pitch": "green-kouen.png",
+            "park": "green-kouen.png",
+            "playground": "green-kouen.png",
             "amusement_arcade": "Input-gaming.svg"
         },
+        "railway": {
+            "station": "bule-koutsuu.png"
+        },
         "public_transport": {
-            "station": "station.svg"
+            "station": "bule-koutsuu.png"
         }
     },
     "marker_append_files": [

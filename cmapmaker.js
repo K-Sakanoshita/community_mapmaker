@@ -40,6 +40,7 @@ class CMapMaker {
 
 	constructor() {
 		this.status = "initialize";
+		this.open_osmid = "";
 		this.last_modetime = 0;
 	};
 
@@ -48,6 +49,7 @@ class CMapMaker {
 		winCont.splash(true);
 		Marker.init();						// Marker Initialize
 		leaflet.init();						// Leaflet Initialize
+
 		Promise.all([
 			gSpreadSheet.get(Conf.google.AppScript, Conf.google.sheetName),
 			cMapmaker.poi_get(),			// get_zoomなどleafletの情報が必要なためleaflet.init後に実行
@@ -65,6 +67,8 @@ class CMapMaker {
 			cmap_events.init();
 			cMapmaker.poi_view();
 			winCont.window_resize();
+			listTable.init();
+			listTable.datalist_make(Object.values(Conf.targets));						// view all list
 			cMapmaker.mode_change("map");												// initialize last_modetime
 			winCont.menu_make(Conf.menu, "main_menu");
 			glot.render();
@@ -110,10 +114,9 @@ class CMapMaker {
 			console.log('mode_change: ' + mode + ' : ' + this.last_modetime + " : " + Date.now());
 			list_collapse_icon.className = 'fas fa-chevron-' + params[mode][0];
 			list_collapse.classList[params[mode][1]]('show');
-			if (mode == "list") {
-				listTable.init();
-				listTable.datalist_make(Object.values(Conf.targets))
-			};
+			//			if (mode == "list") {
+			//				listTable.datalist_make(Object.values(Conf.targets))
+			//			};
 			this.last_modetime = Date.now();
 			this.status = "normal";
 		};
@@ -136,14 +139,14 @@ class CMapMaker {
 			if (map.getZoom() < Conf.default.iconViewZoom) {
 				winCont.spinner(false);
 				console.log("cMapmaker: poi_get end(more zoom).");
-				resolve();
+				resolve({ "update": false });
 			} else {
 				OvPassCnt.get(keys).then(ovanswer => {
 					winCont.spinner(false);
 					poiCont.all_clear();
 					poiCont.add_geojson(ovanswer);
 					console.log("cMapmaker: poi_get end(success).");
-					resolve();
+					resolve({ "update": true });
 				}) /* .catch((jqXHR, statusText, errorThrown) => {
 					winCont.spinner(false);
 					console.log("cMapmaker: poi_get end(overror). " + statusText);
@@ -167,12 +170,22 @@ class CMapMaker {
 
 	detail_view(osmid, openid) {	// PopUpを表示(marker,openid=actlst.id)
 		let osmobj = poiCont.get_osmid(osmid);
-		let tags = osmobj == undefined ? {} : osmobj.geojson.properties;
+		let tags = osmobj == undefined ? { "targets": [] } : osmobj.geojson.properties;
 		let micon = tags.mapmaker_icon;
-		let title = `<img src="./image/${micon}">${tags.name == undefined ? glot.get("undefined") : tags.name}`;
-		let message = "";
+		let target = osmobj.targets[0];
+		let category = poiCont.get_catname(tags);
+		let title = "", message = "";
+		for (let i = 0; i < Conf.osm[target].views.length; i++) {
+			if (tags[Conf.osm[target].views[i]] !== void 0) {
+				title = `<img src="./image/${micon}">${tags[Conf.osm[target].views[i]]}`;
+				break;
+			}
+		}
+		if (title == "") title = category;
+		if (title == "") title = glot.get("undefined");
 		winCont.menu_make(Conf.detail_menu, "modal_menu");
 		winCont.modal_progress(0);
+		cMapmaker.open_osmid = osmid;
 
 		// append OSM Tags(仮…テイクアウトなど判別した上で最終的には分ける)
 		message += modal_osmbasic.make(tags);
@@ -195,6 +208,7 @@ class CMapMaker {
 			"title": title, "message": message, "mode": "close", "callback_close": () => {
 				winCont.modal_close();
 				history.replaceState('', '', location.pathname + location.hash);
+				cMapmaker.open_osmid = "";
 			}, "menu": true
 		});
 		if (openid !== undefined) document.getElementById("modal_" + openid).scrollIntoView();
@@ -244,7 +258,11 @@ class cMapEvents {
 		this.id = setTimeout(() => {
 			console.log("cmapmaker: move event end.");
 			this.busy = 2;
-			cMapmaker.poi_get().then(() => { cMapmaker.poi_view(); this.busy = 0; });
+			cMapmaker.poi_get().then((status) => {
+				cMapmaker.poi_view();
+				if (status.update) listTable.datalist_make(Object.values(Conf.targets));	// view all list
+				this.busy = 0;
+			});
 		}, 1000);
 	}
 
@@ -259,9 +277,13 @@ var cmap_events = new cMapEvents();
 
 class Activity {
 
+	constructor() {
+		this.busy = false;
+	};
+
 	// edit activity
-	edit(p) {			// p {osmid: undefined時はnew,mode: "new" or "edit" or "delete"}
-		let title = glot.get(p.new ? "activity_add" : "activity_edit");
+	edit(id) {			// p {id: undefined時はnew}
+		let title = glot.get(id === void 0 ? "act_add" : "act_edit");
 		let gt = {};
 		["category", "name", "rubi", "memo", "detail_url", "official_url", "picture_url1", "picture_url2", "picture_url3"]
 			.forEach(key => { gt[`act_${key}`] = glot.get(`act_${key}`) });
@@ -270,7 +292,7 @@ class Activity {
 		<div class="container">
 			<div class="row mb-1 align-items-center">
 				<div class="col-2 p-1">${gt.act_category}</div>
-				<div class="col-10 p-1"><select id="act_category" class="form-control form-control-sm"></select></div>
+				<div class="col-10 p-1"><input type="text" id="act_category" class="form-control form-control-sm"></input></div>
 			</div>
 			<div class="row mb-1 align-items-center">
 				<div class="col-2 p-1">${gt.act_name}</div>
@@ -303,6 +325,8 @@ class Activity {
 			<div class="row mb-1 align-items-center">
 				<div class="col-2 p-1">${gt.act_picture_url3}</div>
 				<div class="col-10 p-1"><input type="url" id="act_picture_url3" value="https://" class="form-control form-control-sm"></div>
+				<input type="hidden" id="act_id" value="${id === void 0 ? "" : id}"></input>
+				<input type="hidden" id="act_osmid" value="${cMapmaker.open_osmid}"></input>
 			</div>
 			<div class="row mb-1 align-items-center">
 				<div class="col-12 p-1"><h4>この内容で登録しますか？</h4></div>
@@ -314,7 +338,25 @@ class Activity {
 		winCont.modal_open({
 			"title": title, "message": message, "mode": "yes,no", "menu": true,
 			"callback_no": () => { winCont.modal_close() }, "callback_yes": () => {
-				console.log("save");
+				if (!activity.busy) {
+					activity.busy = true;
+					let senddata = {
+						"id": act_id.value, "osmid": act_osmid.value, "category": act_category.value, "title": act_name.value, "rubi": act_rubi.value,
+						"body": act_memo.value, "detail_url": act_detail_url.value, "official_url": act_official_url.value,
+						"picture_url1": act_picture_url1.value, "picture_url2": act_picture_url2.value, "picture_url3": act_picture_url3.value
+					};
+					gSpreadSheet.set(Conf.google.AppScript, Conf.google.sheetName, senddata, "child").then(() => {
+						console.log("save");
+						winCont.modal_close();
+						gSpreadSheet.get(Conf.google.AppScript, Conf.google.sheetName).then(jsonp => {
+							poiCont.set_actjson(jsonp);
+							cMapmaker.poi_view();
+							activity.busy = false;
+						});
+					}).catch(() => {
+						activity.busy = false;
+					});
+				}
 			}
 		});
 	}
@@ -341,24 +383,6 @@ class Activity {
 		};
 		$("#memo").val(json['メモ']);
 		$('#PoiEdit_Modal').modal({ backdrop: false, keyboard: false });
-	};
-
-	form_save(callback) {
-		let commit = {};
-		if (confirm("この内容で登録しますか？")) {
-			$('#PoiEdit_Button').hide();
-			commit['index'] = $('#index').val();
-			commit['OSMID'] = $('#osmid').html();
-			commit['場所'] = $('#area').val();
-			commit['植樹日'] = $('#planting').val().replace(/-/g, "/");
-			commit['愛称'] = $('#name').val();
-			commit['写真アドレス'] = $('#picture_url').val();
-			commit['メモ'] = $('#memo').val();
-			console.log(commit);
-			PoiData.set(commit, false).then(() => callback());
-		};
-		$('#PoiEdit_Modal').modal("hide");
-		return;
 	};
 };
 var activity = new Activity();	// Google Spreadsheet Control Form

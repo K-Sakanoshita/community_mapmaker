@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   inkscape:version="1.1 (ce6663b3b7, 2021-05-25)"
+   sodipodi:docname="library_round.svg"
+   id="svg6"
+   height="250"
+   width="250"
+   viewBox="0 0 250 250"
+   version="1.1"
+   xml:space="default"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <metadata
+     id="metadata12">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs10" />
+  <sodipodi:namedview
+     inkscape:document-rotation="0"
+     inkscape:current-layer="svg6"
+     inkscape:window-maximized="1"
+     inkscape:window-y="27"
+     inkscape:window-x="0"
+     inkscape:cy="125.09198"
+     inkscape:cx="94.755305"
+     inkscape:zoom="2.6700352"
+     showgrid="false"
+     id="namedview8"
+     inkscape:window-height="1016"
+     inkscape:window-width="1920"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0"
+     guidetolerance="10"
+     gridtolerance="10"
+     objecttolerance="10"
+     borderopacity="1"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     inkscape:pagecheckerboard="0" />
+  <title
+     id="title2">日本の地図記号 - 図書館</title>
+  <ellipse
+     style="fill:#ffffff;fill-opacity:1;stroke:#a43a00;stroke-width:29.4913;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+     id="path223"
+     cx="125.53044"
+     cy="125.22507"
+     rx="109.83282"
+     ry="109.92872" />
+  <path
+     sodipodi:nodetypes="ccccccccccc"
+     style="display:inline;fill:#f8f8f0;fill-opacity:1;stroke:#aaaaaa;stroke-width:10.711;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     inkscape:connector-curvature="0"
+     id="path4"
+     d="M 67.353864,199.68988 29.137192,88.229781 C 43.034164,63.271802 70.249066,54.763399 110.78192,62.704576 131.62737,41.14995 155.07851,34.343229 181.13534,42.284406 l 35.66699,104.023864 2.54967,7.43623 c -33.58433,-7.9412 -57.03549,-1.13445 -70.3534,20.42014 -39.37477,-7.94118 -67.168723,0.56725 -83.381857,25.52524 L 29.137192,88.229781 m 81.644728,-25.525205 33.0053,107.205884" />
+</svg>
