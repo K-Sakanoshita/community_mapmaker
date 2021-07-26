@@ -75,6 +75,22 @@
 		"ja": "写真URL3",
 		"en": "Picture URL3"
 	},
+	"act_userid": {
+		"ja": "ユーザー名",
+		"en": "User ID"
+	},
+	"act_passwd": {
+		"ja": "パスワード",
+		"en": "Password"
+	},
+	"act_confirm": {
+		"ja": "上記の内容でデータを登録・更新しますか？",
+		"en": "register / update data with this contents?"
+	},
+	"act_error": {
+		"ja": "登録失敗。ユーザー名とパスワードを確認してください",
+		"en": "failed. Please check your username and password"
+	},
 	"zoomlevel": {
 		"ja": "ズームレベル：",
 		"en": "Zoom Level: "
@@ -103,7 +119,7 @@
 		"ja": "思い出など",
 		"en": "Memorials"
 	},
-	"memories_link": {
+	"share_link": {
 		"ja": "シェア",
 		"en": "sharing"
 	},

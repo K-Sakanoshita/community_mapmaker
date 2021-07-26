@@ -303,9 +303,6 @@ class ListTable {
 		if (this.table !== undefined) this.table.destroy();
 		let result = poiCont.list(targets);
 		let columns = JSON.parse(JSON.stringify(Conf.datatables.columns.common));
-		// let tags = targets == Conf.google.sheetName ? Conf.datatables.columns.googlesheet : Conf.datatables.columns.osm;
-		//columns.forEach((col, idx) => col.data = tags[idx]);
-		//let columns = targets == Conf.google.sheetName ? Conf.datatables.columns.googlesheet : Conf.datatables.columns.osm;
 		this.table = $('#tableid').DataTable({
 			"columns": Object.keys(columns).map(function (key) { return columns[key] }),
 			"data": result,

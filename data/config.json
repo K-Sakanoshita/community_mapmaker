@@ -28,19 +28,80 @@
                 136.11914
             ]
         ],
-        "zoom": 15,
-        "pc_minzoom": 13,
-        "phone_minzoom": 12,
-        "maxzoom": 19,
+        "initZoom": 15,
+        "pc_minZoom": 13,
+        "phone_minZoom": 12,
+        "maxZoom": 19,
         "zoomSnap": 0.5,
         "iconViewZoom": 14,
         "bookmark": true
     },
+    "activities": {
+        "header": "",
+        "footer": "",
+        "form": {
+            "act_category": {
+                "glot": "category",
+                "type": "select",
+                "category": [
+                    "テイクアウト",
+                    "ごはんや",
+                    "公園",
+                    "自然遊び",
+                    "ぼうさい",
+                    "トイレ",
+                    "みやげ",
+                    "直売所",
+                    "めいしょ",
+                    "こうつう"
+                ],
+                "gsheet": "category"
+            },
+            "act_name": {
+                "glot": "name",
+                "type": "text",
+                "gsheet": "title"
+            },
+            "act_rubi": {
+                "glot": "rubi",
+                "type": "text",
+                "gsheet": "rubi"
+            },
+            "act_memo": {
+                "glot": "memo",
+                "type": "textarea",
+                "gsheet": "body"
+            },
+            "act_detail_url": {
+                "glot": "detail_url",
+                "type": "url",
+                "gsheet": "detail_url"
+            },
+            "act_official_url": {
+                "glot": "official_url",
+                "type": "url",
+                "gsheet": "official_url"
+            },
+            "act_picture_url1": {
+                "glot": "picture_url1",
+                "type": "url",
+                "gsheet": "picture_url1"
+            },
+            "act_picture_url2": {
+                "glot": "picture_url2",
+                "type": "url",
+                "gsheet": "picture_url2"
+            },
+            "act_picture_url3": {
+                "glot": "picture_url3",
+                "type": "url",
+                "gsheet": "picture_url3"
+            }
+        }
+    },
     "google": {
         "Analytics": "",
-        "AppScript": "https://script.google.com/macros/s/AKfycby_E4W1SQrp8y6gkXOPksd7mCDv505Z3leIv3RWDBh5bnhNoKo8S1PmmkBGR630AoM4yA/exec",
-        "_AppScript": "https://script.google.com/macros/s/AKfycbyknNKqOCnBqovC2IrTTZJNHdhlV9f6hJ0psxbu00kwxvBA_XmkoupAi_TTSLQrEjR-pg/exec",
-        "sheetName": "activity",
+        "AppScript": "https://script.google.com/macros/s/AKfycbyCq06UBWAId9MeUH6lZQRLs2kIRX5MMLCcYEn0EMk4zjrVC7u9qaaq1Ks1fBwzCvBKUA/exec",
         "targetName": "activity"
     },
     "splash": {
@@ -86,7 +147,7 @@
     "detail_menu": [
         {
             "glot-model": "act_add",
-            "linkto": "javascript:activity.edit()",
+            "linkto": "javascript:modal_activities.edit()",
             "divider": false
         }
     ],

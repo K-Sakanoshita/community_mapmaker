@@ -2,6 +2,7 @@ class modal_Activities {
     // make modal html for Activities
 
     constructor() {
+        this.busy = false;
         this.html = ""
         var xhr = new XMLHttpRequest();
         xhr.open('GET', "./modal_activities.html", true);
@@ -32,7 +33,7 @@ class modal_Activities {
             let clone = template.querySelector("div.body").cloneNode(true);
             let head = clone.querySelector("h5");
             let body = clone.querySelector("div.card-body");
-            let chtml;
+            let chtml = "", updated = basic.formatDate(new Date(act.updatetime), ymd);
             let openflag = (act.id == openid) || (!openid && idx == 0 && Conf.detail_view.openfirst) ? true : false;
             newmode = act.id.split('/')[0];
             clone.querySelector("div.collapse").id = "collapse" + idx;
@@ -41,8 +42,8 @@ class modal_Activities {
             if (openflag && openid !== undefined) head.setAttribute("id", "modal_" + openid);
             clone.querySelector("#collapse" + idx).classList[openflag ? "add" : "remove"]("show");
             clone.querySelector("span").innerHTML = act.title;
-            chtml = "<div class='float-right'>" + glot.get("update") + " " + basic.formatDate(new Date(act.updatetime), ymd) + " [" + glot.get("act_edit") + "]</div>";
-            chtml += "<strong>" + glot.get("memories_link") + ":</strong> ";
+            chtml = `<div class="float-right">${glot.get("update")} ${updated}[<a href="javascript:modal_activities.edit('${act.id}')">${glot.get("act_edit")}</a>]</div>`;
+            chtml += "<strong>" + glot.get("share_link") + ":</strong> ";
             chtml += `
             <button type="button" class="btn btn-warning pl-3 pr-3 pt-0 pb-0"
              data-toggle="popover" data-content="${glot.get("modal_popover_copied")}" onclick="cMapmaker.url_share('${act.id}')">
@@ -96,5 +97,91 @@ class modal_Activities {
         template.remove();
         return result;
     };
+
+    // edit activity
+    edit(id) {			// p {id: undefined時はnew}
+        let title = glot.get(id === void 0 ? "act_add" : "act_edit");
+        let html = "", act = Conf.activities;
+        let data = id === void 0 ? { osmid: cMapmaker.open_osmid } : poiCont.get_actid(id);
+
+        html = "<div class='container'>";
+        Object.keys(act.form).forEach(key => {
+            html += "<div class='row mb-1 align-items-center'>";
+            html += `<div class='col-2 p-1'>${glot.get(`act_${act.form[key].glot}`)}</div>`;
+            let defvalue = data[act.form[key].gsheet] || "";
+            switch (act.form[key].type) {
+                case "select":
+                    let selects = "", category = act.form[key].category;
+                    for (let idx in act.form[key].category) {
+                        let selected = category[idx] !== data.category ? "" : "selected";
+                        selects += `<option value="${category[idx]}" ${selected}>${category[idx]}</option>`;
+                    };
+                    html += `<div class="col-10 p-1"><select id="${key}" class="form-control form-control-sm">${selects}</select></div>`;
+                    break;
+                case "textarea":
+                    html += `<div class="col-10 p-1"><textarea id="${key}" rows="8" class="form-control form-control-sm">${defvalue}</textarea></div>`;
+                    break;
+                case "text":
+                    html += `<div class="col-10 p-1"><input type="text" id="${key}" maxlength="40" class="form-control form-control-sm" value="${defvalue}"></div>`;
+                    break;
+                case "url":
+                    html += `<div class="col-10 p-1"><input type="text" id="${key}" maxlength="40" class="form-control form-control-sm" value="${defvalue}"></div>`;
+                    break;
+            };
+            html += "</div>";
+        });
+        html += "<hr>";
+        html += `<div class="row mb-1 align-items-center">`;
+        html += `<div class="col-12 p-1"><h4>${glot.get("act_confirm")}</h4></div>`;
+        html += `<div class="col-2 p-1">${glot.get("act_userid")}</div>`;
+        html += `<div class="col-4 p-1"><input type="text" id="act_userid" class="form-control form-control-sm"></input></div>`;
+        html += `<div class="col-2 p-1">${glot.get("act_passwd")}</div>`;
+        html += `<div class="col-4 p-1"><input type="password" id="act_passwd" class="form-control form-control-sm"></input></div>`;
+        html += `</div></div>`;
+        html += `<input type="hidden" id="act_id" value="${id === void 0 ? "" : id}"></input>`;
+        html += `<input type="hidden" id="act_osmid" value="${data.osmid}"></input>`;
+
+        winCont.modal_progress(0);
+        winCont.modal_open({
+            "title": title, "message": html, "mode": "yes,no", "menu": true,
+            "callback_no": () => { winCont.modal_close() }, "callback_yes": () => {
+                let userid = document.getElementById("act_userid").value;
+                let passwd = document.getElementById("act_passwd").value;
+                if (!modal_activities.busy && userid !== "" && passwd !== "") {
+                    modal_activities.busy = true;
+                    let senddata = { "id": act_id.value, "osmid": act_osmid.value };
+                    Object.keys(act.form).forEach(key => {
+                        senddata[act.form[key].gsheet] = document.getElementById(key).value
+                    });
+
+                    gSpreadSheet.get_salt(Conf.google.AppScript, userid).then((e) => {
+                        console.log("salt: " + e.salt);
+                        return basic.makeSHA256(passwd + e.salt);
+                    }).then((hashpw) => {
+                        console.log("hashpw: " + hashpw);
+                        return gSpreadSheet.set(Conf.google.AppScript, senddata, "child", userid, hashpw);
+                    }).then((e) => {
+                        if (e.status.indexOf("ok") > -1) {
+                            console.log("save: ok");
+                            winCont.modal_close();
+                            gSpreadSheet.get(Conf.google.AppScript).then(jsonp => {
+                                poiCont.set_actjson(jsonp);
+                                cMapmaker.poi_view();
+                                modal_activities.busy = false;
+                            });
+                        } else {
+                            console.log("save: ng");
+                            alert(glot.get("act_error"));
+                            modal_activities.busy = false;
+                        }
+                    }).catch(() => {
+                        modal_activities.busy = false;
+                    });
+                }else if(userid == "" || passwd == ""){
+                    alert(glot.get("act_error"));
+                }
+            }
+        });
+    }
 }
 var modal_activities = new modal_Activities();

@@ -26,6 +26,7 @@ class Basic {
         const u8 = Uint8Array.from(b64.split(""), function (e) { return e.charCodeAt() });
         return new Blob([u8], { type: "image/png" });
     }
+
     concatTwoDimensionalArray(array1, array2, axis) {      // 2次元配列の合成
         if (axis != 1) axis = 0;
         var array3 = [];
@@ -41,6 +42,7 @@ class Basic {
         };
         return array3;
     }
+
     unicodeUnescape(str) {     // \uxxx形式→文字列変換
         let result = "", strs = str.match(/\\u.{4}/ig);
         if (!strs) return '';
@@ -49,6 +51,7 @@ class Basic {
         };
         return result;
     }
+
     uniq(array) {
         let elems = new Map();
         for (let elem of array) {
@@ -56,6 +59,7 @@ class Basic {
         };
         return Array.from(elems.keys());
     }
+
     getWikipedia(lang, url) {      // get wikipedia contents
         return new Promise((resolve, reject) => {
             let encurl = encodeURI(url);
@@ -68,6 +72,7 @@ class Basic {
             });
         });
     }
+
     isSmartPhone() {
         if (window.matchMedia && window.matchMedia('(max-device-width: 640px)').matches) {
             return true;
@@ -75,8 +80,16 @@ class Basic {
             return false;
         };
     }
+    
     convLinkTag(url) {
         return (/^(ftp|http|https):\/\/[^ "]+$/.test(url)) ? `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>` : "";
     }
+
+    async makeSHA256(text) {
+        const uint8 = new TextEncoder().encode(text);
+        const digest = await crypto.subtle.digest('SHA-256', uint8);
+        return Array.from(new Uint8Array(digest)).map(v => v.toString(16).padStart(2, '0')).join('');
+    }
+
 };
 var basic = new Basic();
