@@ -122,10 +122,10 @@ class modal_Activities {
                     html += `<div class="col-10 p-1"><textarea id="${key}" rows="8" class="form-control form-control-sm">${defvalue}</textarea></div>`;
                     break;
                 case "text":
-                    html += `<div class="col-10 p-1"><input type="text" id="${key}" maxlength="40" class="form-control form-control-sm" value="${defvalue}"></div>`;
+                    html += `<div class="col-10 p-1"><input type="text" id="${key}" maxlength="80" class="form-control form-control-sm" value="${defvalue}"></div>`;
                     break;
                 case "url":
-                    html += `<div class="col-10 p-1"><input type="text" id="${key}" maxlength="40" class="form-control form-control-sm" value="${defvalue}"></div>`;
+                    html += `<div class="col-10 p-1"><input type="text" id="${key}" class="form-control form-control-sm" value="${defvalue}"></div>`;
                     break;
             };
             html += "</div>";
