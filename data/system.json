@@ -6,9 +6,15 @@
     },
     "tile_select": {
         "Facebook_Builtin": "OSM_Standard",
-        "default": "MapTiler"
+        "default": "Kusatsu_ort"
     },
     "tile": {
+        "Kusatsu_ort": {
+            "name": "草津市航空写真",
+            "copyright": "<a href='https://wiki.openstreetmap.org/wiki/JA:Kusatsu_ortho'>草津市</a>",
+            "url": "https://codeforkusatsu.org/tile/{z}/{x}/{-y}.png",
+            "maxNativeZoom": 21
+        },
         "MapTiler": {
             "name": "OpenStreetMap Maptiler",
             "copyright": "<a href='https://www.maptiler.com/copyright/'>© MapTiler</a> <a href='https://www.openstreetmap.org/copyright'>© OpenStreetMap contributors</a>",

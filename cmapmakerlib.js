@@ -58,6 +58,7 @@ var poiCont = (function () {
 			let key1 = categorys.find(key => tags[key] !== undefined);
 			let key2 = tags[key1] == undefined ? "" : tags[key1];
 			let catname = (key2 !== "") ? Conf.category[key1][key2] : "";   // known tags
+			if (catname == undefined) console.log("get_catname:" + key1 + "," + key2);
 			return (catname == undefined) ? "" : catname;
 		},
 		get_wikiname: (tags) => {          								// get Wikipedia Name from tag

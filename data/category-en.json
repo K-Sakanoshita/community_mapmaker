@@ -13,7 +13,10 @@
             "restaurant": "restaurant",
             "vending_machine": "vending machine",
             "place_of_worship": "place of worship",
-            "post_box":"POST box"
+            "post_box":"POST box",
+            "post_office":"POST Office",
+            "school":"School",
+            "community_centre": "community center"
         },
         "shop": {
             "alcohol": "alcohol",
@@ -191,7 +194,8 @@
         "tourism": {
             "viewpoint": "viewpoint",
             "artwork": "artwork",
-            "information": "information"
+            "information": "information",
+            "museum": "museum"
         },
         "historic": {
             "memorial": "memorial",

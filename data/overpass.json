@@ -57,10 +57,13 @@
         "museum": {
             "overpass": [
                 "node[\"tourism\"=\"museum\"]",
-                "way[\"tourism\"=\"museum\"]"
+                "way[\"tourism\"=\"museum\"]",
+                "node[\"tourism\"=\"artwork\"]",
+                "way[\"tourism\"=\"artwork\"]"
             ],
             "tags": [
-                "tourism=museum"
+                "tourism=museum",
+                "tourism=artwork"
             ],
             "views": [
                 "name",
@@ -145,13 +148,13 @@
                 "operator"
             ]
         },
-        "castle": {
+        "historic": {
             "overpass": [
-                "node[\"histric\"=\"castle\"]",
-                "way[\"histric\"=\"castle\"]"
+                "node[\"historic\"]",
+                "way[\"historic\"]"
             ],
             "tags": [
-                "histric=castle"
+                "historic"
             ],
             "views": [
                 "name",

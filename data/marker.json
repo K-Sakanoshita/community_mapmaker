@@ -14,6 +14,8 @@
             "vending_machine": "vending.svg",
             "place_of_worship": "purple-meishyo.png",
             "post_box": "post_box.svg",
+            "post_office":"post_office.svg",
+            "school":"school.svg",
             "community_centre": "green-taiken.png"
         },
         "shop": {

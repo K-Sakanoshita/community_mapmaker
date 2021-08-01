@@ -13,7 +13,10 @@
             "restaurant": "レストラン",
             "vending_machine": "自動販売機",
             "place_of_worship": "宗教施設",
-            "post_box":"郵便ポスト"
+            "post_box": "郵便ポスト",
+            "post_office": "郵便局",
+            "school": "学校",
+            "community_centre": "公民館"
         },
         "shop": {
             "alcohol": "酒屋",
@@ -191,7 +194,8 @@
         "tourism": {
             "viewpoint": "ビューポイント",
             "artwork": "アート作品",
-            "information": "案内"
+            "information": "案内",
+            "museum": "美術館"
         },
         "historic": {
             "memorial": "石碑",

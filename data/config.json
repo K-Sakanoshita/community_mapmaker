@@ -9,6 +9,7 @@
         "wikipedia",
         "centre",
         "station",
+        "historic",
         "activity"
     ],
     "default": {
@@ -31,7 +32,7 @@
         "initZoom": 15,
         "pc_minZoom": 13,
         "phone_minZoom": 12,
-        "maxZoom": 19,
+        "maxZoom": 21,
         "zoomSnap": 0.5,
         "iconViewZoom": 14,
         "bookmark": true
