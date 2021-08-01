@@ -108,19 +108,19 @@
         "tourism": {
             "viewpoint": "star-round.svg",
             "artwork": "artwork.svg",
-            "information": "information.svg",
+            "information": "information-round.svg",
             "museum":"green-taiken.png"
         },
         "historic": {
-            "memorial": "memorial.svg"
+            "memorial": "memorial-round.svg"
         },
         "information": {
             "board": "information2.svg",
-            "terminal": "information.svg",
-            "audioguide": "information.svg",
+            "terminal": "information-round.svg",
+            "audioguide": "information-round.svg",
             "map": "information2.svg",
             "tactile_map": "information2.svg",
-            "guidepost": "information.svg"
+            "guidepost": "information-round.svg"
         },
         "man_made": {
             "torii": "torii.svg",

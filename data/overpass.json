@@ -151,10 +151,13 @@
         "historic": {
             "overpass": [
                 "node[\"historic\"]",
-                "way[\"historic\"]"
+                "way[\"historic\"]",
+                "node[\"tourism\"=\"information\"]",
+                "way[\"tourism\"=\"information\"]"
             ],
             "tags": [
-                "historic"
+                "historic",
+                "tourism=information"
             ],
             "views": [
                 "name",

@@ -32,7 +32,7 @@
         "initZoom": 15,
         "pc_minZoom": 13,
         "phone_minZoom": 12,
-        "maxZoom": 21,
+        "maxZoom": 22,
         "zoomSnap": 0.5,
         "iconViewZoom": 14,
         "bookmark": true

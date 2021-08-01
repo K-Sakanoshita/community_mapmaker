@@ -11,7 +11,7 @@
     "tile": {
         "Kusatsu_ort": {
             "name": "草津市航空写真",
-            "copyright": "<a href='https://wiki.openstreetmap.org/wiki/JA:Kusatsu_ortho'>草津市</a>",
+            "copyright": "<a href='https://wiki.openstreetmap.org/wiki/JA:Kusatsu_ortho'>草津市 | &copy OpenStreetMap contributors</a>",
             "url": "https://codeforkusatsu.org/tile/{z}/{x}/{-y}.png",
             "maxNativeZoom": 21
         },
@@ -38,13 +38,13 @@
         },
         "GIS_pale": {
             "name": "地理院地図 淡色",
-            "copyright": "<a href='https://www.gsi.go.jp/kikakuchousei/kikakuchousei40182.html'>国土地理院</a>",
+            "copyright": "<a href='https://www.gsi.go.jp/kikakuchousei/kikakuchousei40182.html'>国土地理院 | &copy OpenStreetMap contributors</a>",
             "url": "https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png",
             "maxNativeZoom": 18
         },
         "GIS_ort": {
             "name": "地理院地図 オルソ",
-            "copyright": "<a href='https://www.gsi.go.jp/kikakuchousei/kikakuchousei40182.html'>国土地理院</a>",
+            "copyright": "<a href='https://www.gsi.go.jp/kikakuchousei/kikakuchousei40182.html'>国土地理院 | &copy OpenStreetMap contributors</a>",
             "url": "https://cyberjapandata.gsi.go.jp/xyz/ort/{z}/{x}/{y}.jpg",
             "maxNativeZoom": 18
         }
