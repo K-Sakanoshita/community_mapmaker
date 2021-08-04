@@ -19,11 +19,11 @@
     background: transparent url("./image/transparent.png") !important;
 }
 
-.leaflet-container a{
+.leaflet-container a {
     color: initial !important;
 }
 
-.leaflet-touch .leaflet-control-layers-toggle{
+.leaflet-touch .leaflet-control-layers-toggle {
     width: 30px !important;
     height: 30px !important;
 }

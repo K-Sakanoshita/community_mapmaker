@@ -1,5 +1,36 @@
 {
     "osm": {
+        "restaurant": {
+            "overpass": [
+                "node[\"amenity\"]",
+                "way[\"amenity\"]"
+            ],
+            "tags": [
+                "amenity=restaurant",
+                "amenity=fast_food",
+                "amenity=biergarten",
+                "amenity=bar",
+                "amenity=pub",
+                "amenity=cafe"
+            ],
+            "views": [
+                "name",
+                "operator"
+            ]
+        },
+        "shop": {
+            "overpass": [
+                "node[\"shop\"]",
+                "way[\"shop\"]"
+            ],
+            "tags": [
+                "shop"
+            ],
+            "views": [
+                "name",
+                "operator"
+            ]
+        },
         "takeout": {
             "overpass": [
                 "way[\"takeaway\"]",

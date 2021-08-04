@@ -73,8 +73,8 @@ class modal_Activities {
                     }));
                     for (let i = 1; i <= 3; i++) {
                         let url = act[`picture_url${i}`];
-                        if (url == "http://" && url == "https://" && url == "") {
-                            chtml += (act[url] !== "" ? `<img class="w100" src="${act[url]}"><br>` : "<br>");
+                        if (url !== "http://" && url !== "https://" && url !== "") {
+                            chtml += (url !== "" ? `<img class="w100 m-1" src="${url}"><br>` : "<br>");
                         }
                     };
                     break;
@@ -145,9 +145,11 @@ class modal_Activities {
         winCont.modal_open({
             "title": title, "message": html, "mode": "yes,no", "menu": true,
             "callback_no": () => { winCont.modal_close() }, "callback_yes": () => {
+                winCont.modal_progress(0);
                 let userid = document.getElementById("act_userid").value;
                 let passwd = document.getElementById("act_passwd").value;
                 if (!modal_activities.busy && userid !== "" && passwd !== "") {
+                    winCont.modal_progress(10);
                     modal_activities.busy = true;
                     let senddata = { "id": act_id.value, "osmid": act_osmid.value };
                     Object.keys(act.form).forEach(key => {
@@ -155,12 +157,15 @@ class modal_Activities {
                     });
 
                     gSpreadSheet.get_salt(Conf.google.AppScript, userid).then((e) => {
+                        winCont.modal_progress(40);
                         console.log("salt: " + e.salt);
                         return basic.makeSHA256(passwd + e.salt);
                     }).then((hashpw) => {
+                        winCont.modal_progress(70);
                         console.log("hashpw: " + hashpw);
                         return gSpreadSheet.set(Conf.google.AppScript, senddata, "child", userid, hashpw);
                     }).then((e) => {
+                        winCont.modal_progress(100);
                         if (e.status.indexOf("ok") > -1) {
                             console.log("save: ok");
                             winCont.modal_close();
@@ -175,9 +180,10 @@ class modal_Activities {
                             modal_activities.busy = false;
                         }
                     }).catch(() => {
+                        winCont.modal_progress(0);
                         modal_activities.busy = false;
                     });
-                }else if(userid == "" || passwd == ""){
+                } else if (userid == "" || passwd == "") {
                     alert(glot.get("act_error"));
                 }
             }

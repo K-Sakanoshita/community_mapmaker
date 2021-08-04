@@ -1,6 +1,7 @@
 {
     "targets": [
-        "takeout",
+        "restaurant",
+        "shop",
         "library",
         "museum",
         "disaster",
