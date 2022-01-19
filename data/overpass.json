@@ -1,5 +1,27 @@
 {
     "osm": {
+        "*":{
+            "tags":[],
+            "views": [
+                "name",
+                "operator"
+            ]
+        },
+        "pub": {
+            "overpass": [
+                "node[\"amenity\"]",
+                "way[\"amenity\"]"
+            ],
+            "tags": [
+                "amenity=biergarten",
+                "amenity=bar",
+                "amenity=pub"
+            ],
+            "views": [
+                "name",
+                "operator"
+            ]
+        },
         "restaurant": {
             "overpass": [
                 "node[\"amenity\"]",
@@ -8,9 +30,6 @@
             "tags": [
                 "amenity=restaurant",
                 "amenity=fast_food",
-                "amenity=biergarten",
-                "amenity=bar",
-                "amenity=pub",
                 "amenity=cafe"
             ],
             "views": [
@@ -65,6 +84,20 @@
             "tags": [
                 "social_facility=shelter",
                 "emergency"
+            ],
+            "views": [
+                "name",
+                "operator"
+            ]
+        },
+        "government": {
+            "overpass": [
+                "relation[\"amenity\"=\"townhall\"]",
+                "way[\"amenity\"=\"townhall\"]",
+                "node[\"amenity\"=\"townhall\"]"
+            ],
+            "tags": [
+                "amenity=townhall"
             ],
             "views": [
                 "name",
@@ -257,6 +290,25 @@
             ],
             "tags": [
                 "amenity=post_box"
+            ],
+            "views": [
+                "name",
+                "operator"
+            ]
+        },
+        "place": {
+            "overpass": [
+                "way[\"place\"=\"suburb\"]",
+                "node[\"place\"=\"suburb\"]",
+                "way[\"place\"=\"quarter\"]",
+                "node[\"place\"=\"quarter\"]",
+                "way[\"place\"=\"neighbourhood\"]",
+                "node[\"place\"=\"neighbourhood\"]"
+            ],
+            "tags": [
+                "place=suburb",
+                "place=quarter",
+                "place=neighbourhood"
             ],
             "views": [
                 "name",

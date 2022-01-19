@@ -1,26 +1,12 @@
 {
-    "targets": [
-        "restaurant",
-        "shop",
-        "library",
-        "museum",
-        "disaster",
-        "park",
-        "worship",
-        "wikipedia",
-        "centre",
-        "station",
-        "historic",
-        "activity"
-    ],
     "default": {
         "keep_default_view": false,
         "default_view": [
-            35.00372,
-            135.94746
+            37.169,
+            137.157
         ],
-        "_maxbounds": "",
-        "maxbounds": [
+        "maxbounds": "",
+        "_maxbounds": [
             [
                 35.09545,
                 135.86492
@@ -30,97 +16,48 @@
                 136.11914
             ]
         ],
-        "initZoom": 15,
-        "pc_minZoom": 13,
-        "phone_minZoom": 12,
-        "maxZoom": 22,
+        "initZoom": 5.5,
+        "pc_minZoom": 5,
+        "phone_minZoom": 5,
+        "maxZoom": 18,
         "zoomSnap": 0.5,
-        "iconViewZoom": 14,
+        "iconViewZoom": 10,
+        "act_iconViewZoom": 5,
         "bookmark": true
     },
-    "activities": {
-        "header": "",
-        "footer": "",
-        "form": {
-            "act_category": {
-                "glot": "category",
-                "type": "select",
-                "category": [
-                    "テイクアウト",
-                    "ごはんや",
-                    "公園",
-                    "自然遊び",
-                    "ぼうさい",
-                    "トイレ",
-                    "みやげ",
-                    "直売所",
-                    "めいしょ",
-                    "こうつう"
-                ],
-                "gsheet": "category"
-            },
-            "act_name": {
-                "glot": "name",
-                "type": "text",
-                "gsheet": "title"
-            },
-            "act_rubi": {
-                "glot": "rubi",
-                "type": "text",
-                "gsheet": "rubi"
-            },
-            "act_memo": {
-                "glot": "memo",
-                "type": "textarea",
-                "gsheet": "body"
-            },
-            "act_detail_url": {
-                "glot": "detail_url",
-                "type": "url",
-                "gsheet": "detail_url"
-            },
-            "act_official_url": {
-                "glot": "official_url",
-                "type": "url",
-                "gsheet": "official_url"
-            },
-            "act_picture_url1": {
-                "glot": "picture_url1",
-                "type": "url",
-                "gsheet": "picture_url1"
-            },
-            "act_picture_url2": {
-                "glot": "picture_url2",
-                "type": "url",
-                "gsheet": "picture_url2"
-            },
-            "act_picture_url3": {
-                "glot": "picture_url3",
-                "type": "url",
-                "gsheet": "picture_url3"
-            }
-        }
+    "targets": [
+        "wikipedia"
+    ],
+    "listTable": {
+        "targets": [
+            "wikipedia"
+        ],
+        "update_mode": ""
+    },
+    "playback": {
+        "zoomLevel": 15,
+        "timer": 4000
     },
     "google": {
         "Analytics": "",
-        "AppScript": "https://script.google.com/macros/s/AKfycbyCq06UBWAId9MeUH6lZQRLs2kIRX5MMLCcYEn0EMk4zjrVC7u9qaaq1Ks1fBwzCvBKUA/exec",
+        "AppScript": "",
+        "_AppScript": "https://script.google.com/macros/s/AKfycbyCq06UBWAId9MeUH6lZQRLs2kIRX5MMLCcYEn0EMk4zjrVC7u9qaaq1Ks1fBwzCvBKUA/exec",
         "targetName": "activity"
     },
     "splash": {
-        "url": "./image/splash.png"
+        "url": ""
     },
     "static": {
+        "mode": false,
         "osmjson": "",
-        "osmbounds": [],
-        "_osmjson": "./data/osaka_city_library.json",
-        "_osmbounds": {
+        "osmbounds": {
             "NW": {
-                "lat": 34.80000,
-                "lng": 135.37000
+                "lat": 45.7392,
+                "lng": 119.0340
             },
             "SE": {
-                "lat": 34.52000,
-                "lng": 135.67000
+                "lat": 20.5444,
+                "lng": 144.8863
             }
         }
     },
@@ -132,13 +69,13 @@
         },
         {
             "glot-model": "about",
-            "linkto": "https://www.oml.city.osaka.lg.jp/index.php?page_id=1301",
+            "linkto": "https://github.com/armd-02/library_chronology",
             "divider": false
         },
         {
             "glot-model": "owner",
             "linkto": "https://github.com/K-Sakanoshita/community_mapmaker",
-            "divider": true
+            "divider": false
         },
         {
             "glot-model": "openstreetmap",
@@ -148,8 +85,8 @@
     ],
     "detail_menu": [
         {
-            "glot-model": "act_add",
-            "linkto": "javascript:modal_activities.edit()",
+            "glot-model": "button_close",
+            "linkto": "javascript:winCont.modal_close()",
             "divider": false
         }
     ],

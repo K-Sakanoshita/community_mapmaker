@@ -180,4 +180,3 @@ class modal_Takeout {
         $('#modal_poiview').one('hidden.bs.modal', hidden);
     }
 }
-var modal_takeout = new modal_Takeout();

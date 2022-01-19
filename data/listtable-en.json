@@ -1,0 +1,35 @@
+{
+    "list": {
+        "columns": {
+            "common": [
+                {
+                    "id": "osmid",
+                    "hidden": true
+                },
+                {
+                    "id": "date",
+                    "name": "Date",
+                    "hidden": true
+                },
+                {
+                    "id": "category",
+                    "name": "Category"
+                },
+                {
+                    "id": "name",
+                    "name": "Title"
+                }
+            ],
+            "osm": [
+                "date",
+                "category",
+                "name"
+            ],
+            "googlesheet": [
+                "startdatetime",
+                "category",
+                "title"
+            ]
+        }
+    }
+}

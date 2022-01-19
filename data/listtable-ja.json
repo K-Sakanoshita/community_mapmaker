@@ -1,0 +1,35 @@
+{
+    "list": {
+        "columns": {
+            "common": [
+                {
+                    "id": "osmid",
+                    "hidden": true
+                },
+                {
+                    "id": "date",
+                    "name": "日付",
+                    "hidden": true
+                },
+                {
+                    "id": "category",
+                    "name": "種類"
+                },
+                {
+                    "id": "name",
+                    "name": "題名"
+                }
+            ],
+            "osm": [
+                "date",
+                "category",
+                "name"
+            ],
+            "googlesheet": [
+                "startdatetime",
+                "category",
+                "title"
+            ]
+        }
+    }
+}

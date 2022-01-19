@@ -1,22 +1,34 @@
 {
     "category": {
+        "*": {
+            "*": "-"
+        },
         "amenity": {
             "library": "図書館",
             "bar": "バー/酒場",
             "bench": "ベンチ",
             "cafe": "カフェ/喫茶店",
+            "community_centre": "公民館",
             "drinking_water": "給水所/水栓",
             "fast_food": "ファーストフード",
             "food_court": "フードコート",
+            "hospital": "病院",
             "ice_cream": "アイスクリーム店",
             "pub": "パブ/居酒屋",
+            "police": "警察署",
             "restaurant": "レストラン",
             "vending_machine": "自動販売機",
             "place_of_worship": "宗教施設",
             "post_box": "郵便ポスト",
             "post_office": "郵便局",
             "school": "学校",
-            "community_centre": "公民館"
+            "theatre": "劇場"
+        },
+        "assembly_point:tsunami": {
+            "yes": "津波避難"
+        },
+        "attraction": {
+            "animal": "動物"
         },
         "shop": {
             "alcohol": "酒屋",
@@ -156,12 +168,6 @@
         "social_facility": {
             "shelter": "一時避難所"
         },
-        "assembly_point:tsunami": {
-            "yes": "津波避難"
-        },
-        "attraction": {
-            "animal": "動物"
-        },
         "playground": {
             "structure": "複合遊具",
             "slide": "すべり台",
@@ -213,6 +219,10 @@
             "torii": "鳥居",
             "lamp": "灯籠"
         },
+        "landuse": {
+            "religious":"信仰",
+            "industrial": "工業"
+        },
         "leisure": {
             "pitch": "グラウンド",
             "park": "公園",
@@ -224,6 +234,11 @@
         },
         "public_transport": {
             "station": "鉄道駅"
+        },
+        "place": {
+            "suburb": "区",
+            "quarter": "大字",
+            "neighbourhood": "小字"
         },
         "suffix_covid19": "(暫定)",
         "bookmarked": "スターつき"

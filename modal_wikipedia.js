@@ -28,4 +28,3 @@ class modal_Wikipedia {
         };
     };
 }
-var modal_wikipedia = new modal_Wikipedia();

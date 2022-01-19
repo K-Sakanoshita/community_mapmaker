@@ -52,6 +52,15 @@ class Leaflet {
 
     };
 
+    start() {
+        ["dragging", "touchZoom", "touchZoom"].forEach(key => map[key].enable());
+        this.Control["maps"].addTo(map);
+        this.Control["locate"].addTo(map);
+        map.zoomControl.addTo(map);
+        if (map.tap) map.tap.enable();
+        document.getElementById('mapid').style.cursor = 'grab';
+    };
+
     stop() {
         ["dragging", "touchZoom", "touchZoom"].forEach(key => map[key].disable());
         this.Control["maps"].remove(map);
@@ -61,13 +70,8 @@ class Leaflet {
         document.getElementById('mapid').style.cursor = 'default';
     };
 
-    start() {
-        ["dragging", "touchZoom", "touchZoom"].forEach(key => map[key].enable());
-        this.Control["maps"].addTo(map);
-        this.Control["locate"].addTo(map);
-        map.zoomControl.addTo(map);
-        if (map.tap) map.tap.enable();
-        document.getElementById('mapid').style.cursor = 'grab';
+    zoomSet(zoomlv) {
+        map.flyTo(map.getCenter(), zoomlv, { animate: true, duration: 0.5 });
     };
 
     controlAdd(position, domid, html, css) {     // add leaflet control
@@ -90,7 +94,6 @@ class Leaflet {
     };
 
 };
-var leaflet = new Leaflet();
 
 // GeoJson Control
 var GeoCont = (function () {
@@ -214,6 +217,10 @@ var GeoCont = (function () {
                 if (found > -1) break;
             };
             return (found > -1) ? idx : false;
+        },
+
+        check_inner: (latlng, LL) => {          // latlngがLL(get_LL)範囲内であれば true
+            return (LL.NW.lat > latlng[0] && LL.SE.lat < latlng[0] && LL.NW.lng < latlng[1] && LL.SE.lng > latlng[1]);
         },
 
         get_LL: () => {			// LatLngエリアの設定 [経度lng,緯度lat]

@@ -1,52 +1,64 @@
 {
     "marker_tag": {
+        "*": {
+            "*": "marker-stroked.svg"
+        },
         "amenity": {
-            "library": "library-round.svg",
-            "bar": "red-takeout.png",
+            "library": "library.svg",
+            "bar": "bar.svg",
             "bench": "bench.svg",
-            "cafe": "red-gohan.png",
-            "drinking_water": "water.svg",
-            "fast_food": "red-gohan.png",
-            "food_court": "red-gohan.png",
-            "ice_cream": "red-takeout.png",
-            "pub": "red-takeout.png",
-            "restaurant": "red-gohan.png",
-            "vending_machine": "vending.svg",
-            "place_of_worship": "purple-meishyo.png",
+            "cafe": "cafe.svg",
+            "community_centre": "town-hall.svg",
+            "drinking_water": "drinking-water.svg",
+            "fast_food": "fast-food.svg",
+            "food_court": "restaurant.svg",
+            "hospital": "hospital.svg",
+            "ice_cream": "ice-cream.svg",
+            "pub": "beer.svg",
+            "police": "police.svg",
+            "restaurant": "restaurant.svg",
+            "vending_machine": "vending_machine.svg",
+            "place_of_worship": "place-of-worship.svg",
             "post_box": "post_box.svg",
-            "post_office":"post_office.svg",
-            "school":"school.svg",
-            "community_centre": "green-taiken.png"
+            "post_office": "post-JP.svg",
+            "school": "school-JP.svg",
+            "theatre": "theatre.svg"
+        },
+        "assembly_point:tsunami": {
+            "yes": "shelter.svg"
+        },
+        "attraction": {
+            "animal": "veterinary.svg"
         },
         "shop": {
-            "alcohol": "red-takeout.png",
-            "bakery": "red-takeout.png",
-            "beverages": "water.svg",
-            "brewing_supplies": "red-takeout.png",
-            "butcher": "red-takeout.png",
-            "cheese": "red-takeout.png",
-            "chocolate": "red-takeout.png",
-            "coffee": "red-takeout.png",
-            "confectionery": "red-takeout.png",
-            "convenience": "red-takeout.png",
-            "deli": "red-takeout.png",
-            "dairy": "red-takeout.png",
-            "farm": "red-takeout.png",
-            "frozen_food": "red-takeout.png",
-            "greengrocer": "red-tyokubaijyo.png",
-            "gift": "red-omiyage.png",
-            "health_food": "red-takeout.png",
-            "ice_cream": "red-takeout.png",
-            "pasta": "red-takeout.png",
-            "pastry": "red-takeout.png",
-            "seafood": "red-takeout.png",
-            "spices": "red-takeout.png",
-            "tea": "red-takeout.png",
+            "alcohol": "alcohol-shop.svg",
+            "bakery": "bakery.svg",
+            "beverages": "bottles.svg",
+            "brewing_supplies": "storage_fermenter.svg",
+            "butcher": "cleaver.svg",
+            "cheese": "cheese.svg",
+            "chocolate": "confectionery.svg",
+            "coffee": "hot_drink_cup.svg",
+            "confectionery": "confectionery.svg",
+            "convenience": "shopping-basket.svg",
+            "deli": "meat.svg",
+            "dairy": "cheese.svg",
+            "farm": "apple-alt.svg",
+            "frozen_food": "shop.svg",
+            "greengrocer": "carrot.svg",
+            "gift": "gift.svg",
+            "health_food": "shop.svg",
+            "ice_cream": "ice-cream.svg",
+            "pasta": "restaurant.svg",
+            "pastry": "bakery.svg",
+            "seafood": "restaurant-seafood.svg",
+            "spices": "spice_bottle.svg",
+            "tea": "teahouse.svg",
             "water": "water.svg",
-            "wine": "red-takeout.png",
-            "kiosk": "red-takeout.png",
-            "supermarket": "red-takeout.png",
-            "variety_store": "shops.svg"
+            "wine": "alcohol-shop.svg",
+            "kiosk": "store.svg",
+            "supermarket": "grocery.svg",
+            "variety_store": "shop.svg"
         },
         "species": {
             "Cherry blossom": "sakura.svg",
@@ -54,12 +66,12 @@
             "Cerasus × yedoensis": "sakura.svg"
         },
         "natural": {
-            "tree": "tree.svg"
+            "tree": "park.svg"
         },
         "emergency": {
-            "fire_extinguisher": "orange-bousai.png",
-            "fire_hydrant": "orange-bousai.png",
-            "defibrillator": "orange-bousai.png"
+            "fire_extinguisher": "fire-extinguisher.svg",
+            "fire_hydrant": "fire_hydrant.svg",
+            "defibrillator": "defibrillator.svg"
         },
         "highway": {
             "traffic_signals": "signal.svg"
@@ -67,27 +79,18 @@
         "social_facility": {
             "shelter": "shelter.svg"
         },
-        "assembly_point:tsunami": {
-            "yes": "shelter.svg"
-        },
-        "wikipedia": {
-            "*": "wikipedia.svg"
-        },
-        "attraction": {
-            "animal": "animal.svg"
-        },
         "playground": {
-            "structure": "playground.svg",
-            "slide": "playground.svg",
+            "structure": "play_structure.svg",
+            "slide": "slide.svg",
             "climbingframe": "playground.svg",
             "climbingwall": "playground.svg",
             "balancebeam": "playground.svg",
-            "playhouse": "playground.svg",
+            "playhouse": "play_structure.svg",
             "sandpit": "playground.svg",
             "hopscotch": "playground.svg",
             "teenshelter": "playground.svg",
             "sledding": "playground.svg",
-            "youth_bench": "playground.svg",
+            "youth_bench": "bench.svg",
             "map": "playground.svg",
             "swing": "playground.svg",
             "basketswing": "playground.svg",
@@ -106,41 +109,49 @@
             "exercise": "playground.svg"
         },
         "tourism": {
-            "viewpoint": "star-round.svg",
-            "artwork": "artwork.svg",
-            "information": "information-round.svg",
-            "museum":"green-taiken.png"
+            "viewpoint": "spotting_scope.svg",
+            "artwork": "art-gallery.svg",
+            "information": "information.svg",
+            "museum": "museum.svg"
         },
         "historic": {
-            "memorial": "memorial-round.svg"
+            "memorial": "monument.svg"
         },
         "information": {
-            "board": "information2.svg",
-            "terminal": "information-round.svg",
-            "audioguide": "information-round.svg",
-            "map": "information2.svg",
-            "tactile_map": "information2.svg",
-            "guidepost": "information-round.svg"
+            "board": "info_board.svg",
+            "terminal": "app_terminal.svg",
+            "audioguide": "information.svg",
+            "map": "info_board.svg",
+            "tactile_map": "info_board.svg",
+            "guidepost": "map-signs.svg"
         },
         "man_made": {
-            "torii": "torii.svg",
+            "torii": "shinto.svg",
             "lamp": "lantern.svg"
         },
+        "landuse": {
+            "religious": "wikipedia.svg",
+            "industrial": "industry.svg"
+        },
         "leisure": {
-            "pitch": "green-kouen.png",
-            "park": "green-kouen.png",
-            "playground": "green-kouen.png",
-            "amusement_arcade": "Input-gaming.svg"
+            "pitch": "pitch.svg",
+            "park": "tree_and_bench.svg",
+            "playground": "playground.svg",
+            "amusement_arcade": "gaming.svg"
         },
         "railway": {
-            "station": "bule-koutsuu.png"
+            "station": "train.svg"
         },
         "public_transport": {
-            "station": "bule-koutsuu.png"
+            "station": "train.svg"
+        },
+        "place": {
+            "suburb": "triangle.svg",
+            "quarter": "triangle.svg",
+            "neighbourhood": "triangle-stroked.svg"
+        },
+        "wikipedia": {
+            "*": "wikipedia.svg"
         }
-    },
-    "marker_append_files": [
-        "wikipedia_orange.svg",
-        "attention.svg"
-    ]
+    }
 }
