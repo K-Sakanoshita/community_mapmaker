@@ -98,5 +98,6 @@ class Basic {
         return Array.from(new Uint8Array(digest)).map(v => v.toString(16).padStart(2, '0')).join('');
     }
 
-};
+    //   getLatLng(keyword, (address) => { return address }, () => { return [] }
 
+};

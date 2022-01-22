@@ -1,15 +1,15 @@
 // Display Status(progress&message)
-class WinCont {
+class winCont {
 
     constructor() { this.modal_mode = false }
 
-    splash(mode) {
+    static splash(mode) {
         $("#splash_image").attr("src", Conf.splash.url);
         let act = mode ? { backdrop: 'static', keyboard: false } : 'hide';
         $('#modal_splash').modal(act);
     }
 
-    spinner(view) {
+    static spinner(view) {
         try {
             let display = view ? "remove" : "add";
             global_spinner.classList[display]('d-none');
@@ -19,7 +19,7 @@ class WinCont {
         }
     }
 
-    modal_open(p) {   // open modal window(p: title,message,mode(yes no close),callback_yes,callback_no,callback_close)
+    static modal_open(p) {   // open modal window(p: title,message,mode(yes no close),callback_yes,callback_no,callback_close)
         let MW = "modal_window";
         document.getElementById(`${MW}_title`).innerHTML = p.title;
         document.getElementById(`${MW}_message`).innerHTML = p.message;
@@ -52,23 +52,23 @@ class WinCont {
         });    // "x" click
     }
 
-    modal_text(text, append) {
+    static modal_text(text, append) {
         let newtext = append ? $(`${MW}_message`).html() + text : text;
         $(`#modal_window_message`).html(newtext);
     }
 
-    modal_progress(percent) {
+    static modal_progress(percent) {
         percent = percent == 0 ? 0.1 : percent;
         $(`#modal_window_progress`).css('width', parseInt(percent) + "%");
     }
 
-    modal_close() {            // close modal window(note: change this)
+    static modal_close() {            // close modal window(note: change this)
         winCont.modal_mode = false;
         $(`#modal_window`).modal('hide');
         [`#modal_window_yes`, `#modal_window_no`, `#modal_window_close`].forEach(id => $(id).off('click'));
     }
 
-    menu_make(menulist, domid) {
+    static menu_make(menulist, domid) {
         let dom = document.getElementById(domid);
         dom.innerHTML = Conf.menu_list.template;
         Object.keys(menulist).forEach(key => {
@@ -91,18 +91,18 @@ class WinCont {
         dom.querySelector("span:first-child").remove();
     }
 
-    select_add(domid, text, value) {
+    static select_add(domid, text, value) {
         let option = document.createElement("option");
         option.text = text;
         option.value = value;
         document.getElementById(domid).appendChild(option);
     }
-    select_clear(domid) {
+    static select_clear(domid) {
         $('#' + domid + ' option').remove();
         $('#' + domid).append($('<option>').html("---").val("-"));
     }
 
-    window_resize() {
+    static window_resize() {
         console.log("Window: resize.");
         let mapWidth = basic.isSmartPhone() ? window.innerWidth - 50 : window.innerWidth * 0.3;
         mapWidth = mapWidth < 300 ? 300 : mapWidth;

@@ -15,7 +15,6 @@ var cmap_events = new cMapEvents();
 var modal_takeout = new modal_Takeout();
 var modal_activities = new modal_Activities();
 var modal_wikipedia = new modal_Wikipedia();
-var winCont = new WinCont();
 var basic = new Basic();
 var poiMarker = new PoiMarker();
 var leaflet = new Leaflet();

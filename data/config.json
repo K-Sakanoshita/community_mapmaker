@@ -26,7 +26,13 @@
         "bookmark": true
     },
     "targets": [
-        "wikipedia"
+        "wikipedia",
+        "museum",
+        "gallery",
+        "park",
+        "garden",
+        "historic",
+        "worship"
     ],
     "listTable": {
         "targets": [
