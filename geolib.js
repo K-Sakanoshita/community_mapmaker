@@ -93,6 +93,17 @@ class Leaflet {
         }).addTo(map);
     };
 
+    geojsonAdd(data) {
+        L.geoJSON(data, {
+            style: function (feature) {
+                return {
+                    color: feature.properties.stroke,
+                    weight: feature.properties["stroke-width"]
+                };
+            }
+        }).addTo(map);
+    }
+
 };
 
 // GeoJson Control

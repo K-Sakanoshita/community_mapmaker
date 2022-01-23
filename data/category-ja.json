@@ -204,8 +204,10 @@
             "museum": "美術館"
         },
         "historic": {
+            "archaeological_site":"遺跡・古墳",
+            "castle": "お城",
             "memorial": "石碑",
-            "castle": "お城"
+            "wayside_shrine":"地蔵・道祖神"
         },
         "information": {
             "board": "掲示板",
@@ -220,6 +222,7 @@
             "lamp": "灯籠"
         },
         "landuse": {
+            "farmland": "農地",
             "religious":"信仰",
             "industrial": "工業"
         },

@@ -115,7 +115,10 @@
             "museum": "museum.svg"
         },
         "historic": {
-            "memorial": "monument.svg"
+            "archaeological_site": "archaeological-site.svg",
+            "castle": "castle-JP.svg",
+            "memorial": "monument.svg",
+            "wayside_shrine": "ojizou.svg"
         },
         "information": {
             "board": "info_board.svg",
@@ -130,6 +133,7 @@
             "lamp": "lantern.svg"
         },
         "landuse": {
+            "farmland": "farm.svg",
             "religious": "wikipedia.svg",
             "industrial": "industry.svg"
         },

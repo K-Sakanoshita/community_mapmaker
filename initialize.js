@@ -7,7 +7,7 @@ const LANG = (window.navigator.userLanguage || window.navigator.language || wind
 const FILES = [
 	"./baselist.html", "./data/config.json", './data/config-system.json', './data/config-activities.json',
 	'./data/overpass.json', `./data/marker.json`, `./data/category-${LANG}.json`, `data/listtable-${LANG}.json`,
-	`./data/glot-custom.json`, `data/glot-system.json`];
+	`./data/glot-custom.json`, `data/glot-system.json`,`data/takenouchi.json`];
 const glot = new Glottologist();
 var gSheet = new GoogleSpreadSheet();
 var cMapmaker = new CMapMaker();
@@ -16,7 +16,6 @@ var modal_takeout = new modal_Takeout();
 var modal_activities = new modal_Activities();
 var modal_wikipedia = new modal_Wikipedia();
 var basic = new Basic();
-var poiMarker = new PoiMarker();
 var leaflet = new Leaflet();
 
 
@@ -32,8 +31,10 @@ window.addEventListener("DOMContentLoaded", function () {
 			Conf[key1] = {};
 			Object.keys(arg[key1]).forEach((key2) => Conf[key1][key2] = arg[key1][key2]);
 		});
+		Conf.category_keys = Object.keys(Conf.category);						// Make Conf.category_keys
 		glot.data = Object.assign(glot.data, arguments[8][0]);					// import glot data
 		glot.data = Object.assign(glot.data, arguments[9][0]);					// import glot data
+		Conf.takenouchi = arguments[10][0];										// import takenouchi data
 
 		window.onresize = winCont.window_resize;    // 画面サイズに合わせたコンテンツ表示切り替え
 		// document.title = glot.get("title");		// Title(no change / Google検索で日本語表示させたいので)

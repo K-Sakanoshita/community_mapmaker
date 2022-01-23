@@ -212,16 +212,41 @@
                 "operator"
             ]
         },
-        "historic": {
+        "information":{
             "overpass": [
-                "node[\"historic\"]",
-                "way[\"historic\"]",
                 "node[\"tourism\"=\"information\"]",
                 "way[\"tourism\"=\"information\"]"
             ],
             "tags": [
                 "historic",
                 "tourism=information"
+            ],
+            "views": [
+                "name",
+                "operator"
+            ]
+        },
+        "wayside_shrine": {
+            "overpass": [
+                "node[\"historic\"=\"wayside_shrine\"]",
+                "way[\"historic\"=\"wayside_shrine\"]"
+            ],
+            "tags": [
+                "historic=wayside_shrine"
+            ],
+            "views": [
+                "name"
+            ]
+        },
+        "historic": {
+            "overpass": [
+                "node[\"historic\"]",
+                "way[\"historic\"]"
+            ],
+            "tags": [
+                "historic=archaeological_site",
+                "historic=castle",
+                "historic=memorial"
             ],
             "views": [
                 "name",

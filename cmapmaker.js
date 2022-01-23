@@ -140,17 +140,12 @@ class CMapMaker {
 		let osmobj = poiCont.get_osmid(osmid);
 		let tags = osmobj == undefined ? { "targets": [] } : osmobj.geojson.properties;
 		tags["*"] = "*";
-		let categorys = Object.keys(Conf.category);
-		let keyn = categorys.find(key => (tags[key] !== undefined) && key !== "*");
-		keyn = keyn == undefined ? "*" : keyn;	// カテゴリに無いPOIへの対応
-		let icon_name = Conf.marker_tag[keyn][tags[keyn]];
-		icon_name = icon_name == undefined ? Conf.marker_tag["*"]["*"] : icon_name;
 		let target = osmobj == undefined ? "*" : osmobj.targets[0];
 		let category = poiCont.get_catname(tags);
 		let title = "", message = "";
 		for (let i = 0; i < Conf.osm[target].views.length; i++) {
 			if (tags[Conf.osm[target].views[i]] !== void 0) {
-				title = `<img src="./${Conf.icon.path}/${icon_name}">${tags[Conf.osm[target].views[i]]}`;
+				title = `<img src="./${Conf.icon.path}/${poiMarker.get_icon(tags)}">${tags[Conf.osm[target].views[i]]}`;
 				break;
 			}
 		}

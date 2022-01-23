@@ -204,8 +204,10 @@
             "museum": "museum"
         },
         "historic": {
+            "archaeological_site":"archaeological site",
+            "castle": "castle",
             "memorial": "memorial",
-            "castle": "castle"
+            "wayside_shrine":"wayside shrine"
         },
         "information": {
             "board": "board",
@@ -220,6 +222,7 @@
             "lamp": "lantern"
         },
         "landuse": {
+            "farmland": "farmland",
             "religious": "religious",
             "industrial": "industrial"
         },

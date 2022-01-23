@@ -19,20 +19,14 @@
         "initZoom": 5.5,
         "pc_minZoom": 5,
         "phone_minZoom": 5,
-        "maxZoom": 18,
+        "maxZoom": 20,
         "zoomSnap": 0.5,
         "iconViewZoom": 10,
         "act_iconViewZoom": 5,
         "bookmark": true
     },
     "targets": [
-        "wikipedia",
-        "museum",
-        "gallery",
-        "park",
-        "garden",
-        "historic",
-        "worship"
+        "wayside_shrine"
     ],
     "listTable": {
         "targets": [
