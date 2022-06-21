@@ -1,31 +1,27 @@
 {
-	"title": {
-		"ja": "コミュニティマップメーカー デモ",
-		"en": "Community Map Maker DEMO"
+	"site_title": {
+		"ja": "Community Map Maker",
+		"en": "Community Map Maker"
 	},
-	"subtitle": {
+	"site_subtitle": {
 		"ja": "Powered by Community Map Maker",
 		"en": "Powered by Community Map Maker"
 	},
 	"about": {
-		"ja": "図書館年表マップについて",
-		"en": "about Library chronology"
-	},
-	"library-redesign": {
-		"ja": "「図書館」（仮称）リ・デザイン会議について",
-		"en": "about Library Redesign Conference"
+		"ja": "Community Map Makerについて",
+		"en": "about Community Map Maker"
 	},
 	"owner": {
 		"ja": "コミュニティマップメーカー開発サイト",
-		"en": "development site"
+		"en": "Community Map Maker development site"
 	},
 	"licence_title": {
 		"ja": "利用規約",
 		"en": "Terms of Use"
 	},
 	"licence_message": {
-		"ja": "図書館年表マップのデータは <a href=\"https://creativecommons.org/share-your-work/public-domain/cc0\">CC0</a> で提供されています。<br>「図書館」（仮称）リ・デザイン会議のサイトを御覧ください。",
-		"en": "Library chronology map data can be provided under <a href=\"https://creativecommons.org/share-your-work/public-domain/cc0\">CC0</a>.<br>Please see the site of the Library Redesign Conference."
+		"ja": "Community Map MakerのデータはOpenStreetMapと独自データを組み合わせています。",
+		"en": "The data of Community Map Maker is a combination of OpenStreetMap and Original data."
 	},
 	"more_message": {
 		"ja": "",
@@ -36,7 +32,7 @@
 		"en": "Event Dates: "
 	},
 	"activities": {
-		"ja": "各種活動",
+		"ja": "活動履歴",
 		"en": "Activities"
 	},
 	"libc": {
@@ -51,6 +47,18 @@
 		"ja": "思い出など",
 		"en": "Memorials"
 	},
+	"actdate":{
+		"ja":"発生日",
+		"en":"Disaster Date"
+	},
+	"ds_subject":{
+		"ja":"作業名",
+		"en":"Subject"
+	},
+	"ds_detail_url":{
+		"ja":"詳細URL",
+		"en":"Detail URL"
+	},
 	"act_grade": {
 		"ja": "学年",
 		"en": "Grade"
@@ -64,8 +72,8 @@
 		"en": "Detail"
 	},
 	"act_official_url": {
-		"ja": "草津おみやげラボURL",
-		"en": "Kusatsu Omiyage Labo URL"
+		"ja": "公式サイトURL",
+		"en": "Public Site URL"
 	},
 	"act_recommend_url": {
 		"ja": "オススメURL",
@@ -122,10 +130,6 @@
 	"libc_ymd": {
 		"ja": "時期",
 		"en": "Around"
-	},
-	"memories_title": {
-		"ja": "タイトル",
-		"en": "Title"
 	},
 	"memories_author": {
 		"ja": "投稿者",

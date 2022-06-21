@@ -3,8 +3,18 @@ class winCont {
 
     constructor() { this.modal_mode = false }
 
+    static playback(view){
+		let display = view ? "remove" : "add";
+		list_playback_control.classList[display]('d-none');
+    }
+
+    static download(view){
+		let display = view ? "remove" : "add";
+		list_download.classList[display]('d-none');
+    }
+
     static splash(mode) {
-        $("#splash_image").attr("src", Conf.splash.url);
+        document.getElementById("splash_image").setAttribute("src", Conf.splash.url);
         let act = mode ? { backdrop: 'static', keyboard: false } : 'hide';
         $('#modal_splash').modal(act);
     }
@@ -19,7 +29,9 @@ class winCont {
         }
     }
 
-    static modal_open(p) {   // open modal window(p: title,message,mode(yes no close),callback_yes,callback_no,callback_close)
+    // open modal window(p: title,message,mode(yes no close),callback_yes,callback_no,callback_close,append,openid)
+    // append: append button(Conf.detail_view.buttons)
+    static modal_open(p) {
         let MW = "modal_window";
         document.getElementById(`${MW}_title`).innerHTML = p.title;
         document.getElementById(`${MW}_message`).innerHTML = p.message;
@@ -42,14 +54,28 @@ class winCont {
         winCont.modal_progress(0);
         $(`#${MW}`).modal({ backdrop: false, keyboard: true });
         winCont.modal_mode = true;
+        $(`#${MW}`).off('shown.bs.modal');
         $(`#${MW}`).on('shown.bs.modal', () => {
             ["yes", "no", "close"].forEach(keyn => delEvents(keyn));
-            if (!winCont.modal_mode) $(`#${MW}`).modal('hide')
+            if (!winCont.modal_mode) $(`#${MW}`).modal('hide');
+		    if (p.openid !== undefined){
+                let act = document.getElementById(p.openid.replace("/", ""));
+                if (act !== null) act.scrollIntoView();        // 指定したidのactivityがあればスクロール
+            };
         });                 // Open中にCloseされた時の対応
+        $(`#${MW}`).off('hidden.bs.modal');
         $(`#${MW}`).on('hidden.bs.modal', () => {
             ["yes", "no", "close"].forEach(keyn => delEvents(keyn));
             p[`callback_${p.callback_close ? "close" : "no"}`]();
         });    // "x" click
+        let chtml = "";
+        if (p.append !== undefined) {      // append button
+            p.append.forEach(p => {
+                chtml += `<button class="${p.btn_class}" onclick="${p.code}"><i class="${p.icon_class}"></i>`;
+                chtml += ` <span>${glot.get(p.btn_glot_name)}</span></button>`;
+            });
+        };
+        modal_footer.innerHTML = chtml;
     }
 
     static modal_text(text, append) {
@@ -62,10 +88,14 @@ class winCont {
         $(`#modal_window_progress`).css('width', parseInt(percent) + "%");
     }
 
-    static modal_close() {            // close modal window(note: change this)
+    static modal_close() {              // close modal window(note: change this)
         winCont.modal_mode = false;
         $(`#modal_window`).modal('hide');
         [`#modal_window_yes`, `#modal_window_no`, `#modal_window_close`].forEach(id => $(id).off('click'));
+    }
+
+    static osm_open(param_text) {        // open osm window
+        window.open(`https://osm.org/${param_text.replace(/[?&]*/, '', "")}`, '_blank');
     }
 
     static menu_make(menulist, domid) {
@@ -92,10 +122,14 @@ class winCont {
     }
 
     static select_add(domid, text, value) {
-        let option = document.createElement("option");
-        option.text = text;
-        option.value = value;
-        document.getElementById(domid).appendChild(option);
+        let dom = document.getElementById(domid);
+        let newopt = document.createElement("option");
+        var optlst = Array.prototype.slice.call(dom.options);
+        let already = false;
+        newopt.text = text;
+        newopt.value = value;
+        already = optlst.some(opt => opt.value == value);
+        if (!already) dom.appendChild(newopt);
     }
     static select_clear(domid) {
         $('#' + domid + ' option').remove();
@@ -104,8 +138,8 @@ class winCont {
 
     static window_resize() {
         console.log("Window: resize.");
-        let mapWidth = basic.isSmartPhone() ? window.innerWidth - 50 : window.innerWidth * 0.3;
-        mapWidth = mapWidth < 300 ? 300 : mapWidth;
+        let mapWidth = basic.isSmartPhone() ? window.innerWidth - 20 : window.innerWidth * 0.3;
+        mapWidth = mapWidth < 350 ? 350 : mapWidth;
         if (typeof baselist !== "undefined") baselist.style.width = mapWidth + "px";
         if (typeof mapid !== "undefined") mapid.style.height = window.innerHeight + "px";
     }

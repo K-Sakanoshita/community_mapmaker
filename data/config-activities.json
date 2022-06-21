@@ -1,5 +1,97 @@
 {
     "activities": {
+        "AattoMark": {
+            "header": "",
+            "footer": "",
+            "form": {
+                "actdate": {
+                    "glot": "actdate",
+                    "type": "date",
+                    "gsheet": "actdate"
+                },
+                "category": {
+                    "glot": "act_category",
+                    "type": "select",
+                    "category": [
+                        "イベント",
+                        "活動記録",
+                        "店舗紹介"
+                    ],
+                    "gsheet": "category"
+                },
+                "title": {
+                    "glot": "title",
+                    "type": "text",
+                    "gsheet": "title"
+                },
+                "memo": {
+                    "glot": "act_memo",
+                    "type": "textarea",
+                    "gsheet": "body"
+                },
+                "detail_url": {
+                    "glot": "ds_detail_url",
+                    "type": "url",
+                    "gsheet": "detail_url"
+                },
+                "picture_url1": {
+                    "glot": "act_picture_url1",
+                    "type": "image_url",
+                    "gsheet": "picture_url1"
+                },
+                "picture_url2": {
+                    "glot": "act_picture_url2",
+                    "type": "image_url",
+                    "gsheet": "picture_url2"
+                }
+            }
+        },
+        "sample": {
+            "header": "",
+            "footer": "",
+            "form": {
+                "actdate": {
+                    "glot": "actdate",
+                    "type": "date",
+                    "gsheet": "actdate"
+                },
+                "category": {
+                    "glot": "act_category",
+                    "type": "select",
+                    "category": [
+                        "イベント",
+                        "活動記録",
+                        "店舗紹介"
+                    ],
+                    "gsheet": "category"
+                },
+                "title": {
+                    "glot": "title",
+                    "type": "text",
+                    "gsheet": "title"
+                },
+                "memo": {
+                    "glot": "act_memo",
+                    "type": "textarea",
+                    "gsheet": "body"
+                },
+                "detail_url": {
+                    "glot": "ds_detail_url",
+                    "type": "url",
+                    "gsheet": "detail_url"
+                },
+                "picture_url1": {
+                    "glot": "act_picture_url1",
+                    "type": "image_url",
+                    "gsheet": "picture_url1"
+                },
+                "picture_url2": {
+                    "glot": "act_picture_url2",
+                    "type": "image_url",
+                    "gsheet": "picture_url2"
+                }
+            }
+        },
         "child": {
             "header": "",
             "footer": "",
@@ -109,6 +201,128 @@
                     "glot": "act_quiz_hint_url",
                     "type": "quiz_hint_url",
                     "gsheet": "quiz_hint_url"
+                }
+            }
+        },
+        "awesetouchi": {
+            "header": "",
+            "footer": "",
+            "form": {
+                "category": {
+                    "glot": "act_category",
+                    "type": "select",
+                    "category": [
+                        "現代アート",
+                        "古代アート",
+                        "現代クラフト",
+                        "伝統クラフト",
+                        "現代建築",
+                        "伝統建築",
+                        "ハイブリッド建築",
+                        "サステナブルなレストラン",
+                        "サステナブルなカフェ",
+                        "うどん",
+                        "サステナブルな食料品店",
+                        "サステナブルなグッズショップ",
+                        "野草木",
+                        "園芸植物",
+                        "野獣",
+                        "ペット",
+                        "家畜",
+                        "野鳥",
+                        "爬虫類と両生類",
+                        "昆虫",
+                        "苔・藻類",
+                        "ジオ（地質）",
+                        "ビューポイント"
+                    ],
+                    "gsheet": "category"
+                },
+                "name": {
+                    "glot": "act_name",
+                    "type": "text",
+                    "gsheet": "name"
+                },
+                "title": {
+                    "glot": "act_title",
+                    "type": "text",
+                    "gsheet": "title"
+                },
+                "memo": {
+                    "glot": "act_memo",
+                    "type": "textarea",
+                    "gsheet": "body"
+                },
+                "official_url": {
+                    "glot": "act_official_url",
+                    "type": "url",
+                    "gsheet": "official_url"
+                },
+                "recommend_url": {
+                    "glot": "act_recommend_url",
+                    "type": "url",
+                    "gsheet": "recommend_url"
+                },
+                "picture_url1": {
+                    "glot": "act_picture_url1",
+                    "type": "image_url",
+                    "gsheet": "picture_url1"
+                },
+                "picture_url2": {
+                    "glot": "act_picture_url2",
+                    "type": "image_url",
+                    "gsheet": "picture_url2"
+                },
+                "picture_url3": {
+                    "glot": "act_picture_url3",
+                    "type": "image_url",
+                    "gsheet": "picture_url3"
+                }
+            }
+        },
+        "disaster": {
+            "header": "",
+            "footer": "",
+            "form": {
+                "actdate": {
+                    "glot": "actdate",
+                    "type": "date",
+                    "gsheet": "actdate"
+                },
+                "category": {
+                    "glot": "act_category",
+                    "type": "select",
+                    "category": [
+                        "購入/調達",
+                        "整備/修理",
+                        "廃棄/廃止"
+                    ],
+                    "gsheet": "category"
+                },
+                "subject": {
+                    "glot": "ds_subject",
+                    "type": "text",
+                    "gsheet": "title"
+                },
+                "memo": {
+                    "glot": "act_memo",
+                    "type": "textarea",
+                    "gsheet": "body"
+                },
+                "detail_url": {
+                    "glot": "ds_detail_url",
+                    "type": "url",
+                    "gsheet": "detail_url"
+                },
+                "picture_url1": {
+                    "glot": "act_picture_url1",
+                    "type": "image_url",
+                    "gsheet": "picture_url1"
+                },
+                "picture_url2": {
+                    "glot": "act_picture_url2",
+                    "type": "image_url",
+                    "gsheet": "picture_url2"
                 }
             }
         }

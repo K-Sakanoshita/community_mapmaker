@@ -1,0 +1,33 @@
+{
+    "osm": {
+        "AweSetouchi": {
+            "overpass": [
+                "node[\"shop\"=\"bakery\"]",
+                "way[\"shop\"=\"bakery\"]",
+                "node[\"shop\"=\"brewing_supplies\"]",
+                "way[\"shop\"=\"brewing_supplies\"]",
+                "node[\"shop\"=\"chocolate\"]",
+                "way[\"shop\"=\"chocolate\"]",
+                "node[\"shop\"=\"coffee\"]",
+                "way[\"shop\"=\"coffee\"]",
+                "node[\"shop\"=\"confectionery\"]",
+                "way[\"shop\"=\"confectionery\"]",
+                "node[\"shop\"=\"farm\"]",
+                "way[\"shop\"=\"farm\"]",
+                "node[\"shop\"=\"greengrocer\"]",
+                "way[\"shop\"=\"greengrocer\"]",
+                "node[\"shop\"=\"health_food\"]",
+                "way[\"shop\"=\"health_food\"]",
+                "node[\"shop\"=\"seafood\"]",
+                "way[\"shop\"=\"seafood\"]"
+            ],
+            "tags": [
+                "shop=*"
+            ],
+            "titles": [
+                "name",
+                "operator"
+            ]
+        }
+    }
+}

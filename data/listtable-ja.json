@@ -7,7 +7,7 @@
                     "hidden": true
                 },
                 {
-                    "id": "date",
+                    "id": "updatetime",
                     "name": "日付",
                     "hidden": true
                 },
@@ -18,15 +18,22 @@
                 {
                     "id": "name",
                     "name": "題名"
-                }
+                },
+                {
+                    "id": "artist_name",
+                    "name": "作者名"
+                }                
             ],
-            "osm": [
-                "date",
-                "category",
-                "name"
+            "poi_fields": [
+                "id",
+                "timestamp",
+                "#category",
+                "name",
+                "artist_name"
             ],
-            "googlesheet": [
-                "startdatetime",
+            "act_fields": [
+                "id",
+                "updatetime",
                 "category",
                 "title"
             ]

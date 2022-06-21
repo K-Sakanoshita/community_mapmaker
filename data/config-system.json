@@ -10,7 +10,7 @@
         ]
     },
     "tile_select": {
-        "Facebook_Builtin": "OSM_Standard",
+        "Facebook_Builtin": "OSM_Thin",
         "default": "MapTiler"
     },
     "tile": {
@@ -30,8 +30,8 @@
             "copyright": "<a href=\"https://openstreetmap.org\">&copy OpenStreetMap contributors</a>",
             "url": "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
             "filter": [
-                "brightness:105%",
-                "grayscale:75%"
+                "brightness:95%",
+                "grayscale:60%"
             ],
             "maxNativeZoom": 18
         },

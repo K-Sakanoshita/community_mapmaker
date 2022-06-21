@@ -1,0 +1,602 @@
+{
+    "osm": {
+        "*": {
+            "tags": [],
+            "titles": [
+                "name",
+                "operator"
+            ]
+        },
+        "arts": {
+            "overpass": [
+                "node[\"tourism\"=\"artwork\"]",
+                "way[\"tourism\"=\"artwork\"]",
+                "node[\"tourism\"=\"gallery \"]",
+                "way[\"tourism\"=\"gallery \"]",
+                "node[\"amenity\"=\"arts_centre\"]",
+                "way[\"amenity\"=\"arts_centre\"]"
+            ],
+            "tags": [
+                "tourism=artwork",
+                "tourism=gallery",
+                "amenity=arts_centre"
+            ],
+            "expression":{
+                "stroke":"#A06060",
+                "stroke-width":1
+            },
+            "titles": [
+                "name",
+                "operator",
+                "note"
+            ]
+        },
+        "pub": {
+            "overpass": [
+                "node[\"amenity\"=\"biergarten\"]",
+                "node[\"amenity\"=\"bar\"]",
+                "node[\"amenity\"=\"pub\"]",
+                "way[\"amenity\"=\"biergarten\"]",
+                "way[\"amenity\"=\"bar\"]",
+                "way[\"amenity\"=\"pub\"]"
+            ],
+            "tags": [
+                "amenity=biergarten",
+                "amenity=bar",
+                "amenity=pub"
+            ],
+            "expression":{
+                "stroke":"#808080",
+                "stroke-width":1
+            },
+            "titles": [
+                "name",
+                "operator"
+            ]
+        },
+        "restaurant": {
+            "overpass": [
+                "node[\"amenity\"=\"restaurant\"]",
+                "node[\"amenity\"=\"fast_food\"]",
+                "node[\"amenity\"=\"cafe\"]",
+                "way[\"amenity\"=\"restaurant\"]",
+                "way[\"amenity\"=\"fast_food\"]",
+                "way[\"amenity\"=\"cafe\"]"
+            ],
+            "tags": [
+                "amenity=restaurant",
+                "amenity=fast_food",
+                "amenity=cafe"
+            ],
+            "expression":{
+                "stroke":"#705050",
+                "stroke-width":1
+            },
+            "titles": [
+                "name",
+                "operator"
+            ]
+        },
+        "shop": {
+            "overpass": [
+                "node[\"shop\"]",
+                "way[\"shop\"]"
+            ],
+            "tags": [
+                "shop"
+            ],
+            "expression":{
+                "stroke":"#507070",
+                "stroke-width":1
+            },
+            "titles": [
+                "name",
+                "operator"
+            ]
+        },
+        "forest": {
+            "overpass": [
+                "way[\"natural\"=\"wood\"]",
+                "way[\"landuse\"=\"forest\"]",
+                "relation[\"natural\"=\"wood\"]",
+                "relation[\"landuse\"=\"forest\"]"
+            ],
+            "tags": [
+                "natural=wood",
+                "landuse=forest"
+            ],
+            "expression":{
+                "stroke":"#508050",
+                "stroke-width":1
+            },
+            "titles": [
+                "name",
+                "operator"
+            ]
+        },
+        "tree": {
+            "overpass": [
+                "node[\"natural\"=\"tree\"]"
+            ],
+            "tags": [
+                "natural=tree"
+            ],
+            "expression":{
+                "stroke":"#509050",
+                "stroke-width":1
+            },
+            "titles": [
+                "name",
+                "operator"
+            ]
+        },
+        "takeout": {
+            "overpass": [
+                "way[\"takeaway\"]",
+                "node[\"takeaway\"]",
+                "way[\"takeaway:covid19\"]",
+                "node[\"takeaway:covid19\"]",
+                "node[\"shop\"=\"greengrocer\"]",
+                "way[\"shop\"=\"greengrocer\"]",
+                "node[\"shop\"=\"gift\"]",
+                "way[\"shop\"=\"gift\"]",
+                "node[\"shop\"=\"bakery\"]",
+                "way[\"shop\"=\"bakery\"]",
+                "node[\"shop\"=\"deli\"]",
+                "way[\"shop\"=\"deli\"]"
+            ],
+            "tags": [
+                "takeaway",
+                "shop"
+            ],
+            "expression":{
+                "stroke":"#705070",
+                "stroke-width":1
+            },
+            "titles": [
+                "name",
+                "operator"
+            ]
+        },
+        "disaster": {
+            "overpass": [
+                "way[\"social_facility\"=\"shelter\"]",
+                "node[\"social_facility\"=\"shelter\"]",
+                "way[\"emergency\"]",
+                "node[\"emergency\"]"
+            ],
+            "tags": [
+                "social_facility=shelter",
+                "emergency"
+            ],
+            "expression":{
+                "stroke":"#505070",
+                "stroke-width":1
+            },
+            "titles": [
+                "name",
+                "operator"
+            ]
+        },
+        "government": {
+            "overpass": [
+                "relation[\"amenity\"=\"townhall\"]",
+                "way[\"amenity\"=\"townhall\"]",
+                "node[\"amenity\"=\"townhall\"]"
+            ],
+            "tags": [
+                "amenity=townhall"
+            ],
+            "expression":{
+                "stroke":"#404040",
+                "stroke-width":1
+            },
+            "titles": [
+                "name",
+                "operator"
+            ]
+        },
+        "hospital":{
+            "overpass": [
+                "relation[\"amenity\"=\"hospital\"]",
+                "way[\"amenity\"=\"hospital\"]",
+                "node[\"amenity\"=\"hospital\"]"
+            ],
+            "tags": [
+                "amenity=hospital"
+            ],
+            "expression":{
+                "stroke":"#606090",
+                "stroke-width":1
+            },
+            "titles": [
+                "name",
+                "operator"
+            ]
+        },
+        "library": {
+            "overpass": [
+                "relation[\"amenity\"=\"library\"]",
+                "way[\"amenity\"=\"library\"]",
+                "node[\"amenity\"=\"library\"]"
+            ],
+            "tags": [
+                "amenity=library"
+            ],
+            "expression":{
+                "stroke":"#606090",
+                "stroke-width":1
+            },
+            "titles": [
+                "name",
+                "operator"
+            ]
+        },
+        "museum": {
+            "overpass": [
+                "relation[\"tourism\"=\"museum\"]",
+                "node[\"tourism\"=\"museum\"]",
+                "way[\"tourism\"=\"museum\"]"
+            ],
+            "tags": [
+                "tourism=museum"
+            ],
+            "expression":{
+                "stroke":"#606060",
+                "stroke-width":1
+            },
+            "titles": [
+                "name",
+                "operator"
+            ]
+        },
+        "telephone": {
+            "overpass": [
+                "node[\"amenity\"=\"telephone\"]",
+                "way[\"amenity\"=\"telephone\"]"
+            ],
+            "tags": [
+                "amenity=telephone"
+            ],
+            "expression":{
+                "stroke":"#606060",
+                "stroke-width":1
+            },
+            "titles": [
+                "name",
+                "operator"
+            ]
+        },
+        "theatre": {
+            "overpass": [
+                "node[\"amenity\"=\"theatre\"]",
+                "way[\"amenity\"=\"theatre\"]"
+            ],
+            "tags": [
+                "amenity=theatre"
+            ],
+            "expression":{
+                "stroke":"#705070",
+                "stroke-width":1
+            },
+            "titles": [
+                "name",
+                "operator"
+            ]
+        },
+        "centre": {
+            "overpass": [
+                "node[\"amenity\"=\"community_centre\"]",
+                "way[\"amenity\"=\"community_centre\"]"
+            ],
+            "tags": [
+                "amenity=community_centre"
+            ],
+            "expression":{
+                "stroke":"#505070",
+                "stroke-width":1
+            },
+            "titles": [
+                "name",
+                "operator"
+            ]
+        },
+        "park": {
+            "overpass": [
+                "node[\"amenity\"=\"shelter\"]",
+                "node[\"leisure\"=\"park\"]",
+                "node[\"leisure\"=\"playground\"]",
+                "node[\"man_made\"=\"tower\"]",
+                "node[\"man_made\"=\"drinking_water\"]",
+                "way[\"amenity\"=\"shelter\"]",
+                "way[\"leisure\"=\"park\"]",
+                "way[\"leisure\"=\"playground\"]",
+                "way[\"man_made\"=\"tower\"]",
+                "way[\"landuse\"=\"recreation_ground\"]"
+            ],
+            "tags": [
+                "leisure=park",
+                "leisure=playground",
+                "amenity=shelter",
+                "amenity=clock",
+                "amenity=bench",
+                "amenity=fountain",
+                "amenity=drinking_water",
+                "man_made=tower",
+                "tower:type=bell_tower",
+                "landuse=recreation_ground"
+            ],
+            "expression":{
+                "stroke":"#508050",
+                "stroke-width":1
+            },
+            "titles": [
+                "name",
+                "operator"
+            ]
+        },
+        "garden": {
+            "overpass": [
+                "way[\"leisure\"=\"garden\"]",
+                "way[\"landuse\"=\"farmland\"]",
+                "way[\"landuse\"=\"allotments\"]",
+                "way[\"landuse\"=\"orchard\"]",
+                "way[\"landuse\"=\"grass\"]",
+                "way[\"landuse\"=\"aquaculture\"]"
+            ],
+            "tags": [
+                "leisure=garden",
+                "landuse=farmland",
+                "landuse=allotments",
+                "landuse=orchard",
+                "landuse=grass",
+                "landuse=aquaculture"
+            ],
+            "expression":{
+                "stroke":"#508050",
+                "stroke-width":1
+            },
+            "titles": [
+                "name",
+                "operator"
+            ]
+        },
+        "information": {
+            "overpass": [
+                "node[\"tourism\"=\"information\"]",
+                "way[\"tourism\"=\"information\"]"
+            ],
+            "tags": [
+                "tourism=information"
+            ],
+            "expression":{
+                "stroke":"#808080",
+                "stroke-width":1
+            },
+            "titles": [
+                "name",
+                "operator"
+            ]
+        },
+        "wayside_shrine": {
+            "overpass": [
+                "node[\"historic\"=\"wayside_shrine\"]",
+                "way[\"historic\"=\"wayside_shrine\"]"
+            ],
+            "tags": [
+                "historic=wayside_shrine"
+            ],
+            "expression":{
+                "stroke":"#505050",
+                "stroke-width":1
+            },
+            "titles": [
+                "name"
+            ]
+        },
+        "historic": {
+            "overpass": [
+                "node[\"historic\"]",
+                "way[\"historic\"]"
+            ],
+            "tags": [
+                "historic"
+            ],
+            "expression":{
+                "stroke":"#606060",
+                "stroke-width":0
+            },
+            "titles": [
+                "name",
+                "operator"
+            ]
+        },
+        "water": {
+            "overpass": [
+                "way[\"natural\"=\"water\"]",
+                "relation[\"natural\"=\"water\"]",
+                "way[\"landuse\"=\"reservoir\"]"
+            ],
+            "tags": [
+                "natural=water",
+                "landuse=reservoir"
+            ],
+            "expression":{
+                "stroke":"#505080",
+                "stroke-width":1
+            },
+            "titles": [
+                "name",
+                "religion"
+            ]
+        },
+        "worship": {
+            "overpass": [
+                "node[\"amenity\"=\"place_of_worship\"]",
+                "way[\"amenity\"=\"place_of_worship\"]"
+            ],
+            "tags": [
+                "amenity=place_of_worship"
+            ],
+            "expression":{
+                "stroke":"#7d7d7d",
+                "stroke-width":1
+            },
+            "titles": [
+                "name",
+                "religion"
+            ]
+        },
+        "amusement_arcade": {
+            "overpass": [
+                "node[\"leisure\"=\"amusement_arcade\"]",
+                "way[\"leisure\"=\"amusement_arcade\"]"
+            ],
+            "tags": [
+                "leisure=amusement_arcade"
+            ],
+            "expression":{
+                "stroke":"#7d7d7d",
+                "stroke-width":1
+            },
+            "titles": [
+                "name",
+                "operator"
+            ]
+        },
+        "station": {
+            "overpass": [
+                "node[\"public_transport\"=\"station\"]",
+                "way[\"public_transport\"=\"station\"]",
+                "node[\"railway\"=\"station\"]",
+                "way[\"railway\"=\"station\"]"
+            ],
+            "tags": [
+                "public_transport=station",
+                "railway=station"
+            ],
+            "expression":{
+                "stroke":"#7d7d7d",
+                "stroke-width":1
+            },
+            "titles": [
+                "name",
+                "operator"
+            ]
+        },
+        "swimming_pool": {
+            "overpass": [
+                "node[\"leisure\"=\"swimming_pool\"]",
+                "way[\"leisure\"=\"swimming_pool\"]",
+                "relation[\"leisure\"=\"swimming_pool\"]"
+            ],
+            "tags": [
+                "leisure=swimming_pool"
+            ],
+            "expression":{
+                "stroke":"#404080",
+                "stroke-width":1
+            },
+            "titles": [
+                "name",
+                "operator"
+            ]
+        },
+        "toilets": {
+            "overpass": [
+                "node[\"amenity\"=\"toilets\"]",
+                "way[\"amenity\"=\"toilets\"]"
+            ],
+            "tags": [
+                "amenity=toilets"
+            ],
+            "expression":{
+                "stroke":"#7d7d7d",
+                "stroke-width":1
+            },
+            "titles": [
+                "name",
+                "operator"
+            ]
+        },
+        "vending_machine": {
+            "overpass": [
+                "node[\"amenity\"=\"vending_machine\"]",
+                "way[\"amenity\"=\"vending_machine\"]"
+            ],
+            "tags": [
+                "amenity=vending_machine"
+            ],
+            "expression":{
+                "stroke":"#805050",
+                "stroke-width":1
+            },
+            "titles": [
+                "name",
+                "operator"
+            ]
+        },
+        "post_box": {
+            "overpass": [
+                "node[\"amenity\"=\"post_box\"]",
+                "way[\"amenity\"=\"post_box\"]"
+            ],
+            "tags": [
+                "amenity=post_box"
+            ],
+            "expression":{
+                "stroke":"#805050",
+                "stroke-width":1
+            },
+            "titles": [
+                "name",
+                "operator"
+            ]
+        },
+        "place": {
+            "overpass": [
+                "way[\"place\"=\"suburb\"]",
+                "node[\"place\"=\"suburb\"]",
+                "way[\"place\"=\"quarter\"]",
+                "node[\"place\"=\"quarter\"]",
+                "way[\"place\"=\"neighbourhood\"]",
+                "node[\"place\"=\"neighbourhood\"]"
+            ],
+            "tags": [
+                "place=suburb",
+                "place=quarter",
+                "place=neighbourhood"
+            ],
+            "expression":{
+                "stroke":"#7d7d7d",
+                "stroke-width":1
+            },
+            "titles": [
+                "name",
+                "operator"
+            ]
+        },
+        "wikipedia": {
+            "marker": "wikipedia.svg",
+            "api_": "wikipedia.org/w/api.php?format=json&action=query&prop=extracts%7Cimages&exintro=&explaintext=&titles=",
+            "api":"wikipedia.org/api/rest_v1/page/summary/",
+            "domain": "wikipedia.org",
+            "tag": "wikipedia",
+            "overpass": [
+                "node[\"wikipedia\"][\"public_transport\"!=\"stop_position\"]",
+                "way[\"wikipedia\"][!\"highway\"][!\"railway\"]",
+                "relation[\"wikipedia\"][!\"route\"][!\"highway\"][!\"railway\"][\"name:ja\"!=\"本州\"][\"area\"!=\"yes\"][!\"boundary\"]"
+            ],
+            "tags": [
+                "wikipedia"
+            ],
+            "expression":{
+                "stroke":"#7070C0",
+                "stroke-width":1
+            },           
+            "titles": [
+                "name"
+            ]
+        }
+    }
+}

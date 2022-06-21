@@ -7,6 +7,7 @@ class Basic {
 
     formatDate(date, format) {
         // date format
+        if (Number.isNaN(date.getDate())) return "";
         try {
             format = format.replace(/YYYY/g, date.getFullYear());
             format = format.replace(/YY/g, date.getFullYear().toString().slice(-2));
@@ -63,12 +64,11 @@ class Basic {
     getWikipedia(lang, url) {      // get wikipedia contents
         return new Promise((resolve, reject) => {
             let encurl = encodeURI(url);
-            encurl = "https://" + lang + "." + Conf.osm.wikipedia.api + encurl;
-            $.get({ url: encurl, dataType: "jsonp" }, function (data) {
-                let key = Object.keys(data.query.pages);
-                let text = data.query.pages[key].extract;
-                console.log(text);
-                resolve(text);
+            encurl = "https://" + lang + "." + Conf.osm.wikipedia.api + encurl + "?origin=*";
+            console.log(encurl);
+            $.get({ url: encurl, dataType: "json" }, function (data) {
+                console.log(data.extract);
+                resolve([data.extract, data.thumbnail]);
             });
         });
     }
@@ -98,6 +98,10 @@ class Basic {
         return Array.from(new Uint8Array(digest)).map(v => v.toString(16).padStart(2, '0')).join('');
     }
 
-    //   getLatLng(keyword, (address) => { return address }, () => { return [] }
+    //二次元配列 -> CSV形式の文字列に変換
+    makeArray2CSV(arr, col = ',', row = '\n') {
+        const escape = (s) => { return `"${s.replace(/\"/g, '\"\"')}"` };
+        return arr.map((row) => row.map((cell) => escape(Array.isArray(cell) ? cell.join("//") : cell)).join(col)).join(row);
+    }
 
 };

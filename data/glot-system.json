@@ -1,4 +1,8 @@
 {
+	"cat_select": {
+		"ja": "選択表示",
+		"en": "Select display"
+	},
 	"act_add": {
 		"ja": "追加",
 		"en": "Add information"
@@ -31,6 +35,14 @@
 		"ja": "登録失敗。ユーザー名とパスワードを確認してください",
 		"en": "failed. Please check your username and password"
 	},
+	"title": {
+		"ja": "タイトル",
+		"en": "Title"
+	},
+	"download": {
+		"ja": "一覧表をダウンロード",
+		"en": "list download"
+	},
 	"zoomlevel": {
 		"ja": "ズームレベル：",
 		"en": "Zoom Level: "
@@ -44,8 +56,12 @@
 		"en": "Getdate: "
 	},
 	"share_link": {
-		"ja": "シェア",
-		"en": "sharing"
+		"ja": "Link",
+		"en": "Link"
+	},
+	"add_activity": {
+		"ja": "情報追加",
+		"en": "add Activity"
 	},
 	"morezoom": {
 		"ja": "もっとズームしてください",
@@ -130,5 +146,125 @@
 	"openstreetmap": {
 		"ja": "OpenStreetMapについて",
 		"en": "about OpenStreetMap"
+	},
+	"osm_open": {
+		"ja": "OpenStreetMapで見る",
+		"en": "See in OpenStreetMap"
+	},
+	"target_activity": {
+		"ja": "活動内容",
+		"en": "activity"
+	},
+	"target_arts": {
+		"ja": "アート",
+		"en": "arts"
+	},
+	"target_pub": {
+		"ja": "居酒屋・パブ",
+		"en": "pub"
+	},
+	"target_restaurant": {
+		"ja": "レストラン",
+		"en": "restaurant"
+	},
+	"target_shop": {
+		"ja": "ショップ",
+		"en": "shop"
+	},
+	"target_forest": {
+		"ja": "森・林",
+		"en": "forest"
+	},
+	"target_takeout": {
+		"ja": "持ち帰り",
+		"en": "takeout"
+	},
+	"target_disaster": {
+		"ja": "防災",
+		"en": "disaster"
+	},
+	"target_government": {
+		"ja": "行政",
+		"en": "government"
+	},
+	"target_library": {
+		"ja": "図書館",
+		"en": "library"
+	},
+	"target_museum": {
+		"ja": "博物館",
+		"en": "museum"
+	},
+	"target_telephone": {
+		"ja": "公衆電話",
+		"en": "telephone"
+	},
+	"target_theatre": {
+		"ja": "劇場・映画館",
+		"en": "theatre"
+	},
+	"target_centre": {
+		"ja": "公民館・センター",
+		"en": "centre"
+	},
+	"target_park": {
+		"ja": "公園",
+		"en": "park"
+	},
+	"target_garden": {
+		"ja": "庭・農地",
+		"en": "garden"
+	},
+	"target_information": {
+		"ja": "案内",
+		"en": "information"
+	},
+	"target_wayside_shrine": {
+		"ja": "祠・地蔵",
+		"en": "wayside shrine"
+	},
+	"target_historic": {
+		"ja": "遺跡・記念碑",
+		"en": "historic"
+	},
+	"target_water": {
+		"ja": "水域",
+		"en": "water"
+	},
+	"target_worship": {
+		"ja": "宗教施設",
+		"en": "worship"
+	},
+	"target_amusement_arcade": {
+		"ja": "ゲームセンター",
+		"en": "amusement arcade"
+	},
+	"target_station": {
+		"ja": "駅",
+		"en": "station"
+	},
+	"target_swimming_pool": {
+		"ja": "水泳プール",
+		"en": "swimming pool"
+	},
+	"target_toilets": {
+		"ja": "トイレ",
+		"en": "toilets"
+	},
+	"target_vending_machine": {
+		"ja": "自動販売機",
+		"en": "vending machine"
+	},
+	"target_post_box": {
+		"ja": "郵便ポスト",
+		"en": "post box"
+	},
+	"target_place": {
+		"ja": "場所・地域",
+		"en": "place"
+	},
+	"target_wikipedia": {
+		"ja": "Wikipedia",
+		"en": "Wikipedia"
 	}
 }
