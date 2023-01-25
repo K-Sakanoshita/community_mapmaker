@@ -7,7 +7,7 @@
             135.4828
         ],
         "maxbounds": "", // [[左上のlat,lng],[右下のlat,lng]]
-        "initZoom": 14,
+        "initZoom": 15,
         "pc_minZoom": 6,
         "phone_minZoom": 5,
         "maxZoom": 22,
@@ -15,9 +15,9 @@
         "bookmark": true
     },
     "PoiViewZoom": {
-        "activity": 14,
-        "restaurant": 14,
-        "shop": 14
+        "activity": 15,
+        "restaurant": 15,
+        "shop": 15
     },
     "PoiView": {
         "targets": [
@@ -34,11 +34,11 @@
             "shop"
         ],
         "playback": {
-            "view": false,
+            "view": true,
             "zoomLevel": 15,
             "timer": 4000
         },
-        "download": false
+        "download": true
     },
     "google": {
         "Analytics": "",
