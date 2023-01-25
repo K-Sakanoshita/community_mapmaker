@@ -23,61 +23,29 @@
 		"ja": "Community Map MakerのデータはOpenStreetMapと独自データを組み合わせています。",
 		"en": "The data of Community Map Maker is a combination of OpenStreetMap and Original data."
 	},
-	"more_message": {
-		"ja": "",
-		"en": ""
-	},
-	"eventdates": {
-		"ja": "開催期間: ",
-		"en": "Event Dates: "
-	},
 	"activities": {
 		"ja": "活動履歴",
 		"en": "Activities"
 	},
-	"libc": {
-		"ja": "年表",
-		"en": "chronology"
+	"act_date": {
+		"ja": "確認日",
+		"en": "Check Date"
 	},
-	"children": {
-		"ja": "お宝",
-		"en": "Treasure"
-	},
-	"memories": {
-		"ja": "思い出など",
-		"en": "Memorials"
-	},
-	"actdate":{
-		"ja":"発生日",
-		"en":"Disaster Date"
-	},
-	"ds_subject":{
-		"ja":"作業名",
-		"en":"Subject"
-	},
-	"ds_detail_url":{
-		"ja":"詳細URL",
-		"en":"Detail URL"
-	},
-	"act_grade": {
-		"ja": "学年",
-		"en": "Grade"
+	"act_category": {
+		"ja": "カテゴリ",
+		"en": "Category"
 	},
 	"act_title": {
-		"ja": "題名",
-		"en": "Subject"
+		"ja": "タイトル",
+		"en": "Title"
 	},
 	"act_memo": {
 		"ja": "説明",
 		"en": "Detail"
 	},
-	"act_official_url": {
-		"ja": "公式サイトURL",
-		"en": "Public Site URL"
-	},
-	"act_recommend_url": {
-		"ja": "オススメURL",
-		"en": "Recommend URL"
+	"act_detail_url": {
+		"ja": "詳細URL",
+		"en": "Detail URL"
 	},
 	"act_picture_url1": {
 		"ja": "写真URL1",
@@ -90,73 +58,5 @@
 	"act_picture_url3": {
 		"ja": "写真URL3",
 		"en": "Picture URL3"
-	},
-	"act_quiz_comment": {
-		"ja": "クイズを出したい人は、下に書いてね",
-		"en": "If you want to give a quiz, please write below"
-	},
-	"act_quiz": {
-		"ja": "クイズの問題",
-		"en": "Quiz questions"
-	},
-	"act_quiz_choice": {
-		"ja": "選択肢",
-		"en": "Choice"
-	},
-	"act_quiz_answer": {
-		"ja": "答え",
-		"en": "Answer"
-	},
-	"act_quiz_hint_url": {
-		"ja": "ヒントURL",
-		"en": "Hint URL"
-	},
-	"libc_title": {
-		"ja": "項目",
-		"en": "Subject"
-	},
-	"libc_agency": {
-		"ja": "機関",
-		"en": "Agency"
-	},
-	"libc_authority": {
-		"ja": "典拠",
-		"en": "Authority"
-	},
-	"libc_area": {
-		"ja": "地域",
-		"en": "Area"
-	},
-	"libc_ymd": {
-		"ja": "時期",
-		"en": "Around"
-	},
-	"memories_author": {
-		"ja": "投稿者",
-		"en": "Author"
-	},
-	"memories_date": {
-		"ja": "いつ頃",
-		"en": "Date"
-	},
-	"memories_memorial": {
-		"ja": "思い出",
-		"en": "Memorial"
-	},
-	"memories_place": {
-		"ja": "場所",
-		"en": "Place"
-	},
-	"memories_supply": {
-		"ja": "補足・追加情報",
-		"en": "Supplementary / additional information"
-	},
-	"memories_references": {
-		"ja": "参考文献",
-		"en": "References"
-	},
-	"memories_reception": {
-		"ja": "受付日",
-		"en": "Reception date"
 	}
 }

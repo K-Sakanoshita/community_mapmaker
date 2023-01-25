@@ -95,25 +95,36 @@ img.thumbnail {
     box-shadow: 2px 2px 2px rgb(0 0 0 / 60%);
 }
 
-img.icon_normal {
+img.normal {
     background: url("./image/icon_circle.svg");
     background-size: cover;
     float: left;
-    padding: 4px;
-    height: 32px;
-    width: 32px;
+    padding: 4px !important;
+    height: 32px !important;
+    width: 32px !important;
     object-fit: contain;
 }
 
-img.icon_attention {
+img.attention {
     background: url("./image/icon_circle_attention.svg");
     background-size: cover;
     float: left;
-    padding: 8px;
+    padding: 8px !important;
     height: 48px;
     width: 48px;
     object-fit: contain;
 }
+
+/*
+.attention {
+    display: flex;
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    top: -28px;
+    left: 12px;
+}
+*/
 
 img.w100 {
     width: 100%;
@@ -170,11 +181,33 @@ span.subtitle {
 }
 
 span.icon {
+    border-radius: 8px;
     margin-left: 2px;
     padding: 0px 2px;
     white-space: nowrap;
-    background-color: white;
-    background: rgba(255, 255, 255, 0.5);
+}
+
+span.icon_normal {
+    color: #ffffffee;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+span.icon_attention {
+    color: #ffffff;
+    background: rgba(0, 0, 0, 0.6);
+}
+
+/* マーカーのフォントサイズ選択 */
+span.fs-10{
+    font-size: 10px;
+}
+
+span.fs-12{
+    font-size: 12px;
+}
+
+span.fs-14{
+    font-size: 14px;
 }
 
 /* button for select way color */
@@ -293,17 +326,6 @@ h5[aria-expanded="true"]:before {
     height: 18px;
     margin-right: 0px;
     vertical-align: middle;
-}
-
-.attention {
-    display: flex;
-    width: 24px;
-    height: 24px;
-    position: absolute;
-    top: -28px;
-    left: 12px;
-    animation: rotation 1.5s ease 0s 1 alternate none running;
-    animation-iteration-count: infinite;
 }
 
 @keyframes rotation {

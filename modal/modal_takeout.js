@@ -4,7 +4,7 @@ class modal_Takeout {
     constructor() {
         this.html = ""
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', "./modal_takeout.html", true);
+        xhr.open('GET', "./modal/modal_takeout.html", true);
         xhr.onerror = function () {
             console.log("[error]modal_Takeout:");
             console.log(xhr);
@@ -25,23 +25,6 @@ class modal_Takeout {
         $("#modals").html(this.html);
 
         let osmid = marker.target.mapmaker_id
-        /*
-                let popcont;
-                let id = ev.target.mapmaker_id;
-                let key = ev.target.mapmaker_key;
-                let tags = poiCont.get_osmid(id).geojson.properties;
-                if (key == Conf.osm.wikipedia.tag) {		// Wikipedia時のPopUp
-                    let qr_btn = `<button class='btn btn-sm m-2' onclick='cMapmaker.qr_add("wikipedia","${id}")'>${glot.get("qrcode_make")}</button>`;
-                    popcont = tags[Conf.osm.wikipedia.tag] + "<br>" + qr_btn;
-                } else {									// その他
-                    let name = tags.name == undefined ? "" : tags.name;
-                    popcont = (name == '' ? glot.get("marker_noname") : name) + "<br>" + chg_mkr + del_btn;
-                };
-                L.responsivePopup({ "keepInView": true }).setContent(popcont).setLatLng(ev.latlng).openOn(map);
-                ev.target.openPopup();
-                return false;
-        */
-
         let poi = poiCont.get_osmid(osmid);
         let tags = poi.geojson.properties;
         let date = moment(tags.timestamp);

@@ -1,79 +1,33 @@
 {
     "activities": {
-        "AattoMark": {
-            "header": "",
-            "footer": "",
-            "form": {
-                "actdate": {
-                    "glot": "actdate",
-                    "type": "date",
-                    "gsheet": "actdate"
-                },
-                "category": {
-                    "glot": "act_category",
-                    "type": "select",
-                    "category": [
-                        "イベント",
-                        "活動記録",
-                        "店舗紹介"
-                    ],
-                    "gsheet": "category"
-                },
-                "title": {
-                    "glot": "title",
-                    "type": "text",
-                    "gsheet": "title"
-                },
-                "memo": {
-                    "glot": "act_memo",
-                    "type": "textarea",
-                    "gsheet": "body"
-                },
-                "detail_url": {
-                    "glot": "ds_detail_url",
-                    "type": "url",
-                    "gsheet": "detail_url"
-                },
-                "picture_url1": {
-                    "glot": "act_picture_url1",
-                    "type": "image_url",
-                    "gsheet": "picture_url1"
-                },
-                "picture_url2": {
-                    "glot": "act_picture_url2",
-                    "type": "image_url",
-                    "gsheet": "picture_url2"
-                }
-            }
-        },
         "sample": {
             "header": "",
             "footer": "",
             "form": {
                 "actdate": {
-                    "glot": "actdate",
+                    "glot": "act_date",
                     "type": "date",
                     "gsheet": "actdate"
                 },
-                "category": {
+                "select": {
                     "glot": "act_category",
                     "type": "select",
+                    "gsheet": "category",
                     "category": [
-                        "イベント",
-                        "活動記録",
-                        "店舗紹介"
-                    ],
-                    "gsheet": "category"
+                        "カテゴリ1",
+                        "カテゴリ2",
+                        "カテゴリ3"
+                    ]
                 },
                 "title": {
-                    "glot": "title",
+                    "glot": "act_title",
                     "type": "text",
                     "gsheet": "title"
                 },
                 "memo": {
                     "glot": "act_memo",
                     "type": "textarea",
-                    "gsheet": "body"
+                    "gsheet": "memo"
                 },
                 "detail_url": {
                     "glot": "ds_detail_url",
@@ -89,240 +43,11 @@
                     "glot": "act_picture_url2",
                     "type": "image_url",
                     "gsheet": "picture_url2"
-                }
-            }
-        },
-        "child": {
-            "header": "",
-            "footer": "",
-            "form": {
-                "category": {
-                    "glot": "act_category",
-                    "type": "select",
-                    "category": [
-                        "草津おみやげラボ",
-                        "暮らし（くらし）",
-                        "健康（けんこう）",
-                        "運動（うんどう）",
-                        "文化（ぶんか）",
-                        "魅力（みりょく）"
-                    ],
-                    "gsheet": "category"
-                },
-                "name": {
-                    "glot": "act_name",
-                    "type": "text",
-                    "gsheet": "title"
-                },
-                "grade": {
-                    "glot": "act_grade",
-                    "type": "select",
-                    "category": [
-                        "小学生未満",
-                        "小学1年生",
-                        "小学2年生",
-                        "小学3年生",
-                        "小学4年生",
-                        "小学5年生",
-                        "小学6年生",
-                        "中学生",
-                        "高校生",
-                        "大学/専門校生",
-                        "社会人"
-                    ],
-                    "gsheet": "grade"
-                },
-                "title": {
-                    "glot": "act_title",
-                    "type": "text",
-                    "gsheet": "title"
-                },
-                "memo": {
-                    "glot": "act_memo",
-                    "type": "textarea",
-                    "gsheet": "body"
-                },
-                "official_url": {
-                    "glot": "act_official_url",
-                    "type": "url",
-                    "gsheet": "official_url"
-                },
-                "recommend_url": {
-                    "glot": "act_recommend_url",
-                    "type": "url",
-                    "gsheet": "recommend_url"
-                },
-                "picture_url1": {
-                    "glot": "act_picture_url1",
-                    "type": "image_url",
-                    "gsheet": "picture_url1"
-                },
-                "picture_url2": {
-                    "glot": "act_picture_url2",
-                    "type": "image_url",
-                    "gsheet": "picture_url2"
                 },
                 "picture_url3": {
                     "glot": "act_picture_url3",
                     "type": "image_url",
                     "gsheet": "picture_url3"
-                },
-                "comment1": {
-                    "glot": "act_quiz_comment",
-                    "type": "comment",
-                    "gsheet": ""
-                },
-                "quiz": {
-                    "glot": "act_quiz",
-                    "type": "quiz_textarea",
-                    "gsheet": "quiz"
-                },
-                "quiz_choice1": {
-                    "glot": "act_quiz_choice",
-                    "type": "quiz_choice",
-                    "gsheet": "quiz_choice1"
-                },
-                "quiz_choice2": {
-                    "glot": "act_quiz_choice",
-                    "type": "quiz_choice",
-                    "gsheet": "quiz_choice2"
-                },
-                "quiz_choice3": {
-                    "glot": "act_quiz_choice",
-                    "type": "quiz_choice",
-                    "gsheet": "quiz_choice3"
-                },
-                "quiz_answer": {
-                    "glot": "act_quiz_answer",
-                    "type": "quiz_choice",
-                    "gsheet": "quiz_answer"
-                },
-                "quiz_hint_url": {
-                    "glot": "act_quiz_hint_url",
-                    "type": "quiz_hint_url",
-                    "gsheet": "quiz_hint_url"
-                }
-            }
-        },
-        "awesetouchi": {
-            "header": "",
-            "footer": "",
-            "form": {
-                "category": {
-                    "glot": "act_category",
-                    "type": "select",
-                    "category": [
-                        "現代アート",
-                        "古代アート",
-                        "現代クラフト",
-                        "伝統クラフト",
-                        "現代建築",
-                        "伝統建築",
-                        "ハイブリッド建築",
-                        "サステナブルなレストラン",
-                        "サステナブルなカフェ",
-                        "うどん",
-                        "サステナブルな食料品店",
-                        "サステナブルなグッズショップ",
-                        "野草木",
-                        "園芸植物",
-                        "野獣",
-                        "ペット",
-                        "家畜",
-                        "野鳥",
-                        "爬虫類と両生類",
-                        "昆虫",
-                        "苔・藻類",
-                        "ジオ（地質）",
-                        "ビューポイント"
-                    ],
-                    "gsheet": "category"
-                },
-                "name": {
-                    "glot": "act_name",
-                    "type": "text",
-                    "gsheet": "name"
-                },
-                "title": {
-                    "glot": "act_title",
-                    "type": "text",
-                    "gsheet": "title"
-                },
-                "memo": {
-                    "glot": "act_memo",
-                    "type": "textarea",
-                    "gsheet": "body"
-                },
-                "official_url": {
-                    "glot": "act_official_url",
-                    "type": "url",
-                    "gsheet": "official_url"
-                },
-                "recommend_url": {
-                    "glot": "act_recommend_url",
-                    "type": "url",
-                    "gsheet": "recommend_url"
-                },
-                "picture_url1": {
-                    "glot": "act_picture_url1",
-                    "type": "image_url",
-                    "gsheet": "picture_url1"
-                },
-                "picture_url2": {
-                    "glot": "act_picture_url2",
-                    "type": "image_url",
-                    "gsheet": "picture_url2"
-                },
-                "picture_url3": {
-                    "glot": "act_picture_url3",
-                    "type": "image_url",
-                    "gsheet": "picture_url3"
-                }
-            }
-        },
-        "disaster": {
-            "header": "",
-            "footer": "",
-            "form": {
-                "actdate": {
-                    "glot": "actdate",
-                    "type": "date",
-                    "gsheet": "actdate"
-                },
-                "category": {
-                    "glot": "act_category",
-                    "type": "select",
-                    "category": [
-                        "購入/調達",
-                        "整備/修理",
-                        "廃棄/廃止"
-                    ],
-                    "gsheet": "category"
-                },
-                "subject": {
-                    "glot": "ds_subject",
-                    "type": "text",
-                    "gsheet": "title"
-                },
-                "memo": {
-                    "glot": "act_memo",
-                    "type": "textarea",
-                    "gsheet": "body"
-                },
-                "detail_url": {
-                    "glot": "ds_detail_url",
-                    "type": "url",
-                    "gsheet": "detail_url"
-                },
-                "picture_url1": {
-                    "glot": "act_picture_url1",
-                    "type": "image_url",
-                    "gsheet": "picture_url1"
-                },
-                "picture_url2": {
-                    "glot": "act_picture_url2",
-                    "type": "image_url",
-                    "gsheet": "picture_url2"
                 }
             }
         }

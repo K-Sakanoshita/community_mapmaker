@@ -5,7 +5,7 @@ class modal_Activities {
         this.busy = false;
         this.html = ""
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', "./modal_activities.html", true);
+        xhr.open('GET', "./modal/modal_activities.html", true);
         xhr.onerror = function () {
             console.log("[error]modal_Activities:");
             console.log(xhr);
@@ -70,7 +70,7 @@ class modal_Activities {
 
                     Object.keys(form).forEach((key) => {
                         chtml += `<div class='row'>`;
-                        let gdata = act[form[key].gsheet] == undefined ? "" : act[form[key].gsheet];
+                        let gdata = act[form[key].gsheet] == undefined ? "" : String(act[form[key].gsheet]);
                         switch (form[key].type) {
                             case "date":
                                 chtml += `<div class='col'>${glot.get(form[key].glot)}</div><div class='col-9'>${basic.formatDate(new Date(gdata), "YYYY/MM/DD")}</div>`;
@@ -91,7 +91,7 @@ class modal_Activities {
                                 break;
                             case "image_url":
                                 if (gdata !== "http://" && gdata !== "https://" && gdata !== "") {
-                                    chtml += `<img class="col w100 m-1" src="${gdata}"><br>`;
+                                    chtml += `<div class="col text-center"><img class="m-1 w-100" src="${gdata}"></div><br>`;
                                 };
                                 break;
                         };

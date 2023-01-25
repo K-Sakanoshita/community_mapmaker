@@ -1,33 +1,47 @@
 {
     "osm": {
-        "AweSetouchi": {
+        "Playgrounds_Area": {
             "overpass": [
-                "node[\"shop\"=\"bakery\"]",
-                "way[\"shop\"=\"bakery\"]",
-                "node[\"shop\"=\"brewing_supplies\"]",
-                "way[\"shop\"=\"brewing_supplies\"]",
-                "node[\"shop\"=\"chocolate\"]",
-                "way[\"shop\"=\"chocolate\"]",
-                "node[\"shop\"=\"coffee\"]",
-                "way[\"shop\"=\"coffee\"]",
-                "node[\"shop\"=\"confectionery\"]",
-                "way[\"shop\"=\"confectionery\"]",
-                "node[\"shop\"=\"farm\"]",
-                "way[\"shop\"=\"farm\"]",
-                "node[\"shop\"=\"greengrocer\"]",
-                "way[\"shop\"=\"greengrocer\"]",
-                "node[\"shop\"=\"health_food\"]",
-                "way[\"shop\"=\"health_food\"]",
-                "node[\"shop\"=\"seafood\"]",
-                "way[\"shop\"=\"seafood\"]"
+                "node[\"leisure\"=\"park\"]",
+                "way[\"leisure\"=\"park\"]",
+                "node[\"leisure\"=\"playground\"]",
+                "way[\"leisure\"=\"playground\"]",
+                "way[\"landuse\"=\"recreation_ground\"]",
+                "relation[\"leisure\"=\"park\"]",
+                "relation[\"leisure\"=\"playground\"]",
+                "relation[\"landuse\"=\"recreation_ground\"]"
             ],
             "tags": [
-                "shop=*"
+                "leisure=park",
+                "leisure=playground",
+                "landuse=recreation_ground"
             ],
+            "expression": {
+                "stroke": "#409040",
+                "stroke-width": 2
+            },
             "titles": [
                 "name",
                 "operator"
             ]
-        }
+        },
+        "Playgrounds_Poi": {
+            "overpass": [
+                "node[\"playground\"]",
+                "way[\"playground\"]",
+                "area[\"playground\"]"
+            ],
+            "tags": [
+                "playground"
+            ],
+            "expression": {
+                "stroke": "#c0c0c0",
+                "stroke-width": 1
+            },
+            "titles": [
+                "name",
+                "operator"
+            ]
+        }     
     }
 }

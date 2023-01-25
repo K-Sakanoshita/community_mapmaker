@@ -1,6 +1,9 @@
+// Community Mapmaker System Config
 {
     "icon": {
-        "path": "maki-icon"
+        "path": "maki-icon",
+        "normal": 32,
+        "attention": 48
     },
     "system": {
         "OverPassServer": [
@@ -16,6 +19,11 @@
     "tile": {
         "MapTiler": {
             "name": "OpenStreetMap Maptiler",
+            "copyright": "<a href='https://www.maptiler.com/copyright/'>© MapTiler</a> <a href='https://www.openstreetmap.org/copyright'>© OpenStreetMap contributors</a>",
+            "style": "https://api.maptiler.com/maps/c9876a21-f16a-4a84-abc0-950badd4631e/style.json?key=Eq2IyrHsOEGFU1W1fvd7"
+        },
+        "MapTiler(Memories)": {
+            "name": "OpenStreetMap Maptiler(Memories)",
             "copyright": "<a href='https://www.maptiler.com/copyright/'>© MapTiler</a> <a href='https://www.openstreetmap.org/copyright'>© OpenStreetMap contributors</a>",
             "style": "https://api.maptiler.com/maps/2e4db38a-b862-444d-bcfe-fefe51429073/style.json?key=Eq2IyrHsOEGFU1W1fvd7"
         },

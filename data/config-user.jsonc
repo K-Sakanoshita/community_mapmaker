@@ -1,18 +1,17 @@
-// Community Mapmaker Config
+// Community Mapmaker User Config
 {
     "default": {
         "keep_default_view": false,
         "default_view": [
-            34.6883,
-            135.5250
+            34.7212,
+            135.4828
         ],
         "maxbounds": "", // [[左上のlat,lng],[右下のlat,lng]]
-        "initZoom": 15,
-        "pc_minZoom": 1,
+        "initZoom": 14,
+        "pc_minZoom": 6,
         "phone_minZoom": 5,
-        "maxZoom": 21,
+        "maxZoom": 22,
         "zoomSnap": 0.5,
-        "PoiLoadZoom": 14,
         "bookmark": true
     },
     "PoiViewZoom": {
@@ -20,18 +19,20 @@
         "restaurant": 14,
         "shop": 14
     },
-    "targets": [
-        "activity",
-        "restaurant",
-        "shop"
-    ],
-    "listTable": {
-        // "targets"はConf.targetsをカテゴリ表示、"activity"はactivity(フォームデータ)を表示
+    "PoiView": {
         "targets": [
-            "arts",
+            "restaurant",
+            "shop",
             "activity"
         ],
-        "update_mode": "",
+        "update_mode": "all" // listTable更新時 all:全て / filter:絞り込み / "":非連動
+    },
+    "listTable": {
+        "targets": [ // target名:overpass名を表示 / activity:google sheetsを表示 / tags:osm poi種別名を表示
+            "activity",
+            "restaurant",
+            "shop"
+        ],
         "playback": {
             "view": false,
             "zoomLevel": 15,
@@ -50,16 +51,7 @@
     "static": {
         "mode": false,
         "osmjson": "",
-        "osmbounds": {
-            "NW": {
-                "lat": 45.7392,
-                "lng": 119.0340
-            },
-            "SE": {
-                "lat": 20.5444,
-                "lng": 144.8863
-            }
-        }
+        "osmbounds": {} // "{NW: {"lat":lat,"lng":lng"},"SE":{"lat":lat,"lng":lng}}
     },
     // トップメニュー一覧
     "menu": [
@@ -70,8 +62,8 @@
         },
         {
             "glot-model": "about",
-            "linkto": "https://github.com/armd-02/openhc-map",
-            "divider": false
+            "linkto": "https://github.com/K-Sakanoshita/community_mapmaker",
+            "divider": true
         },
         {
             "glot-model": "owner",
@@ -88,7 +80,7 @@
     "detail_menu": [
         {
             "glot-model": "act_add",
-            "linkto": "javascript:modal_activities.edit({form:'AattoMark'})",
+            "linkto": "javascript:modal_activities.edit({form:'Playgrounds'})",
             "divider": false
         },
         {
@@ -109,7 +101,7 @@
         "buttons": [
             {
                 "btn_class": "btn btn-light border-secondary mr-2",
-                "code": "javascript:modal_activities.edit({form:'AattoMark'})",
+                "code": "javascript:modal_activities.edit({form:'Playgrounds'})",
                 "icon_class": "fas fa-plus",
                 "btn_glot_name": "add_activity"
             },

@@ -7,35 +7,29 @@
                     "hidden": true
                 },
                 {
-                    "id": "updatetime",
-                    "name": "日付",
-                    "hidden": true
-                },
-                {
                     "id": "category",
                     "name": "種類"
                 },
                 {
                     "id": "name",
-                    "name": "題名"
+                    "name": "施設名"
                 },
                 {
-                    "id": "artist_name",
-                    "name": "作者名"
-                }                
+                    "id": "min_age",
+                    "name": "年齢"
+                }
             ],
             "poi_fields": [
                 "id",
-                "timestamp",
                 "#category",
-                "name",
-                "artist_name"
+                "#parent.name",
+                "min_age"
             ],
             "act_fields": [
                 "id",
-                "updatetime",
-                "category",
-                "title"
+                "#category",
+                "#name",
+                "#min_age"
             ]
         }
     }

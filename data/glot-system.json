@@ -223,9 +223,13 @@
 		"ja": "祠・地蔵",
 		"en": "wayside shrine"
 	},
-	"target_historic": {
-		"ja": "遺跡・記念碑",
-		"en": "historic"
+	"target_historic_area": {
+		"ja": "遺跡・古墳",
+		"en": "historic(area)"
+	},
+	"target_historic_poi": {
+		"ja": "石碑・道祖神",
+		"en": "historic(poi)"
 	},
 	"target_water": {
 		"ja": "水域",
