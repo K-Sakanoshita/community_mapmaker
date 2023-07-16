@@ -30,7 +30,7 @@
                     "gsheet": "memo"
                 },
                 "detail_url": {
-                    "glot": "ds_detail_url",
+                    "glot": "act_detail_url",
                     "type": "url",
                     "gsheet": "detail_url"
                 },

@@ -29,10 +29,15 @@
             "overpass": [
                 "node[\"playground\"]",
                 "way[\"playground\"]",
-                "area[\"playground\"]"
+                "area[\"playground\"]",
+                "node[\"amenity\"=\"toilets\"]",
+                "way[\"amenity\"=\"toilets\"]",
+                "node[\"amenity\"=\"drinking_water\"]",
+                "way[\"amenity\"=\"drinking_water\"]"
             ],
             "tags": [
-                "playground"
+                "playground",
+                "amenity"
             ],
             "expression": {
                 "stroke": "#c0c0c0",
@@ -42,6 +47,6 @@
                 "name",
                 "operator"
             ]
-        }     
+        }
     }
 }

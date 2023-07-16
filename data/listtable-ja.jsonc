@@ -1,5 +1,6 @@
 {
     "list": {
+        "height": 0.2,
         "columns": {
             "common": [
                 {
@@ -8,21 +9,24 @@
                 },
                 {
                     "id": "category",
-                    "name": "Category"
+                    "name": "種類",
+                    "width": "50%"
                 },
                 {
                     "id": "name",
-                    "name": "name"
+                    "name": "施設名",
+                    "width": "30%"
                 },
                 {
                     "id": "min_age",
-                    "name": "min age"
+                    "name": "年齢",
+                    "width": "20%"
                 }
             ],
             "poi_fields": [
                 "id",
                 "#category",
-                "#parent.name",
+                "#parent.name,name",
                 "min_age"
             ],
             "act_fields": [

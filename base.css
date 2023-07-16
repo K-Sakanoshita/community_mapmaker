@@ -17,7 +17,7 @@ header {
 body {
     font-family: "Tahoma";
     height: 100%;
-    background-color: #000000;
+    background-color: #ffffff;
     padding: 0px;
     margin: 0px;
     overflow: hidden;
@@ -89,13 +89,24 @@ li::before {
 }
 
 img.thumbnail {
+    margin: 4px auto !important;
     border: 4px solid #ffffff;
-    margin: 2em auto 2em auto;
     display: block;
     box-shadow: 2px 2px 2px rgb(0 0 0 / 60%);
+    cursor: zoom-in;
+    width: 50%;
 }
 
 img.normal {
+    background-size: cover;
+    float: left;
+    padding: 4px !important;
+    height: 32px !important;
+    width: 32px !important;
+    object-fit: contain;
+}
+
+img.circle {
     background: url("./image/icon_circle.svg");
     background-size: cover;
     float: left;
@@ -115,17 +126,6 @@ img.attention {
     object-fit: contain;
 }
 
-/*
-.attention {
-    display: flex;
-    width: 24px;
-    height: 24px;
-    position: absolute;
-    top: -28px;
-    left: 12px;
-}
-*/
-
 img.w100 {
     width: 100%;
 }
@@ -144,15 +144,13 @@ h2.zoom {
 }
 
 .menu {
-    color: white;
     margin: 2px 0px;
-    background-color: rgba(0, 48, 0, 0.4);
-    border: 0px;
+    border: 1px solid;
     width: initial !important;
     height: 100%;
 }
 
-.pointer{
+.pointer {
     cursor: pointer;
 }
 
@@ -180,51 +178,52 @@ span.subtitle {
     padding: 0px 0px 0px 0px;
 }
 
-span.icon {
+span.circle {
     border-radius: 8px;
     margin-left: 2px;
     padding: 0px 2px;
     white-space: nowrap;
+    background-color: rgb(255 255 255 / 80%);
 }
 
-span.icon_normal {
-    color: #ffffffee;
-    background: rgba(0, 0, 0, 0.5);
-}
-
-span.icon_attention {
-    color: #ffffff;
-    background: rgba(0, 0, 0, 0.6);
+span.attention {
+    border-radius: 8px;
+    margin-left: 2px;
+    padding: 0px 2px;
+    white-space: nowrap;
+    font-weight: bold;
+    background-color: rgb(255 255 255 / 100%);
 }
 
 /* マーカーのフォントサイズ選択 */
-span.fs-10{
+span.fs-10 {
     font-size: 10px;
 }
 
-span.fs-12{
+span.fs-12 {
     font-size: 12px;
 }
 
-span.fs-14{
+span.fs-14 {
     font-size: 14px;
 }
 
 /* button for select way color */
 
+.modal-backdrop.show {
+    opacity: 0;
+}
+
 .modal-dialog-fluid {
-    max-width: inherit !important;
-    max-height: 50% !important;
-    width: 80% !important;
+    max-width: 800px !important;
+    max-height: 98% !important;
+    width: 98% !important;
+    margin: auto !important;
 }
 
 .modal-body {
     font-size: 14px !important;
     overflow-x: hidden;
-}
-
-.leaflet-div-icon {
-    border: 0px !important;
 }
 
 input[type="search"] {
@@ -264,7 +263,8 @@ tr.selected td {
     bottom: 0px;
 }
 
-.card-header, .card-body {
+.card-header,
+.card-body {
     padding: 0px !important;
 }
 
@@ -285,21 +285,6 @@ tr.selected td {
 
 .bg-clear {
     background: transparent url("./image/transparent.png") !important;
-}
-
-.leaflet-container a {
-    color: initial !important;
-}
-
-.leaflet-touch .leaflet-control-layers-toggle {
-    width: 30px !important;
-    height: 30px !important;
-}
-
-.modal-dialog-fluid {
-    max-width: inherit !important;
-    width: 98% !important;
-    margin-left: 8px !important;
 }
 
 .cursor-pointer {
@@ -326,6 +311,24 @@ h5[aria-expanded="true"]:before {
     height: 18px;
     margin-right: 0px;
     vertical-align: middle;
+}
+
+#full_screen_image {
+    display: none;
+    background: RGBA(0, 0, 0, .8) no-repeat center;
+    background-image: url();
+    background-size: contain;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 10000;
+    top: 0;
+    left: 0;
+    cursor: zoom-out;
+}
+
+#full_screen_image.isFullScreen {
+    display: block;
 }
 
 @keyframes rotation {

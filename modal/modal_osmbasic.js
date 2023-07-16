@@ -12,6 +12,33 @@ class modal_OSMbasic {
             elements++;
         };
 
+        // write changing_table
+        if (tags.changing_table !== undefined) {
+            let available = tags.changing_table == "yes" ? glot.get("available") : glot.get("unavailable");
+            html += `<div class="flex-row"> <i class="fas fa-baby"></i> ${glot.get("changing_table")}:${available}</div>`;
+            elements++;
+        };
+
+        // write wheelchair
+        if (tags.wheelchair !== undefined) {
+            let test = { "yes": "available", "no": "unavailable", "limited": "limited" };
+            if (test[tags.wheelchair] !== undefined) {
+                let available = glot.get(test[tags.wheelchair]);
+                html += `<div class="flex-row"> <i class="fas fa-wheelchair"></i> ${available}</div>`;
+                elements++;
+            }
+        };
+
+        // write bottle
+        if (tags.bottle !== undefined) {
+            let test = { "yes": "available", "no": "unavailable", "limited": "limited" };
+            if (test[tags.bottle] !== undefined) {
+                let available = glot.get(test[tags.bottle]);
+                html += `<div class="flex-row"> <i class="fas fa-wine-bottle"></i> ${available}</div>`;
+                elements++;
+            }
+        };
+
         // write website
         if (tags.website !== undefined) {
             html += `<div class="flex-row"> <i class="fas fa-globe"></i> <a href="${tags.website}" target="_blank">${tags.website}</a></div>`;

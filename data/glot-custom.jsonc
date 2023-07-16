@@ -11,6 +11,10 @@
 		"ja": "Community Map Makerについて",
 		"en": "about Community Map Maker"
 	},
+	"about_message": {
+		"ja": "",
+		"en": ""
+	},
 	"owner": {
 		"ja": "コミュニティマップメーカー開発サイト",
 		"en": "Community Map Maker development site"

@@ -40,8 +40,7 @@ class modal_Activities {
             head.innerHTML = act.title;
             head.setAttribute("id", act.id.replace("/", ""));
             let chtml = `<div class="float-right">${glot.get("update")} ${updated}[<a href="javascript:modal_activities.edit({id:'${act.id}',form:'${newmode}'})">${glot.get("act_edit")}</a>]</div>`;
-            chtml += glot.get("share_link") + `<button type="button" class="btn-sm btn-light ml-1 pl-2 pr-2 pt-0 pb-0"
-             data-toggle="popover" data-content="${glot.get("modal_popover_copied")}" onclick="cMapmaker.url_share('${act.id}')">
+            chtml += glot.get("share_link") + `<button type="button" class="btn-sm btn-light ml-1 pl-2 pr-2 pt-0 pb-0" onclick="cMapMaker.url_share('${act.id}')">
                 <i class="fas fa-clone"></i>
             </button><br><br>`;
             switch (newmode) {
@@ -91,7 +90,7 @@ class modal_Activities {
                                 break;
                             case "image_url":
                                 if (gdata !== "http://" && gdata !== "https://" && gdata !== "") {
-                                    chtml += `<div class="col text-center"><img class="m-1 w-100" src="${gdata}"></div><br>`;
+                                    chtml += `<div class="col text-center"><img class="thumbnail" onclick="modal_activities.viewImage('${gdata}')" src="${gdata}"></div><br>`;
                                 };
                                 break;
                         };
@@ -122,7 +121,7 @@ class modal_Activities {
     edit(params) {			// p {id: undefined時はnew}
         let title = glot.get(params.id === void 0 ? "act_add" : "act_edit");
         let html = "", act = Conf.activities;
-        let data = params.id === void 0 ? { osmid: cMapmaker.open_osmid } : poiCont.get_actid(params.id);
+        let data = params.id === void 0 ? { osmid: cMapMaker.open_osmid } : poiCont.get_actid(params.id);
 
         html = "<div class='container'>";
         Object.keys(act[params.form].form).forEach(key => {
@@ -204,8 +203,9 @@ class modal_Activities {
                             winCont.modal_close();
                             gSheet.get(Conf.google.AppScript).then(jsonp => {
                                 poiCont.set_actjson(jsonp);
-                                let targets = (Conf.listTable.targets.indexOf("targets") > -1) ? [list_category.value] : ["-"];
-                                cMapmaker.view_poi(targets);	// in targets
+                                let targets = (Conf.listTable.targets.indexOf("targets") > -1) ? [listTable.getSelCategory()] : ["-"];
+                                cMapMaker.viewArea(targets);	// in targets
+                                cMapMaker.viewPoi(targets);	// in targets
                                 modal_activities.busy = false;
                             });
                         } else {
@@ -223,4 +223,14 @@ class modal_Activities {
             }
         });
     }
+
+    viewImage(imgurl) {
+        document.getElementById("full_screen_image").classList.add("isFullScreen");
+        document.getElementById("full_screen_image").style["background-image"] = "url('" + imgurl + "')";
+    }
+
+    closeImage(){
+        document.getElementById("full_screen_image").classList.remove("isFullScreen");
+    }
+
 }

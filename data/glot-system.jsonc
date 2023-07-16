@@ -1,8 +1,4 @@
 {
-	"cat_select": {
-		"ja": "選択表示",
-		"en": "Select display"
-	},
 	"act_add": {
 		"ja": "追加",
 		"en": "Add information"
@@ -87,6 +83,18 @@
 		"ja": "いいえ",
 		"en": "NO"
 	},
+	"available": {
+		"ja": "有り",
+		"en": "available"
+	},
+	"unavailable": {
+		"ja": "無し",
+		"en": "unavailable"
+	},
+	"limited": {
+		"ja": "限定的",
+		"en": "limited"
+	},
 	"loading_title": {
 		"ja": "マップデータのロード中",
 		"en": "Loading map data"
@@ -118,10 +126,6 @@
 	"modal_close": {
 		"ja": "閉じる",
 		"en": "close"
-	},
-	"modal_popover_copied": {
-		"ja": "クリップボードにコピーしました",
-		"en": "Clipboard to clipboard"
 	},
 	"source_wikipedia": {
 		"ja": "(出典: Wikipedia)",
@@ -270,5 +274,13 @@
 	"target_wikipedia": {
 		"ja": "Wikipedia",
 		"en": "Wikipedia"
+	},
+	"changing_table": {
+		"ja": "おむつ交換台",
+		"en": "diaper hanging table"
+	},
+	"wheelchair":{
+		"ja": "車椅子対応",
+		"en": "wheelchair"
 	}
 }
