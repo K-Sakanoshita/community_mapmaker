@@ -2,20 +2,12 @@
     "osm": {
         "stores": {
             "overpass": [
-                "nwr[\"amenity\"]",
                 "nwr[\"shop\"]",
-                "nwr[\"railway\"=\"station\"]",
-                "nwr[\"leisure\"]",
-                "nwr[\"craft\"]",
-                "nwr[\"office\"]"
+                "nwr[\"craft\"]"
             ],
             "tags": [
-                "amenity",
                 "shop",
-                "railway",
-                "leisure",
-                "craft",
-                "office"
+                "craft"
             ],
             "expression": {
                 "stroke": "#c0c0c0",
