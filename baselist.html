@@ -18,6 +18,7 @@
 		</a>
 	</div>
 	<div class="col-12 p-2 mr-2 d-flex align-items-center">
+		<div class="h-100 d-flex align-items-center text-nowrap"><span glot-model="cat_select"></span></div>
 		<select class="form-control ml-1" id="list_category"></select>
 		<button class="btn btn-light border-secondary float-left ml-2 float-left ml-2" id="mode_button"
 			onclick="cMapMaker.mode_change();"><i class="fas fa-list" id="list_collapse_icon"></i></button>
@@ -51,7 +52,7 @@
 		<!-- プレイバック操作 -->
 		<div class="row" id="list_playback_control">
 			<div class="col-12 pr-0">
-				<button class="btn btn-light float-left menu mr-2" onclick="cMapMaker.playback();"><i
+				<button class="btn btn-light float-left menu mr-2" onclick="cMapMaker.playback(listTable.flist);"><i
 						id="list_playback" class="fas fa-play"></i></button>
 				<input type="range" class="form-control-range menu" id="list_speed">
 			</div>

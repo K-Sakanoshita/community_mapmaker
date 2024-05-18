@@ -1,23 +1,28 @@
 {
     "category": {
+        // 下記の順番はカテゴリ名を取得する時の優先順位にもなる
         "*": {
             "*": "-"
         },
         "amenity": {
             "arts_centre": "アートセンター",
             "bar": "バー/酒場",
+            "bank": "銀行",
             "bbq": "バーベキュー",
             "bench": "ベンチ",
             "bicycle_parking": "駐輪場(バイク)",
+            "bicycle_rental": "レンタサイクル",
             "bus_station": "バスターミナル",
             "cafe": "カフェ/喫茶店",
             "clinic": "クリニック",
             "clock": "時計",
             "college": "大学",
-            "community_centre": "公民館",
+            "community_centre": "コミュニティセンター・スペース",
             "courthouse": "裁判所",
+            "coworking_space": "コワーキングスペース",
             "crematorium": "火葬場",
             "cinema": "映画館",
+            "dentist": "歯医者",
             "doctors": "医者",
             "drinking_water": "水飲み場",
             "fast_food": "ファーストフード",
@@ -25,11 +30,14 @@
             "fire_station": "消防署",
             "food_court": "フードコート",
             "fountain": "噴水",
+            "gambling": "娯楽",
             "grave_yard": "墓地",
             "hospital": "病院",
             "ice_cream": "アイスクリーム店",
             "internet_cafe": "インターネットカフェ",
+            "karaoke_box": "カラオケボックス",
             "kindergarten": "幼稚園",
+            "language_school": "語学学校",
             "library": "図書館",
             "nightclub": "クラブ/ライブハウス",
             "marketplace": "市場",
@@ -75,6 +83,7 @@
         },
         "building": {
             "apartments": "アパート",
+            "detached": "一戸建て",
             "museum": "博物館",
             "office": "事務所",
             "public": "公共建築",
@@ -83,6 +92,12 @@
             "retail": "店舗",
             "yes": "建物"
         },
+        "craft": {
+            "carpenter": "工務店",
+            "confectionery": "菓子工房",
+            "lighting": "照明工房",
+            "photographer": "写真館"
+        },
         "diplomatic": {
             "embassy": "大使館"
         },
@@ -90,7 +105,9 @@
             "school": "廃校"
         },
         "office": {
-            "company": "company",
+            "company": "会社",
+            "estate_agent": "不動産屋",
+            "foundation": "財団・協会",
             "government": "政府機関"
         },
         "shop": {
@@ -115,8 +132,9 @@
             "clothes": "洋服店",
             "coffee": "コーヒー店",
             "computer": "パソコン屋",
-            "confectionery": "お菓子店(甘味)",
+            "confectionery": "お菓子店",
             "convenience": "コンビニエンスストア",
+            "copyshop": "コピー店",
             "cosmetics": "化粧品店",
             "dairy": "乳製品店",
             "deli": "お弁当/惣菜屋",
@@ -138,27 +156,34 @@
             "health_food": "健康食品店",
             "ice_cream": "アイスクリーム店",
             "interior_decoration": "内装用品",
+            "jewelry": "宝飾店",
             "kiosk": "キオスク",
             "laundry": "ランドリー",
             "mall": "ショッピングモール",
             "massage": "マッサージ店",
             "medical_supply": "医療用品店",
+            "mobile_phone":"携帯電話店",
             "motorcycle": "自転車屋",
+            "newsagent":"新聞販売店",
             "optician": "メガネ店",
             "pasta": "パスタ専門店",
             "pastry": "お菓子店(焼き菓子)",
             "pawnbroker": "質屋",
+            "photo": "写真店",
             "rice": "米穀店",
             "seafood": "鮮魚店",
             "second_hand": "中古屋",
             "shoes": "靴屋",
             "spices": "スパイス専門店",
+            "stationery": "文具店",
             "supermarket": "スーパーマーケット",
+            "tailor": "仕立て屋",
             "tea": "お茶専門店",
             "ticket": "チケット店",
             "tobacco": "タバコ屋",
             "travel_agency": "旅行代理店",
             "variety_store": "雑貨店",
+            "video_games":"テレビゲーム販売店",
             "water": "飲料水専門店",
             "wine": "ワイン専門店"
         },
@@ -175,6 +200,7 @@
             "fire_extinguisher": "消火器",
             "fire_hydrant": "消火栓",
             "fire_hose": "消火ホース",
+            "fire_lookout": "火の見櫓",
             "defibrillator": "AED",
             "siren": "サイレン",
             "water_tank": "防火水槽"
@@ -194,30 +220,43 @@
             "climbingframe": "ジャングルジム",
             "climbingwall": "クライミングウォール",
             "cushion": "ふわふわドーム",
+            "dome": "ドーム",
             "exercise": "健康遊具",
+            "hamster_wheel": "回し車",
             "hopscotch": "遊べるフィールド",
             "horizontal_bar": "鉄棒",
+            "ladder": "はしご",
             "map": "マップ",
+            "monkey_bars": "雲梯",
             "mound": "円丘",
             "playhouse": "プレイハウス",
+            "play_sculpture": "遊具彫刻",
             "roundabout": "メリーゴーランド",
+            "rope_swing": "ロープスイング",
+            "ride_on": "乗馬",
             "sandpit": "砂場",
             "seesaw": "シーソー",
             "sledding": "小さな丘",
+            "sieve": "砂ふるい",
             "slide": "すべり台",
             "splash_pad": "水遊びをする場所",
             "springy": "スプリング",
+            "stepping_post": "ステッピングポスト",
             "stepping_stones": "飛び石",
+            "stepping_tires": "並んだタイヤ",
             "structure": "複合遊具",
             "swing": "ブランコ",
             "teenshelter": "子ども用東屋",
+            "tire": "タイヤ",
             "trampoline": "トランポリン",
             "tunnel_tube": "トンネル",
             "water": "水や泥で遊ぶ場所",
+            "water_channel": "水路",
             "youth_bench": "運動用ベンチ",
             "zipwire": "ジップライン"
         },
         "tourism": {
+            "apartment": "リゾートマンション",
             "attraction": "観光名所",
             "artwork": "アート作品",
             "gallery": "ギャラリー",
@@ -260,6 +299,16 @@
             "surveillance": "監視機器",
             "works": "工場"
         },
+        "leisure": {
+            "amusement_arcade": "ゲームセンター",
+            "garden": "庭",
+            "dance": "ダンスホール",
+            "fitness_centre": "フィットネスセンター",
+            "pitch": "グラウンド",
+            "park": "公園",
+            "playground": "児童公園",
+            "swimming_pool": "水泳プール"
+        },
         "landuse": {
             "farmland": "農地",
             "religious": "信仰",
@@ -271,14 +320,6 @@
             "retail": "商業エリア",
             "grass": "芝生",
             "recreation_ground": "レクリエーション広場"
-        },
-        "leisure": {
-            "amusement_arcade": "ゲームセンター",
-            "garden": "庭",
-            "pitch": "グラウンド",
-            "park": "公園",
-            "playground": "児童公園",
-            "swimming_pool": "水泳プール"
         },
         "railway": {
             "station": "鉄道駅"
@@ -304,6 +345,11 @@
         "bookmarked": "スターつき"
     },
     "category_sub": {
+        "gambling": {
+            "gambling": {
+                "mahjong": "麻雀"
+            }
+        },
         "social_facility": {
             "social_facility": {
                 "shelter": "一時避難所"

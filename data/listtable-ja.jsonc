@@ -1,6 +1,6 @@
 {
     "list": {
-        "height": 0.2,
+        "height": 0.46,
         "columns": {
             "common": [
                 {
@@ -10,30 +10,24 @@
                 {
                     "id": "category",
                     "name": "種類",
-                    "width": "50%"
                 },
                 {
                     "id": "name",
-                    "name": "施設名",
-                    "width": "30%"
-                },
-                {
-                    "id": "min_age",
-                    "name": "年齢",
-                    "width": "20%"
+                    "name": "施設名"
                 }
             ],
+            // #parent.tag名:親地物(敷地)の指定したタグ / その他:tag名
             "poi_fields": [
                 "id",
                 "#category",
-                "#parent.name,name",
-                "min_age"
+                "name"
             ],
+            // #category:tagから計算したカテゴリ / #tag名:指定したOSM tag名 / datetime:日付(変換付き)
+            // フィールド名:データベースのフィールド名 / フィールド名.date:日付変換付き
             "act_fields": [
                 "id",
-                "#category",
-                "#name",
-                "#min_age"
+                "category",
+                "#name"
             ]
         }
     }

@@ -2,7 +2,7 @@ class modal_OSMbasic {
     // make modal html for OSM basic tags
 
     make(tags) {
-        let catname = poiCont.get_catname(tags);
+        let catname = poiCont.getCatnames(tags);
         let elements = 0;
         let html = `<div class="d-flex justify-content-between flex-wrap mb-3">`;
 
@@ -40,8 +40,9 @@ class modal_OSMbasic {
         };
 
         // write website
-        if (tags.website !== undefined) {
-            html += `<div class="flex-row"> <i class="fas fa-globe"></i> <a href="${tags.website}" target="_blank">${tags.website}</a></div>`;
+        let website = [tags.website, tags["contact:website"]].filter(a => a !== undefined)[0];
+        if (website !== undefined) {
+            html += `<div class="flex-row"> <i class="fas fa-globe"></i> <a href="${website}" target="_blank">${website}</a></div>`;
             elements++;
         };
 
@@ -70,6 +71,9 @@ class modal_OSMbasic {
         };
 
         return elements > 0 ? html + "</div>" : "";
+
     };
+
+
 }
 var modal_osmbasic = new modal_OSMbasic();

@@ -2,23 +2,20 @@
 {
     "icon": {
         "path": "maki-icon",
-        "circle": 32,
+        "normal": 32,
         "attention": 48
     },
     "system": {
         "OverPassServer": [
+            "https://overpass.openstreetmap.jp/api/interpreter",
             "https://maps.mail.ru/osm/tools/overpass/api/interpreter",
             "https://overpass.kumi.systems/api/interpreter",
             "https://overpass-api.de/api/interpreter"
         ]
     },
-    "tile_default": "OSM_Standard",
     "tile": {
-        "MapTiler": {
-            "style": "https://api.maptiler.com/maps/c9876a21-f16a-4a84-abc0-950badd4631e/style.json?key=Eq2IyrHsOEGFU1W1fvd7"
-        },
-        "MapTiler(Memories)": {
-            "style": "https://api.maptiler.com/maps/2e4db38a-b862-444d-bcfe-fefe51429073/style.json?key=Eq2IyrHsOEGFU1W1fvd7"
+        "OSMFJ": {
+            "style": "./tiles/osmfj.json"
         },
         "OSM_Standard": {
             "style": {

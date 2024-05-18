@@ -22,13 +22,15 @@ class modal_Activities {
         xhr.send();
     };
 
+    // make activity detail list
     make(actlists) {
         let ymd = "YYYY/MM/DD";
         let tModal = document.createElement("div");
         let template = document.createElement("div");
         let result = "", newmode = "";
+        let wikimq = [];
         template.innerHTML = this.html;
-        actlists.sort((a, b) => { return a.updatetime > b.updatetime ? -1 : 1 });   // sort by update.
+        actlists.sort((a, b) => { return a.updatetime < b.updatetime ? -1 : 1 });   // sort by update.
         result = modal_activities.make_activity_list(actlists);
         actlists.forEach((act, idx) => {
             let clone = template.querySelector("div.body").cloneNode(true);
@@ -37,12 +39,11 @@ class modal_Activities {
             let updated = basic.formatDate(new Date(act.updatetime), ymd);
             newmode = act.id.split('/')[0];
             let form = Conf.activities[newmode].form;
-            head.innerHTML = act.title;
+            head.innerHTML = act.title + ` <button type="button" class="btn-sm btn-light ml-1 pl-2 pr-2 pt-0 pb-0" onclick="cMapMaker.shareURL('${act.id}')">
+            <i class="fas fa-clone"></i></button>`;
             head.setAttribute("id", act.id.replace("/", ""));
-            let chtml = `<div class="float-right">${glot.get("update")} ${updated}[<a href="javascript:modal_activities.edit({id:'${act.id}',form:'${newmode}'})">${glot.get("act_edit")}</a>]</div>`;
-            chtml += glot.get("share_link") + `<button type="button" class="btn-sm btn-light ml-1 pl-2 pr-2 pt-0 pb-0" onclick="cMapMaker.url_share('${act.id}')">
-                <i class="fas fa-clone"></i>
-            </button><br><br>`;
+            let edit = Conf.etc.editMode ? `[<a href="javascript:modal_activities.edit({id:'${act.id}',form:'${newmode}'})">${glot.get("act_edit")}</a>]` : "";
+            let chtml = Conf.etc.editMode ? `<div class="float-right">${glot.get("update")} ${updated}${edit}</div><br>` : "";
             switch (newmode) {
                 case "libc":
                     let mm = !parseInt(act.mm) ? "--" : ("00" + act.mm).substr(-2);
@@ -55,53 +56,56 @@ class modal_Activities {
                     chtml += "<strong>" + glot.get("libc_area") + "</strong><br>" + act.area + "<br><br>";
                     chtml += "<strong>" + glot.get("libc_ymd") + `</strong><br>${act_ymd}<br><br>`;
                     break;
-                case "memorial":
-                    chtml += "<strong>" + glot.get("title") + "</strong><br>" + act.title + "<br><br>";
-                    chtml += "<strong>" + glot.get("memories_author") + "</strong><br>" + act.author + "<br><br>";
-                    chtml += "<strong>" + glot.get("memories_memorial") + "</strong><br>" + act.body.replace(/\r?\n/g, '<br>') + "<br><br>";
-                    chtml += "<strong>" + glot.get("memories_place") + "</strong><br>" + act.place + "<br><br>";
-                    chtml += "<strong>" + glot.get("memories_supply") + "</strong><br>" + act.supply + "<br><br>";
-                    chtml += "<strong>" + glot.get("memories_references") + "</strong><br>" + act.references + "<br><br>";
-                    chtml += "<strong>" + glot.get("memories_reception") + "</strong><br>" + basic.formatDate(new Date(act.reception), ymd) + "<br><br>";
-                    break;
                 default:    // event
-                    head.innerHTML = act.title;
-
                     Object.keys(form).forEach((key) => {
-                        chtml += `<div class='row'>`;
-                        let gdata = act[form[key].gsheet] == undefined ? "" : String(act[form[key].gsheet]);
-                        switch (form[key].type) {
-                            case "date":
-                                chtml += `<div class='col'>${glot.get(form[key].glot)}</div><div class='col-9'>${basic.formatDate(new Date(gdata), "YYYY/MM/DD")}</div>`;
-                                break;
-                            case "select":
-                            case "text":
-                            case "textarea":
-                            case "quiz_choice":
-                                if (key !== "quiz_answer" && key !== "title") chtml += `<div class='col'>${glot.get(form[key].glot)}</div><div class='col-9'>${gdata.replace(/\r?\n/g, '<br>')}</div>`;
-                                break;
-                            case "quiz_textarea":
-                                chtml += `<div class='col'>${glot.get(form[key].glot)}</div><div class='col-9'>${gdata.replace(/\r?\n/g, '<br>')}</div>`;
-                                break;
-                            case "url":
-                                if (gdata !== "http://" && gdata !== "https://" && gdata !== "") {
-                                    chtml += `<div class='col'>${glot.get(form[key].glot)}</div><div class='col-9'><a href="${gdata}">${gdata}</a></div>`;
-                                };
-                                break;
-                            case "image_url":
-                                if (gdata !== "http://" && gdata !== "https://" && gdata !== "") {
-                                    chtml += `<div class="col text-center"><img class="thumbnail" onclick="modal_activities.viewImage('${gdata}')" src="${gdata}"></div><br>`;
-                                };
-                                break;
+                        if (form[key].viewHidden !== true) {
+                            chtml += `<div class='row'>`;
+                            let gdata = act[form[key].gsheet] == undefined ? "" : String(act[form[key].gsheet]);
+                            gdata = basic.htmlspecialchars(gdata).replace(/\r?\n/g, '<br>');
+                            switch (form[key].type) {
+                                case "date":
+                                    chtml += `<div class='col-12'>${glot.get(form[key].glot)}</div><div class='col-12'>${basic.formatDate(new Date(gdata), "YYYY/MM/DD")}</div>`;
+                                    break;
+                                case "select":
+                                case "text":
+                                case "textarea":
+                                case "quiz_choice":
+                                    if (key !== "quiz_answer" && key !== "title" && gdata !== "") {
+                                        gdata = basic.autoLink(gdata)
+                                        chtml += `<div class='col-12'><span class="font-weight-bold">${glot.get(form[key].glot)}</span>${gdata.replace(/\r?\n/g, '<br>')}</div>`;
+                                    }
+                                    break
+                                case "quiz_textarea":
+                                    chtml += `<div class='col-12'>${glot.get(form[key].glot)}</div><div class='col-12'>${gdata.replace(/\r?\n/g, '<br>')}</div>`;
+                                    break;
+                                case "url":
+                                    if (gdata !== "http://" && gdata !== "https://" && gdata !== "") {
+                                        chtml += `<div class='col-12'><span class="font-weight-bold">${glot.get(form[key].glot)}</span><a href="${gdata}">${gdata}</a></div>`;
+                                    }
+                                    break
+                                case "image_url":
+                                    if (gdata !== "http://" && gdata !== "https://" && gdata !== "") {
+                                        if (gdata.slice(0, 5) == "File:") {  // Wikimedia Commons
+                                            let id = act.id.replace("/", "") + "_" + key;
+                                            wikimq.push([gdata, id]);
+                                            chtml += `<div class="col-12 text-center"><img class="thumbnail" onclick="modal_activities.viewImage(this)" id="${id}"><span id="${id}-copyright"></span></div>`;
+                                        } else {
+                                            chtml += `<div class="col-12 text-center"><img class="thumbnail" onclick="modal_activities.viewImage(this)" src="${gdata}"></div>`;
+                                        }
+                                    }
+                                    break;
+                                case "attention":   // 何もしない
+                                    break;
+                            };
+                            chtml += "</div>";
                         };
-                        chtml += "</div>";
                     });
                     break;
             };
-
             body.innerHTML = chtml;
             result += clone.outerHTML;
         });
+        wikimq.forEach(q => { basic.getWikiMediaImage(q[0], Conf.etc.thumbnailWidth, q[1]) });        // WikiMedia Image 遅延読み込み
         tModal.remove();
         template.remove();
         return result;
@@ -109,12 +113,17 @@ class modal_Activities {
 
     // make activity list
     make_activity_list(actlists) {
-        let html = "<ul class='ml-0 pl-4'>";
-        for (let act of actlists) {
-            console.log("modal_Activities: " + act.id);
-            html += `<li><span class="pointer" onclick="document.getElementById('${act.id.replace('/', '')}').scrollIntoView({behavior: 'smooth'})">${act.title}<span></li>`;
+        if (actlists.length > 1) {
+            let html = "<ul class='ml-0 pl-4'>"
+            for (let act of actlists) {
+                //console.log("modal_Activities: " + act.id)
+                html += `<li><span class="pointer" onclick="document.getElementById('${act.id.replace('/', '')}').scrollIntoView({behavior: 'smooth'})">${act.title}<span></li>`;
+            }
+            return html + "</ul>";
         }
-        return html + "</ul>";
+        else {
+            return "";
+        }
     }
 
     // edit activity
@@ -129,13 +138,14 @@ class modal_Activities {
             html += "<div class='row mb-1 align-items-center'>";
             let defvalue = data[act[params.form].form[key].gsheet] || "";
             let form = act[params.form].form[key];
-            html += `<div class='col-2 p-1'>${glot.get(`${form.glot}`)}</div>`;
             switch (form.type) {
                 case "date":
+                    html += `<div class='col-2 p-1'>${glot.get(`${form.glot}`)}</div>`;
                     let gdate = basic.formatDate(new Date(defvalue), "YYYY-MM-DD");
                     html += `<div class="col-10 p-1"><input type="date" id="${akey}" class="form-control form-control-sm" value="${gdate}"></div>`;
                     break;
                 case "select":
+                    html += `<div class='col-2 p-1'>${glot.get(`${form.glot}`)}</div>`;
                     let selects = "", category = form.category;
                     for (let idx in form.category) {
                         let selected = category[idx] !== data.category ? "" : "selected";
@@ -145,19 +155,26 @@ class modal_Activities {
                     break;
                 case "textarea":
                 case "quiz_textarea":
+                    html += `<div class='col-2 p-1'>${glot.get(`${form.glot}`)}</div>`;
                     html += `<div class="col-10 p-1"><textarea id="${akey}" rows="8" class="form-control form-control-sm">${defvalue}</textarea></div>`;
                     break;
                 case "quiz_choice":
                 case "text":
+                    html += `<div class='col-2 p-1'>${glot.get(`${form.glot}`)}</div>`;
                     html += `<div class="col-10 p-1"><input type="text" id="${akey}" maxlength="80" class="form-control form-control-sm" value="${defvalue}"></div>`;
                     break;
                 case "quiz_hint_url":
                 case "image_url":
                 case "url":
+                    html += `<div class='col-2 p-1'>${glot.get(`${form.glot}`)}</div>`;
                     html += `<div class="col-10 p-1"><input type="text" id="${akey}" class="form-control form-control-sm" value="${defvalue}"></div>`;
                     break;
                 case "comment":
+                    html += `<div class='col-2 p-1'>${glot.get(`${form.glot}`)}</div>`;
                     html += `<div class='col-10 p-1'><h5>${glot.get(`${form.glot}`)}</h5></div>`;
+                    break;
+                case "attention":
+                    html += `<div class='col-12 p-1'>${glot.get(`${form.glot}`)}</div>`;
                     break;
             };
             html += "</div>";
@@ -186,7 +203,7 @@ class modal_Activities {
                     let senddata = { "id": act_id.value, "osmid": act_osmid.value };
                     Object.keys(act[params.form].form).forEach(key => {
                         let field = act[params.form].form[key];
-                        if (field.gsheet !== "") senddata[field.gsheet] = document.getElementById("act_" + key).value
+                        if (field.gsheet !== "" && field.gsheet !== undefined) senddata[field.gsheet] = document.getElementById("act_" + key).value
                     });
                     gSheet.get_salt(Conf.google.AppScript, userid).then((e) => {
                         winCont.modal_progress(40);
@@ -202,8 +219,8 @@ class modal_Activities {
                             console.log("save: ok");
                             winCont.modal_close();
                             gSheet.get(Conf.google.AppScript).then(jsonp => {
-                                poiCont.set_actjson(jsonp);
-                                let targets = (Conf.listTable.targets.indexOf("targets") > -1) ? [listTable.getSelCategory()] : ["-"];
+                                poiCont.setActdata(jsonp);
+                                let targets = Conf.listTable.target == "targets" ? [listTable.getSelCategory()] : ["-"];
                                 cMapMaker.viewArea(targets);	// in targets
                                 cMapMaker.viewPoi(targets);	// in targets
                                 modal_activities.busy = false;
@@ -224,12 +241,14 @@ class modal_Activities {
         });
     }
 
-    viewImage(imgurl) {
+    viewImage(e) {
+        let src_org = e.getAttribute("src_org");
+        src_org = src_org == null ? e.src : src_org;
         document.getElementById("full_screen_image").classList.add("isFullScreen");
-        document.getElementById("full_screen_image").style["background-image"] = "url('" + imgurl + "')";
+        document.getElementById("full_screen_image").style["background-image"] = "url('" + src_org + "')";
     }
 
-    closeImage(){
+    closeImage() {
         document.getElementById("full_screen_image").classList.remove("isFullScreen");
     }
 

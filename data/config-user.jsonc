@@ -1,133 +1,106 @@
 // Community Mapmaker User Config
 {
-    "default": {
-        "tile_default": "MapTiler", // タイル一覧は config-system.jsonc へ
-        "keep_default_view": false,
-        "default_view": [
-            135.4828,
-            34.7212
+    "map": {
+        "tileName": "OSMFJ", // 初期表示のタイル名(タイル一覧はconfig-system.jsonc)
+        "viewCenter": [ // 引数無しでURLを開いた時の初期座標
+            135.48061,
+            34.72014
         ],
-        "maxbounds": "",
-        "_maxbounds": [
-            [
-                136.11914,
-                34.94088
-            ],
-            [
-                135.86492,
-                35.09545
-            ]
-        ],
-        "initZoom": 14,
-        "pc_minZoom": 5,
-        "phone_minZoom": 4,
-        "maxZoom": 21,
-        "zoomSnap": 0.5
+        "maxBounds": "", // マップの移動範囲制限 (例)[135.4,34.65],[135.55,34.8]
+        "viewPitch": 40, // 引数無しでURLを開いた時の初期傾き
+        "initZoom": 17, // 引数無しでURLを開いた時の初期ズーム
+        "maxZoom": 23, // 最大ズーム
+        "modalZoom": 19 // モーダルダイアログ表示時のズームサイズ
     },
-    "PoiViewZoom": {
-        "activity": 15,
-        "restaurant": 15,
-        "shop": 15
-    },
-    "PoiView": {
-        "targets": [
-            "restaurant",
-            "shop",
-            "activity"
-        ],
-        "update_mode": "all" // listTable更新時 all:全て / filter:絞り込み / "":非連動
-    },
-    "DetailViewZoom": 17,
-    "listTable": {
-        "targets": [ // target名:overpass名を表示 / activity:google sheetsを表示 / tags:osm poi種別名を表示
-            "activity",
-            "restaurant",
-            "shop"
-        ],
-        "playback": {
-            "view": false,
-            "zoomLevel": 15,
-            "timer": 4000
+    "view": {
+        "poiZoom": {
+            "shop": 7 // 表示するアイコン種別名(複数値対応)
         },
-        "download": false
+        "poiFilter": "all" // リスト更新時の動き all:全て / filter:絞り込み / "":非連動
+    },
+    "listTable": {
+        "category": "tags", // カテゴリ選択 / activity:アクティビティリスト / tags:タグ
+        "target": "tags", // target名:overpass名を表示 / activity:google sheetsを表示 / tags:osm poi種別名を表示
+        "allActs": true, // true: 全てのactivityを常に表示 / false: 画面内のActivityのみ表示
+        "playback": { // リスト上のアイコンを連続表示する機能
+            "view": true, // 使うときはtrue
+            "zoomLevel": 15, // 表示する時のズームレベル
+            "timer": 4000 // 待ち時間
+        },
+        "download": false   // リスト一覧のダウンロード機能(開発中)
     },
     "google": {
         "Analytics": "",
-        "AppScript": "https://script.google.com/macros/s/AKfycbyCq06UBWAId9MeUH6lZQRLs2kIRX5MMLCcYEn0EMk4zjrVC7u9qaaq1Ks1fBwzCvBKUA/exec",
-        "targetName": "activity"
-    },
-    "splash": {
-        "url": "./image/cMapmaker.png"
+        "AppScript": "",    // GoogleSpreadSheetと連携する時のURL
+        "targetName": "activity"    // GoogleSpreadSheet上のシート名
     },
     "static": {
         "mode": false,
-        "osmjson": "",
-        "osmbounds": { // "{NW: {"lat":lat,"lng":lng"},"SE":{"lat":lat,"lng":lng}}
-            "NW": {
-                "lat": 45.7392,
-                "lng": 119.0340
-            },
-            "SE": {
-                "lat": 20.5444,
-                "lng": 144.8863
-            }
-        }
+        "osmjson": ""
     },
-    // トップメニュー一覧
-    "menu": [
-        {
-            "glot-model": "licence_title",
-            "linkto": "javascript:cMapmaker.licence()",
-            "divider": false
-        },
-        {
-            "glot-model": "about",
-            "linkto": "https://github.com/K-Sakanoshita/community_mapmaker",
-            "divider": true
-        },
-        {
-            "glot-model": "owner",
-            "linkto": "https://github.com/K-Sakanoshita/community_mapmaker",
-            "divider": false
-        },
-        {
-            "glot-model": "openstreetmap",
-            "linkto": "https://www.openstreetmap.org/about",
-            "divider": false
-        }
-    ],
-    // 詳細表示のモーダル設定
-    "detail_menu": [
-        {
-            "glot-model": "act_add",
-            "linkto": "javascript:modal_activities.edit({form:'sample'})",
-            "divider": false
-        },
-        {
-            "glot-model": "osm_open",
-            "linkto": "javascript:winCont.osm_open(cMapmaker.open_osmid)",
-            "divider": false
-        },
-        {
-            "glot-model": "button_close",
-            "linkto": "javascript:winCont.modal_close()",
-            "divider": false
-        }
-    ],
-    "detail_view": {
-        // 詳細モーダルの一番上を開くかどうか
-        "openfirst": true,
+    "wikipedia": {
+        "marker": "wikipedia.svg",
+        "api_": "wikipedia.org/w/api.php?format=json&action=query&prop=extracts%7Cimages&exintro=&explaintext=&titles=",
+        "api": "wikipedia.org/api/rest_v1/page/summary/",
+        "domain": "wikipedia.org",
+        "tag": "wikipedia",
+        "image": true
+    },
+    "etc": {
+        "editMode": false, // 編集メニューの表示/非表示
+        "thumbnailWidth": "240",
+        "splashUrl": "./image/cMapmaker.png"
+    },
+    "menu": {
+        "main": [
+            // トップメニュー一覧
+            {
+                "glot-model": "licence_title",
+                "linkto": "javascript:cMapmaker.licence()",
+                "divider": false
+            },
+            {
+                "glot-model": "develop_site",
+                "linkto": "https://github.com/K-Sakanoshita/community_mapmaker",
+                "divider": false
+            },
+            {
+                "glot-model": "openstreetmap",
+                "linkto": "https://www.openstreetmap.org/about",
+                "divider": false
+            }
+        ],
+        // 詳細表示のハンバーガーメニュー
+        "modal": [
+            /*{
+                "glot-model": "act_add",
+                "linkto": "javascript:modal_activities.edit({form:'Playgrounds'})",
+                "divider": false
+            },*/
+            {
+                "glot-model": "osm_open",
+                "linkto": "javascript:winCont.osm_open(cMapMaker.open_osmid)",
+                "divider": false
+            },
+            {
+                "glot-model": "button_close",
+                "linkto": "javascript:winCont.modal_close()",
+                "divider": false
+            }
+        ],
         // 詳細モーダルの追加ボタン 
         "buttons": [
+            /*
             {
                 "btn_class": "btn btn-light border-secondary mr-2",
-                "code": "javascript:modal_activities.edit({form:'sample'})",
+                "code": "javascript:modal_activities.edit({form:'Welcome2024'})",
                 "icon_class": "fas fa-plus",
                 "btn_glot_name": "add_activity"
             },
+            */
             {
                 "btn_class": "btn btn-light border-secondary",
-                "code": "javascript:cMapMaker.url_share()",
+                "code": "javascript:cMapMaker.shareURL()",
                 "icon_class": "fas fa-clone",
                 "btn_glot_name": "share_link"
             }

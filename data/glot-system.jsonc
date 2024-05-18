@@ -156,12 +156,16 @@
 		"en": "See in OpenStreetMap"
 	},
 	"target_activity": {
-		"ja": "活動内容",
+		"ja": "口コミ",
 		"en": "activity"
 	},
 	"target_arts": {
 		"ja": "アート",
 		"en": "arts"
+	},
+	"target_bath":{
+		"ja": "銭湯",
+		"en": "bath"
 	},
 	"target_pub": {
 		"ja": "居酒屋・パブ",
@@ -235,6 +239,10 @@
 		"ja": "石碑・道祖神",
 		"en": "historic(poi)"
 	},
+	"target_hospital": {
+		"ja": "病院",
+		"en": "hospital"
+	},
 	"target_water": {
 		"ja": "水域",
 		"en": "water"
@@ -279,7 +287,7 @@
 		"ja": "おむつ交換台",
 		"en": "diaper hanging table"
 	},
-	"wheelchair":{
+	"wheelchair": {
 		"ja": "車椅子対応",
 		"en": "wheelchair"
 	}
