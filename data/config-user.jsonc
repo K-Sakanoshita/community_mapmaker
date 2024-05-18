@@ -23,7 +23,7 @@
         "target": "tags", // target名:overpass名を表示 / activity:google sheetsを表示 / tags:osm poi種別名を表示
         "allActs": true, // true: 全てのactivityを常に表示 / false: 画面内のActivityのみ表示
         "playback": { // リスト上のアイコンを連続表示する機能
-            "view": true, // 使うときはtrue
+            "view": false, // 使うときはtrue
             "zoomLevel": 15, // 表示する時のズームレベル
             "timer": 4000 // 待ち時間
         },
