@@ -1,22 +1,154 @@
 {
     "osm": {
-        "stores": {
+        "historic": {
+            "overpass": [
+                "nwr[\"historic\"]"
+            ],
+            "tags": [
+                "historic"
+            ],
+            "expression": {
+                "poiView": true, // true時はアイコン表示
+                "viewArea": false,
+                "stroke": "#606060",
+                "stroke-width": 0,
+                "fill-opacity": 0.25
+            }
+        },
+        "natural": {
+            "overpass": [
+                "node[\"natural\"=\"tree\"]",
+                "way[\"natural\"=\"tree_row\"]",
+                "way[\"barrier\"=\"hedge\"]"
+            ],
+            "tags": [
+                "natural=tree",
+                "natural=tree_row",
+                "barrier=hedge"
+            ],
+            "expression": {
+                "poiView": false, // true時はアイコン表示
+                "viewArea": true,
+                "stroke": "#50A050",
+                "stroke-width": 4,
+                "fill-opacity": 0.25
+            }
+        },
+        "amenity": {
+            "overpass": [
+                "nwr[\"amenity\"]"
+            ],
+            "tags": [
+                "amenity"
+            ],
+            "expression": {
+                "poiView": true, // true時はアイコン表示
+                "viewArea": false,
+                "stroke": "#606060",
+                "stroke-width": 0,
+                "fill-opacity": 0.25
+            }
+        },
+        "shop": {
             "overpass": [
                 "nwr[\"shop\"]",
-                "nwr[\"craft\"]"
+                "nwr[\"tourism\"]"
             ],
             "tags": [
                 "shop",
-                "craft"
+                "tourism"
             ],
             "expression": {
-                "stroke": "#c0c0c0",
-                "stroke-width": 1
+                "poiView": true, // true時はアイコン表示
+                "viewArea": false,
+                "stroke": "#606060",
+                "stroke-width": 0,
+                "fill-opacity": 0.25
+            }
+        },
+        "indoor": {
+            "scope": {
+                "type": "viewport"
             },
-            "titles": [
-                "name",
-                "operator"
-            ]
+            "overpass": [
+                "nwr[\"indoor\"]",
+                "nwr[\"level\"]",
+                "nwr[\"highway\"=\"corridor\"]",
+                "nwr[\"highway\"~\"^(steps|elevator)$\"][\"level\"]",
+                "nwr[\"entrance\"][\"level\"]",
+                "way[\"building\"]"
+            ],
+            "tags": [
+                "indoor",
+                "level",
+                "highway=corridor",
+                "highway=steps",
+                "highway=elevator",
+                "entrance",
+                "building"
+            ],
+            "expression": {
+                "renderer": "indoor",
+                "poiView": false,
+                "listView": false,
+                "viewArea": true,
+                "styles": {
+                    "room": {
+                        "fill": "#f4e7cf",
+                        "fill-opacity": 0.72,
+                        "stroke": "#8b7965"
+                    },
+                    "area": {
+                        "fill": "#e8f3e8",
+                        "fill-opacity": 0.68,
+                        "stroke": "#789478"
+                    },
+                    "corridor": {
+                        "fill": "#f8f8f8",
+                        "fill-opacity": 0.88,
+                        "stroke": "#9aa0a6",
+                        "highway-stroke": "#2563a8",
+                        "highway-stroke-width": 4
+                    },
+                    "wall": {
+                        "stroke": "#4b5563",
+                        "stroke-width": 2.5
+                    },
+                    "building": {
+                        "stroke": "#303842",
+                        "stroke-width": 4
+                    },
+                    "door": {
+                        "color": "#2563a8",
+                        "radius": 3.5
+                    }
+                }
+            }
+        },
+        "edit_poi": {
+            "overpass": [
+                "nwr[\"amenity\"]",
+                "nwr[\"shop\"]",
+                "nwr[\"historic\"]",
+                "nwr[\"tourism\"]",
+                "nwr[\"man_made\"]",
+                "nwr[\"natural\"]"
+            ],
+            "tags": [
+                "amenity",
+                "shop",
+                "historic",
+                "tourism",
+                "man_made",
+                "natural"
+            ],
+            "expression": {
+                "poiView": true, // true時はアイコン表示
+                "viewArea": true,
+                "stroke": "#606060",
+                "stroke-width": 0,
+                "fill-opacity": 0.25
+            }
         }
     }
 }

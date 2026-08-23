@@ -1,22 +1,34 @@
 // Community Mapmaker System Config
 {
-    "icon": {
-        "path": "maki-icon",
-        "normal": 32,
-        "attention": 48
+    "wikipedia": {
+        "marker": "wikipedia.svg",
+        "api_": "wikipedia.org/w/api.php?format=json&action=query&prop=extracts%7Cimages&exintro=&explaintext=&titles=",
+        "api": "wikipedia.org/api/rest_v1/page/summary/",
+        "domain": "wikipedia.org",
+        "tag": "wikipedia",
+        "image": true
     },
     "system": {
         "OverPassServer": [
-            "https://overpass.openstreetmap.jp/api/interpreter",
-            "https://maps.mail.ru/osm/tools/overpass/api/interpreter",
-            "https://overpass.kumi.systems/api/interpreter",
-            "https://overpass-api.de/api/interpreter"
-        ]
+            "https://armd-01.sakura.ne.jp/api/interpreter",
+            "https://overpass-api.de/api/interpreter",
+            "https://overpass.private.coffee/api/interpreter"
+        ],
+        "NoChacheServer": "https://overpass-api.de/api/interpreter"
     },
     "tile": {
-        "OSMFJ": {
-            "style": "./tiles/osmfj.json"
+        "OSMFJ_NOPOI": {
+            "style": "./tiles/osmfj_nopoi.json",
+            "name": "OpenStreetMap(3D/OSMFJ提供)",
+            "skip": false
         },
+        /*
+        "OSMFJ_POI(SNOW)": {
+            "style": "./tiles/osmfj_nopoi_snow.json",
+            "name": "OpenStreetMap(3D/OSMFJ提供・雪景色)",
+            "skip": false
+        },
+        */
         "OSM_Standard": {
             "style": {
                 "version": 8,
@@ -31,6 +43,7 @@
                         "attribution": "<a href=\"https://openstreetmap.org\">&copy OpenStreetMap contributors</a>"
                     }
                 },
+                "glyphs": "https://tile.openstreetmap.jp/fonts/{fontstack}/{range}.pbf",
                 "layers": [
                     {
                         "id": "raster-tiles",
@@ -38,20 +51,22 @@
                         "source": "rtile"
                     }
                 ]
-            }
+            },
+            "name": "OpenStreetMap標準地図(2D)",
+            "skip": false
         },
-        "GSI_pale": {
+        "GSI_seamlessphoto": {
             "style": {
                 "version": 8,
                 "sources": {
                     "rtile": {
                         "type": "raster",
                         "tiles": [
-                            "https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png"
+                            "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg"
                         ],
                         "tileSize": 256,
                         "maxzoom": 18,
-                        "attribution": "<a href='https://www.gsi.go.jp/kikakuchousei/kikakuchousei40182.html'>国土地理院(淡色) | &copy OpenStreetMap contributors</a>"
+                        "attribution": "<a href='https://www.gsi.go.jp/kikakuchousei/kikakuchousei40182.html'>全国最新写真（シームレス） | &copy OpenStreetMap contributors</a>"
                     }
                 },
                 "layers": [
@@ -60,46 +75,21 @@
                         "type": "raster",
                         "source": "rtile"
                     }
-                ]
-            }
+                ],
+                "glyphs": "https://tile.openstreetmap.jp/fonts/{fontstack}/{range}.pbf"
+            },
+            "name": "地理院 全国最新写真（シームレス）",
+            "skip": false
         },
-        "GSI_ort": {
-            "style": {
-                "version": 8,
-                "sources": {
-                    "rtile": {
-                        "type": "raster",
-                        "tiles": [
-                            "https://cyberjapandata.gsi.go.jp/xyz/ort/{z}/{x}/{y}.jpg"
-                        ],
-                        "tileSize": 256,
-                        "maxzoom": 18,
-                        "attribution": "<a href='https://www.gsi.go.jp/kikakuchousei/kikakuchousei40182.html'>国土地理院(オルソ画像) | &copy OpenStreetMap contributors</a>"
-                    }
-                },
-                "layers": [
-                    {
-                        "id": "raster-tiles",
-                        "type": "raster",
-                        "source": "rtile",
-                    }
-                ]
-            }
+        "miniMap": { // for planet globe
+            "style": "./tiles/osmfj_nopoi.json",
+            "name": "Planet globe",
+            "skip": true
         }
     },
     "menu_list": {
         "template": "<a class='dropdown-item'><span></span></a><span class='dropdown-item'></span>",
         "divider": "<div class='dropdown-divider'></div>"
-    },
-    "effect": {
-        "icon": {
-            "x": 0,
-            "y": 0
-        },
-        "text": {
-            "size": 12,
-            "view": true
-        }
     },
     "style": {
         "circle": {
@@ -115,5 +105,13 @@
             "size": 14,
             "color": "black"
         }
+    },
+    "skyStyle": {
+        "sky-color": "#60A0E0",
+        "sky-horizon-blend": 0.5,
+        "horizon-color": "#C0D0F0",
+        "horizon-fog-blend": 0.5,
+        "fog-color": "#0000ff",
+        "fog-ground-blend": 0.5
     }
 }

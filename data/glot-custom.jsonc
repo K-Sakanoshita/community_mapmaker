@@ -1,66 +1,147 @@
 {
-	"site_title": {
-		"ja": "Community Map Maker",
-		"en": "Community Map Maker"
-	},
-	"site_subtitle": {
-		"ja": "Powered by Community Map Maker",
-		"en": "Powered by Community Map Maker"
-	},
-	"about": {
-		"ja": "Community Map Makerについて",
-		"en": "about Community Map Maker"
-	},
-	"about_message": {
-		"ja": "",
-		"en": ""
-	},
-	"owner": {
-		"ja": "コミュニティマップメーカー開発サイト",
-		"en": "Community Map Maker development site"
-	},
-	"licence_title": {
-		"ja": "利用規約",
-		"en": "Terms of Use"
-	},
-	"licence_message": {
-		"ja": "Community Map MakerのデータはOpenStreetMapと独自データを組み合わせています。",
-		"en": "The data of Community Map Maker is a combination of OpenStreetMap and Original data."
-	},
-	"activities": {
-		"ja": "活動履歴",
-		"en": "Activities"
-	},
-	"act_date": {
-		"ja": "確認日",
-		"en": "Check Date"
-	},
-	"act_category": {
-		"ja": "カテゴリ",
-		"en": "Category"
-	},
-	"act_title": {
-		"ja": "タイトル",
-		"en": "Title"
-	},
-	"act_memo": {
-		"ja": "説明",
-		"en": "Detail"
-	},
-	"act_detail_url": {
-		"ja": "詳細URL",
-		"en": "Detail URL"
-	},
-	"act_picture_url1": {
-		"ja": "写真URL1",
-		"en": "Picture URL1"
-	},
-	"act_picture_url2": {
-		"ja": "写真URL2",
-		"en": "Picture URL2"
-	},
-	"act_picture_url3": {
-		"ja": "写真URL3",
-		"en": "Picture URL3"
-	}
+    "site_title": {
+        "ja": "Community Map Maker",
+        "en": "Community Map Maker"
+    },
+    "site_subtitle": {
+        "ja": "Powered by Community Map Maker",
+        "en": "Powered by Community Map Maker"
+    },
+    "about": {
+        "ja": "Community Map Makerについて",
+        "en": "About Community Map Maker"
+    },
+    "about_message": {
+        "ja": "OpenStreetMapのOverpass APIやGoogle Spreadsheetのデータを地図上に表示できるWebアプリです。設定ファイルを編集して、さまざまなコミュニティマップを作成できます。",
+        "en": "A web application for building community maps from OpenStreetMap Overpass API and Google Spreadsheet data."
+    },
+    "owner": {
+        "ja": "コミュニティマップメーカー開発サイト",
+        "en": "Community Map Maker development site"
+    },
+    "licence_title": {
+        "ja": "利用しているデータについて",
+        "en": "About the data being used"
+    },
+    "licence_message": {
+        "ja": "このサイトで使われているデータは、OpenStreetMapとプロジェクトのデータを組み合わせています。</a>",
+        "en": "The data used on this site is a combination of OpenStreetMap and project data."
+    },
+    "develop_site": {
+        "ja": "コミュニティマップメーカーの開発サイトへ",
+        "en": "Community Map Maker development site"
+    },
+    "official_site": {
+        "ja": "公式サイト",
+        "en": "Official site"
+    },
+    "more_message": {
+        "ja": "",
+        "en": ""
+    },
+    // listtable.js
+    "listCategory": {
+        "ja": "種類",
+        "en": "Category"
+    },
+    "listName": {
+        "ja": "施設名",
+        "en": "Name"
+    },
+    "listComment": {
+        "ja": "💬 ",
+        "en": "💬 "
+    },
+    "listTitle": {
+        "ja": "施設リスト",
+        "en": "Facilities"
+    },
+    "activities": {
+        "ja": "活動履歴",
+        "en": "Activities"
+    },
+    "actdate": {
+        "ja": "確認日",
+        "en": "Disaster Date"
+    },
+    "act_title": {
+        "ja": "題名",
+        "en": "Subject"
+    },
+    "act_attention": {
+        "ja": "写真URLにWikimedia Commonsを指定する時は、タイトルを入力してください(例 File:遊具名.jpg)",
+        "en": "When specifying Wikimedia Commons for the photo URL, enter the title (e.g. File: Play equipment name.jpg)"
+    },
+    "act_date": {
+        "ja": "確認日",
+        "en": "Disaster Date"
+    },
+    "act_address": {
+        "ja": "住所",
+        "en": "Address"
+    },
+    "act_genre": {
+        "ja": "ジャンル",
+        "en": "Genre"
+    },
+    "act_keyword": {
+        "ja": "キーワード",
+        "en": "keyword"
+    },
+    "act_memo": {
+        "ja": "説明",
+        "en": "Detail"
+    },
+    "act_official_url": {
+        "ja": "公式サイトURL",
+        "en": "Public Site URL"
+    },
+    "act_recommend_url": {
+        "ja": "オススメURL",
+        "en": "Recommend URL"
+    },
+    "act_detail_url": {
+        "ja": "詳細URL",
+        "en": "Detail URL"
+    },
+    "act_picture_url1": {
+        "ja": "写真URL1",
+        "en": "Picture URL1"
+    },
+    "act_picture_url2": {
+        "ja": "写真URL2",
+        "en": "Picture URL2"
+    },
+    "act_picture_url3": {
+        "ja": "写真URL3",
+        "en": "Picture URL3"
+    },
+    "act_picture_url4": {
+        "ja": "写真URL4",
+        "en": "Picture URL4"
+    },
+    "act_picture_url5": {
+        "ja": "写真URL5",
+        "en": "Picture URL5"
+    },
+    "act_picture_url6": {
+        "ja": "写真URL6",
+        "en": "Picture URL6"
+    },
+    "act_picture_url7": {
+        "ja": "写真URL7",
+        "en": "Picture URL7"
+    },
+    "act_picture_url8": {
+        "ja": "写真URL8",
+        "en": "Picture URL8"
+    },
+    "act_video_url1": {
+        "ja": "動画URL1",
+        "en": "Video URL1"
+    },
+    "act_license_attention": {
+        "ja": "投稿された情報はオープンデータ(CC0)として公開されます。内緒の情報などは書かないでください。",
+        "en": "The posted information will be published as open data (CC0), so please do not include any confidential information."
+    }
 }

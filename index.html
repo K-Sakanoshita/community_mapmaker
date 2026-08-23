@@ -2,100 +2,155 @@
 <html>
 
 <head>
-  <title>Community MapMaker</title>
-  <meta charset="utf-8" />
-  <meta name="description" content="Demo and Template">
-  <meta property="og:description" content="Community MapMaker" />
-  <meta property="og:url" content="https://k-sakanoshita.github.io/community_mapmaker/" />
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="Community MapMaker" />
-  <meta property="og:image" content="" />
-  <meta property="og:image:width" content="" />
-  <meta property="og:image:height" content="" />
-  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1" />
-  <link rel="shortcut icon" href="favicon.ico" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gridjs@6.0.6/dist/theme/mermaid.min.css" />
-  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.3.1/dist/maplibre-gl.css" />
-  <link rel="stylesheet" href="base.css" />
-  <script defer src="https://unpkg.com/maplibre-gl@4.3.1/dist/maplibre-gl.js"></script>
-  <script defer src="https://www.unpkg.com/pmtiles@3.0.5/dist/pmtiles.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/gridjs@6.0.6/dist/gridjs.production.min.js"></script>
-  <script defer src="https://unpkg.com/json5@^2.0.0/dist/index.min.js"></script>
-  <script defer src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/moment@2.24.0/moment.min.js"></script>
-  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
-  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/chroma-js/2.1.0/chroma.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
-  <script defer src="https://unpkg.com/glottologist@2.0.3/dist/glottologist.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
-  <script defer src="./lib/osmtogeojson.js"></script>
-  <script defer src="./lib/basiclib.js"></script>
-  <script defer src="./lib/winlib.js"></script>
-  <script defer src="./lib/geolib.js"></script>
-  <script defer src="./lib/gsheetlib.js"></script>
-  <script defer src="./lib/poilib.js"></script>
-  <script defer src="./lib/listtable.js"></script>
-  <script defer src="./lib/overpasslib.js"></script>
-  <script defer src="./modal/modal_activities.js"></script>
-  <script defer src="./modal/modal_wikipedia.js"></script>
-  <script defer src="./modal/modal_osmbasic.js"></script>
-  <script defer src="./cmapmaker.js"></script>
-  <script defer src="./initialize.js"></script>
+    <title>Community Map Maker</title>
+    <meta charset="utf-8" />
+    <meta name="description" content="OpenStreetMapを使ったコミュニティマップ作成ツール" />
+    <meta property="og:description" content="OpenStreetMapを使ったコミュニティマップ作成ツール" />
+    <meta property="og:url" content="https://k-sakanoshita.github.io/community_mapmaker/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Community Map Maker" />
+    <meta property="og:image" content="https://k-sakanoshita.github.io/community_mapmaker/image/cMapmaker.png" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Community Map Maker" />
+    <meta name="twitter:description" content="OpenStreetMapを使ったコミュニティマップ作成ツール" />
+    <meta name="twitter:image" content="https://k-sakanoshita.github.io/community_mapmaker/image/cMapmaker.png" />
+
+    <link rel="icon" href="./favicon.ico" sizes="any">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+    <link rel="stylesheet" href="system.css?ver=20260823-35" />
+    <script type="module" src="./loader.module.js?ver=20260823-43"></script>
 </head>
 
 <body>
-  <div id="container">
-    <article id="article">
-      <div id="mapid"></div>
-    </article>
-  </div>
+    <div class="container-fluid m-0 p-0">
+        <article id="article" class="two-pane d-none" style="display: none">
+            <main id="top-pane">
+                <div id="mapid"><canvas id="snow"></canvas></div>
+            </main>
+            <aside id="bottom-pane" class="row m-0">
+                <div id="sidebarResizeHandle" title="ドラッグしてサイズ変更" aria-label="ドラッグしてリストのサイズを変更"></div>
+                <div id="btmHeader" class="accordion p-2 h-100">
 
-  <div id="modal_splash" class="modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document" data-keyboard="false">
-      <div class="modal-content">
-        <div class="modal-body">
-          <img src="" style="width: 100%;float: none !important" id="splash_image"><br>
-          <div class="d-flex justify-content-center mt-2">
-            <div class="spinner-border text-primary mx-auto" role="status"> <span class="sr-only">Loading...</span>
+                    <!-- Detail -->
+                    <div id="detailMenu" class="accordion-item mb-2">
+
+                        <h2 id="detailHeader" class="d-flex align-items-center m-0 p-2">
+                            <div class="dropdown me-2">
+                                <button class="btn btn-light border-secondary p-0" type="button" id="btnMenuButton"
+                                    data-bs-toggle="dropdown" aria-expanded="false" style="width: 30px; height: 30px">
+                                    <i class="fas fa-bars text-black"></i>
+                                </button>
+
+                                <div class="dropdown-menu" aria-labelledby="btnMenuButton" id="btnMenu"></div>
+                            </div>
+
+                            <span class="detailTitle d-flex align-items-center" id="btmWindow_title"></span>
+                        </h2>
+
+                        <div id="detailArea">
+                            <div class="accordion-body p-0">
+                                <div id="mini-map" class="d-none mx-auto"></div>
+                                <div id="btmWindow_message" class="p-1"></div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- list -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="listHeader">
+                            <div class="accordion-button p-2" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#listAccordion" aria-expanded="true" aria-controls="listAccordion">
+                                <span class="detailTitle ms-1" id="listTitle"></span>
+                            </div>
+                        </h2>
+
+                        <div id="listAccordion" class="accordion-collapse collapse show" aria-labelledby="listHeader">
+                            <div class="accordion-body p-0">
+                                <!-- リスト -->
+                                <div class="col-12 p-0" id="listArea"></div>
+
+                                <!-- プレイバック操作 -->
+                                <div class="col-12 d-flex align-items-center" id="list_playback_control">
+                                    <button class="btn btn-light float-left border-secondary ms-2 me-2"
+                                        onclick="cMapMaker.playback(listTable.getFilterList());"><i id="list_playback"
+                                            class="fas fa-play"></i></button>
+                                    <input type="range" class="form-range me-2" id="list_speed" />
+                                </div>
+
+                                <!-- ダウンロード -->
+                                <div class="col-12 text-center" id="list_download">
+                                    <button class="btn btn-light btn-lg border-secondary w-50 m-2 p-1"
+                                        onclick="cMapMaker.download()">
+                                        <i class="fas fa-download"></i>
+                                        <span glot-model="download"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div id="panelProgress" class="col-12 p-0 mb-2 progress progress-bar bg-success" style="width: 0%;">
+                    </div>
+                    <div class="footerSpace"></div>
+                </div>
+
+                <div id="sidebarCont" class="row fixed-bottom m-2 pe-none d-none">
+                    <div class="col-7 p-0">
+                        <div class="btn-group btn-group-lg pe-auto"></div>
+                    </div>
+                    <div class="col-5 p-0">
+                        <div class="ms-auto btn-group btn-group-lg d-flex pe-auto">
+                            <button id="sidebarMinimize" class="btn btn-light border-secondary p-1"
+                                onclick="javascript: winCont.setSidebar('mini')">
+                                <i class="fa-solid fa-window-minimize"></i>
+                            </button>
+                            <button id="sidebarChange" class="btn btn-light border-secondary p-1"
+                                onclick="javascript: winCont.setSidebar('change')">
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </button>
+                            <button id="sidebarClose" class="btn btn-light border-secondary p-1"
+                                onclick="javascript:cMapMaker.viewDetail();cMapMaker.changeMode('list')">
+                                <i class="fa-regular fa-rectangle-xmark"></i>
+                            </button>
+                            <button id="closeDetail" class="btn btn-light border-secondary p-1"
+                                onclick="javascript:cMapMaker.changeMode('list')">
+                                <i class="fa-solid fa-check"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </article>
+    </div>
+
+    <div id="splashImage" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" data-keyboard="false">
+            <div class="modal-body">
+                <img src="" style="width: 100%;float: none !important" id="splashSrc"><br>
+                <div class="d-flex justify-content-center mt-2">
+                    <div class="spinner-border text-primary mx-auto" role="status"> </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
 
-  <div id="modal_window" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-dialog-fluid modal-dialog-scrollable m-1" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <div class="dropdown">
-            <button type="button" class="btn btn-sm float-right menu mr-2" data-toggle="dropdown" aria-expanded="true" id="modal_window_menu">
-              <i class="fas fa-bars text-black"></i>
-            </button>
-            <div class="dropdown-menu" aria-labelledby="modal_menu" style="z-index: 1090" id="modal_menu"></div>
-          </div>
-          <h4 class="modal-title" id="modal_window_title"></h4>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+    <div id="PinchImageBK" onclick="modalActs.closeMedia()">
+        <div class="d-flex align-items-center justify-content-center h-100">
+            <div class="spinner-border text-primary" id="image_spinner"></div>
         </div>
-        <div class="modal-body">
-          <div id="modal_window_progress" class="progress-bar progress-bar-striped progress-bar-animated mb-2" style="height: 2px" role="progressbar"></div>
-          <div id="modal_window_message"></div>
-        </div>
-        <div class="modal-footer">
-          <div id="modal_footer"></div>
-          <button id="modal_window_yes" class="btn btn-primary"></button>
-          <button id="modal_window_no" class="btn btn-secondary"></button>
-          <button id="modal_window_close" class="btn btn-secondary"></button>
-        </div>
-      </div>
     </div>
-  </div>
+    <img id="PinchImage" draggable="false" onclick="modalActs.toggleImageSize(this, event)"></img>
+    <button type="button" id="PinchImageClose" aria-label="画像を閉じる" title="閉じる" onclick="event.stopPropagation(); modalActs.closeMedia()">✕</button>
+    <video id="FullScreenVideo" playsinline onclick="modalActs.toggleVideo(this)"></video>
+    <button type="button" id="FullScreenVideoClose" aria-label="動画を閉じる" title="閉じる" onclick="event.stopPropagation(); modalActs.closeMedia()">✕</button>
 
-  <div id="full_screen_image" onclick="modal_activities.closeImage()"></div>
+    <div id="scrollHand" class="d-flex justify-content-center d-none">
+        <img src="./image/hand-pointer-solid.svg" width="42px">
+    </div>
 </body>
 
 </html>

@@ -1,123 +1,7 @@
 {
     "osm": {
         "*": {
-            "tags": [],
-            "titles": [
-                "name",
-                "operator"
-            ]
-        },
-        "shop": {
-            "overpass": [
-                "nwr[\"shop\"]"
-            ],
-            "tags": [
-                "shop"
-            ],
-            "expression": {
-                "stroke": "#507070",
-                "stroke-width": 1
-            },
-            "titles": [
-                "name",
-                "operator"
-            ]
-        },
-        "tourism": {
-            "overpass": [
-                "nwr[\"tourism\"]"
-            ],
-            "tags": [
-                "tourism"
-            ],
-            "expression": {
-                "stroke": "#606060",
-                "stroke-width": 1
-            },
-            "titles": [
-                "name",
-                "operator"
-            ]
-        },
-        "natural": {
-            "overpass": [
-                "nwr[\"natural\"]"
-            ],
-            "tags": [
-                "natural"
-            ],
-            "expression": {
-                "stroke": "#509050",
-                "stroke-width": 1
-            },
-            "titles": [
-                "name",
-                "operator"
-            ]
-        },
-        "leisure": {
-            "overpass": [
-                "node[\"leisure\"]"
-            ],
-            "tags": [
-                "leisure"
-            ],
-            "expression": {
-                "stroke": "#508050",
-                "stroke-width": 1
-            },
-            "titles": [
-                "name",
-                "operator"
-            ]
-        },
-        "social_facility": {
-            "overpass": [
-                "way[\"social_facility\"]"
-            ],
-            "tags": [
-                "social_facility"
-            ],
-            "expression": {
-                "stroke": "#505070",
-                "stroke-width": 1
-            },
-            "titles": [
-                "name",
-                "operator"
-            ]
-        },
-        "public_transport": {
-            "overpass": [
-                "nwr[\"public_transport\"]"
-            ],
-            "tags": [
-                "public_transport"
-            ],
-            "expression": {
-                "stroke": "#7d7d7d",
-                "stroke-width": 1
-            },
-            "titles": [
-                "name",
-                "operator"
-            ]
-        },
-        "place": {
-            "overpass": [
-                "nwr[\"place\"]"
-            ],
-            "tags": [
-                "place"
-            ],
-            "expression": {
-                "stroke": "#7d7d7d",
-                "stroke-width": 1
-            },
-            "titles": [
-                "name",
-                "operator"
-            ]
+            "tags": []
         },
         "wikipedia": {
             "marker": "wikipedia.svg",
@@ -134,12 +18,12 @@
                 "wikipedia"
             ],
             "expression": {
+                "poiView": true, // true時はアイコン表示
+                "viewArea": true,
                 "stroke": "#7070C0",
-                "stroke-width": 1
-            },
-            "titles": [
-                "name"
-            ]
+                "stroke-width": 1,
+                "fill-opacity": 0.25
+            }
         }
     }
 }

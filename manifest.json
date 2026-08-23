@@ -1,0 +1,55 @@
+{
+    "styles": [
+        "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css",
+        "https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css",
+        "https://cdn.jsdelivr.net/npm/maplibre-gl@5.15/dist/maplibre-gl.min.css",
+        "user.css"
+    ],
+    "scriptGroups": [
+        {
+            "name": "vendor-cdn-parallel",
+            "parallel": true,
+            "scripts": [
+                "https://cdn.jsdelivr.net/npm/maplibre-gl@5.15/dist/maplibre-gl.min.js",
+                "https://cdn.jsdelivr.net/npm/pmtiles@4.3.1/dist/pmtiles.min.js",
+                "https://cdn.jsdelivr.net/npm/json5@2.2.3/dist/index.min.js",
+                "https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js",
+                "https://cdn.jsdelivr.net/npm/glottologist@2.0.3/dist/glottologist.min.js",
+                "https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js",
+                "./lib/osmtogeojson.js",
+                "./lib/basiclib.js",
+                "./lib/winlib.js",
+                "./lib/maplib.js",
+                "./lib/geolib.js",
+                "./lib/gsheetlib.js",
+                "./lib/poilib.js",
+                "./lib/listtable.js",
+        "./lib/overpasslib.js",
+        "./lib/poistatuslib.js"
+            ]
+        },
+        {
+            "name": "app-local-ordered",
+            "parallel": false,
+            "scripts": [
+        "./cmapmaker.js"
+      ]
+    }
+  ],
+  "lazyScriptGroups": {
+    "wikimedia": {
+      "parallel": false,
+      "scripts": [
+        "./lib/wikimedialib.js"
+      ]
+    },
+    "detail": {
+      "parallel": true,
+      "scripts": [
+        "./detail/activities.js",
+        "./detail/osmbasic.js"
+      ]
+    }
+  },
+    "gId": ""
+}
