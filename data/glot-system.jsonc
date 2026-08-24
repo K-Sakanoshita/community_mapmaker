@@ -256,12 +256,12 @@
         "en": "The file was loaded"
     },
     "Mo": {
-        "ja": "Mo",
-        "en": "月"
+        "ja": "月",
+        "en": "Mo"
     },
     "Tu": {
-        "ja": "Tu",
-        "en": "火"
+        "ja": "火",
+        "en": "Tu"
     },
     "We": {
         "ja": "水",
@@ -285,7 +285,7 @@
     },
     "PH": {
         "ja": "祝日",
-        "PH": "PH"
+        "en": "PH"
     },
     "off": {
         "ja": "休業",
@@ -297,7 +297,7 @@
     },
     "closed": {
         "ja": "休み",
-        "en": "Holyday"
+        "en": "Closed"
     },
     "parse_error": {
         "ja": "解析に失敗",

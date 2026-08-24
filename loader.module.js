@@ -1,4 +1,19 @@
 // loader_module_fast_v2.js
+const setStartupStatus = (message, error = false) => {
+    const status = document.getElementById("startupStatus");
+    const text = document.getElementById("startupStatusMessage");
+    if (!status || !text) return;
+    text.textContent = message;
+    status.dataset.error = String(error);
+    status.hidden = false;
+};
+const hideStartupStatus = () => {
+    const status = document.getElementById("startupStatus");
+    if (status) status.hidden = true;
+};
+window.setStartupStatus = setStartupStatus;
+window.hideStartupStatus = hideStartupStatus;
+
 (async () => {
     const loaderUrl = new URL(import.meta.url);
     const assetVersion = loaderUrl.searchParams.get("ver") || "";
@@ -17,6 +32,7 @@
     // no-cache は毎回 manifest を取りに行くので、通常は避ける。
     // 更新反映を確実にしたい場合は loader_module_fast_v2.js?ver=20260429 のように
     // HTML側でクエリ文字列を付ける方が扱いやすい。
+    setStartupStatus("必要なファイルを確認しています…");
     const res = await fetch(manifestUrl, { cache: "no-store" });
     if (!res.ok) throw new Error(`manifest load failed: ${res.status}`);
 
@@ -47,8 +63,18 @@
             l.rel = "stylesheet";
             l.href = url;
             l.crossOrigin = "anonymous";
-            l.onload = resolve;
-            l.onerror = () => reject(new Error(`Failed to load stylesheet: ${url}`));
+            const timer = setTimeout(() => {
+                l.remove();
+                reject(new Error(`Stylesheet load timed out: ${url}`));
+            }, 30000);
+            l.onload = () => {
+                clearTimeout(timer);
+                resolve();
+            };
+            l.onerror = () => {
+                clearTimeout(timer);
+                reject(new Error(`Failed to load stylesheet: ${url}`));
+            };
             document.head.appendChild(l);
         });
     }
@@ -72,8 +98,18 @@
             s.async = !ordered;
             s.defer = true;
 
-            s.onload = resolve;
-            s.onerror = () => reject(new Error(`Failed to load script: ${url}`));
+            const timer = setTimeout(() => {
+                s.remove();
+                reject(new Error(`Script load timed out: ${url}`));
+            }, 30000);
+            s.onload = () => {
+                clearTimeout(timer);
+                resolve();
+            };
+            s.onerror = () => {
+                clearTimeout(timer);
+                reject(new Error(`Failed to load script: ${url}`));
+            };
             document.head.appendChild(s);
         });
     }
@@ -98,26 +134,32 @@
         return promise;
     };
 
-    // CSSは並列ロード。ただし、CSSの読み込み完了を待つと初期化が安定する。
-    await Promise.all(trimNonEmpty(styles).map(loadStyle));
+    // CSSとJSの通信を同時に開始し、初回読み込みの直列待ちをなくす。
+    const stylesReady = Promise.all(trimNonEmpty(styles).map(loadStyle));
+    setStartupStatus("地図ライブラリを読み込んでいます…");
 
-    // 後方互換: scriptGroups が無い場合は従来通り scripts を順番に読む。
-    if (scriptGroups.length === 0) {
-        for (const src of trimNonEmpty(scripts)) {
-            await loadScript(src, { ordered: true });
-        }
-    } else {
-        for (const group of scriptGroups) {
-            const groupScripts = trimNonEmpty(group.scripts);
-            if (group.parallel) {
-                await Promise.all(groupScripts.map(src => loadScript(src, { ordered: false })));
-            } else {
-                for (const src of groupScripts) {
-                    await loadScript(src, { ordered: true });
+    const scriptsReady = (async () => {
+        // 後方互換: scriptGroups が無い場合は従来通り scripts を順番に読む。
+        if (scriptGroups.length === 0) {
+            for (const src of trimNonEmpty(scripts)) {
+                await loadScript(src, { ordered: true });
+            }
+        } else {
+            for (const group of scriptGroups) {
+                const groupScripts = trimNonEmpty(group.scripts);
+                if (group.parallel) {
+                    await Promise.all(groupScripts.map(src => loadScript(src, { ordered: false })));
+                } else {
+                    for (const src of groupScripts) {
+                        await loadScript(src, { ordered: true });
+                    }
                 }
             }
         }
-    }
+    })();
+
+    // 初期化時にはCSSとJSの両方が揃っていることを保証する。
+    await Promise.all([stylesReady, scriptsReady]);
 
     // Google Analytics は本体初期化を待たせない。
     // gtag.js の URL は ?id=G-XXXX が正しい。
@@ -137,5 +179,9 @@
         });
     }
 
+    setStartupStatus("設定を読み込んでいます…");
     cMapMaker.init();
-})();
+})().catch((error) => {
+    console.error("Application loader failed", error);
+    setStartupStatus("読み込みに失敗しました。通信を確認して再読み込みしてください。", true);
+});

@@ -58,121 +58,140 @@ img.slide {
     object-fit: cover;
 }
 
+#maplist {
+    margin-bottom: 12px;
+}
+
 .indoor-level-control {
     position: fixed;
     top: 110px;
     left: 10px;
     z-index: 100;
-    max-height: min(60vh, 420px);
-    padding: 4px;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    touch-action: pan-y;
-    border: 1px solid #cfd4da;
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.24);
+    width: 66px;
 }
 
-.indoor-level-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 34px);
-    grid-template-rows: repeat(5, 34px);
-    grid-auto-flow: column;
-    gap: 3px;
-}
-
-.indoor-level-panel[hidden] {
-    display: none;
-}
-
-.indoor-level-layout {
-    display: flex;
-    align-items: flex-start;
-    gap: 4px;
-}
-
-.indoor-level-panels {
-    min-width: 71px;
-}
-
-.indoor-level-page-buttons {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 3px;
-}
-
-.indoor-level-page-button {
-    min-width: 44px;
-    height: 34px;
-    padding: 0 7px;
-    border: 1px solid #9ca3af;
-    border-radius: 5px;
-    background: #fff;
-    color: #111827;
-    font-size: 14px;
-    font-weight: 700;
-    line-height: 32px;
-    white-space: nowrap;
-    cursor: pointer;
-}
-
-.indoor-level-page-button:hover,
-.indoor-level-page-button.active {
-    border-color: #2563a8;
-    background: #dbeafe;
-    color: #1d4ed8;
-}
-
-.indoor-level-page-button:focus-visible {
+.indoor-level-option:focus-visible,
+.indoor-level-wheel:focus-visible {
     outline: 3px solid rgba(37, 99, 168, 0.28);
     outline-offset: 1px;
 }
 
-.indoor-level-button {
-    width: 34px;
+.indoor-level-popover {
+    width: 66px;
+    padding: 4px;
+    border: 1px solid #cfd4da;
+    border-radius: 9px;
+    background: rgba(255, 255, 255, 0.97);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.24);
+}
+
+.indoor-level-wheel-frame {
+    position: relative;
+    overflow: hidden;
+    border-radius: 6px;
+}
+
+.indoor-level-wheel-frame::before,
+.indoor-level-wheel-frame::after {
+    position: absolute;
+    right: 0;
+    left: 0;
+    z-index: 1;
     height: 34px;
-    flex: 0 0 34px;
-    padding: 0;
-    border: 1px solid #9ca3af;
-    border-radius: 5px;
-    background-color: #fff;
-    color: #111827;
-    font-size: 15px;
-    font-weight: 700;
-    line-height: 32px;
+    pointer-events: none;
+    content: "";
+}
+
+.indoor-level-wheel-frame::before {
+    top: 0;
+    background: linear-gradient(to bottom, #fff 10%, rgba(255, 255, 255, 0));
+}
+
+.indoor-level-wheel-frame::after {
+    bottom: 0;
+    background: linear-gradient(to top, #fff 10%, rgba(255, 255, 255, 0));
+}
+
+.indoor-level-wheel {
+    box-sizing: border-box;
+    width: 58px;
+    height: 200px;
+    padding: 80px 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: none;
+    scroll-snap-type: y mandatory;
+    touch-action: pan-y;
+}
+
+.indoor-level-wheel::-webkit-scrollbar {
+    display: none;
+}
+
+.indoor-level-option {
+    position: relative;
+    display: block;
+    width: 58px;
+    height: 40px;
+    padding: 0 7px;
+    scroll-snap-align: center;
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    color: #374151;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 40px;
     text-align: center;
     cursor: pointer;
 }
 
-.indoor-level-button:hover {
+.indoor-level-option:not(:disabled)::after {
+    position: absolute;
+    top: 17px;
+    right: 5px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #2563a8;
+    content: "";
+}
+
+.indoor-level-option:hover {
     background: #e8f1fb;
 }
 
-.indoor-level-button.active {
-    border-color: #2563a8;
+.indoor-level-option.active {
+    box-shadow: inset 0 0 0 2px #2563a8;
+    color: #1f2937;
+}
+
+.indoor-level-option.pending {
     background: #2563a8;
     color: #fff;
+    font-size: 16px;
+    font-weight: 700;
 }
 
-.indoor-level-button:focus-visible {
-    outline: 3px solid rgba(37, 99, 168, 0.28);
-    outline-offset: 1px;
+.indoor-level-option.pending::after {
+    background: #fff;
 }
 
-.indoor-level-button:disabled {
-    border-color: #d1d5db;
-    background: #e5e7eb;
+.indoor-level-option:disabled {
     color: #9ca3af;
-    opacity: 1;
+    opacity: 0.7;
     cursor: not-allowed;
+}
+
+.indoor-level-option.pending:disabled {
+    background: #e5e7eb;
+    color: #6b7280;
 }
 
 @media (max-width: 575.98px) {
     .indoor-level-control {
         top: 104px;
         left: 6px;
-        max-height: 52vh;
-        padding: 3px;
     }
 }

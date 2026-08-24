@@ -52,11 +52,13 @@
         "shop": {
             "overpass": [
                 "nwr[\"shop\"]",
-                "nwr[\"tourism\"]"
+                "nwr[\"tourism\"]",
+                "nwr[\"leisure\"]"
             ],
             "tags": [
                 "shop",
-                "tourism"
+                "tourism",
+                "leisure"
             ],
             "expression": {
                 "poiView": true, // true時はアイコン表示
@@ -72,40 +74,36 @@
             },
             "overpass": [
                 "nwr[\"indoor\"]",
-                "nwr[\"level\"]",
-                "nwr[\"highway\"=\"corridor\"]",
-                "nwr[\"highway\"~\"^(steps|elevator)$\"][\"level\"]",
-                "nwr[\"entrance\"][\"level\"]",
-                "way[\"building\"]"
+                "nwr[\"door\"]",
+                "way[\"highway\"=\"corridor\"]"
             ],
             "tags": [
                 "indoor",
-                "level",
-                "highway=corridor",
-                "highway=steps",
-                "highway=elevator",
-                "entrance",
-                "building"
+                "door",
+                "highway=corridor"
             ],
             "expression": {
                 "renderer": "indoor",
                 "poiView": false,
                 "listView": false,
                 "viewArea": true,
+                "renderTags": {
+                    "line": {
+                        "indoor": ["room", "area", "corridor", "wall"],
+                        "highway": ["corridor"]
+                    },
+                    "point": {
+                        "door": "*"
+                    }
+                },
                 "styles": {
                     "room": {
-                        "fill": "#f4e7cf",
-                        "fill-opacity": 0.72,
                         "stroke": "#8b7965"
                     },
                     "area": {
-                        "fill": "#e8f3e8",
-                        "fill-opacity": 0.68,
                         "stroke": "#789478"
                     },
                     "corridor": {
-                        "fill": "#f8f8f8",
-                        "fill-opacity": 0.88,
                         "stroke": "#9aa0a6",
                         "highway-stroke": "#2563a8",
                         "highway-stroke-width": 4
@@ -113,10 +111,6 @@
                     "wall": {
                         "stroke": "#4b5563",
                         "stroke-width": 2.5
-                    },
-                    "building": {
-                        "stroke": "#303842",
-                        "stroke-width": 4
                     },
                     "door": {
                         "color": "#2563a8",

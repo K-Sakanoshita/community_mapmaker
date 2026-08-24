@@ -4500,6 +4500,59 @@
       ]
     },
     {
+      "id": "poi_transit-ja",
+      "type": "symbol",
+      "source": "openmaptiles",
+      "source-layer": "poi",
+      "minzoom": 11,
+      "layout": {
+        "icon-size": 1.0,
+        "text-font": [
+          "Noto Sans"
+        ],
+        "text-size": 14,
+        "icon-image": "{class}_11",
+        "text-field": "{name:ja}",
+        "visibility": "visible",
+        "text-anchor": "left",
+        "text-offset": [
+          0.7,
+          -0.1
+        ],
+        "text-padding": 2,
+        "text-max-width": 9,
+        "symbol-placement": "point",
+        "text-line-height": 2
+      },
+      "paint": {
+        "text-color": "rgba(0, 0, 0, 1)",
+        "text-opacity": 1,
+        "text-halo-blur": 0,
+        "text-halo-color": "rgba(255, 255, 255, 0.5)",
+        "text-halo-width": 8
+      },
+      "metadata": {},
+      "filter": [
+        "all",
+        [
+          "in",
+          "class",
+          "bus",
+          "railway",
+          "airport"
+        ],
+        [
+          "==",
+          "subclass",
+          "station"
+        ],
+        [
+          "has",
+          "name:ja"
+        ]
+      ]
+    },
+    {
       "id": "highway-shield",
       "type": "symbol",
       "source": "openmaptiles",

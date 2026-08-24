@@ -23,6 +23,7 @@
         "initZoom": 17,
         "maxZoom": 23,
         "detailZoom": 19, // 詳細表示時のズームサイズ
+        "zoomMessageThreshold": 17, // 「もっとズームしてください」を消すズームレベル
         "textFont": [
             "Noto Sans Bold"
         ], // 使用可能なフォント（spriteに依存）
@@ -101,6 +102,11 @@
             // 編集時に追加するpoiZoom
         }
     },
+    "poiData": {
+        "maxFeatures": 12000, // pdataに保持する最大地物数
+        "pruneThreshold": 15000, // この件数を超えた時だけ遠方データを整理
+        "applyToStatic": false // 静的データは全件保持する
+    },
     "selectItem": { // 選択リストの内容を手動記載 / 空の時は "" とする
         "default": "",
         "menu": "",
@@ -150,9 +156,20 @@
     "indoor": {
         "use": true,
         "defaultLevel": "0",
-        "floorHeightMeters": 3.2,
+        "floorHeightMeters": 3.66,
+        "buildingLevelHeightMeters": 3.66,
         "floorOffsetMeters": 0.2,
-        "floorThicknessMeters": 0.12,
+        "backgroundTransportationOpacity": 0.08,
+        "buildingSource": {
+            "type": "vectorTile",
+            "styleSource": "openmaptiles",
+            "dedicatedSource": "indoor-building-tiles",
+            "sourceUrl": "https://tile.openstreetmap.jp/data/planet.json",
+            "sourceLayer": "building",
+            "heightProperty": "render_height",
+            "minHeightProperty": "render_min_height",
+            "deduplicate": true
+        },
         "fallbackLevels": {
             "highway=corridor": "0"
         },
@@ -162,7 +179,7 @@
         },
         "largeBuildingActivation": {
             "use": true,
-            "minZoom": 17,
+            "minZoom": 15,
             "referenceZoom": 18,
             "viewportCoverageRatio": 1.0,
             "groupNearbyBuildings": false
@@ -170,6 +187,7 @@
         "buildingGroup": {
             "smallBuildingAreaSquareMeters": 1500,
             "groupRadiusMeters": 50,
+            "activationRadiusMeters": 50,
             "requireIndoorPoi": true
         },
         "levels": {
