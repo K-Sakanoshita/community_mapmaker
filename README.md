@@ -28,6 +28,12 @@ python3 -m http.server 8000
 
 Google Spreadsheetを利用する場合は `config-user.jsonc` の `google`、静的GeoJSONを利用する場合は `static` を設定します。経路検索、検索、3D表示などの追加機能は、利用したい機能の設定で `use` を有効にし、必要な接続先や表示ルールを指定してください。設定項目は各ファイルのコメントを参照してください。
 
+## バックエンド
+
+[Community Mapmaker Backend](https://github.com/K-Sakanoshita/community_mapmaker_backend) は、投稿データの保存・取得、プロジェクトと投稿項目の管理、ユーザー登録・認証を提供するPHPバックエンドです。投稿機能などで利用する場合は、別途バックエンドを設置し、フロントエンドの接続先を設定します。
+
+必要環境、セットアップ、API、公開方法は、[バックエンドのREADME](https://github.com/K-Sakanoshita/community_mapmaker_backend#readme)を参照してください。
+
 ## OSMデータを整備する方へ
 
 表示する施設の種類は、地図ごとの取得対象と表示設定で決まります。施設が表示されない場合は、OSMの登録内容と [data/overpass-custom.jsonc](data/overpass-custom.jsonc) の対象タグを確認してください。
