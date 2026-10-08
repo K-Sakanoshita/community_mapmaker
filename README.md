@@ -12,6 +12,49 @@ python3 -m http.server 8000
 
 ブラウザで `http://localhost:8000/` を開いてください。
 
+## 共通システムの更新元と互換性
+
+「遊具のある公園マップ」を共通システムの最新開発版として、
+[armd-02/Playgrounds](https://github.com/armd-02/Playgrounds) の
+`79ba3a229f7b06f6765e239560794de8cbc40995`（2026年10月8日取り込み）から共通コードを更新しています。
+
+サイドバー操作、共有URL、経路検索、投稿API・スキーマ対応、更新情報、敷地と地物の関連付け、検索、設定ベースの3D表示などの実装を取り込みました。
+MapLibre GL JSは5.24.0を使用します。公園専用の公開URL・Analytics・投稿先・遊具モデル素材は引き継いでいません。
+
+デモの初期位置・ズーム・カテゴリ・Overpass取得対象・投稿フォーム・背景地図・インドア表示と、サイト名・画像・独自CSSは従来の設定を維持しています。
+追加の共通UIスタイルは `common-ui.css` に分離し、既存の `user.css` を後から読み込んで上書きします。
+新しい共通文言は `data/glot-system.jsonc` に追加し、`data/glot-custom.jsonc` を優先します。
+
+従来の `google.AppScript` / `google.targetName` は起動時に `activity` 設定へ対応付けるため、設定ファイルの移行は不要です。
+明示した `activity` 設定がある場合はそちらを優先します。新しいJSON APIを利用する場合は、例えば次の設定を `data/config-user.jsonc` に追加できます（URLは自分のサーバーへ変更してください）。
+
+```json
+"activity": {
+    "url": "https://example.com/api/activities.php?app=my-map",
+    "authMode": "basic",
+    "targetName": "activity"
+}
+```
+
+`news`、`changes`、`intro`、`areaFeatureLinker`、`areaSearch`、`discovery`、`listActions`、`feature3d`、`directions` は、未設定の場合は無効です。
+利用したい機能に `"use": true` と、その地図に合う設定を追加してください。
+例えば経路検索は `"directions": { "use": true }` で有効になります。
+敷地の関連付けは `areaFeatureLinker.areaTargets` / `featureTargets` に既存のOverpass対象名を指定し、一覧の `list.views` / `listTable.viewBindings` も設定します。
+3D表示は `feature3d.models` / `rules` に任意のモデルURLとタグ条件を指定します。遊具向けの手続き型モデル生成関数も利用できますが、モデル素材や公園専用のルールは同梱していません。
+新しい `icon.zoomSteps` を指定しない場合は、従来のマーカー倍率を使用します。
+
+## テスト
+
+リポジトリのルートで、Node.jsの標準ライブラリだけを使う回帰テストを実行できます。
+
+```bash
+node tests/run.cjs
+```
+
+上流から取り込んだ公園向けの設定を使うテストは `tests/fixtures/` を参照し、デモの実設定と分離しています。
+`tests/generic-config.cjs` では、既存設定の維持、Google Apps Scriptとの互換性、追加機能の初期無効化と明示設定の優先を確認します。
+テスト内のHTTP 500や未対応APIのログは、障害時の処理を検証するための模擬応答です。
+
 ## 主な設定
 
 * `data/config-user.jsonc`: 初期表示、サイドバー、一覧、外部データ、メニュー
@@ -76,3 +119,4 @@ Overpassのダウンロード中は受信量を0.1MB単位で `Loading...` に�
 * 2024/05/18 「東淀川区新歓祭マップ2024」をもとに本家を更新
 * 2026/08/22 「長浜城下町遺産マップ」の実装をもとに本家を更新
 * 2026/08/24 起動処理、Overpass取得・キャッシュ、POI保持上限、階層・インドア表示を改善
+* 2026/10/08 「遊具のある公園マップ」の最新共通コードを取り込み、汎用デモ設定と従来の設定形式を維持

@@ -22,6 +22,92 @@ body {
     overflow: hidden;
 }
 
+/* startup status */
+#startupStatus {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: #fff7cb;
+    color: #263238;
+    font-family: Tahoma, sans-serif;
+    text-align: center;
+}
+
+#startupStatus[hidden] {
+    display: none;
+}
+
+.startup-status-card {
+    box-sizing: border-box;
+    width: min(420px, calc(100vw - 48px));
+    max-height: calc(100vh - 48px);
+    max-height: calc(100dvh - 48px);
+    padding: 12px 12px 20px;
+    overflow: auto;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.94);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.16);
+}
+
+@media (min-width: 768px) {
+    .startup-status-card {
+        width: min(640px, calc(100vw - 64px));
+        padding: 16px 16px 24px;
+    }
+}
+
+.startup-splash-image {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    max-height: calc(100vh - 180px);
+    max-height: calc(100dvh - 180px);
+    height: auto;
+    margin: 0 auto 16px;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.startup-status-spinner {
+    width: 32px;
+    height: 32px;
+    margin: 0 auto 14px;
+    border: 4px solid #c8ddd1;
+    border-top-color: #00753a;
+    border-radius: 50%;
+    animation: startup-spin 0.8s linear infinite;
+}
+
+#startupStatus[data-error="true"] .startup-status-spinner {
+    display: none;
+}
+
+#startupRetry {
+    display: none;
+    margin: 16px auto 0;
+    padding: 8px 18px;
+    border: 1px solid #00753a;
+    border-radius: 6px;
+    background: #fff;
+    color: #00753a;
+    font: inherit;
+    cursor: pointer;
+}
+
+#startupStatus[data-error="true"] #startupRetry {
+    display: block;
+}
+
+@keyframes startup-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 h4 {
     font-size: 1.3em !important;
     margin-right: auto;
@@ -48,6 +134,7 @@ a {
 
 #top-pane {
     background-color: #faf8f8;
+    overflow: hidden;
 }
 
 #bottom-pane {
@@ -121,7 +208,16 @@ body.is-resizing-sidebar #sidebarResizeHandle::after {
         left: 0;
         width: 100%;
         height: 12px;
+        background: #faf8f8;
         cursor: row-resize;
+    }
+
+    #btmHeader {
+        padding-top: 12px !important;
+    }
+
+    #detailHeader {
+        top: 12px;
     }
 
     #sidebarResizeHandle::before {
@@ -170,31 +266,95 @@ body.is-resizing-sidebar * {
 }
 
 #detailHeader {
+    position: sticky;
+    top: 0;
+    z-index: 10;
     background-color: var(--bs-accordion-active-bg);
     color: var(--bs-accordion-active-color);
     border-bottom: var(--bs-accordion-border-width) solid var(--bs-accordion-border-color);
 }
 
+#detailHeader,
+#listHeader {
+    padding: 4px 5px !important;
+}
+
+#detailHeader .dropdown {
+    margin-right: 4px !important;
+}
+
+#btnMenuButton {
+    width: 40px !important;
+    height: 40px !important;
+}
+
 #detailHeader .detailTitle {
+    flex: 1 1 auto;
+    min-width: 0;
     color: var(--bs-accordion-active-color);
 }
 
-/* list */
-ul {
-    /*column-count: 3;*/
-    list-style-type: none;
+#detailHeaderClose {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    color: #000;
+    font-size: 24px;
+    line-height: 1;
 }
 
-li::before {
-    position: relative;
-    top: -2px;
-    left: -12px;
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    content: "";
-    border-radius: 100%;
-    background: green;
+#listHeader {
+    min-height: 48px;
+    background-color: var(--bs-accordion-active-bg);
+    color: var(--bs-accordion-active-color);
+    border-bottom: var(--bs-accordion-border-width) solid var(--bs-accordion-border-color);
+}
+
+#listHeader .detailTitle {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.sidebar-window-controls .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    color: #000;
+}
+
+@media (min-width: 1080px) {
+    #bottom-pane.sidebar-minimized {
+        flex: 0 0 48px !important;
+        width: 48px !important;
+        min-width: 48px;
+        max-width: 48px;
+    }
+
+    #bottom-pane.sidebar-minimized #detailMenu,
+    #bottom-pane.sidebar-minimized #listAccordion,
+    #bottom-pane.sidebar-minimized #panelProgress,
+    #bottom-pane.sidebar-minimized .footerSpace,
+    #bottom-pane.sidebar-minimized #listTitle {
+        display: none !important;
+    }
+
+    #bottom-pane.sidebar-minimized #sidebarMinimize {
+        display: none !important;
+    }
+
+    #bottom-pane.sidebar-minimized #btmHeader {
+        overflow: hidden;
+        padding: 0 !important;
+    }
+
+    #bottom-pane.sidebar-minimized #listHeader {
+        justify-content: center;
+        padding-inline: 4px !important;
+    }
 }
 
 div.showcase {
@@ -243,14 +403,43 @@ h4 img {
 
 .globalMessage {
     display: block;
-    color: rgba(0, 0, 0, 1);
-    background-color: rgba(255, 255, 255, 0.6);
-    padding: 6px;
-    margin: 0px;
+    margin: 0;
+    color: #111;
+    font-weight: 600;
 }
 
-.globalMessage:empty {
+.global-status-message {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 11px;
+    border: 1px solid rgba(73, 80, 87, 0.35);
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+    text-align: center;
+}
+
+.global-status-message:not(:has(.globalMessage:not(:empty))):not(:has(#globalSpinner:not(.d-none))) {
     display: none;
+}
+
+#globalSpinner {
+    flex: 0 0 auto;
+    width: 1.35rem;
+    height: 1.35rem;
+    margin: 0 !important;
+    border-width: 0.18em;
+}
+
+#globalStatus {
+    position: absolute;
+    z-index: 100;
+    width: max-content;
+    max-width: calc(100% - 24px);
+    margin: 0 !important;
+    pointer-events: none;
+    transform: none !important;
 }
 
 .menu {
@@ -272,19 +461,6 @@ p {
 
 span {
     font-size: 16px;
-}
-
-/* マーカーのフォントサイズ選択 */
-span.fs-10 {
-    font-size: 10px;
-}
-
-span.fs-12 {
-    font-size: 12px;
-}
-
-span.fs-14 {
-    font-size: 14px;
 }
 
 /* button for select way color */
@@ -417,7 +593,11 @@ tr.selected td {
 #mapid {
     position: relative;
     overflow: hidden;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, #4286f4, #373B44); /*宇宙をイメージした暗めのグラデーション背景色*/
 }
+
 
 .list-icon {
     width: 20px;
@@ -445,10 +625,12 @@ tr.selected td {
     transform: translate(-50%, -50%);
     background-color: rgba(0, 0, 0, 0.8);
     color: #fff;
-    padding: 20px 40px;
+    width: min(360px, calc(100vw - 40px));
+    box-sizing: border-box;
+    padding: 20px 20px;
     border-radius: 8px;
     opacity: 1;
-    transition: opacity 2s ease;
+    transition: opacity 3s ease;
     z-index: 9999;
     text-align: center;
     font-size: 1.2rem;
@@ -563,3 +745,13 @@ tr.selected td {
     pointer-events: none;
     z-index: 10;
 }
+
+#listArea .list-group-item { position: relative; padding-right: 5rem; }
+#listArea .list-group-item.list-area-item { padding-right: .75rem; }
+#listArea .list-area-item .list-area-name { padding-right: 5rem; }
+.poi-status-toggle { color: #6c757d; }
+.poi-status-toggle i { font-size: 1.3rem; }
+.poi-status-toggle[aria-pressed="true"] { color: #0d6efd; }
+#listArea .list-status-button { position: absolute; top: .2rem; }
+#listArea .list-visited { right: 2.5rem; }
+#listArea .list-favorite { right: .25rem; }

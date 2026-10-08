@@ -20,9 +20,12 @@ class OSMbasic {
         }
 
         // write changing_table
-        if (tags.changing_table !== undefined) {
-            let available = tags.changing_table == "yes" ? glot.get("available") : glot.get("unavailable");
-            html += `<div class="flex-row mt-1 me-3"> <i class="fas fa-baby"></i> ${glot.get("changing_table")}:${available}</div>`;
+        if (tags.changing_table === "yes" || tags.changing_table === "no") {
+            const available = glot.get(tags.changing_table === "yes" ? "available" : "unavailable");
+            const label = tags.amenity === "toilets"
+                ? glot.get(tags.changing_table === "yes" ? "toilet_changing_yes" : "toilet_changing_no")
+                : `${glot.get("changing_table")}:${available}`;
+            html += `<div class="flex-row mt-1 me-3"> <i class="fas fa-baby"></i> ${label}</div>`;
             elements++;
         }
 
@@ -31,7 +34,10 @@ class OSMbasic {
             let test = { yes: "available", no: "unavailable", limited: "limited" };
             if (test[tags.wheelchair] !== undefined) {
                 let available = glot.get(test[tags.wheelchair]);
-                html += `<div class="flex-row mt-1 me-3"> <i class="fas fa-wheelchair"></i> ${available}</div>`;
+                const label = tags.amenity === "toilets"
+                    ? glot.get({ yes: "facility_wheelchair_yes", limited: "facility_wheelchair_limited", no: "toilet_wheelchair_no" }[tags.wheelchair])
+                    : available;
+                html += `<div class="flex-row mt-1 me-3"> <i class="fas fa-wheelchair"></i> ${label}</div>`;
                 elements++;
             }
         }
@@ -107,38 +113,21 @@ class OSMbasic {
             elements++;
         }
 
-        // write toilets
-        if (tags.amenity == "toilets") {
-            let test = { yes: "available", no: "unavailable", limited: "limited" };
-            html += `<div class="flex-row mt-1 me-3"> `
-            if (tags.female == "yes") {
-                html += `<i class="fa-solid fa-venus"></i> `;
-                let capacity = Number(tags["capacity:women"])
-                if (capacity > 0 && capacity !== NaN) {
-                    html += `:${capacity} `;
-                } else {
-                    html += `:${glot.get("available")} `;
-                }
+        // Individual toilet: distinguish explicit "no" from missing tags.
+        if (tags.amenity === "toilets") {
+            const entries = [["female", "capacity:women", `🚺 ${glot.get("toilet_female")}`],
+                ["male", "capacity:men", `🚹 ${glot.get("toilet_male")}`],
+                ["unisex", "capacity:unisex", `🚻 ${glot.get("toilet_unisex")}`]];
+            const known = entries.filter(([key]) => tags[key] === "yes" || tags[key] === "no");
+            if (!known.length) {
+                html += `<div class="flex-row mt-1 me-3">${glot.get("toilet_unknown")}</div>`;
             }
-            if (tags.male == "yes") {
-                html += `<i class="fa-solid fa-mars"></i> `;
-                let capacity = Number(tags["capacity:men"])
-                if (capacity > 0 && capacity !== NaN) {
-                    html += `:${capacity} `;
-                } else {
-                    html += `:${glot.get("available")} `;
-                }
+            for (const [key, capacityKey, label] of known) {
+                const capacity = Number(tags[capacityKey]);
+                const value = tags[key] === "no" ? glot.get("toilet_none")
+                    : Number.isFinite(capacity) && capacity > 0 ? String(capacity) : glot.get("toilet_available");
+                html += `<div class="flex-row mt-1 me-3">${label} ${value}</div>`;
             }
-            if (tags.unisex == "yes") {
-                html += `<i class="fa-solid fa-mars-and-venus"></i> `;
-                let capacity = Number(tags["capacity:unisex"])
-                if (capacity > 0 && capacity !== NaN) {
-                    html += `:${capacity} `;
-                } else {
-                    html += `:${glot.get("available")} `;
-                }
-            }
-            html += `</div>`
             elements++;
         }
 
@@ -146,6 +135,12 @@ class OSMbasic {
         if (tags.level !== undefined) {
             const level = cMapMaker.formatIndoorLevel(tags.level);
             html += `<div class="flex-row mt-1 me-3"> <i class="fa-solid fa-stairs"></i> ${level}</div>`;
+            elements++;
+        }
+
+        // write location=roof
+        if (tags.location == "roof" || tags.location == "rooftop") {
+            html += `<div class="flex-row mt-1 me-3"> <i class="fa-solid fa-stairs"></i> ${glot.get("rooftop")}</div>`;
             elements++;
         }
 
@@ -161,16 +156,28 @@ class OSMbasic {
             elements++;
         }
 
+        const directionsUrl = cMapMaker.getDirectionsUrl?.(tags.id);
+        const directionsHtml = directionsUrl
+            ? `<div class="flex-row mt-1 me-3"><a class="btn btn-sm btn-outline-primary" href="${directionsUrl.replace(/&/g, "&amp;")}" target="_blank" rel="noopener noreferrer" title="${glot.get("directions_google_maps")}"><i class="fa-solid fa-route me-1" aria-hidden="true"></i>${glot.get("directions_open")}</a></div>`
+            : "";
+
         // 既に行ったかチェック
         if (Conf.etc.localSave !== "") {
             let poiStatus = poiStatusCont.getValueByOSMID(tags.id)
-            html += `<div class="flex-row mt-1 me-3"><i class="fa-solid fa-person-walking me-1"></i>`;
-            html += `${glot.get("visited")} <input type="checkbox" id="visited" class="m-2" name="${tags.id}" ${poiStatus[PoiStatusIndex.VISITED] ? "checked" : ""}/>`;
-            html += `</div><div class="flex-row mt-1 me-3"><i class="fa-solid fa-heart me-1"></i>`;
-            html += `${glot.get("favorite")} <input type="checkbox" id="favorite" class="m-2" name="${tags.id}" ${poiStatus[PoiStatusIndex.FAVORITE] ? "checked" : ""}/>`;
-            html += `</div><div class="flex-row mt-1 me-3 d-flex text-nowrap align-items-center w-100">`;
+            const escapeAttr = value => String(value).replace(/[&"<>']/g, char =>
+                ({ "&": "&amp;", '"': "&quot;", "<": "&lt;", ">": "&gt;", "'": "&#39;" })[char]);
+            html += `<div class="flex-row mt-1 me-3"><button type="button" id="visited" class="poi-status-toggle btn btn-sm" name="${escapeAttr(tags.id)}" aria-pressed="${Boolean(poiStatus[PoiStatusIndex.VISITED])}" onclick="cMapMaker.togglePoiStatus('visited')"><i class="${poiStatus[PoiStatusIndex.VISITED] ? "fa-solid" : "fa-regular"} fa-circle-check fa-fw" aria-hidden="true"></i> ${glot.get("visited")}</button>`;
+            html += `</div><div class="flex-row mt-1 me-3"><button type="button" id="favorite" class="poi-status-toggle btn btn-sm" name="${escapeAttr(tags.id)}" aria-pressed="${Boolean(poiStatus[PoiStatusIndex.FAVORITE])}" onclick="cMapMaker.togglePoiStatus('favorite')"><i class="${poiStatus[PoiStatusIndex.FAVORITE] ? "fa-solid" : "fa-regular"} fa-heart fa-fw" aria-hidden="true"></i> ${glot.get("favorite")}</button>`;
+            html += `</div>${directionsHtml}<div class="flex-row mt-1 me-3 d-flex text-nowrap align-items-center w-100">`;
             let memo = poiStatus[PoiStatusIndex.MEMO] !== undefined ? poiStatus[PoiStatusIndex.MEMO] : "";
-            html += `<input type="text" id="visited-memo" maxlength="140" size="20" class="form-control ms-2" placeholder="${glot.get("reservation_memo")}" value="${memo}" /></div>`
+            html += `<label for="visited-memo" class="ms-2 me-2">${glot.get("personal_memo_label")}</label>`;
+            html += `<input type="text" id="visited-memo" aria-describedby="personal-memo-help" maxlength="140" size="20" class="form-control" oninput="cMapMaker.savePoiStatus()" value="${escapeAttr(memo)}" /></div>`
+            html += `<div id="personal-memo-help" class="form-text w-100 mt-1 mb-2">${glot.get("personal_memo_help")}</div>`;
+            elements++;
+        }
+
+        if (directionsHtml) {
+            if (Conf.etc.localSave === "") html += directionsHtml;
             elements++;
         }
 
@@ -186,6 +193,61 @@ class OSMbasic {
             }
         }
         return elements > 0 ? html + "</div>" : "";
+    }
+
+    makeAreaFacilities(osmid) {
+        if (!/^(?:way|relation)\/\d+$/.test(String(osmid ?? ""))) return "";
+        const linker = window.areaFeatureLinker;
+        const area = linker?.getAreaRecord(osmid);
+        if (!area || String(area.areaId) !== String(osmid)) return "";
+        const linked = area.linkedFeatures ?? [];
+        const playTargets = new Set(Conf.areaFeatureLinker?.detailPlayTargets ?? []);
+        const play = new Map();
+        const other = new Map();
+        const toilets = [];
+        const seen = new Set();
+        for (const item of linked) {
+            const id = String(item?.featureId ?? "");
+            if (id && seen.has(id)) continue;
+            if (id) seen.add(id);
+            const properties = item?.feature?.properties ?? {};
+            const tags = properties.tags && typeof properties.tags === "object"
+                ? properties.tags : properties;
+            if (tags.amenity === "toilets") {
+                toilets.push(tags);
+                continue;
+            }
+            const category = poiCont.getCatnames(tags);
+            const label = String(category[1] || category[0] || "").trim();
+            if (!label || label === glot.get("undefined")) continue;
+            const group = (item.targets ?? []).some(target => playTargets.has(target)) ? play : other;
+            group.set(label, (group.get(label) ?? 0) + 1);
+        }
+        if (!play.size && !other.size && !toilets.length) return "";
+
+        const escapeHtml = value => String(value).replace(/[&<>"']/g, char =>
+            ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]);
+        const formatEntries = group => [...group].map(([label, count]) =>
+            `<li>${escapeHtml(label)}${count > 1 ? ` ×${count}` : ""}</li>`).join("");
+        const items = [];
+        if (play.size)
+            items.push(`<li>${escapeHtml(glot.get("facility_play_equipment"))}<ul>${formatEntries(play)}</ul></li>`);
+        if (toilets.length) {
+            const details = [];
+            const wheelchair = toilets.some(tags => tags.wheelchair === "yes") ? "yes"
+                : toilets.some(tags => tags.wheelchair === "limited") ? "limited" : null;
+            if (wheelchair)
+                details.push(`<li>${escapeHtml(glot.get(wheelchair === "yes"
+                    ? "facility_wheelchair_yes" : "facility_wheelchair_limited"))}</li>`);
+            if (toilets.some(tags => tags.changing_table === "yes"))
+                details.push(`<li>${escapeHtml(glot.get("facility_changing_table"))}</li>`);
+            items.push(`<li>${escapeHtml(toilets.length === 1 ? glot.get("facility_toilet")
+                : glot.get("facility_toilet_count").replace("{count}", String(toilets.length)))}`
+                + (details.length ? `<ul>${details.join("")}</ul>` : "") + "</li>");
+        }
+        if (other.size) items.push(formatEntries(other));
+        return `<section class="m-2"><strong>${escapeHtml(glot.get("facility_section_title"))}</strong>`
+            + `<ul class="mb-0">${items.join("")}</ul></section>`;
     }
 
     // instagramのURLとユーザーネームを取得

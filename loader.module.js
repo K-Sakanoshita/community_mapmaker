@@ -1,15 +1,34 @@
 // loader_module_fast_v2.js
+const STARTUP_STATUS_MIN_VISIBLE_MS = 2000;
+const startupStatusShownAt = Date.now();
+let startupStatusHideTimer = null;
+
 const setStartupStatus = (message, error = false) => {
     const status = document.getElementById("startupStatus");
     const text = document.getElementById("startupStatusMessage");
     if (!status || !text) return;
+    if (startupStatusHideTimer !== null) {
+        clearTimeout(startupStatusHideTimer);
+        startupStatusHideTimer = null;
+    }
     text.textContent = message;
     status.dataset.error = String(error);
     status.hidden = false;
 };
 const hideStartupStatus = () => {
     const status = document.getElementById("startupStatus");
-    if (status) status.hidden = true;
+    if (!status) return;
+
+    const hide = () => {
+        status.hidden = true;
+        startupStatusHideTimer = null;
+    };
+    const remaining = STARTUP_STATUS_MIN_VISIBLE_MS - (Date.now() - startupStatusShownAt);
+    if (remaining <= 0) {
+        hide();
+    } else {
+        startupStatusHideTimer = setTimeout(hide, remaining);
+    }
 };
 window.setStartupStatus = setStartupStatus;
 window.hideStartupStatus = hideStartupStatus;
@@ -32,7 +51,7 @@ window.hideStartupStatus = hideStartupStatus;
     // no-cache は毎回 manifest を取りに行くので、通常は避ける。
     // 更新反映を確実にしたい場合は loader_module_fast_v2.js?ver=20260429 のように
     // HTML側でクエリ文字列を付ける方が扱いやすい。
-    setStartupStatus("必要なファイルを確認しています…");
+    setStartupStatus(window.startupText("files"));
     const res = await fetch(manifestUrl, { cache: "no-store" });
     if (!res.ok) throw new Error(`manifest load failed: ${res.status}`);
 
@@ -136,7 +155,7 @@ window.hideStartupStatus = hideStartupStatus;
 
     // CSSとJSの通信を同時に開始し、初回読み込みの直列待ちをなくす。
     const stylesReady = Promise.all(trimNonEmpty(styles).map(loadStyle));
-    setStartupStatus("地図ライブラリを読み込んでいます…");
+    setStartupStatus(window.startupText("libraries"));
 
     const scriptsReady = (async () => {
         // 後方互換: scriptGroups が無い場合は従来通り scripts を順番に読む。
@@ -179,9 +198,9 @@ window.hideStartupStatus = hideStartupStatus;
         });
     }
 
-    setStartupStatus("設定を読み込んでいます…");
+    setStartupStatus(window.startupText("settings"));
     cMapMaker.init();
 })().catch((error) => {
     console.error("Application loader failed", error);
-    setStartupStatus("読み込みに失敗しました。通信を確認して再読み込みしてください。", true);
+    setStartupStatus(window.startupText("failed"), true);
 });
