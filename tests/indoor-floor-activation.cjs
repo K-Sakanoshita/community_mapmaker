@@ -39,9 +39,16 @@ assert.equal(context.control.isPoiVisibleInLevelMode({ geojson: outdoor[0] }), f
 
 const explicit = point('explicit', { amenity: 'library', level: '1' });
 const activated = result([explicit, ...outdoor, building], [['amenity'], ...targets, []]);
-assert.deepEqual(Array.from(activated.availableLevels), ['1']);
+assert.deepEqual(Array.from(activated.availableLevels), ['0', '1'], 'unassigned POIs make 1F selectable after explicit-floor activation');
 assert.equal(intersects, 1, 'only the explicitly assigned POI is intersected with the building');
 assert(activated.levels.includes('3'), 'building height extends selectable levels');
+const clinic = point('clinic', { amenity: 'doctors', level: '8' });
+const mixedFloors = result([clinic, ...outdoor], [['amenity'], ...targets]);
+assert.deepEqual(Array.from(mixedFloors.availableLevels), ['0', '8'], '9F clinic must not hide the fallback floor of other visible facilities');
+assert.equal(intersects, 1, 'fallback-floor availability introduces no building intersection work');
+context.control.indoorLevel = '0';
+assert.equal(context.control.isPoiVisibleInLevelMode({ geojson: outdoor[0] }), true);
+assert.equal(context.control.isPoiVisibleInLevelMode({ geojson: clinic }), false);
 assert.equal(result([point('ground', { amenity: 'library', level: '0' })], [['amenity']]).levelFeatureMode, true);
 assert.deepEqual(Array.from(result([point('roof', { amenity: 'cafe', location: 'roof' })], [['amenity']]).availableLevels), ['roof']);
 assert.deepEqual(Array.from(result([point('repeat', { amenity: 'bench', repeat_on: '1;2' })], [['amenity']]).availableLevels), ['1', '2']);
