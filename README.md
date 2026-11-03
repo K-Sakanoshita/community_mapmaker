@@ -1,85 +1,63 @@
 # Community Map Maker
 
-OpenStreetMapのOverpass APIやGoogle Spreadsheetのデータを地図上に表示し、設定ファイルを編集してさまざまなコミュニティマップを作成できるWebアプリです。
+OpenStreetMap（OSM）やGoogle Spreadsheetのデータを地図上に表示するWebアプリです。設定ファイルを編集して、地域やテーマに合わせたコミュニティマップを作成できます。
 
-## 最新版の取り込み（2026-11-03）
+## 利用・公開方法
 
-[HigayodoStreetMap2026](https://github.com/armd-02/HigayodoStreetMap2026) の
-コミット `85aa48a2eab03b1e0e5dcb801905f60171adba72`（2026-10-31 JST）を取り込みました。
-無効な機能も含めて全コードと全アセットを同梱しています。取り込み元の記録は
-[元のREADME](docs/upstream-higayodo.md)、設定変更は [最新版の設定](docs/configuration-update.md) を参照してください。
-
-サイト名・初期位置・OSM取得対象・サンプル投稿定義は汎用サイトの設定を維持しています。
-祭典専用のAPI接続と固定座標の装飾は無効ですが、その実装・モデル・画像も同梱しています。
-既存の屋上表示、駐車場カテゴリ、インドア表示の拡張も保持しています。
-
-`node tests/run.cjs` で回帰テストを実行できます。
-
-## ローカルでの確認
-
-静的Webサイトのため、リポジトリのルートでHTTPサーバーを起動して確認できます。
+このリポジトリをクローンまたはダウンロードし、ルートディレクトリでHTTPサーバーを起動します。ビルドは不要です。
 
 ```bash
 python3 -m http.server 8000
 ```
 
-ブラウザで `http://localhost:8000/` を開いてください。
+ブラウザで `http://localhost:8000/` を開いてください。公開する場合は、GitHub Pagesなどの静的サイト用サーバーに配置できます。
 
-## 主な設定
+## 自分の地図を作る
 
-* `data/config-user.jsonc`: 初期表示、サイドバー、一覧、外部データ、メニュー
-* `data/config-system.jsonc`: Overpass API、背景地図、共通表示設定
-* `data/overpass-custom.jsonc`: 表示するOSM地物
-* `data/category-ja.jsonc` / `data/category-en.jsonc`: カテゴリ名
-* `data/marker.jsonc`: マーカー画像の対応
-* `data/glot-custom.jsonc`: サイト固有の表示文言
-* `manifest.json`: 読み込むCSS、JavaScript、Analytics ID
+主に次のファイルを編集します。`data/` の設定ファイルは、コメントを書けるJSONC形式です。
 
-マーカー画像は `icon/` に配置します。静的GeoJSONを利用する場合は `data/config-user.jsonc` の `static` を設定してください。
+* [data/config-user.jsonc](data/config-user.jsonc): 初期位置、ズーム、施設リスト、外部データ、メニュー
+* [data/config-system.jsonc](data/config-system.jsonc): Overpass API、背景地図
+* [data/overpass-custom.jsonc](data/overpass-custom.jsonc): 取得・表示するOSM地物と表示スタイル
+* [data/category-ja.jsonc](data/category-ja.jsonc) / [data/category-en.jsonc](data/category-en.jsonc): カテゴリ名
+* [data/marker.jsonc](data/marker.jsonc): OSMタグとマーカー画像の対応
+* [data/glot-custom.jsonc](data/glot-custom.jsonc): サイト固有の表示文言
+* [manifest.json](manifest.json): 読み込むファイルとAnalytics ID
 
-`map.zoomMessageThreshold` は「もっとズームしてください」を消すズームレベルです。POI自体の取得・表示開始ズームは、従来どおり `poiView.poiZoom` と `poiView.mobilePoiZoom` で対象ごとに設定します。
+サイト名や初期位置、表示対象を自分の用途に合わせて変更してください。外部データや投稿機能を利用する場合は、接続先も設定します。マーカー画像は `icon/` に配置し、見た目は `user.css` で調整できます。
 
-## 起動とOverpass取得
+Google Spreadsheetを利用する場合は `config-user.jsonc` の `google`、静的GeoJSONを利用する場合は `static` を設定します。経路検索、検索、3D表示などの追加機能は、利用したい機能の設定で `use` を有効にし、必要な接続先や表示ルールを指定してください。設定項目は各ファイルのコメントを参照してください。
 
-初期HTMLにスプラッシュと進捗を直接配置し、外部CSSとJavaScriptを並列に読み込みます。地図と操作UIの準備が完了した時点でスプラッシュを閉じ、その次の描画フレームからOverpassによる周辺データ取得を開始するため、データ取得中も先に地図を操作できます。読み込み失敗時はスプラッシュに再読み込みボタンを表示します。
+## バックエンド
 
-Overpassのダウンロード中は受信量を0.1MB単位で `Loading...` に表示します。HTTP 408/425や一時的な応答異常は同じサーバーで一度再試行し、HTTP 429、5xx、タイムアウトなどは別の設定済みサーバーへ切り替えます。構文・クエリエラーに相当する4xxは別サーバーへ送っても改善しないため、そのまま終了します。429を返したサーバーにはクールダウンを設けます。
+[Community Mapmaker Backend](https://github.com/K-Sakanoshita/community_mapmaker_backend) は、投稿データの保存・取得、プロジェクトと投稿項目の管理、ユーザー登録・認証を提供するPHPバックエンドです。投稿機能などで利用する場合は、別途バックエンドを設置し、フロントエンドの接続先を設定します。
 
-動的取得のキャッシュはズーム14のタイル範囲と取得対象の組み合わせで管理します。画面の中心、表示範囲、ズーム、傾き、方角が同じ連続更新だけを重複処理として抑止し、地図を別地域へ移動した場合は新しい範囲をOverpassから取得します。
+必要環境、セットアップ、API、公開方法は、[バックエンドのREADME](https://github.com/K-Sakanoshita/community_mapmaker_backend#readme)を参照してください。
 
-## 取得後の更新処理
+## OSMデータを整備する方へ
 
-一覧の元データ・行DOM・マーカーソースを差分更新し、同じ内容の再処理を省きます。取得キャッシュの方式は従来どおりです。詳細は [差分更新と性能](docs/render-performance.md) を参照してください。
+表示する施設の種類は、地図ごとの取得対象と表示設定で決まります。施設が表示されない場合は、OSMの登録内容と [data/overpass-custom.jsonc](data/overpass-custom.jsonc) の対象タグを確認してください。
 
-## POIデータの保持上限
+施設の種類は `amenity`、`shop`、`leisure`、`historic` など、名称は `name` で登録します。実際の施設に合うタグと位置を整備してください。
 
-動的なOverpass取得では、`data/config-user.jsonc` の `poiData.maxFeatures` を`pdata`の保持上限、`poiData.pruneThreshold` を整理開始件数として使います。既定では15,000件を超えた時だけ現在地に近い12,000件へ整理し、毎回の追加時には全件ソートしません。表示中の詳細POIとActivityに紐づくPOIは優先して保持します。データ整理後はタイルの取得済み判定を無効化し、同一の表示範囲・中心座標・ズーム・傾き・方角で続けて発生する重複更新だけを抑止します。地図を移動した場合はOverpassから取得し直します。`poiData.applyToStatic` が `false` の場合、静的データには上限を適用しません。
+### 建物内の施設・インドア地物
 
-## インドア表示
+階別表示を利用する地図では、`config-user.jsonc` の `indoor.use` を有効にします。部屋や通路も表示するには、それらの地物をOSMに登録します。
 
-`data/config-user.jsonc` の `indoor.use` を `true` にすると、建物内の部屋、壁、通路とドアを階別に表示します。`indoor=corridor` と `highway=corridor` の両方を通路として扱い、`highway=corridor` に `level` がなければ1Fとして表示します。インドアの面地物は塗りつぶさず、部屋・通路・共用エリアを輪郭線と名称で描画します。`level` の単一値、セミコロン区切り、数値範囲、`repeat_on` を解釈します。`level` のないPOIはOSMの `level=0` と同じ1F扱いです。
+* 施設や屋内地物の階数は `level` に登録します。OSMの `level=0` は、この地図では1F、`level=1` は2Fとして表示します。
+* 階数未設定の施設は1F扱いになるため、上階や地下の施設には実際の階数を登録してください。
+* 複数階に属する地物は、セミコロン区切りの `level` や `repeat_on` に対応しています。
+* 部屋・共用エリア・通路・壁には `indoor=room/area/corridor/wall`、通路には `highway=corridor`、扉には `door=*` などを使います。階数と必要な名称も登録してください。
 
-`poiView=true` の取得対象に属する `level=*` または `location=roof` 付きPOIが画面内にあり、その対象の `poiView.poiZoom` / `mobilePoiZoom` に達した場合は「階層表示」とし、階選択と階別表示を有効にします。低ズームでは、画面内に部屋・通路や階タグ付きPOIがあっても階数選択を表示しません。設定した `indoor=room/area/corridor/wall` または `highway=corridor` がある場合を「インドア表示」とし、部屋、通路、壁などを表示します。どちらの状態でも背景3D建物の不透明度は変更しません。建物を使う従来判定では通常は `poiView.poiZoom.indoor`、モバイルは `poiView.mobilePoiZoom.indoor` のズームレベルを使います。小規模な建物は `indoor.buildingGroup` の面積・距離条件で複数棟をまとめられ、画面を覆う大規模建物は `indoor.largeBuildingActivation` の条件でズーム15から判定できます。
+表示内容はOSMデータと取得・表示設定に依存します。この地図の表示だけでは、施設がないことや建物全体の階構成を判断できません。
 
-階層表示へ初めて入る時は、URLに `indoor.control.urlParameter` の階指定があればその値を優先し、未指定なら `indoor.defaultLevel` を使います。詳細URLを開き直した場合や再読み込みした場合も指定階を保持します。指定階が対象データにない場合は、表示可能な最初の階へ切り替えます。階数切り替えは開始時から5段の縦スクロール式階選択を展開し、現在階だけを表示する折りたたみボタンは置きません。階の選択肢をクリックまたはタップすると即時に切り替わり、続けて別の階を選べます。`location=roof` のPOIがある場合は数値階の後ろに「屋上」を追加し、選択時は屋上POIだけを表示します。フロアを変更すると、選択中のPOI、詳細表示、地図上の選択強調を解除します。マウスホイール、スワイプ、上下キーは候補を移動するだけで、スクロール終了時には確定しません。キーボードではEnterで中央候補を確定できます。POIがなくても部屋、通路、壁などのインドア地物がある階は選択でき、POIとインドア地物のどちらもない推定階は薄く表示して選択不可にします。表示中の階はURLにも保存されます。
+## 開発時の確認
 
-階数推定用の建物形状は `indoor.buildingSource` で指定したベクタータイルの `building` レイヤーだけから取得します。現在の背景地図に同じソースがあれば再利用し、ラスタースタイルでは判定専用の非表示ソースを追加します。建物形状は地図には描画せず、`render_height` を3.66m/階で四捨五入して最高階を推定します。地物に推定値を超える `level` がある場合は、明示された階を優先して階選択を延長します。Overpassからは建物way・relationを取得しません。インドア用の面・線・点は表示専用で選択できません。`indoor` 描画の対象は `data/overpass-custom.jsonc` の `expression.renderTags` で設定し、標準では `indoor=room/area/corridor/wall` または `highway=corridor` の面・線を輪郭表示し、Pointの青点は `door=*` または `indoor=door` を表示します。POIアイコンと施設リストへの掲載は各取得対象の `poiView` / `listView` に従い、階層表示中も `poiView.poiZoom` / `mobilePoiZoom` のズーム条件を維持します。POIマーカーと施設リストは選択階に合うものだけを表示し、インドア時はマーカー名の階数表記、重複するOSM点名、2F以上で使う影レイヤーを非表示にします。
+Node.jsで回帰テストを実行できます。
 
-主な設定項目は次のとおりです。
-
-* `indoor.defaultLevel`: インドア表示開始時のOSM階番号
-* `indoor.floorHeightMeters` / `floorOffsetMeters`: 傾斜表示時の階高（標準3.66m）と1階のオフセット。階別の輪郭・名称は階空間の中央高を基準にし、見分けやすくするため画面上の浮上量を2倍に補正
-* `indoor.backgroundTransportationOpacity`: インドア表示中のベクタータイル上のレール、プラットフォーム、`highway=footway` の不透明度（標準0.08、終了時は元の値へ復元）
-* `indoor.buildingLevelHeightMeters`: ベクタータイルの建物高さを階数へ戻す換算値
-* `indoor.buildingSource`: 階数推定に使う建物タイルソース、ソースレイヤー、高さ属性
-* `indoor.fallbackLevels`: `level` がない特定タグへ補う階番号
-* `indoor.buildingGroup`: 小規模建物をまとめる面積、距離、屋内POI必須条件
-* `indoor.underground`: 建物未選択時に地下施設からインドア表示を開始する条件
-* `indoor.largeBuildingActivation`: 大規模建物を低いズームから判定する条件
-* `indoor.levels`: データからの階数検出と階順
-* `indoor.control`: 階数切り替えUIとURLパラメーター
-
-取得対象と描画色は `data/overpass-custom.jsonc` の `osm.indoor` で設定します。`expression.poiView` と `expression.listView` はインドア地物そのもののマーカー・リスト表示を制御し、`expression.styles` で部屋、通路、壁、扉の色や線幅を変更できます。
+```bash
+node tests/run.cjs
+```
 
 ## 経歴
 
@@ -162,6 +140,10 @@ Community Map Makerと、同じコードをもとに開発している各マッ�
 * 2026/10/07 起動案内・各画面の英語対応、目的別の絞り込み、周辺・お気に入り・最近見たの切り替え、前回位置と目的の復元を改善（[遊具のある公園マップ][history-playgrounds]）
 * 2026/10/07 口コミ・地図情報の更新を場所ごとに集約し、未確認・既読管理と表示範囲を限定したActivity API取得に対応。地物分類と3Dモデル表示を設定ベースで汎用化（[遊具のある公園マップ][history-playgrounds]）
 * 2026/10/07 共有URLの統一、コピー結果の案内・手動コピー、経路検索へのリンクを追加し、非公開メモと公開投稿の違いを明示（[遊具のある公園マップ][history-playgrounds]）
+* 2026/10/08 サイドバー操作と共有URLを改善し、経路検索、投稿API・スキーマ対応、更新情報、敷地と地物の関連付け、検索、設定ベースの3D表示を追加
+* 2026/10/08 地図のドラッグ・ズーム時の動作速度を改善
+* 2026/10/08 インジケータを階数表示の上へ配置
+* 2026/10/08 階数未設定の施設がある場合、階層表示中も1Fを選択できるよう修正
 * 2026/10/09 都道府県別の更新取得履歴・一覧の保存、お気に入りの独立した更新確認、取得失敗時の履歴保持に対応。口コミの内訳と一覧ボタンのキーボード操作を改善（[遊具のある公園マップ][history-playgrounds]）
 * 2026/10/10 3D表示対象を拡充し、写真の読み込み表示とスマートフォンの詳細画面の余白を改善（[万博マニアックマップ][history-expo]）
 * 2026/10/12 カテゴリ横断の「すべて表示」、検索から地図への連携、ブラウザ言語に合わせた表示を追加。写真スクロール案内・遅延読み込み・最大40枚表示、パネルのサイズ変更中の地図表示を改善（[万博マニアックマップ][history-expo]）
