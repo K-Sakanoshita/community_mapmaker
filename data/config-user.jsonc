@@ -1,40 +1,58 @@
-// Community Mapmaker User Config
 {
+    "siteUpdates": {
+        "use": false
+    },
+    "mapDisplayStatus": {
+        "use": false
+    },
     "map": {
-        "changeMap": true, // 地図切り替え時はtrue
-        "tileName": "OSMFJ_NOPOI", // タイル一覧は config-system.jsonc へ
+        "changeMap": true,
+        "tileName": "OSMFJ_NOPOI",
         "viewCenter": [
             135.518691,
             34.663617
         ],
         "viewPitch": 30,
         "maxPitch": 60,
-        "_maxBounds": [ // 旧設定値（現在は無効）
-            [
-                135.30000,
-                34.54000
-            ],
-            [
-                135.80000,
-                34.80000
-            ]
-        ],
-        "maxBounds": "", // 地図の表示範囲(左下[]、右上[])。未指定時は""
+        "maxBounds": "",
         "initZoom": 17,
         "maxZoom": 23,
-        "detailZoom": 19, // 詳細表示時のズームサイズ
-        "zoomMessageThreshold": 17, // 「もっとズームしてください」を消すズームレベル
+        "detailZoom": 19,
+        "zoomMessageThreshold": 17,
         "textFont": [
             "Noto Sans Bold"
-        ], // 使用可能なフォント（spriteに依存）
+        ],
         "textSize": 12,
-        "polygonMarker": { // ポリゴン設定
+        "polygonMarker": {
             "fill-color": "#CC6666",
             "fill-opacity": 0.3
         }
     },
-    "minimap": { // 地球儀表示時の初期設定
-        "use": false, // 地球儀利用時はtrue
+    "mapIllustrations": {
+        "use": false,
+        "autoHide": false,
+        "referenceZoom": 15,
+        "minZoom": 0,
+        "maxZoom": 24,
+        "widthPx": 120,
+        "mobileWidthPx": 80,
+        "shadow": {
+            "use": true,
+            "color": "rgba(0, 0, 0, 0.25)",
+            "blurPx": 4,
+            "offsetXPx": 2,
+            "offsetYPx": 4
+        },
+        "maxVisible": {
+            "desktop": 4,
+            "mobile": 2
+        },
+        "avoidPaddingPx": 24,
+        "illustrationGapPx": 40,
+        "items": []
+    },
+    "minimap": {
+        "use": false,
         "height": 200,
         "initZoom": 2,
         "viewCenter": [
@@ -45,6 +63,7 @@
     "icon": {
         "fgPath": "icon",
         "bgPath": "image",
+        "flagPath": "./flags/w40",
         "shadow": 0.7,
         "attention": 0.8,
         "green": 0.6,
@@ -54,18 +73,17 @@
         "flag": 0.5,
         "textFont": [
             "Noto Sans Regular"
-        ], // 使用可能なフォント（spriteに依存）
+        ],
         "textSize": 12,
-        "textViewZoom": 13, // アイコンに文字を表示するズームレベル
+        "textViewZoom": 13,
         "markerColors": {
             "hover": {
                 "stroke": "#e9a05b"
             },
-            //"attention": { "fill": "#ffffff", "stroke": "#ffc786" },
             "attention": {
                 "fill": "#ffffff",
                 "stroke": "#888888"
-            }, // attentionしか無いのでnormalと同じ色にする
+            },
             "green": {
                 "fill": "#ffffff",
                 "stroke": "#51b3a1"
@@ -85,49 +103,49 @@
         }
     },
     "poiView": {
-        "poiActLoad": true, // 起動時にActivityを読み込むか
+        "poiActLoad": true,
         "poiZoom": {
-            // アイコンの前後位置は後ろの方が手前になる
+            "activity": 12,
             "historic": 16,
             "natural": 16,
             "amenity": 16,
             "shop": 16,
             "indoor": 18,
-            "activity": 12
+            "parking": 16
         },
         "mobilePoiZoom": {
             "indoor": 17
         },
-        "editZoom": {
-            // 編集時に追加するpoiZoom
-        }
+        "editZoom": {},
+        "poiFilter": "all"
     },
     "poiData": {
-        "maxFeatures": 12000, // pdataに保持する最大地物数
-        "pruneThreshold": 15000, // この件数を超えた時だけ遠方データを整理
-        "applyToStatic": false // 静的データは全件保持する
+        "maxFeatures": 12000,
+        "pruneThreshold": 15000,
+        "applyToStatic": false
     },
-    "selectItem": { // 選択リストの内容を手動記載 / 空の時は "" とする
+    "selectItem": {
         "default": "",
         "menu": "",
-        "action": "ChangePoi" // ChangeMap:背景地図切り替え / ChangePoi:メニューに会ったOverpass名のPOIを表示 / "":google Spreadseedのcategory
+        "action": "ChangePoi"
     },
     "sideBar": {
-        "everyView": true, // すべてのビューでサイドバーを表示するか
-        "initView": "view" // 空は非表示 / view:表示 / change:表示と拡大の切り替え / mini:縦の時はタイトルのみ表示。横の時は非表示 / list:リスト表示
+        "everyView": true,
+        "initView": "view"
     },
     "listTable": {
+        "nameFallback": "category",
         "backgroundImage": "./image/transparent.png",
-        "category": "activity", // カテゴリ選択 / activity:アクティビティリスト / tags:タグ / menu: タグベースの手動カテゴリ
-        "target": "tags", // targets:指定したtargetだけ表示 / activity:google sheetsのデータのみ表示 // 空:両方表示
-        "allActs": false, // true: 全てのactivityを常に表示 / false: 画面内のActivityのみ表示
+        "category": "tags",
+        "target": "tags",
+        "allActs": false,
         "playback": {
             "view": false,
             "zoomLevel": 15,
             "timer": 4000
         },
         "download": false,
-        "csvColumn": [ // ダウンロードするCSVの項目
+        "csvColumn": [
             "id",
             "categoryJa",
             "name",
@@ -137,20 +155,163 @@
             "iconFile",
             "lng",
             "lat"
+        ],
+        "height": 0.6
+    },
+    "feature3d": {
+        "use": true,
+        "visualScale": 1,
+        "hitArea": {
+            "use": true,
+            "padding": 0.35,
+            "minSize": 2
+        },
+        "models": {
+            "play_aerialrotator": {
+                "type": "aerialrotator",
+                "size": 2
+            },
+            "play_basketrotator": {
+                "type": "basketrotator",
+                "size": 1.8
+            },
+            "play_activitypanel": {
+                "type": "activitypanel",
+                "size": 1.6
+            },
+            "play_cushion": {
+                "type": "trampoline",
+                "size": 3
+            },
+            "play_komyaku_eye": {
+                "type": "komyaku_eye",
+                "size": 2.7
+            },
+            "play_structure": {
+                "url": "./assets/models/playground/poly-pizza/composite-play-structure/composite-play-structure.glb",
+                "size": 8
+            },
+            "play_seesaw": {
+                "url": "./assets/models/playground/poly-pizza/seesaw/seesaw.glb",
+                "size": 4
+            },
+            "play_slide": {
+                "url": "./assets/models/playground/leonkin-playground/GLTF/slide.glb",
+                "size": 4
+            },
+            "bench": {
+                "url": "./assets/models/poi/bench/scene.gltf",
+                "size": 2
+            },
+            "drinking_water": {
+                "url": "./assets/models/poi/drinking-water/scene.gltf",
+                "size": 1.2,
+                "scaleBelowZoom": 19,
+                "maxZoomScale": 4
+            },
+            "vending_machine": {
+                "url": "./assets/models/poi/vending-machine/scene.gltf",
+                "size": 1.9,
+                "scaleBelowZoom": 19,
+                "maxZoomScale": 4
+            },
+            "vending_machine_red": {
+                "url": "./assets/models/poi/vending-machine-red/scene.gltf",
+                "size": 1.9,
+                "scaleBelowZoom": 19,
+                "maxZoomScale": 4
+            }
+        },
+        "rules": [
+            {
+                "tags": {
+                    "playground": "aerialrotator"
+                },
+                "model": "play_aerialrotator"
+            },
+            {
+                "tags": {
+                    "playground": "basketrotator"
+                },
+                "model": "play_basketrotator"
+            },
+            {
+                "tags": {
+                    "playground": "activitypanel"
+                },
+                "model": "play_activitypanel"
+            },
+            {
+                "tags": {
+                    "playground": "cushion",
+                    "playground:theme": "komyaku"
+                },
+                "model": "play_komyaku_eye"
+            },
+            {
+                "tags": {
+                    "playground": "cushion"
+                },
+                "model": "play_cushion"
+            },
+            {
+                "tags": {
+                    "playground": "structure"
+                },
+                "model": "play_structure"
+            },
+            {
+                "tags": {
+                    "playground": "slide"
+                },
+                "model": "play_slide"
+            },
+            {
+                "tags": {
+                    "playground": "seesaw"
+                },
+                "model": "play_seesaw"
+            },
+            {
+                "tags": {
+                    "amenity": "bench"
+                },
+                "model": "bench"
+            },
+            {
+                "tags": {
+                    "amenity": "drinking_water"
+                },
+                "model": "drinking_water"
+            },
+            {
+                "tags": {
+                    "amenity": "vending_machine",
+                    "brand": "コカ・コーラ"
+                },
+                "model": "vending_machine_red"
+            },
+            {
+                "tags": {
+                    "amenity": "vending_machine"
+                },
+                "model": "vending_machine"
+            }
         ]
     },
     "thumbnail": {
         "use": true,
-        "limits": 20, // 画像の制限数
+        "limits": 20,
         "slideThumbWidth": "320",
         "modalThumbWidth": "800"
     },
     "google": {
-        "AppScript": "", // Google Spreadsheetと連携する時のApps Script URL
-        "targetName": "activity"
+        "AppScript": "",
+        "targetName": "activity",
+        "Analytics": ""
     },
     "static": {
-        "use": false, // true:静的データを利用する / false:OverpassAPIを利用する
+        "use": false,
         "osmjsons": []
     },
     "indoor": {
@@ -181,7 +342,7 @@
             "use": true,
             "minZoom": 15,
             "referenceZoom": 18,
-            "viewportCoverageRatio": 1.0,
+            "viewportCoverageRatio": 1,
             "groupNearbyBuildings": false
         },
         "buildingGroup": {
@@ -203,7 +364,10 @@
                 "7",
                 "8",
                 "9"
-            ]
+            ],
+            "labels": {
+                "roof": "屋上"
+            }
         },
         "control": {
             "view": true,
@@ -216,18 +380,18 @@
         "api_": "wikipedia.org/w/api.php?format=json&action=query&prop=extracts%7Cimages&exintro=&explaintext=&titles=",
         "api": "wikipedia.org/api/rest_v1/page/summary/",
         "domain": "wikipedia.org",
-        "tag": "wikipedia"
+        "tag": "wikipedia",
+        "image": true
     },
     "etc": {
-        "localSave": "", // 訪問済み機能フラグ(有効時はアプリ名、無効時は"")
-        "reverseIcon": false, // true:訪問済みを目立たせる / false:訪問済みを目立たせない
-        "editMode": false, // 編集メニューの表示/非表示
+        "localSave": "",
+        "reverseIcon": false,
+        "editMode": false,
         "splashUrl": "./image/cMapmaker.png",
         "loadingUrl": "./image/loading.gif"
     },
     "menu": {
         "main": [
-            // トップメニュー一覧
             {
                 "glot-model": "about",
                 "linkto": "javascript:cMapMaker.about()",
@@ -248,34 +412,8 @@
                 "linkto": "https://www.openstreetmap.org/about",
                 "divider": false
             }
-            /*
-            {
-                "glot-model": "UseOVCacheYes",
-                "linkto": "javascript:cMapMaker.setCacheMode(true)",
-                "divider": false
-            },
-            {
-                "glot-model": "UseOVCacheNo",
-                "linkto": "javascript:cMapMaker.setCacheMode(false)",
-                "divider": false
-            }
-            */
         ],
-        "mainSystem": [
-            /*
-            {
-                "glot-model": "export_visited",
-                "linkto": "javascript:poiStatusCont.export()",
-                "divider": false
-            },
-            {
-                "glot-model": "import_visited",
-                "linkto": "javascript:poiStatusCont.import()",
-                "divider": false
-            }
-                */
-        ],
-        // 詳細表示のハンバーガーメニュー
+        "mainSystem": [],
         "modal": [
             {
                 "glot-model": "copyShareLink",
@@ -288,7 +426,6 @@
                 "divider": false
             }
         ],
-        // 詳細モーダルの追加ボタン
         "activities": [],
         "editActivity": [
             {
@@ -306,5 +443,44 @@
                 "btn_glot_name": "act_upload"
             }
         ]
+    },
+    "activity": {
+        "url": "",
+        "authMode": "legacy",
+        "targetName": "activity",
+        "local": {
+            "use": false,
+            "hosts": [
+                "127.0.0.1",
+                "localhost",
+                "::1",
+                "[::1]"
+            ],
+            "url": ""
+        }
+    },
+    "news": {
+        "use": false
+    },
+    "changes": {
+        "use": false
+    },
+    "intro": {
+        "use": false
+    },
+    "areaFeatureLinker": {
+        "use": false
+    },
+    "areaSearch": {
+        "use": false
+    },
+    "discovery": {
+        "use": false
+    },
+    "listActions": {
+        "use": false
+    },
+    "directions": {
+        "use": false
     }
 }

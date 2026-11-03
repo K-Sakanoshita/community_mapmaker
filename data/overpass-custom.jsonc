@@ -1,5 +1,54 @@
 {
     "osm": {
+        "green_area": {
+            "overpass": [
+                "node[\"natural\"=\"tree\"]",
+                "way[\"natural\"=\"tree_row\"]",
+                "way[\"barrier\"=\"hedge\"]"
+            ],
+            "tags": [
+                "natural=tree",
+                "natural=tree_row",
+                "barrier=hedge"
+            ],
+            "expression": {
+                "poiView": false,
+                "viewArea": true,
+                "stroke": "#50A050",
+                "stroke-width": 4,
+                "fill-opacity": 0.25
+            }
+        },
+        "traffic_board": {
+            "overpass": [
+                "nwr[\"tourism\"=\"information\"][\"board_type\"=\"traffic\"]"
+            ],
+            "tags": [
+                "board_type=traffic"
+            ],
+            "expression": {
+                "poiView": false,
+                "viewArea": true,
+                "stroke": "#50A050",
+                "stroke-width": 2,
+                "fill-opacity": 0.5
+            }
+        },
+        "nopoi": {
+            "overpass": [
+                "node[\"amenity\"=\"cafe\"]"
+            ],
+            "tags": [
+                "dummy"
+            ],
+            "expression": {
+                "poiView": false,
+                "viewArea": false,
+                "stroke": "#606060",
+                "stroke-width": 0,
+                "fill-opacity": 0
+            }
+        },
         "historic": {
             "overpass": [
                 "nwr[\"historic\"]"
@@ -8,7 +57,7 @@
                 "historic"
             ],
             "expression": {
-                "poiView": true, // true時はアイコン表示
+                "poiView": true,
                 "viewArea": false,
                 "stroke": "#606060",
                 "stroke-width": 0,
@@ -27,7 +76,7 @@
                 "barrier=hedge"
             ],
             "expression": {
-                "poiView": false, // true時はアイコン表示
+                "poiView": false,
                 "viewArea": true,
                 "stroke": "#50A050",
                 "stroke-width": 4,
@@ -39,10 +88,11 @@
                 "nwr[\"amenity\"]"
             ],
             "tags": [
-                "amenity"
+                "amenity",
+                "amenity!=parking"
             ],
             "expression": {
-                "poiView": true, // true時はアイコン表示
+                "poiView": true,
                 "viewArea": false,
                 "stroke": "#606060",
                 "stroke-width": 0,
@@ -58,12 +108,28 @@
             "tags": [
                 "shop",
                 "tourism",
-                "leisure"
+                "leisure",
+                "leisure!=garden"
             ],
             "expression": {
-                "poiView": true, // true時はアイコン表示
+                "poiView": true,
                 "viewArea": false,
                 "stroke": "#606060",
+                "stroke-width": 0,
+                "fill-opacity": 0.25
+            }
+        },
+        "parking": {
+            "overpass": [
+                "nwr[\"amenity\"=\"parking\"]"
+            ],
+            "tags": [
+                "amenity=parking"
+            ],
+            "expression": {
+                "poiView": false,
+                "viewArea": true,
+                "stroke": "#F0E040",
                 "stroke-width": 0,
                 "fill-opacity": 0.25
             }
@@ -89,10 +155,20 @@
                 "viewArea": true,
                 "renderTags": {
                     "line": {
-                        "indoor": ["room", "area", "corridor", "wall"],
-                        "highway": ["corridor"]
+                        "indoor": [
+                            "room",
+                            "area",
+                            "corridor",
+                            "wall"
+                        ],
+                        "highway": [
+                            "corridor"
+                        ]
                     },
                     "point": {
+                        "indoor": [
+                            "door"
+                        ],
                         "door": "*"
                     }
                 },
@@ -137,7 +213,7 @@
                 "natural"
             ],
             "expression": {
-                "poiView": true, // true時はアイコン表示
+                "poiView": true,
                 "viewArea": true,
                 "stroke": "#606060",
                 "stroke-width": 0,

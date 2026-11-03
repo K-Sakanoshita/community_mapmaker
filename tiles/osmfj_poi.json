@@ -2072,7 +2072,6 @@
             },
             "paint": {
                 "fill-color": "rgba(255, 255, 255, 1)",
-                "fill-pattern": "pedestrian_polygon",
                 "fill-antialias": false,
                 "fill-outline-color": "rgba(255, 255, 255, 1)",
                 "fill-translate-anchor": "viewport"
@@ -3325,50 +3324,6 @@
                     1
                 ]
             ]
-        },
-        {
-            "id": "road_major_rail-copy",
-            "type": "line",
-            "source": "openmaptiles",
-            "source-layer": "transportation",
-            "minzoom": 10,
-            "paint": {
-                "line-color": "rgba(96, 96, 96, 0.37)",
-                "line-width": {
-                    "base": 1.4,
-                    "stops": [
-                        [
-                            12,
-                            1
-                        ],
-                        [
-                            16,
-                            2
-                        ],
-                        [
-                            20,
-                            4
-                        ]
-                    ]
-                }
-            },
-            "metadata": {},
-            "filter": [
-                "all",
-                [
-                    "==",
-                    "subclass",
-                    "tram"
-                ],
-                [
-                    "==",
-                    "class",
-                    "transit"
-                ]
-            ],
-            "layout": {
-                "visibility": "visible"
-            }
         },
         {
             "id": "road_major_rail",
@@ -5946,18 +5901,19 @@
             "source-layer": "poi",
             "minzoom": 11,
             "layout": {
-                "icon-size": 1.0,
+                "icon-size": 0.9,
                 "text-font": [
-                    "Noto Sans"
+                    "Roboto Condensed Italic",
+                    "Noto Sans Italic"
                 ],
-                "text-size": 14,
+                "text-size": 16,
                 "icon-image": "{class}_11",
                 "text-field": "{name:ja}",
                 "visibility": "visible",
                 "text-anchor": "left",
                 "text-offset": [
-                    0.7,
-                    -0.1
+                    0.9,
+                    0
                 ],
                 "text-padding": 2,
                 "text-max-width": 9,

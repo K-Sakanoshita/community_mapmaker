@@ -1,0 +1,30 @@
+{
+  "source": "armd-02/HigayodoStreetMap2026",
+  "commit": "85aa48a2eab03b1e0e5dcb801905f60171adba72",
+  "sourceFiles": 1922,
+  "missingFiles": [],
+  "adaptedFiles": [
+    "README.md",
+    "data/category-en.jsonc",
+    "data/category-ja.jsonc",
+    "data/config-activities.jsonc",
+    "data/config-system.jsonc",
+    "data/config-user.jsonc",
+    "data/glot-custom.jsonc",
+    "data/glot-system.jsonc",
+    "data/listtable.jsonc",
+    "data/marker.jsonc",
+    "data/overpass-custom.jsonc",
+    "index.html",
+    "lib/wikimedialib.js",
+    "tests/generic-config.cjs",
+    "tests/map-illustrations.cjs",
+    "tests/wikimedia-headers.cjs"
+  ],
+  "assetFiles": 1785,
+  "assetBytesMatch": true,
+  "modelFiles": 14,
+  "imageFiles": 1750,
+  "modelResourceReferences": 18,
+  "localManifestResources": 29
+}

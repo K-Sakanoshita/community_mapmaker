@@ -45,6 +45,7 @@
                 "college": "college.png",
                 "community_centre": "town-hall.png",
                 "compressed_air": "powered_pump.png",
+                "conference_centre": "user-tie-solid-full.png",
                 "co-working": "commercial.png",
                 "courthouse": "courthouse.png",
                 "coworking_space": "commercial.png",
@@ -399,6 +400,7 @@
                 "storage_rental": "storage_rental.png",
                 "sunglasses": "optician.png",
                 "supermarket": "grocery.png",
+                "tattoo": "tattoo_machine.png",
                 "tailor": "needle_and_spool.png",
                 "tea": "teahouse.png",
                 "ticket": "ticket.png",
@@ -804,6 +806,14 @@
             },
             "wikipedia": {
                 "*": "wikipedia.png"
+            },
+            "information": {
+                "board": "info_board.png",
+                "terminal": "app_terminal.png",
+                "audioguide": "information.png",
+                "map": "info_board.png",
+                "tactile_map": "info_board.png",
+                "guidepost": "map-signs.png"
             }
         },
         "subtag": {

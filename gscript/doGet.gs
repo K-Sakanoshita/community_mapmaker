@@ -1,6 +1,10 @@
 // activity 全件取得用キャッシュ
 var ACTIVITY_CACHE_KEY = "activity_all_v1";
 var ACTIVITY_CACHE_SECONDS = 60; // 秒。必要なら 300 などに変更
+var ACTIVITY_DELETE_MODE = "activity_delete";
+var ACTIVITY_DELETED_COLUMN = "is_deleted";
+var ACTIVITY_DELETED_AT_COLUMN = "deleted_at";
+var ACTIVITY_DELETED_BY_COLUMN = "deleted_by";
 
 function doGet(e) {
 
@@ -127,8 +131,40 @@ function doGet(e) {
 
       if (digest == passwd) {
 
+        if (modeSt === ACTIVITY_DELETE_MODE) {
+          var deleteColumns = ensureActivityDeleteColumns_(sheet);
+          var deleteSucceeded = true;
+
+          params.forEach(function (param) {
+            var deleteRow = findRow(sheet, param["id"], 1);
+            if (deleteRow <= 0 || isActivityDeleted_(sheet, deleteRow, deleteColumns.deleted)) {
+              deleteSucceeded = false;
+              return;
+            }
+            sheet.getRange(deleteRow, deleteColumns.deleted).setValue(1);
+            sheet.getRange(deleteRow, deleteColumns.deletedAt).setValue(nowdt);
+            sheet.getRange(deleteRow, deleteColumns.deletedBy).setValue(userid);
+          });
+
+          if (deleteSucceeded) {
+            clearActivityCache_();
+            retdata = JSON.stringify({ status: "ok" });
+          } else {
+            retdata = JSON.stringify({ status: "ng(no data)" });
+          }
+          idsheet.getRange(userrow, 3).setValue("");
+          return makeOutput_(e, retdata);
+        }
+
+        if (params.some(function (param) {
+          return param.latitude !== undefined || param.longitude !== undefined;
+        })) {
+          ensureActivityCoordinateColumns_(sheet);
+        }
+
         var rows = sheet.getDataRange().getValues();
         var keys = rows.splice(0, 1)[0];
+        var updateSucceeded = true;
 
         params.forEach(function (param) {
 
@@ -136,7 +172,13 @@ function doGet(e) {
           var rownum = findRow(sheet, param["id"], 1);
           var row = [];
 
-          keys.forEach(function (key) {
+          var deletedColumn = keys.indexOf(ACTIVITY_DELETED_COLUMN) + 1;
+          if (rownum > 0 && deletedColumn > 0 && isActivityDeleted_(sheet, rownum, deletedColumn)) {
+            updateSucceeded = false;
+            return;
+          }
+
+          keys.forEach(function (key, keyIndex) {
 
             if (key == "updatetime") {
 
@@ -145,6 +187,14 @@ function doGet(e) {
             } else if (key == "updateuser") {
 
               row.push(userid);
+
+            } else if (key === ACTIVITY_DELETED_COLUMN || key === ACTIVITY_DELETED_AT_COLUMN || key === ACTIVITY_DELETED_BY_COLUMN) {
+
+              row.push(rownum > 0 ? sheet.getRange(rownum, keyIndex + 1).getValue() : "");
+
+            } else if ((key === "latitude" || key === "longitude") && param[key] === undefined && rownum > 0) {
+
+              row.push(sheet.getRange(rownum, keyIndex + 1).getValue());
 
             } else {
 
@@ -184,7 +234,7 @@ function doGet(e) {
         clearActivityCache_();
 
         retdata = JSON.stringify({
-          status: "ok"
+          status: updateSucceeded ? "ok" : "ng(no data)"
         });
 
         idsheet.getRange(userrow, 3).setValue("");
@@ -218,16 +268,61 @@ function doGet(e) {
 function getData(sheet) {
   var rows = sheet.getDataRange().getValues();
   var keys = rows.splice(0, 1)[0];
+  var deletedIndex = keys.indexOf(ACTIVITY_DELETED_COLUMN);
 
-  return rows.map(function (row) {
+  return rows.filter(function (row) {
+    return deletedIndex < 0 || !isDeletedValue_(row[deletedIndex]);
+  }).map(function (row) {
     var obj = {};
 
     row.map(function (item, index) {
-      obj[keys[index]] = item;
+      var key = keys[index];
+      if (key !== ACTIVITY_DELETED_COLUMN && key !== ACTIVITY_DELETED_AT_COLUMN && key !== ACTIVITY_DELETED_BY_COLUMN) {
+        obj[key] = item;
+      }
     });
 
     return obj;
   });
+}
+
+function ensureActivityCoordinateColumns_(sheet) {
+  var lastColumn = Math.max(sheet.getLastColumn(), 1);
+  var headers = sheet.getRange(1, 1, 1, lastColumn).getValues()[0];
+
+  ["latitude", "longitude"].forEach(function (name) {
+    if (headers.indexOf(name) >= 0) return;
+    headers.push(name);
+    sheet.getRange(1, headers.length).setValue(name);
+  });
+}
+
+function ensureActivityDeleteColumns_(sheet) {
+  var lastColumn = Math.max(sheet.getLastColumn(), 1);
+  var headers = sheet.getRange(1, 1, 1, lastColumn).getValues()[0];
+
+  function ensureColumn(name) {
+    var index = headers.indexOf(name);
+    if (index >= 0) return index + 1;
+    headers.push(name);
+    var column = headers.length;
+    sheet.getRange(1, column).setValue(name);
+    return column;
+  }
+
+  return {
+    deleted: ensureColumn(ACTIVITY_DELETED_COLUMN),
+    deletedAt: ensureColumn(ACTIVITY_DELETED_AT_COLUMN),
+    deletedBy: ensureColumn(ACTIVITY_DELETED_BY_COLUMN)
+  };
+}
+
+function isActivityDeleted_(sheet, row, deletedColumn) {
+  return isDeletedValue_(sheet.getRange(row, deletedColumn).getValue());
+}
+
+function isDeletedValue_(value) {
+  return value === true || value === 1 || String(value).toLowerCase() === "true";
 }
 
 function findRow(sh, val, col) {

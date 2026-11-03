@@ -1,4 +1,8 @@
 {
+    "listUnnamed": {
+        "ja": "名称不明",
+        "en": "Unnamed place"
+    },
     "site_title": {
         "ja": "Community Map Maker",
         "en": "Community Map Maker"
@@ -39,7 +43,6 @@
         "ja": "",
         "en": ""
     },
-    // listtable.js
     "listCategory": {
         "ja": "種類",
         "en": "Category"
@@ -143,5 +146,53 @@
     "act_license_attention": {
         "ja": "投稿された情報はオープンデータ(CC0)として公開されます。内緒の情報などは書かないでください。",
         "en": "The posted information will be published as open data (CC0), so please do not include any confidential information."
+    },
+    "libc": {
+        "ja": "年表",
+        "en": "chronology"
+    },
+    "higayodo_field_actdate": {
+        "ja": "投稿日",
+        "en": "Actdate"
+    },
+    "higayodo_field_title": {
+        "ja": "タイトル",
+        "en": "Title"
+    },
+    "higayodo_field_body": {
+        "ja": "本文",
+        "en": "Body"
+    },
+    "higayodo_field_category": {
+        "ja": "カテゴリ",
+        "en": "Category"
+    },
+    "higayodo_field_memo": {
+        "ja": "メモ",
+        "en": "Memo"
+    },
+    "higayodo_field_address": {
+        "ja": "住所",
+        "en": "Address"
+    },
+    "higayodo_field_openning": {
+        "ja": "開催時間",
+        "en": "Openning"
+    },
+    "higayodo_field_detail_url": {
+        "ja": "詳細URL",
+        "en": "Detail Url"
+    },
+    "higayodo_field_picture_url1": {
+        "ja": "写真URL1",
+        "en": "Picture Url1"
+    },
+    "higayodo_field_picture_url2": {
+        "ja": "写真URL2",
+        "en": "Picture Url2"
+    },
+    "higayodo_field_picture_url3": {
+        "ja": "写真URL3",
+        "en": "Picture Url3"
     }
 }

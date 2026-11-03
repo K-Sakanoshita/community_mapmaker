@@ -213,26 +213,44 @@ class Activities {
         html += `<div class="col-9 p-1"><input type="text" id="act_userid" class="form-control form-control-sm"></input></div>`;
         html += `<div class="col-3 p-1">${glot.get("act_passwd")}</div>`;
         html += `<div class="col-9 p-1"><input type="password" id="act_passwd" class="form-control form-control-sm"></input></div>`;
+        html += `<div class="col-9 offset-3 p-1"><button type="button" class="participation-link" onclick="areaSearchController.open('research')" aria-haspopup="dialog" aria-controls="poiFilterModal">${glot.get("contribute_firstTime")}</button></div>`;
         html += `</div></div>`;
         html += `<input type="hidden" id="act_id" value="${params.id === void 0 ? "" : params.id}"></input>`;
         html += `<input type="hidden" id="act_osmid" value="${data.osmid}"></input>`;
 
         winCont.setProgress(0);
         mapLibre.viewMiniMap(false)
-        winCont.makeDetail({ title: title, message: html, menu: true, append: Conf.menu.editActivity });
+        const editActions = [...Conf.menu.editActivity];
+        if (Conf.etc.editMode && params.id !== void 0) {
+            editActions.push(...(Conf.menu.deleteActivity ?? []));
+        }
+        winCont.makeDetail({ title: title, message: html, menu: true, append: editActions });
         cMapMaker.changeMode("edit");
     }
 
     save() {
         let act = Conf.activities;
         let fname = Object.keys(Conf.activities)[0];
+        const authMode = String(Conf.activity.authMode || "legacy").toLowerCase();
         winCont.setProgress(0);
         let userid = document.getElementById("act_userid").value;
         let passwd = document.getElementById("act_passwd").value;
         if (!modalActs.busy && userid !== "" && passwd !== "") {
             winCont.setProgress(10);
             modalActs.busy = true;
+            const coordinates = poiCont.get_osmid(act_osmid.value)?.lnglat
+                ?? poiCont.get_actid(act_id.value)?.lnglat;
             let senddata = { id: act_id.value, osmid: act_osmid.value };
+            if (Array.isArray(coordinates) && coordinates.length >= 2
+                && coordinates[0] != null && String(coordinates[0]).trim() !== ""
+                && coordinates[1] != null && String(coordinates[1]).trim() !== ""
+                && Number.isFinite(Number(coordinates[0]))
+                && Number.isFinite(Number(coordinates[1]))
+                && Math.abs(Number(coordinates[0])) <= 180
+                && Math.abs(Number(coordinates[1])) <= 90) {
+                senddata.longitude = Number(coordinates[0]);
+                senddata.latitude = Number(coordinates[1]);
+            }
             Object.keys(act[fname].form).forEach((key) => {
                 let field = act[fname].form[key];
                 if (field.gsheet !== "" && field.gsheet !== undefined) {
@@ -246,44 +264,109 @@ class Activities {
                     }
                 }
             });
-            gSheet
-                .get_salt(Conf.google.AppScript, userid)
-                .then((e) => {
-                    winCont.setProgress(40);
-                    console.log("salt: " + e.salt);
+            const passwordPromise = authMode === "basic"
+                ? Promise.resolve(passwd)
+                : gSheet.get_salt(Conf.activity.url, userid).then((e) => {
+                    if (!e || typeof e.salt !== "string") throw new Error("Salt response is invalid.");
                     return basic.makeSHA256(passwd + e.salt);
-                })
-                .then((hashpw) => {
+                });
+            passwordPromise
+                .then((requestPassword) => {
                     winCont.setProgress(70);
-                    console.log("hashpw: " + hashpw);
-                    return gSheet.set(Conf.google.AppScript, senddata, fname, userid, hashpw);
+                    return gSheet.set(
+                        Conf.activity.url,
+                        senddata,
+                        fname,
+                        userid,
+                        requestPassword,
+                        { authMode }
+                    );
                 })
                 .then((e) => {
                     winCont.setProgress(100);
-                    if (e.status.indexOf("ok") > -1) {
+                    if (String(e?.status || "").includes("ok")) {
                         console.log("save: ok");
+                        winCont.showMessage(glot.get("act_saved"));
                         cMapMaker.clearDatail();
-                        gSheet.get(Conf.google.AppScript).then((jsonp) => {
-                            poiCont.setActdata(jsonp);
-                            let targets = Conf.listTable.target == "targets" ? [listTable.getSelCategory()] : ["-"];
-                            cMapMaker.viewArea();
-                            cMapMaker.viewPoi(targets); // in targets
-                            cMapMaker.changeMode("map"); // in targets
-                            winCont.setProgress(0);
-                            modalActs.busy = false;
-                        });
+                        cMapMaker.reloadActivitiesForView()
+                            .then(async () => {
+                                await changesController.checkActivityChanges(Conf.activity, { force: true });
+                                cMapMaker.showChangeTicker();
+                            })
+                            .catch((error) => {
+                                console.error("Activity reload failed:", error);
+                                alert(glot.get("act_error"));
+                            })
+                            .finally(() => {
+                                cMapMaker.changeMode("map");
+                                winCont.setProgress(0);
+                                modalActs.busy = false;
+                            });
                     } else {
                         console.log("save: ng");
                         alert(glot.get("act_error"));
                         winCont.setProgress(0);
                         modalActs.busy = false;
                     }
-                }).catch(() => {
+                }).catch((error) => {
+                    console.error("Activity save failed:", error);
+                    alert(glot.get("act_error"));
                     winCont.setProgress(0);
                     modalActs.busy = false;
                 });
         } else if (userid == "" || passwd == "") {
             alert(glot.get("act_error"));
+        }
+    }
+
+    async remove() {
+        const activityId = String(document.getElementById("act_id")?.value ?? "").trim();
+        const userid = String(document.getElementById("act_userid")?.value ?? "").trim();
+        const passwd = String(document.getElementById("act_passwd")?.value ?? "");
+        if (!Conf.etc.editMode || !activityId || !userid || !passwd || this.busy) {
+            if (!this.busy) alert(glot.get("act_delete_auth_required"));
+            return;
+        }
+
+        const confirmed = await winCont.confirm({
+            title: glot.get("act_delete_confirm_title"),
+            message: glot.get("act_delete_confirm_message"),
+            yesText: glot.get("act_delete"),
+            yesClass: "btn btn-danger"
+        });
+        if (!confirmed) return;
+
+        this.busy = true;
+        winCont.setProgress(30);
+        try {
+            const authMode = String(Conf.activity.authMode || "legacy").toLowerCase();
+            const requestPassword = authMode === "basic"
+                ? passwd
+                : await gSheet.get_salt(Conf.activity.url, userid).then((response) => {
+                    if (!response || typeof response.salt !== "string") throw new Error("invalid_salt");
+                    return basic.makeSHA256(passwd + response.salt);
+                });
+            const response = await gSheet.remove(
+                Conf.activity.url,
+                activityId,
+                userid,
+                requestPassword,
+                { authMode }
+            );
+            if (!String(response?.status || "").includes("ok")) {
+                throw new Error(response?.code || "delete_failed");
+            }
+
+            winCont.setProgress(100);
+            await cMapMaker.clearDatail();
+            await cMapMaker.reloadActivitiesForView();
+            cMapMaker.changeMode("map");
+        } catch (error) {
+            console.error("Activity delete failed:", error);
+            alert(glot.get("act_delete_error"));
+        } finally {
+            winCont.setProgress(0);
+            this.busy = false;
         }
     }
 

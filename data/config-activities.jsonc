@@ -1,5 +1,66 @@
 {
     "activities": {
+        "higayodo_artfes_2026": {
+            "header": "",
+            "footer": "",
+            "form": {
+                "actdate": {
+                    "glot": "higayodo_field_actdate",
+                    "type": "date",
+                    "gsheet": "actdate"
+                },
+                "title": {
+                    "glot": "higayodo_field_title",
+                    "type": "text",
+                    "gsheet": "title"
+                },
+                "body": {
+                    "glot": "higayodo_field_body",
+                    "type": "textarea",
+                    "gsheet": "body"
+                },
+                "category": {
+                    "glot": "higayodo_field_category",
+                    "type": "text",
+                    "gsheet": "category"
+                },
+                "memo": {
+                    "glot": "higayodo_field_memo",
+                    "type": "text",
+                    "gsheet": "memo"
+                },
+                "address": {
+                    "glot": "higayodo_field_address",
+                    "type": "text",
+                    "gsheet": "address"
+                },
+                "openning": {
+                    "glot": "higayodo_field_openning",
+                    "type": "text",
+                    "gsheet": "openning"
+                },
+                "detail_url": {
+                    "glot": "higayodo_field_detail_url",
+                    "type": "url",
+                    "gsheet": "detail_url"
+                },
+                "picture_url1": {
+                    "glot": "higayodo_field_picture_url1",
+                    "type": "image_url",
+                    "gsheet": "picture_url1"
+                },
+                "picture_url2": {
+                    "glot": "higayodo_field_picture_url2",
+                    "type": "image_url",
+                    "gsheet": "picture_url2"
+                },
+                "picture_url3": {
+                    "glot": "higayodo_field_picture_url3",
+                    "type": "image_url",
+                    "gsheet": "picture_url3"
+                }
+            }
+        },
         "sample": {
             "header": "",
             "footer": "",
