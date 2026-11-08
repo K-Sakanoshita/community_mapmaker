@@ -1,0 +1,51 @@
+{
+    "list": {
+        "columns": {
+            "style": [
+                {
+                    "className": "col-12",
+                    "fallbackName": true
+                },
+                {
+                    "className": "col-12",
+                    "icon": true
+                },
+                {
+                    "className": "col-12",
+                    "glotName": "list_religion_label",
+                    "valueGlotPrefix": "religion_"
+                },
+                {
+                    "className": "col-12",
+                    "glotName": "list_denomination_label",
+                    "valueGlotPrefix": "denomination_"
+                },
+                {
+                    "className": "col-12",
+                    "glotName": "list_start_date_label"
+                },
+                {
+                    "className": "col-12"
+                }
+            ],
+            "poiFields": [
+                "id",
+                "#category",
+                "name",
+                "religion",
+                "denomination",
+                "start_date",
+                ""
+            ],
+            "actFields": [
+                "id",
+                "#category",
+                "#name",
+                "#religion",
+                "#denomination",
+                "#start_date",
+                "memo"
+            ]
+        }
+    }
+}

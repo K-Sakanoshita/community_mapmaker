@@ -12,6 +12,7 @@ const strip = { children: [], classList: classes(), scrollWidth: 400, clientWidt
     addEventListener: (type, handler) => { handlers[type] = handler; },
     removeEventListener: type => { delete handlers[type]; },
     append(image) { this.children.push(image); },
+    querySelector() { return this.children[0] ?? null; },
     querySelectorAll() { return this.children.filter(image => image.dataset.thumbnailLoaded === 'true'); },
     set innerHTML(value) { this.children = []; }
 };

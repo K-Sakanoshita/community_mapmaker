@@ -194,5 +194,89 @@
     "higayodo_field_picture_url3": {
         "ja": "写真URL3",
         "en": "Picture Url3"
+    },
+    "list_religion_label": {
+        "ja": "宗教：",
+        "en": "Religion: "
+    },
+    "list_denomination_label": {
+        "ja": "宗派：",
+        "en": "Denomination: "
+    },
+    "list_start_date_label": {
+        "ja": "年代：",
+        "en": "Date: "
+    },
+    "religion_buddhist": {
+        "ja": "仏教",
+        "en": "Buddhism"
+    },
+    "religion_shinto": {
+        "ja": "神道",
+        "en": "Shinto"
+    },
+    "religion_christian": {
+        "ja": "キリスト教",
+        "en": "Christianity"
+    },
+    "religion_muslim": {
+        "ja": "イスラム教",
+        "en": "Islam"
+    },
+    "religion_jewish": {
+        "ja": "ユダヤ教",
+        "en": "Judaism"
+    },
+    "religion_hindu": {
+        "ja": "ヒンドゥー教",
+        "en": "Hinduism"
+    },
+    "religion_taoist": {
+        "ja": "道教",
+        "en": "Taoism"
+    },
+    "denomination_jodo_shinshu": {
+        "ja": "浄土真宗",
+        "en": "Jodo Shinshu"
+    },
+    "denomination_jodo_shu": {
+        "ja": "浄土宗",
+        "en": "Jodo Shu"
+    },
+    "denomination_nichiren": {
+        "ja": "日蓮宗",
+        "en": "Nichiren"
+    },
+    "denomination_zen": {
+        "ja": "禅宗",
+        "en": "Zen"
+    },
+    "denomination_soto": {
+        "ja": "曹洞宗",
+        "en": "Soto"
+    },
+    "denomination_rinzai": {
+        "ja": "臨済宗",
+        "en": "Rinzai"
+    },
+    "denomination_shingon": {
+        "ja": "真言宗",
+        "en": "Shingon"
+    },
+    "denomination_tendai": {
+        "ja": "天台宗",
+        "en": "Tendai"
+    },
+    "denomination_catholic": {
+        "ja": "カトリック",
+        "en": "Catholic"
+    },
+    "denomination_protestant": {
+        "ja": "プロテスタント",
+        "en": "Protestant"
+    },
+    "denomination_orthodox": {
+        "ja": "正教会",
+        "en": "Orthodox"
     }
 }

@@ -134,6 +134,11 @@ a {
     border-color: #d5dae0;
 }
 
+/* Short details must not clip the dropdown below their header. */
+#detailMenu {
+    overflow: visible;
+}
+
 #sidebarResizeHandle {
     position: absolute;
     top: 0;
@@ -634,7 +639,7 @@ tr.selected td {
 }
 #listArea .list-facility-item > .list-detail-button > .row > div { width: auto; min-width: 0; padding: 0; }
 #listArea .list-facility-name { grid-column: 2; grid-row: 1; font-size: .95rem; font-weight: 600; overflow-wrap: anywhere; }
-#listArea .list-facility-ref { grid-column: 1; grid-row: 2; font-size: .75rem; color: #697580; overflow-wrap: anywhere; }
+#listArea .list-facility-ref { grid-column: 2; grid-row: 2; font-size: .75rem; color: #697580; overflow-wrap: anywhere; }
 #listArea .list-facility-meta { grid-column: 2; font-size: .8rem; color: #697580; overflow-wrap: anywhere; }
 #listArea .list-facility-item .list-icon { position: absolute; left: .75rem; top: .75rem; width: 24px; height: 24px; margin: 0; object-fit: contain; }
 #listArea .list-facility-item > .list-detail-button > small { margin-left: 36px; font-size: .75rem; }

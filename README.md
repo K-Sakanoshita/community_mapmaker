@@ -72,6 +72,10 @@ node tests/run.cjs
 * 2026/08/22 「長浜城下町遺産マップ」の実装をもとに本家を更新
 * 2026/11/03 「HigayodoStreetMap2026」の最新版をもとに、設定・全機能・3Dモデル・画像を更新
 
+## 一覧の項目値を翻訳する
+
+`data/listtable.jsonc` の列設定に `valueGlotPrefix` を指定すると、値に応じた文言を `data/glot-custom.jsonc` から表示できます。例えば `"valueGlotPrefix": "religion_"` を指定した列では、`buddhist` を `religion_buddhist` の日本語・英語表示に置き換えます。セミコロン区切りの複数値にも対応し、翻訳がない値は元の文字列を表示します。
+
 ## 主な更新履歴
 
 Community Map Makerと、同じコードをもとに開発している各マップの機能面の履歴です。
@@ -150,6 +154,7 @@ Community Map Makerと、同じコードをもとに開発している各マッ�
 * 2026/10/28 固定座標の装飾画像を地図と一緒に回転・傾斜・拡大縮小して表示し、影とパネル背景を設定可能に。投稿画像とOSM画像の併用、カテゴリ変更時の地図・一覧・写真の更新を改善（[ひがよど文化祭 会場周遊マップ2026][history-higayodo]）
 * 2026/10/31 新着情報の座標を使った先行移動と詳細の並行取得、欠落地物の代替Overpassサーバーからの取得に対応。更新内訳と絞り込み表示、低ズーム時のアイコン縮小を改善（[遊具のある公園マップ][history-playgrounds]・[ひがよど文化祭 会場周遊マップ2026][history-higayodo]）
 * 2026/11/03 ソフトキーボード表示中のリサイズで入力フォームが再描画され、ユーザー名などを入力できなくなる問題を修正（[遊具のある公園マップの修正コミット](https://github.com/armd-02/Playgrounds/commit/ceab991d01046b866775886cc3618e1e93e9b1d5)から取り込み）
+* 2026/11/08 一覧の項目値翻訳・名称未設定施設のアイコン表示、取得できないサムネイルの除去、詳細メニューの表示と歴史カテゴリ名称を更新（[openhc-map](https://github.com/armd-02/openhc-map/commit/60bed722ad749e09b33cb51de6765baea1a6ca5e)から共通機能を取り込み。詳細は[取り込み記録](docs/upstream-openhc.md)）
 
 [history-osaka]: https://github.com/armd-02/OsakaMemories#更新履歴
 [history-historyculture]: https://github.com/armd-02/openhc-map#更新履歴

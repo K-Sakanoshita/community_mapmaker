@@ -268,7 +268,17 @@ for (const [suffix, index] of [['top-left', 0], ['top-right', 1], ['bottom-right
 assert.equal(settings.autoHide, false);
 assert.equal(settings.minZoom, 0);
 assert.equal(settings.maxZoom, 24);
-for (const item of settings.items) assert.ok(fs.existsSync(item.image), item.image);
+layer.init(map, settings);
+flush();
+assert.equal(layer.items.length, settings.items.length);
+layer.destroy();
+// Fixture artwork belongs to the upstream event; only active site assets must exist.
+const siteSettings = vm.runInNewContext('(' + fs.readFileSync('data/config-user.jsonc', 'utf8') + ')').mapIllustrations;
+if (siteSettings?.use === true) {
+    for (const item of siteSettings.items ?? []) {
+        if (item.use !== false) assert.ok(fs.existsSync(item.image), item.image);
+    }
+}
 assert.ok(JSON.parse(fs.readFileSync('manifest.json', 'utf8')).scriptGroups
     .some(group => group.scripts.includes('./lib/mapillustrations.js')));
 console.log('PASS: geographic illustrations scale/rotate/tilt at fixed corners, restore styles, avoid collisions and clean up');

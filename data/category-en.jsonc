@@ -601,7 +601,7 @@
             "railway_car": "historic railway car",
             "ruins": "ruins",
             "street_lamp": "street lamp",
-            "stone": "histric stone",
+            "stone": "historic stone",
             "tomb": "tomb",
             "wayside_shrine": "wayside shrine",
             "wayside_cross": "cross",
@@ -612,7 +612,7 @@
             "city_gate": "historic city gate",
             "gate": "historic gate",
             "fort": "fort",
-            "manor": "historic manor",
+            "manor": "manor",
             "wreck": "wreck"
         },
         "marker": {
