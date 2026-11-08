@@ -34,7 +34,7 @@ assert.ok(prepared.activity.local.hosts.includes('127.0.0.1'));
 assert.equal(prepared.mapIllustrations.use, false);
 assert.equal(prepared.mapIllustrations.items.length, 0);
 for (const name of ['news', 'changes', 'intro', 'areaFeatureLinker', 'areaSearch',
-    'discovery', 'listActions', 'directions']) {
+    'discovery', 'listActions', 'directions', 'documentPreview', 'mapImageLinks']) {
     assert.equal(prepared[name].use, false, `${name} requires opt-in`);
 }
 assert.equal(prepared.feature3d.use, true);
@@ -92,3 +92,17 @@ assert.equal(context.Conf.activity.targetName, 'custom');
 assert.equal(context.Conf.areaFeatureLinker.use, true);
 assert.equal(context.Conf.feature3d.use, true);
 console.log('PASS: generic Community Map Maker settings, legacy GAS compatibility, disabled dedicated services, and explicit opt-in');
+
+context.Conf = {};
+context.maker.prepareConfig();
+assert.equal(context.Conf.documentPreview.use, false, 'document previews are opt-in');
+assert.equal(context.Conf.directions.use, false, 'directions remain disabled when not configured');
+context.Conf.documentPreview = { use: true, field: 'custom_document' };
+context.maker.prepareConfig();
+assert.equal(context.Conf.documentPreview.use, true);
+assert.equal(context.Conf.documentPreview.field, 'custom_document');
+
+assert.equal(context.Conf.mapImageLinks.use, false, "map image links are opt-in");
+context.Conf.mapImageLinks = { use: true, items: [] };
+context.maker.prepareConfig();
+assert.equal(context.Conf.mapImageLinks.use, true);

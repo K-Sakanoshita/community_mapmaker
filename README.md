@@ -156,6 +156,8 @@ Community Map Makerと、同じコードをもとに開発している各マッ�
 * 2026/11/03 ソフトキーボード表示中のリサイズで入力フォームが再描画され、ユーザー名などを入力できなくなる問題を修正（[遊具のある公園マップの修正コミット](https://github.com/armd-02/Playgrounds/commit/ceab991d01046b866775886cc3618e1e93e9b1d5)から取り込み）
 * 2026/11/08 一覧の項目値翻訳・名称未設定施設のアイコン表示、取得できないサムネイルの除去、詳細メニューの表示と歴史カテゴリ名称を更新（[openhc-map](https://github.com/armd-02/openhc-map/commit/60bed722ad749e09b33cb51de6765baea1a6ca5e)から共通機能を取り込み。詳細は[取り込み記録](docs/upstream-openhc.md)）
 
+* 2026/11/08 写真・資料の拡大表示を共通画像ビューアに統一し、会場詳細の資料画像プレビューと地図上の画像リンクに対応（[HigayodoStreetMap2026](https://github.com/armd-02/HigayodoStreetMap2026/commit/f1def015a0fd5ad524f46573b88b57791989d02f)から共通コードを取り込み。設定方法は[関連資料の画像プレビュー](docs/community-mapmaker.md#関連資料の画像プレビュー)を参照）
+
 [history-osaka]: https://github.com/armd-02/OsakaMemories#更新履歴
 [history-historyculture]: https://github.com/armd-02/openhc-map#更新履歴
 [history-playgrounds]: https://github.com/armd-02/Playgrounds#主な更新履歴

@@ -353,7 +353,7 @@ class CMapMaker extends IndoorControl {
         };
         // Dedicated applications opt in to new services and area/model definitions.
         for (const name of ["news", "changes", "intro", "siteUpdates", "areaFeatureLinker", "areaSearch",
-            "discovery", "listActions", "feature3d", "directions"]) {
+            "discovery", "listActions", "feature3d", "directions", "documentPreview", "mapImageLinks"]) {
             Conf[name] = { use: false, ...Conf[name] };
         }
     }
@@ -517,6 +517,8 @@ class CMapMaker extends IndoorControl {
                     mapLibre.addControl("bottom-left", "images", "", "showcase"); // add images
                     this.mapIllustrations = new MapIllustrations();
                     this.mapIllustrations.init(mapLibre.map, Conf.mapIllustrations);
+                    this.mapImageLinks = new MapImageLinks();
+                    this.mapImageLinks.init(mapLibre.map, Conf.mapImageLinks);
                     mapLibre.addNavigation("bottom-right");
                     mapLibre.addControl("bottom-left", "globalStatus", "", "m-0");
                     globalStatus.innerHTML = '<div class="global-status-message" role="status" aria-live="polite"><div id="globalSpinner" class="spinner-border spinner-border-sm text-primary flex-shrink-0 m-0 d-none" aria-hidden="true"></div><span id="globalMessage" class="globalMessage"></span></div>';

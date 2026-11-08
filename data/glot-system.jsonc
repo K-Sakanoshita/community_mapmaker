@@ -1,4 +1,22 @@
 {
+    "map_documents_title": {"ja":"パンフレット", "en":"Brochure"},
+    "map_documents_map": {"ja":"会場マップ", "en":"Venue map"},
+    "map_documents_program": {"ja":"イベント紹介", "en":"Program"},
+    "image_viewer_region": {"ja": "掲載部分", "en": "Selected area"},
+    "image_viewer_whole": {"ja": "全体", "en": "Whole image"},
+    "image_viewer_zoomIn": {"ja": "拡大 ＋", "en": "Zoom in +"},
+    "image_viewer_zoomOut": {"ja": "縮小 −", "en": "Zoom out −"},
+    "image_viewer_close": {"ja": "閉じる", "en": "Close"},
+    "image_viewer_help": {"ja": "ドラッグで移動、ピンチ・ホイールで拡大縮小。矢印キーでも移動できます。", "en": "Drag to pan; pinch or scroll to zoom. Arrow keys also pan."},
+    "image_viewer_loading": {"ja": "画像を読み込んでいます…", "en": "Loading image…"},
+    "image_viewer_error": {"ja": "画像を読み込めませんでした", "en": "Unable to load image"},
+    "image_viewer_title": {"ja": "画像", "en": "Image"},
+    "image_viewer_actual": {"ja": "等倍", "en": "Actual size"},
+
+    "document_preview_title": {"ja": "関連資料", "en": "Related document"},
+    "document_preview_open": {"ja": "資料を拡大して見る", "en": "Open document"},
+    "document_preview_error": {"ja": "画像を読み込めませんでした", "en": "Unable to load image"},
+
     "facility_toilet_details": {
         "ja": "トイレの詳細を見る",
         "en": "View toilet details"

@@ -1,4 +1,14 @@
 {
+    "documentPreview": {
+        "use": false,
+        "field": "document_preview"
+    },
+    "mapImageLinks": {
+        "use": false,
+        "minZoom": 13,
+        "maxZoom": 19,
+        "items": []
+    },
     "siteUpdates": {
         "use": false
     },

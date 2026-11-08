@@ -29,8 +29,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@5.24.0/dist/maplibre-gl.min.css" />
-    <link rel="stylesheet" href="system.css?ver=20261108-01" />
-<script type="module" src="./loader.module.js?ver=20261108-01"></script>
+    <link rel="stylesheet" href="system.css?ver=20261108-02" />
+<script type="module" src="./loader.module.js?ver=20261108-02"></script>
 </head>
 
 <body>
@@ -282,14 +282,11 @@
         </div>
     </div>
 
-    <div id="PinchImageBK" onclick="modalActs.closeMedia()">
+    <div id="MediaBackdrop" onclick="modalActs.closeMedia()">
         <div class="d-flex align-items-center justify-content-center h-100">
             <div class="spinner-border text-primary" id="image_spinner"></div>
         </div>
     </div>
-    <img id="PinchImage" draggable="false" onclick="modalActs.toggleImageSize(this, event)"></img>
-    <button type="button" id="PinchImageClose" aria-label="画像を閉じる" data-glot-aria-label="image_close" title="閉じる" data-glot-title="ui_close"
-        onclick="event.stopPropagation(); modalActs.closeMedia()">✕</button>
     <video id="FullScreenVideo" playsinline onclick="modalActs.toggleVideo(this)"></video>
     <button type="button" id="FullScreenVideoClose" aria-label="動画を閉じる" data-glot-aria-label="video_close" title="閉じる" data-glot-title="ui_close"
         onclick="event.stopPropagation(); modalActs.closeMedia()">✕</button>

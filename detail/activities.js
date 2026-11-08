@@ -21,6 +21,7 @@ class Activities {
         let makehtml = function (form, act) {
             let chtml = "";
             Object.keys(form).forEach((key) => {
+                if (form[key].gsheet === Conf.documentPreview?.field && Conf.documentPreview?.use === true) return;
                 if (form[key].viewHidden !== true) {
                     //chtml += `<div class='row'>`;
                     let gdata = act[form[key].gsheet] == undefined ? "" : String(act[form[key].gsheet]);
@@ -116,6 +117,7 @@ class Activities {
                 result += clone.outerHTML;
             }
         });
+        result += DocumentPreview.render(actlists);
         setTimeout(() => {
             wikimq.forEach((q) => { wikimedia.getWikiMediaImage(q[0], Conf.thumbnail.modalThumbWidth, q[1]); }); // WikiMedia Image 遅延読み込み
         }, 500)
@@ -391,7 +393,8 @@ class Activities {
         video.src = src;
         video.style.display = "block";
         document.getElementById("FullScreenVideoClose").style.display = "block";
-        PinchImageBK.style.display = "block";
+        ImageViewer.close();
+        document.getElementById("MediaBackdrop").style.display = "block";
 
         const playVideo = () => {
             try {
@@ -418,207 +421,19 @@ class Activities {
         document.getElementById("FullScreenVideoClose").style.display = "none";
         video.removeAttribute("src");
         video.load();
+        document.getElementById("MediaBackdrop").style.display = "none";
     }
 
     closeMedia() {
         this.closeVideo();
-        this.pinchImage(false);
+        ImageViewer.close();
     }
 
-    viewImage(e) {
-        const loadImage = async (e) => {
-            let image = document.getElementById("PinchImage");
-            let src_thumb = e.getAttribute("src_thumb");          // サムネイル画像を表示させる
-            image.src = src_thumb == null ? e.src : src_thumb;
-            try {
-                PinchImageBK.style.display = "block"
-                winCont.spinner(true)
-                await image.decode();
-                modalActs.setImageSize(image, "fit");
-                image.style.display = "block";
-                document.getElementById("PinchImageClose").style.display = "block";
-                winCont.spinner(false)
-                modalActs.pinchImage(true)
-            } catch (encodingError) {
-                console.log("viewImage: decode error.");
-                winCont.spinner(false)
-            }
-        }
-        loadImage(e);
-    }
-
-    setImageSize(image, viewMode) {
-        let width = image.naturalWidth;
-        let height = image.naturalHeight;
-        if (viewMode === "fit") {
-            [width, height] = basic.calcImageSize(width, height, window.innerWidth, window.innerHeight);
-        }
-        image.style.width = width + "px";
-        image.style.height = height + "px";
-        image.style.left = ((window.innerWidth - width) / 2) + "px";
-        image.style.top = ((window.innerHeight - height) / 2) + "px";
-        image.style.transform = "translate(0px, 0px) scale(1)";
-        image.style.cursor = viewMode === "fit" ? "zoom-in" : "grab";
-        image.dataset.viewMode = viewMode;
-    }
-
-    toggleImageSize(image, event) {
-        if (image._suppressNextClick) {
-            image._suppressNextClick = false;
-            event?.preventDefault();
-            return;
-        }
-        const viewMode = image.dataset.viewMode === "actual" ? "fit" : "actual";
-        this.setImageSize(image, viewMode);
-        this.pinchImage(true);
-    }
-
-    pinchImage(view) {
-        let scale = 1, x = 0, y = 0, initX = 0, initY = 0, realX = 0, realY = 0, org_W = 0, org_H = 0,
-            pinchStartDistance = null, pinchStartMove = null,
-            image = document.getElementById("PinchImage");
-        realX = parseInt(image.style.left) || 0;
-        realY = parseInt(image.style.top) || 0;
-        org_W = image.offsetWidth;
-        org_H = image.offsetHeight;
-
-        function handleTouchMove(e) {
-            console.log("handleTouchMove");
-            let orgX = x, orgY = y;
-
-            if (e.touches.length == 1) {  // 1本指の時
-                if (pinchStartMove === null) {
-                    pinchStartMove = true
-                    initX = e.touches[0].pageX
-                    initY = e.touches[0].pageY
-                }
-                x = e.touches[0].pageX - initX + realX
-                y = e.touches[0].pageY - initY + realY
-                x = x < (image.width * -1 + 10) ? orgX : x						// マイナス補正
-                x = x > (window.innerWidth - 10) ? orgX : x		// プラス補正
-                y = (y + image.height - 10) < 10 ? orgY : y						// マイナス補正
-                y = y > (window.innerHeight - 10) ? orgY : y					// プラス補正
-                image.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
-            } else if (e.touches.length == 2) {  // 2本指でピンチ操作
-                const touch1 = e.touches[0];
-                const touch2 = e.touches[1];
-
-                // 2本指の間の距離を計算
-                let distance = Math.hypot(touch1.pageX - touch2.pageX, touch1.pageY - touch2.pageY);
-
-                // 最初の距離を記録
-                if (pinchStartDistance === null) {
-                    pinchStartDistance = distance;
-                    return;
-                }
-
-                // スケール計算
-                let scaleChange = distance / pinchStartDistance;
-                let newScale = scale * scaleChange;
-
-                // スケールが小さすぎないように制限
-                if (newScale < 0.5) newScale = 0.5;
-                if (newScale > 3) newScale = 3;  // スケールの上限設定
-
-                // ピンチ中心を基準に画像を拡大・縮小
-                let pinchCenterX = (touch1.pageX + touch2.pageX) / 4;
-                let pinchCenterY = (touch1.pageY + touch2.pageY) / 4;
-
-                // 画像の拡大・縮小に合わせて位置を補正
-                let deltaX = (pinchCenterX - x) * (newScale - scale) * 0.5;
-                let deltaY = (pinchCenterY - y) * (newScale - scale) * 0.5;
-
-                x -= deltaX;
-                y -= deltaY;
-
-                // 画面範囲を超えないように調整
-                x = Math.min(Math.max(x, (window.innerWidth - org_W * newScale)), 0);
-                y = Math.min(Math.max(y, (window.innerHeight - org_H * newScale)), 0);
-
-                // 画像のスタイル更新
-                image.style.transform = `translate(${x}px, ${y}px) scale(${newScale})`;
-
-                // 更新されたスケールと位置を反映
-                scale = newScale;
-                pinchStartDistance = distance;
-            }
-        }
-
-        function handleTouchEnd() {
-            pinchStartDistance = null;
-            pinchStartMove = null;
-            realX = x;
-            realY = y;
-        }
-
-        let mouseDrag = null;
-        function handleMouseDown(e) {
-            if (e.button !== 0 || image.dataset.viewMode !== "actual") return;
-            e.preventDefault();
-            mouseDrag = {
-                startX: e.clientX,
-                startY: e.clientY,
-                left: parseFloat(image.style.left) || 0,
-                top: parseFloat(image.style.top) || 0,
-                moved: false
-            };
-            image.style.cursor = "grabbing";
-        }
-
-        function handleMouseMove(e) {
-            if (!mouseDrag) return;
-            const dx = e.clientX - mouseDrag.startX;
-            const dy = e.clientY - mouseDrag.startY;
-            if (Math.abs(dx) > 3 || Math.abs(dy) > 3) mouseDrag.moved = true;
-
-            const minLeft = Math.min(0, window.innerWidth - image.offsetWidth);
-            const maxLeft = Math.max(0, window.innerWidth - image.offsetWidth);
-            const minTop = Math.min(0, window.innerHeight - image.offsetHeight);
-            const maxTop = Math.max(0, window.innerHeight - image.offsetHeight);
-            image.style.left = Math.min(Math.max(mouseDrag.left + dx, minLeft), maxLeft) + "px";
-            image.style.top = Math.min(Math.max(mouseDrag.top + dy, minTop), maxTop) + "px";
-        }
-
-        function handleMouseUp() {
-            if (!mouseDrag) return;
-            if (mouseDrag.moved) image._suppressNextClick = true;
-            mouseDrag = null;
-            image.style.cursor = image.dataset.viewMode === "actual" ? "grab" : "zoom-in";
-        }
-
-        const oldHandlers = image._pinchHandlers;
-        if (oldHandlers) {
-            image.removeEventListener("touchmove", oldHandlers.touchMove);
-            image.removeEventListener("touchend", oldHandlers.touchEnd);
-            image.removeEventListener("touchcancel", oldHandlers.touchEnd);
-            image.removeEventListener("mousedown", oldHandlers.mouseDown);
-            window.removeEventListener("mousemove", oldHandlers.mouseMove);
-            window.removeEventListener("mouseup", oldHandlers.mouseUp);
-        }
-
-        if (view) {
-            image.addEventListener("touchmove", handleTouchMove);
-            image.addEventListener("touchend", handleTouchEnd);
-            image.addEventListener("touchcancel", handleTouchEnd);
-            image.addEventListener("mousedown", handleMouseDown);
-            window.addEventListener("mousemove", handleMouseMove);
-            window.addEventListener("mouseup", handleMouseUp);
-            image._pinchHandlers = {
-                touchMove: handleTouchMove,
-                touchEnd: handleTouchEnd,
-                mouseDown: handleMouseDown,
-                mouseMove: handleMouseMove,
-                mouseUp: handleMouseUp
-            };
-        } else {
-            delete image._pinchHandlers;
-            delete image._suppressNextClick;
-            image.style.display = "none";
-            document.getElementById("PinchImageClose").style.display = "none";
-            image.setAttribute("src", "");
-            delete image.dataset.viewMode;
-            PinchImageBK.style.display = "none";
-            console.log("close");
-        }
+    viewImage(source) {
+        this.closeVideo();
+        return ImageViewer.open({
+            image: source.getAttribute("src_thumb") || source.currentSrc || source.src,
+            title: source.alt || ""
+        });
     }
 }

@@ -26,5 +26,15 @@
   "modelFiles": 14,
   "imageFiles": 1750,
   "modelResourceReferences": 18,
-  "localManifestResources": 29
+  "localManifestResources": 29,
+  "incrementalImports": [
+    {
+      "date": "2026-11-08",
+      "fromCommit": "85aa48a2eab03b1e0e5dcb801905f60171adba72",
+      "commit": "f1def015a0fd5ad524f46573b88b57791989d02f",
+      "scope": "shared-code-only",
+      "record": "docs/upstream-higayodo-20261108.md",
+      "testScriptsPassed": 70
+    }
+  ]
 }
