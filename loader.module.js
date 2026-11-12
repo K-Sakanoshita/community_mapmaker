@@ -39,9 +39,11 @@ window.hideStartupStatus = hideStartupStatus;
     const manifestUrl = new URL("./manifest.json", loaderUrl);
     if (assetVersion) manifestUrl.searchParams.set("ver", assetVersion);
 
+    // Reuse the unversioned startup image URL for the splash modal/map artwork.
+    const startupImageUrl = document.querySelector(".startup-splash-image")?.src;
     const withAssetVersion = (rawUrl) => {
         const url = new URL(rawUrl, loaderUrl);
-        if (!assetVersion || url.origin !== location.origin) return rawUrl;
+        if (!assetVersion || url.origin !== location.origin || url.href === startupImageUrl) return rawUrl;
         url.searchParams.set("ver", assetVersion);
         return url.href;
     };
@@ -133,6 +135,12 @@ window.hideStartupStatus = hideStartupStatus;
         });
     }
 
+    // Append the whole group synchronously: downloads overlap, while async=false
+    // keeps classic-script execution in insertion order for dependent scripts.
+    const loadScriptGroup = (group) => Promise.all(
+        trimNonEmpty(group.scripts).map(src => loadScript(src, { ordered: !group.parallel }))
+    );
+
     const lazyGroupPromises = new Map();
     window.loadLazyScriptGroup = (name) => {
         if (lazyGroupPromises.has(name)) return lazyGroupPromises.get(name);
@@ -140,13 +148,7 @@ window.hideStartupStatus = hideStartupStatus;
         const group = lazyScriptGroups[name];
         if (!group) return Promise.reject(new Error(`Unknown lazy script group: ${name}`));
 
-        const groupScripts = trimNonEmpty(group.scripts);
-        const promise = group.parallel
-            ? Promise.all(groupScripts.map(src => loadScript(src, { ordered: false })))
-            : groupScripts.reduce(
-                (chain, src) => chain.then(() => loadScript(src, { ordered: true })),
-                Promise.resolve()
-            );
+        const promise = loadScriptGroup(group);
 
         lazyGroupPromises.set(name, promise);
         promise.catch(() => lazyGroupPromises.delete(name));
@@ -158,21 +160,13 @@ window.hideStartupStatus = hideStartupStatus;
     setStartupStatus(window.startupText("libraries"));
 
     const scriptsReady = (async () => {
-        // 後方互換: scriptGroups が無い場合は従来通り scripts を順番に読む。
+        // Legacy scripts also download together and execute in their listed order.
         if (scriptGroups.length === 0) {
-            for (const src of trimNonEmpty(scripts)) {
-                await loadScript(src, { ordered: true });
-            }
+            await loadScriptGroup({ scripts, parallel: false });
         } else {
+            // Keep barriers between groups (e.g. vendors before application code).
             for (const group of scriptGroups) {
-                const groupScripts = trimNonEmpty(group.scripts);
-                if (group.parallel) {
-                    await Promise.all(groupScripts.map(src => loadScript(src, { ordered: false })));
-                } else {
-                    for (const src of groupScripts) {
-                        await loadScript(src, { ordered: true });
-                    }
-                }
+                await loadScriptGroup(group);
             }
         }
     })();

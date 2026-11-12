@@ -64,7 +64,9 @@ class Activities {
                             break;
                         case "url":
                             if (gdata !== "http://" && gdata !== "https://" && gdata !== "") {
-                                chtml += `<div class='col-12'><p><span class="fw-bold"><small>${glot.get(form[key].glot)}</small></span><a href="${gdata}">${gdata}</a></p></div>`;
+                                const linkText = gdata.replace(/^https?:\/\//, "");
+                                const shortLink = linkText.length > 20 ? linkText.substring(0, 19) + "…" : linkText;
+                                chtml += `<div class='col-12'><p><span class="fw-bold"><small>${glot.get(form[key].glot)}</small></span><a href="${gdata}">${shortLink}</a></p></div>`;
                             }
                             break;
                         case "image_url":
@@ -75,7 +77,10 @@ class Activities {
                                     wikimq.push([gdata, id]);
                                     chtml += `<div class="col-12 text-center"><img class="thumbnail" onclick="modalActs.viewImage(this)" src="${Conf.etc.loadingUrl}" id="${id}"><span id="${id}-copyright"></span></div>`;
                                 } else {
-                                    chtml += `<div class="col-12 text-center"><img class="thumbnail" onclick="modalActs.viewImage(this)" src="${gdata}"></div>`;
+                                    const original = String(act[form[key].gsheet] ?? "").trim();
+                                    const thumbnail = typeof ActivityThumbnails === "undefined" ? original : ActivityThumbnails.url(act, form[key].gsheet, original);
+                                    const escape = value => basic.htmlspecialchars(value);
+                                    chtml += `<div class="col-12 text-center"><img class="thumbnail" onclick="modalActs.viewImage(this)" src="${thumbnail === original ? gdata : Conf.etc.loadingUrl}" data-original-src="${escape(original)}"${thumbnail === original ? "" : ` data-thumbnail-url="${escape(thumbnail)}"`}></div>`;
                                 }
                             }
                             break;
@@ -118,6 +123,7 @@ class Activities {
             }
         });
         result += DocumentPreview.render(actlists);
+        if (typeof ActivityThumbnails !== "undefined") requestAnimationFrame(() => ActivityThumbnails.hydrate());
         setTimeout(() => {
             wikimq.forEach((q) => { wikimedia.getWikiMediaImage(q[0], Conf.thumbnail.modalThumbWidth, q[1]); }); // WikiMedia Image 遅延読み込み
         }, 500)
@@ -432,7 +438,7 @@ class Activities {
     viewImage(source) {
         this.closeVideo();
         return ImageViewer.open({
-            image: source.getAttribute("src_thumb") || source.currentSrc || source.src,
+            image: source.getAttribute("data-original-src") || source.getAttribute("src_org") || source.getAttribute("src_thumb") || source.currentSrc || source.src,
             title: source.alt || ""
         });
     }

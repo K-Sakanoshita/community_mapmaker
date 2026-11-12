@@ -117,3 +117,48 @@ assert.deepEqual(Array.from(marker.geometry.coordinates), [135,34]);
 marker.properties.tags.name = 'Edited marker';
 assert.equal(poi.geojson.properties.tags.name, 'Test', 'marker properties remain isolated from source data');
 console.log('PASS: unchanged marker sources are skipped, viewport/style changes refresh them, and 5000-vertex polygons remain unmodified without a geometry copy');
+
+// Shadow source filters nested OSM tags before rendering; the style must not
+// try to read a top-level level value or convert a multi-level string again.
+context.cMapMaker.parseIndoorLevels = value => String(value).split(';');
+context.cMapMaker.formatIndoorLevel = value => String(value);
+for (const level of ['1', '0;2', '0', '-1']) {
+    poi.geojson.properties.tags.level = level;
+    controller.setPoi([['node/1']], false);
+    const expected = ['1', '0;2'].includes(level) ? 1 : 0;
+    assert.equal(sources.get('marker-shadow').data.features.length, expected, level);
+}
+assert.equal(layers.get('marker-shadow').layout['icon-image'], 'circle_shadow.png');
+console.log('PASS: upper-floor shadow rendering for nested tags and multiple levels; ground/basement excluded');
+
+for (const [level, suffix] of [['0', ''], ['0.0', ''], ['1', '\n(1)'], ['-1', '\n(-1)'], ['0;2', '\n(0;2)']]) {
+    poi.geojson.properties.tags.level = level;
+    controller.setPoi([['node/1']], false);
+    assert.equal(poi.geojson.properties.cmapmaker_name, 'Test' + suffix,
+        'ground-floor labels are omitted while other floors remain: ' + level);
+}
+console.log('PASS: omit ground-only map labels, retain upper/basement/multi-floor labels');
+
+// The all policy uses the current-view path rather than filtered list rows.
+controller.getPois = () => ({ geojson: [poi.geojson], targets: [poi.targets], lnglat: [poi.lnglat] });
+controller.setPoi(undefined, false);
+assert.equal(sources.get('marker-normal').data.features.length, 1);
+context.geoCont.checkInner = () => false;
+controller.setPoi(undefined, false);
+assert.equal(sources.get('marker-normal').data.features.length, 0, 'all still respects the viewport');
+context.geoCont.checkInner = () => true;
+context.cMapMaker.isPoiVisibleInLevelMode = () => false;
+controller.setPoi(undefined, false);
+assert.equal(sources.get('marker-normal').data.features.length, 0, 'all still respects the selected floor');
+context.cMapMaker.isPoiVisibleInLevelMode = () => true;
+context.mapLibre.getZoom = () => 1;
+controller.setPoi(undefined, false);
+assert.equal(sources.get('marker-normal').data.features.length, 0, 'all still respects zoom thresholds');
+context.mapLibre.getZoom = () => 18;
+controller.adata = [{ id: 'WP/1', osmid: 'node/1' }, { id: 'WP/2', osmid: 'node/1' }];
+controller.getActlistByOsmid = () => controller.adata;
+controller.setPoi(undefined, false);
+const markerCount = [...sources].filter(([id]) => /^marker-(attention|green|middle|normal|visited)$/.test(id))
+    .reduce((sum, [, source]) => sum + source.data.features.length, 0);
+assert.equal(markerCount, 1, 'all emits one icon for a venue with multiple activities');
+console.log('PASS: all markers retain viewport, floor and zoom limits and deduplicate venues');

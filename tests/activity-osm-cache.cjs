@@ -25,5 +25,11 @@ const feature = id => ({ type: 'Feature', id, properties: { id }, geometry: { ty
     context.poiCont.adata = [{ osmid: 'node/2' }];
     const changed = controller.setCache({ features: [unrelated] });
     assert.deepStrictEqual(Array.from(changed.targets[0]), ['activity']);
-    console.log('PASS: explicit OSM lookups and activity features survive category filtering');
+    // Static venues must survive startup even before activities are available.
+    context.poiCont.adata = [];
+    const staticVenue = feature('way/1552895764');
+    const imported = await controller.setOsmJson({ elements: [staticVenue] });
+    assert.deepStrictEqual(Array.from(imported.geojson, f => f.id), ['way/1552895764']);
+    assert.strictEqual(imported.targets[0].length, 0, 'retention does not invent category tags');
+    console.log('PASS: explicit OSM lookups, activity features and static venues survive category filtering');
 })().catch(error => { console.error(error); process.exitCode = 1; });

@@ -74,3 +74,65 @@ img.slide {
 #maplist {
     margin-bottom: 12px;
 }
+
+/* Place map controls beside the thumbnails instead of above their spacer. */
+#mapid {
+    --map-controls-width: 48px;
+}
+
+#mapid #dummy {
+    display: none;
+}
+
+#mapid #images.showcase {
+    width: calc(100% - var(--map-controls-width));
+    max-width: calc(100% - var(--map-controls-width));
+}
+
+/* Reserve room for status icons only beside the first lines of each card. */
+#listArea .list-facility-item {
+    padding-right: .75rem;
+}
+
+#listArea .list-facility-item > .list-detail-button > .row {
+    display: flow-root;
+    padding-left: 36px;
+}
+
+#listArea .list-facility-item > .list-detail-button > .row::before {
+    content: "";
+    float: right;
+    width: 5.25rem;
+    height: 40px;
+}
+
+/* Compact list text without shrinking the visited/favorite touch targets. */
+#listArea .list-facility-item .list-detail-button .align-middle {
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+/* Keep the display selector next to the facility-list heading. */
+#listHeader .detailTitle {
+    flex: 0 0 auto;
+    white-space: nowrap;
+}
+
+#listHeader .place-list-mode {
+    flex: 0 1 8.5rem;
+    margin-inline: .75rem .5rem;
+}
+
+#listHeader #listDisplayMode {
+    min-width: 0;
+}
+
+.place-list-toolbar:has(> #placeDiscovery[hidden]) {
+    display: none !important;
+}
+
+@media (min-width: 1080px) {
+    #bottom-pane.sidebar-minimized #listHeader .place-list-mode {
+        display: none !important;
+    }
+}

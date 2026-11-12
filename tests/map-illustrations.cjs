@@ -44,7 +44,9 @@ const map = {
     off: (name, fn) => { if (listeners.get(name) === fn) listeners.delete(name); }
 };
 const context = vm.createContext({
-    document: { createElement: () => ({ complete: true, naturalWidth: 200, naturalHeight: 100 }),
+    URL,
+    document: { baseURI: "https://example.test/", querySelector: () => null,
+        createElement: () => ({ complete: true, naturalWidth: 200, naturalHeight: 100, addEventListener() {}, removeEventListener() {} }),
         querySelectorAll: () => controls },
     window: { withAppAssetVersion: url => `${url}?ver=test` },
     getComputedStyle: () => ({ display: 'block', visibility: 'visible' }),

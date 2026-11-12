@@ -34,14 +34,15 @@ const context = vm.createContext({
         };
     } }
 });
+require('./helpers/thumbnail-cards')(context, dom);
 vm.runInContext(fs.readFileSync('lib/winlib.js', 'utf8') + '\nthis.win = new WinCont();', context);
 const acts = sources => sources.map((src, i) => ({ src: [src], osmid: `node/${i}`, title: src }));
 (async () => {
     const mixed = acts(['good.jpg', 'missing.jpg', 'https://photos.app.goo.gl/example']);
     context.win.setImages(dom, mixed, 'loading.svg', 10, () => ready++);
-    const [good, missing, page] = dom.children;
+    const [good, missing, page] = dom.querySelectorAll("img");
     missing.fail(); page.fail();
-    assert.deepEqual(dom.children, [good], '404 and HTML sharing pages leave no broken frames');
+    assert.deepEqual(dom.children, [good.parentElement], '404 and HTML sharing pages leave no broken frames');
     assert.equal(logs.length, 2);
     assert.match(logs[0][0], /取得できないため非表示/);
     assert.equal(logs[0][1].src, 'missing.jpg');
@@ -56,9 +57,9 @@ const acts = sources => sources.map((src, i) => ({ src: [src], osmid: `node/${i}
     assert.equal(good.dataset.thumbnailLoaded, 'true');
     assert.equal(dom.classList.contains('d-none'), false);
     context.win.setImages(dom, mixed, 'loading.svg', 10, () => {});
-    assert.deepEqual(dom.children, [good], 'unchanged lists do not recreate failed images');
+    assert.deepEqual(dom.children, [good.parentElement], 'unchanged lists do not recreate failed images');
     context.win.setImages(dom, acts(['all-fail.jpg']), 'loading.svg', 10);
-    dom.children[0].fail();
+    dom.querySelector("img").fail();
     assert.equal(dom.children.length, 0);
     assert.equal(dom.classList.contains('d-none'), true);
     assert.equal(context.dummy.style.height, '0px');
@@ -76,7 +77,7 @@ const acts = sources => sources.map((src, i) => ({ src: [src], osmid: `node/${i}
     dom.classList.remove('d-none');
     await new Promise(setImmediate);
     assert.equal(dom.children.length, 1);
-    assert.equal(dom.children[0].src, 'new.jpg');
+    assert.equal(dom.querySelector("img").src, 'new.jpg');
     assert.equal(dom.classList.contains('d-none'), false, 'late failures cannot hide replacement thumbnails');
     console.log('PASS: broken URLs, HTML pages, Commons failures, mixed success, empty-strip reuse and stale failures');
 })().catch(error => { console.error(error); process.exitCode = 1; });

@@ -106,3 +106,20 @@ assert.equal(context.Conf.mapImageLinks.use, false, "map image links are opt-in"
 context.Conf.mapImageLinks = { use: true, items: [] };
 context.maker.prepareConfig();
 assert.equal(context.Conf.mapImageLinks.use, true);
+
+// Newly imported features require a site's explicit configuration.
+assert.equal(config.eventDateFilter.use, false);
+assert.equal(config.eventDateFilter.dates.length, 0);
+assert.equal(Object.keys(config.eventDateFilter.activityDates).length, 0);
+assert.equal(config.stampMarkers.use, false);
+assert.equal(config.stampMarkers.osmIds.length, 0);
+assert.equal(config.icon.photoMarkers.use, false);
+assert.equal(config.thumbnail.backend.use, false);
+assert.equal(config.thumbnail.backend.url, '');
+assert.equal(config.etc.editModeSwitch, false);
+assert.equal(config.etc.showPersonalMemo, true);
+context.Conf = { stampMarkers: { use: true, osmIds: ['node/42'] } };
+context.maker.prepareConfig();
+assert.equal(context.Conf.stampMarkers.use, true);
+assert.equal(context.Conf.stampMarkers.osmIds[0], 'node/42');
+assert.ok(fs.existsSync('icon/stamp.svg'));

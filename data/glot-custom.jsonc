@@ -278,5 +278,37 @@
     "denomination_orthodox": {
         "ja": "正教会",
         "en": "Orthodox"
+    },
+    "act_category": {
+        "ja": "【カテゴリ】",
+        "en": "Category"
+    },
+    "act_actor": {
+        "ja": "【出演/作家】",
+        "en": "Actor"
+    },
+    "act_datetime": {
+        "ja": "【開催日時】",
+        "en": "DateTime"
+    },
+    "act_enter": {
+        "ja": "【来場時】",
+        "en": "entering"
+    },
+    "act_fee": {
+        "ja": "【料金】",
+        "en": "Fee"
+    },
+    "act_reserve": {
+        "ja": "【予約方法】",
+        "en": "Reserve"
+    },
+    "act_organizer": {
+        "ja": "【主催】",
+        "en": "Organizer"
+    },
+    "act_contact": {
+        "ja": "【問合せ】",
+        "en": "Contact"
     }
 }

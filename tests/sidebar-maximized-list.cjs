@@ -24,7 +24,7 @@ function element(width = 0, height = 0) {
 async function checkViewport(wide) {
     const width = wide ? 1280 : 390;
     const height = wide ? 720 : 844;
-    const map = element(wide ? 800 : width, wide ? height : height * .6);
+    const map = element(wide ? 800 : width, wide ? height : height * .65);
     const pane = element(map.width, map.height);
     const elements = { 'top-pane': pane, 'bottom-pane': element(),
         sidebarMinimize: element(), sidebarChange: element(), 'mini-map': element() };
@@ -40,7 +40,7 @@ async function checkViewport(wide) {
     controller.sidebarSize = 2;
     await controller.setSidebar('change');
     const dimension = wide ? 'width' : 'height';
-    const expected = wide ? 800 : height * .6;
+    const expected = wide ? 800 : height * .65;
     assert.equal(parseFloat(map.style[dimension]), expected, 'maximizing retains the previous map viewport');
     for (const frames of map.animations) for (const frame of frames) {
         assert.ok(parseFloat(frame[dimension]) > 0, 'the map never collapses during animation');
@@ -51,6 +51,24 @@ async function checkViewport(wide) {
     assert.equal(parseFloat(map.style[dimension]), expected, 'redrawing the maximized list retains its viewport');
     await controller.setSidebar('change');
     assert.equal(parseFloat(map.style[dimension]), expected, 'restore fits the visible map pane');
+    for (const size of [1, 2, 3]) {
+        controller.sidebarSize = size;
+        await controller.setSidebar('list', .65);
+        assert.equal(controller.sidebarSize, 2, 'expanded list keeps the map visible');
+        assert.equal(parseFloat(elements['bottom-pane'].style[dimension]), wide ? 480 : height * .65);
+        assert.equal(parseFloat(map.style[dimension]), wide ? width - 480 : height * .35);
+        await controller.setSidebar('redraw');
+        assert.equal(parseFloat(elements['bottom-pane'].style[dimension]), wide ? 480 : height * .65,
+            'expanded height persists through redraw');
+    }
+    await controller.setSidebar('list', .35);
+    assert.equal(parseFloat(elements['bottom-pane'].style[dimension]), wide ? 480 : height * .35,
+        'all offerings restores standard height even from expanded normal mode');
+    await controller.setSidebar('redraw');
+    assert.equal(parseFloat(elements['bottom-pane'].style[dimension]), wide ? 480 : height * .35);
+    // Return to the original normal layout for the animation interruption check.
+    await controller.setSidebar('change');
+    await controller.setSidebar('change');
     const abort = Object.assign(new Error('superseded layout'), { name: 'AbortError' });
     pane.animate = () => ({ finished: Promise.reject(abort) });
     await controller.setSidebar('change');

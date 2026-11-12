@@ -1,4 +1,18 @@
 {
+    "eventDateFilter": {
+        "use": false,
+        "category": "",
+        "label": "イベント日付",
+        "allLabel": "全ての催し物",
+        "dateField": "event_dates",
+        "dates": [],
+        "activityDates": {}
+    },
+    "stampMarkers": {
+        "use": false,
+        "osmIds": [],
+        "ringColor": "#D65C8C"
+    },
     "documentPreview": {
         "use": false,
         "field": "document_preview"
@@ -71,6 +85,7 @@
         ]
     },
     "icon": {
+        "photoMarkers": { "use": false, "maxMarkers": 100, "imageFields": [] },
         "fgPath": "icon",
         "bgPath": "image",
         "flagPath": "./flags/w40",
@@ -310,6 +325,7 @@
         ]
     },
     "thumbnail": {
+        "backend": { "use": false, "url": "", "concurrency": 2 },
         "use": true,
         "limits": 20,
         "slideThumbWidth": "320",
@@ -394,6 +410,8 @@
         "image": true
     },
     "etc": {
+        "showPersonalMemo": true,
+        "editModeSwitch": false,
         "localSave": "",
         "reverseIcon": false,
         "editMode": false,

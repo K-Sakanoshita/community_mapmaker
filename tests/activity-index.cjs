@@ -1,7 +1,7 @@
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const vm = require('node:vm');
-const context = vm.createContext({ console });
+const context = vm.createContext({ console, Conf: { static: { use: false }, etc: {} } });
 vm.runInContext(fs.readFileSync('lib/poilib.js', 'utf8') + '\nthis.poiCont = new PoiCont();', context);
 const poi = context.poiCont;
 const first = { id: 'post/1', osmid: 'node/1' };

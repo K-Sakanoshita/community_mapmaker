@@ -29,8 +29,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@5.24.0/dist/maplibre-gl.min.css" />
-    <link rel="stylesheet" href="system.css?ver=20261108-02" />
-<script type="module" src="./loader.module.js?ver=20261108-02"></script>
+    <link rel="stylesheet" href="system.css?ver=20261112-01" />
+<script type="module" src="./loader.module.js?ver=20261112-01"></script>
 </head>
 
 <body>
@@ -49,6 +49,7 @@
             <main id="top-pane">
                 <div id="mapid">
                     <canvas id="snow"></canvas>
+                    <div id="stampMarkerLegend" hidden><i class="fa-solid fa-stamp" aria-hidden="true"></i> スタンプ印＝現地のスタンプ設置場所</div>
                     <section id="cMapIntro" class="cMap-intro" aria-labelledby="cMapIntroTitle" hidden>
                         <div class="cMap-intro__body">
                             <h2 id="cMapIntroTitle" glot-model="intro_title">地図から地域の情報を探してみましょう</h2>
@@ -194,6 +195,7 @@
                     <label class="d-flex align-items-center gap-2"><input class="form-check-input m-0" type="radio" name="poiFilterVisitState" id="poiFilterVisited" value="visited"><span glot-model="visited_filter_visited">訪問済み</span></label>
                     <label class="d-flex align-items-center gap-2"><input class="form-check-input m-0" type="radio" name="poiFilterVisitState" id="poiFilterUnvisited" value="unvisited"><span glot-model="visited_filter_unvisited">未訪問</span></label>
                 </div>
+                <label class="d-flex align-items-center gap-2"><input class="form-check-input m-0" type="checkbox" id="poiFilterFavoriteOnly"><span glot-model="favorite_filter">お気に入りのみ表示</span></label>
             </fieldset>
             <section id="poiFilterSearchContent">
                 <div id="poiFilterZoomNotice" class="alert alert-info" hidden>

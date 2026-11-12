@@ -1388,5 +1388,17 @@
     "changeFeed_operatorTag": {
         "ja": "管理者",
         "en": "Operator"
+    },
+    "menu_other": {
+        "ja": "その他",
+        "en": "Other"
+    },
+    "editMode_label": {
+        "ja": "編集モード",
+        "en": "Edit mode"
+    },
+    "placeAboutWikipedia": {
+        "ja": "この場所について（Wikipedia）",
+        "en": "About this place (Wikipedia)"
     }
 }

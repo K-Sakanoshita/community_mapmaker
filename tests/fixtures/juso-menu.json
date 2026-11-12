@@ -1,0 +1,22 @@
+[
+  {
+    "glot-model": "menu_other",
+    "children": [
+      {
+        "action": "editMode",
+        "glot-model": "editMode_label",
+        "divider": true
+      },
+      {
+        "glot-model": "export_visited",
+        "linkto": "javascript:poiStatusCont.export()",
+        "divider": false
+      },
+      {
+        "glot-model": "import_visited",
+        "linkto": "javascript:poiStatusCont.import()",
+        "divider": false
+      }
+    ]
+  }
+]

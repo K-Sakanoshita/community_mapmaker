@@ -56,7 +56,7 @@ class OSMbasic {
         let website = [tags.website, tags["contact:website"], tags["brand:website"]].filter((a) => a !== undefined)[0];
         if (website !== undefined) {
             let httpn = website.replace(/^https?:\/\//, "");
-            let trunc = httpn.length > 19 ? httpn.substring(0, 29) + "..." : httpn;
+            let trunc = httpn.length > 20 ? httpn.substring(0, 19) + "…" : httpn;
             html += `<div class="flex-row mt-1 me-3"> <i class="fas fa-globe"></i> <a href="${website}" target="_new">${trunc}</a></div>`;
             elements++;
         }
@@ -99,10 +99,25 @@ class OSMbasic {
             }
         }
 
+        // Wikipedia joins the facility's website and social links.
+        const wikipediaTag = /^([a-z][a-z0-9-]*):(.+)$/i.exec(String(tags.wikipedia ?? "").trim());
+        if (wikipediaTag) {
+            const [, lang, article] = wikipediaTag;
+            const sectionIndex = article.indexOf("#");
+            const title = sectionIndex < 0 ? article : article.slice(0, sectionIndex);
+            const section = sectionIndex < 0 ? "" : article.slice(sectionIndex + 1);
+            if (title.trim()) {
+                const url = `https://${lang}.${Conf.wikipedia?.domain ?? "wikipedia.org"}/wiki/${encodeURIComponent(title)}`
+                    + (section ? `#${encodeURIComponent(section)}` : "");
+                html += `<div class="flex-row mt-1 me-3"><a class="facility-wikipedia-link" href="${url}" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-wikipedia-w text-body" aria-hidden="true"></i> ${glot.get("wikipedia")}</a></div>`;
+                elements++;
+            }
+        }
+
         // write tel
         if (tags.phone !== undefined) {
             let phone = tags.phone
-            phone = phone.startsWith("+81") ? "0" + phone.slice(3) : phone;
+            phone = phone.replace(/^\+81[-\s]*(?=[1-9])/, "0");
             html += `<div class="flex-row mt-1 me-3"> <i class="fas fa-phone-alt"></i> <a href="tel:${phone}">${phone}</a></div>`;
             elements++;
         }
@@ -169,10 +184,13 @@ class OSMbasic {
                 ({ "&": "&amp;", '"': "&quot;", "<": "&lt;", ">": "&gt;", "'": "&#39;" })[char]);
             html += `<div class="flex-row mt-1 me-3"><button type="button" id="visited" class="poi-status-toggle btn btn-sm" name="${escapeAttr(tags.id)}" aria-pressed="${Boolean(poiStatus[PoiStatusIndex.VISITED])}" onclick="cMapMaker.togglePoiStatus('visited')"><i class="${poiStatus[PoiStatusIndex.VISITED] ? "fa-solid" : "fa-regular"} fa-circle-check fa-fw" aria-hidden="true"></i> ${glot.get("visited")}</button>`;
             html += `</div><div class="flex-row mt-1 me-3"><button type="button" id="favorite" class="poi-status-toggle btn btn-sm" name="${escapeAttr(tags.id)}" aria-pressed="${Boolean(poiStatus[PoiStatusIndex.FAVORITE])}" onclick="cMapMaker.togglePoiStatus('favorite')"><i class="${poiStatus[PoiStatusIndex.FAVORITE] ? "fa-solid" : "fa-regular"} fa-heart fa-fw" aria-hidden="true"></i> ${glot.get("favorite")}</button>`;
-            html += `</div>${directionsHtml}<div class="flex-row mt-1 me-3 d-flex text-nowrap align-items-center w-100">`;
-            let memo = poiStatus[PoiStatusIndex.MEMO] !== undefined ? poiStatus[PoiStatusIndex.MEMO] : "";
-            html += `<label for="visited-memo" class="ms-2 me-2">${glot.get("personal_memo_label")}</label>`;
-            html += `<input type="text" id="visited-memo" maxlength="140" size="20" class="form-control" oninput="cMapMaker.savePoiStatus()" value="${escapeAttr(memo)}" /></div>`
+            html += `</div>${directionsHtml}`;
+            if (Conf.etc.showPersonalMemo !== false) {
+                const memo = poiStatus[PoiStatusIndex.MEMO] ?? "";
+                html += `<div class="flex-row mt-1 me-3 d-flex text-nowrap align-items-center w-100">`;
+                html += `<label for="visited-memo" class="ms-2 me-2">${glot.get("personal_memo_label")}</label>`;
+                html += `<input type="text" id="visited-memo" maxlength="140" size="20" class="form-control" oninput="cMapMaker.savePoiStatus()" value="${escapeAttr(memo)}" /></div>`;
+            }
             elements++;
         }
 

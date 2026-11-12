@@ -14,6 +14,10 @@ const context = vm.createContext({
     }
 });
 vm.runInContext(fs.readFileSync('lib/wikimedialib.js', 'utf8') + '\nthis.wikimedia = new WikimediaLib();', context);
+context.Conf.etc = { localSave: "" };
+context.poiCont = { getCatnames: () => [] };
+context.cMapMaker = {};
+vm.runInContext(fs.readFileSync('detail/osmbasic.js', 'utf8') + '\nthis.basicInfo = new OSMbasic();', context);
 (async () => {
     for (const [value, title, section] of [['ja:地域会館#沿革', '地域会館', '沿革'], ['ja:地域会館#利用_案内', '地域会館', '利用_案内'], ['en:Example: Title', 'Example: Title', '']]) {
         context.wikimedia.makeWikipediaOverView(value);
@@ -24,8 +28,15 @@ vm.runInContext(fs.readFileSync('lib/wikimedialib.js', 'utf8') + '\nthis.wikimed
         assert.equal(decodeURIComponent(url.pathname), '/wiki/' + title);
         assert.equal(decodeURIComponent(url.hash), section ? '#' + section : '');
         assert.match(output.innerHTML, /Article introduction/);
+        const basicHtml = context.basicInfo.make({ wikipedia: value });
+        assert.match(basicHtml, /fa-wikipedia-w/);
+        assert.equal(basicHtml.match(/href="([^"]+)"/)[1], href, 'basic W link targets the same article and section');
+
         thumbnail = { source: 'https://example.test/photo.jpg', width: 100, height: 80 };
     }
+    assert.doesNotMatch(context.basicInfo.make({}), /fa-wikipedia-w/);
+    assert.doesNotMatch(context.basicInfo.make({ wikipedia: 'invalid' }), /fa-wikipedia-w/);
+    assert.doesNotMatch(context.basicInfo.make({ wikipedia: 'ja:#section' }), /fa-wikipedia-w/);
     assert.match(output.innerHTML, /<img/);
     assert.deepEqual(warnings, []);
     console.log('PASS: Wikipedia section links, plain titles and optional thumbnails');
