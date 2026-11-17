@@ -71,6 +71,25 @@ assert.equal(table.getFlistCount(), 0);
 assert.equal(listArea.children[0].textContent, 'discovery_noMatches');
 table.filterKeyword('   ');
 assert.deepEqual(ids(), ['node/cafe'], 'whitespace restores the original filters');
+context.Conf.listTable.target = 'activity';
+context.poiCont.makeList = targets => targets.includes('amenity') ? rows : [];
+context.poiCont.get_osmid = id => ({geojson:{properties:id === 'node/cafe'
+    ? {name:'スーパーフレスコ', operator:'ハートフレンド'} : {}}});
+for (const keyword of ['スーパーフレスコ', 'ハートフレンド', 'スーパーフレスコ / ハートフレンド', 'スーパーフレスコ／ハートフレンド']) {
+    table.filterKeyword(keyword);
+    assert.deepEqual(ids(), ['node/cafe'], 'search includes POIs and their operator: ' + keyword);
+}
+context.poiCont.getPois = () => ({geojson:[
+    {properties:{name:'スーパーフレスコ', operator:'ハートフレンド'}},
+    {properties:{name:'非表示施設'}}
+], targets:[['amenity'], ['hidden']]});
+context.poiCont.isPoiListVisible = targets => targets.includes('amenity');
+context.poiCont.adata = [{title:'フレスコのイベント'}];
+context.Conf.list.columns.actFields = ['id', '#name', 'title'];
+assert.deepEqual(Array.from(table.keywordSuggestions('フレスコ')), ['スーパーフレスコ', 'フレスコのイベント']);
+assert.deepEqual(Array.from(table.keywordSuggestions('ハート')), ['ハートフレンド']);
+assert.deepEqual(Array.from(table.keywordSuggestions('非表示')), []);
+assert.deepEqual(Array.from(table.keywordSuggestions(' ')), []);
 console.log('PASS: global list search bypasses category, area, personal and display filters; refresh, raw text, empty results and clear restore');
 
 // Structured area lists also search the linker data before the facility filter.

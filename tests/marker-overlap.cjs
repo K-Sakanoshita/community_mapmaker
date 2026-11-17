@@ -15,15 +15,19 @@ const map = {
 const popups = [];
 const element = () => ({ children: [], appendChild(child) { this.children.push(child); },
     addEventListener(type, handler) { this[type] = handler; } });
+const listeners = {};
 const context = vm.createContext({
     console, mapLibre: { map },
-    document: { createElement: element },
+    document: { createElement: element, addEventListener(type, fn) { listeners[type] = fn; },
+        removeEventListener(type) { delete listeners[type]; } },
     maplibregl: { Popup: class {
-        constructor() { popups.push(this); }
+        constructor(options) { this.options = options; popups.push(this); }
         setLngLat(value) { this.lnglat = value; return this; }
         setDOMContent(value) { this.content = value; return this; }
         addTo(value) { this.map = value; return this; }
-        remove() { this.removed = true; }
+        getElement() { return { contains: target => target === "inside" }; }
+        on(type, handler) { this[type] = handler; return this; }
+        remove() { this.removed = true; this.close?.(); }
     } }
 });
 vm.runInContext(fs.readFileSync('lib/poilib.js', 'utf8') + '\nthis.poi = new PoiCont();', context);
@@ -39,21 +43,31 @@ assert.equal(queries, 1, 'non-pointer fallback does not query an invalid screen 
 
 vm.runInContext(fs.readFileSync('lib/mapfeature3d.js', 'utf8') + '\nthis.Picker = MapFeature3D;', context);
 let selected;
-const picker = new context.Picker({ getSelectionTitle: () => 'Choose', getFeatureLabel: id => 'Facility ' + id,
+const picker = new context.Picker({ getFeatureLabel: id => 'Facility ' + id, getFeatureIcon: id => id === 'node/2' ? 'icon/shop.png' : '',
     onSelect: id => { selected = id; } });
 const event = { point: { x: 20, y: 30 }, lngLat: [135, 34], originalEvent: {} };
 assert.equal(picker.handleMarkerClick(event, 'node/1', ids, map), true, 'chooser works even when 3D rendering is disabled');
 assert.equal(popups.length, 1);
 assert.equal(popups[0].map, map);
-assert.equal(popups[0].content.children.length, 4);
-assert.equal(popups[0].content.children[2].textContent, 'Facility node/2');
+assert.equal(popups[0].content.children.length, 3);
+assert.equal(popups[0].options.closeButton, false);
+listeners.pointerdown({ target: 'inside' });
+assert.equal(popups[0].removed, undefined, 'inside interaction keeps chooser open');
+assert.equal(popups[0].content.children[1].children[0].src, 'icon/shop.png');
+assert.equal(popups[0].content.children[1].children[0].alt, '');
+assert.equal(popups[0].content.children[1].children[1].textContent, 'Facility node/2');
+assert.equal(popups[0].content.children[0].children[0].textContent, 'Facility node/1', 'missing icon keeps the label');
 assert.equal(picker.handleMarkerClick(event, 'node/1', ids, map), true);
 assert.equal(popups.length, 1, 'multiple native layer callbacks for one click open one chooser');
 assert.equal(picker.handleMarkerClick({ ...event, originalEvent: {} }, 'node/1', ['node/1'], map), false, 'a lone facility keeps direct selection');
 assert.equal(JSON.stringify(picker.getSelectionIds('node/1', 'model/1', ['node/photo', 'node/1'])), '["node/1","node/photo","model/1"]', 'existing model candidate joins marker candidates');
-popups[0].content.children[2].click();
+popups[0].content.children[1].click();
 Promise.resolve().then(() => {
     assert.equal(selected, 'node/2');
     assert.equal(popups[0].removed, true);
+    assert.equal(listeners.pointerdown, undefined, 'closing removes the outside listener');
+    picker.handleMarkerClick({ ...event, originalEvent: {} }, 'node/1', ids, map);
+    listeners.pointerdown({ target: 'outside' });
+    assert.equal(popups[1].removed, true, 'outside interaction closes chooser');
     console.log('PASS: mixed marker hit testing, deduplication, one chooser per click, selection without 3D, model coexistence and single-marker navigation');
 }).catch(error => { console.error(error); process.exitCode = 1; });

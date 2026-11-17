@@ -43,6 +43,8 @@ assert.equal(calls.length, 0, 'each update renders markers once');
 console.log('PASS: all/filter/default marker policies for activity, target, tag and automatic categories');
 
 // Drive the actual change handler, without move events or a completed request.
+context.clearTimeout = () => {};
+maker.updateKeywordButton = () => {};
 context.list_keyword = { value: 'previous search' };
 context.list_category = { value: 'お店・施設・メニュー' };
 context.document = { getElementById: () => null };

@@ -62,7 +62,7 @@ class OSMbasic {
         }
 
         // opening_hours
-        if (tags.opening_hours !== undefined) {
+        if (Conf.poiView?.openingHours === true && tags.opening_hours !== undefined) {
             let opening = basic.parseOpeningHours(tags.opening_hours)
             if (opening !== "") html += `<div class="flex-row mt-1 me-3"><i class="fa-solid fa-clock"></i>${opening}</div>`;
         }

@@ -6,6 +6,19 @@ var Conf = {}; // Config Praams
 const LANG = window.APP_LANGUAGE || ((window.navigator.languages?.[0] || window.navigator.language || window.navigator.userLanguage || window.navigator.browserLanguage || "en").toLowerCase().startsWith("ja") ? "ja" : "en");
 const MAP_TITLE_DISPLAY_DELAY_MS = 500;
 const MAP_MOVE_SETTLE_DELAY_MS = 300;
+async function retryInitialDataLoad(load, label, isCurrent = () => true) {
+    const delays = [500, 1500];
+    for (let attempt = 0; ; attempt++) {
+        try {
+            return await load();
+        } catch (error) {
+            if (attempt >= delays.length || !isCurrent()) throw error;
+            console.warn(`${label}: retrying after load failure`, error);
+            await new Promise(resolve => setTimeout(resolve, delays[attempt]));
+            if (!isCurrent()) throw error;
+        }
+    }
+}
 const glot = new Glottologist();
 glot.lang = LANG;
 let modalActs = null;
@@ -19,7 +32,6 @@ const listTable = new ListTable();
 const poiCont = new PoiCont();
 const feature3d = new MapFeature3D({
     modelFactories: PlaygroundModelFactories,
-    getSelectionTitle: () => glot.get("mapFeatureSelect"),
     getFeatureLabel: id => {
         const poi = poiCont.get_osmid(id);
         if (!poi) return id;
@@ -27,7 +39,11 @@ const feature3d = new MapFeature3D({
         const tags = props.tags && typeof props.tags === "object" ? props.tags : props;
         const category = poiCont.getCatnames(tags).find(Boolean) || "";
         const name = poiCont.getOSMname(tags, glot.lang);
-        return name && name !== category ? `${category}: ${name}` : (name || category || id);
+        return name || category || id;
+    },
+    getFeatureIcon: id => {
+        const poi = poiCont.get_osmid(id);
+        return poi ? `./${Conf.icon.fgPath}/${poiCont.getIcon(poi.geojson.properties)}` : "";
     },
     onSelect: async id => {
         const poi = poiCont.get_osmid(id);
@@ -407,9 +423,11 @@ class CMapMaker extends IndoorControl {
             console.log("cMapMaker: Static mode");
             // Process one file at a time instead of retaining every response body.
             for (const url of Conf.static.osmjsons) {
-                const response = await fetch(window.withAppAssetVersion(url));
-                if (!response.ok) throw new Error(`Static data load failed: ${url} (${response.status})`);
-                const data = await response.text();
+                const data = await retryInitialDataLoad(async () => {
+                    const response = await fetch(window.withAppAssetVersion(url));
+                    if (!response.ok) throw new Error(`Static data load failed: ${url} (${response.status})`);
+                    return response.text();
+                }, "Static data");
                 let json;
                 try {
                     json = await overPassCont.parseOverpassJsonAsync(data);
@@ -729,10 +747,61 @@ class CMapMaker extends IndoorControl {
         mapLibre.on('moveend', () => newsTicker.update())
         mapLibre.on('zoomend', this.eventZoomMap.bind(cMapMaker))			// ズーム終了時に表示更新
         list_category.addEventListener('change', this.eventChangeCategory.bind(cMapMaker))	// category change
+        const suggestions = document.getElementById('list_keyword_suggestions');
+        let suggestionIndex = -1;
+        const closeSuggestions = () => {
+            if (!suggestions) return;
+            suggestions.hidden = true;
+            list_keyword.setAttribute('aria-expanded', 'false');
+            list_keyword.removeAttribute('aria-activedescendant');
+            suggestionIndex = -1;
+        };
+        const chooseSuggestion = value => {
+            list_keyword.value = value;
+            closeSuggestions();
+            cMapMaker.searchKeyword(value, { selectFirst: true });
+        };
+        const updateSuggestions = () => {
+            if (!suggestions) return;
+            suggestions.replaceChildren(...listTable.keywordSuggestions(list_keyword.value).map(value => {
+                const option = document.createElement('button');
+                option.type = 'button';
+                option.setAttribute('role', 'option');
+                option.textContent = value;
+                option.addEventListener('mousedown', event => event.preventDefault());
+                option.addEventListener('click', () => chooseSuggestion(value));
+                return option;
+            }));
+            suggestionIndex = -1;
+            suggestions.hidden = suggestions.children.length === 0;
+            list_keyword.setAttribute('aria-expanded', String(!suggestions.hidden));
+            list_keyword.removeAttribute('aria-activedescendant');
+        };
+        list_keyword.addEventListener('input', event => {
+            if (!event.isComposing) updateSuggestions();
+        });
+        list_keyword.addEventListener('compositionend', updateSuggestions);
+        list_keyword.addEventListener('focus', updateSuggestions);
+        list_keyword.addEventListener('blur', () => setTimeout(closeSuggestions, 150));
         list_keyword.addEventListener('keydown', (event) => {
-            if (event.key !== 'Enter') return;
-            event.preventDefault();
-            cMapMaker.searchKeyword(list_keyword.value);
+            if (event.isComposing) return;
+            const options = suggestions && !suggestions.hidden ? [...suggestions.children] : [];
+            if ((event.key === 'ArrowDown' || event.key === 'ArrowUp') && options.length) {
+                event.preventDefault();
+                suggestionIndex = (suggestionIndex + (event.key === 'ArrowDown' ? 1 : -1) + options.length) % options.length;
+                options.forEach((option, index) => {
+                    option.id = `keyword_suggestion_${index}`;
+                    option.setAttribute('aria-selected', String(index === suggestionIndex));
+                });
+                list_keyword.setAttribute('aria-activedescendant', options[suggestionIndex].id);
+                options[suggestionIndex].scrollIntoView({ block: 'nearest' });
+            } else if (event.key === 'Escape') {
+                closeSuggestions();
+            } else if (event.key === 'Enter') {
+                event.preventDefault();
+                if (suggestionIndex >= 0 && options[suggestionIndex]) chooseSuggestion(options[suggestionIndex].textContent);
+                else { closeSuggestions(); cMapMaker.searchKeyword(list_keyword.value); }
+            }
         });
     }
 
@@ -742,9 +811,11 @@ class CMapMaker extends IndoorControl {
         if (!date) {
             list_category.value = "";
             list_keyword.value = "";
-        } else if (!listTable.getSelCategory().includes(config.category)) {
+            this.resetKeywordSearchState();
+        } else if (config.category !== "*" && !listTable.getSelCategory().includes(config.category)) {
             list_category.value = config.category;
             list_keyword.value = "";
+            this.resetKeywordSearchState();
         }
         listTable.eventDate = date;
         this.refreshLocalFilters();
@@ -851,6 +922,7 @@ class CMapMaker extends IndoorControl {
             this.changeMode("list");
             list_category.value = "";
             list_keyword.value = "";
+            this.resetKeywordSearchState();
             const url = new URL(location.href);
             url.searchParams.delete("category");
             if (enabled) url.searchParams.set("edit", "true");
@@ -1074,7 +1146,10 @@ class CMapMaker extends IndoorControl {
             : viewportBbox === null ? "Activity BBOX request (full-world fallback):"
                 : "Activity BBOX request (viewport):", url.href);
         try {
-            const activities = await gSheet.get(url.href, { throwOnError: true });
+            const load = () => gSheet.get(url.href, { throwOnError: true });
+            const activities = this.lastActivityBbox === null
+                ? await retryInitialDataLoad(load, "Activity data", () => requestId === this.activityRequestId)
+                : await load();
             if (requestId !== this.activityRequestId) return false;
             if (Conf.poiView.poiActLoad && (!Conf.static.use || Conf.etc.editMode)) {
                 // Imported rows may have no coordinates, and activity-only maps do not
@@ -1274,13 +1349,62 @@ class CMapMaker extends IndoorControl {
     }
 
     // キーワード検索
-    searchKeyword(keyword) {
+    searchKeyword(keyword, { selectFirst = false } = {}) {
         if (keyword !== null) {
+            if (String(keyword).trim() && !this.keywordSearchActive) {
+                const map = mapLibre.map;
+                this.keywordSearchCamera = map ? { center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing(), pitch: map.getPitch() } : null;
+            }
+            this.keywordSearchActive = Boolean(String(keyword).trim());
+            this.updateKeywordButton();
             this.changeMode('list')
             if (winCont.sidebarSize === 1) winCont.setSidebar("list");
-            setTimeout(() => { listTable.filterKeyword(keyword) }, 300)
+            clearTimeout(this.keywordSearchTimer);
+            this.keywordSearchTimer = setTimeout(() => {
+                listTable.filterKeyword(keyword);
+                const first = selectFirst && listTable.getFilterList()[0];
+                if (first) listTable.select(first[0]);
+            }, 300)
             areaSearchController.renderDisplayStatus();
         }
+    }
+
+    updateKeywordButton() {
+        const button = document.getElementById("list_keyword_button");
+        const icon = document.getElementById("list_keyword_search");
+        const label = glot.get(this.keywordSearchActive ? "clearKeyword" : "searchKeyword")
+            || (this.keywordSearchActive ? (LANG === "ja" ? "検索をクリア" : "Clear search") : (LANG === "ja" ? "キーワード検索" : "Search"));
+        button?.setAttribute("aria-label", label);
+        button?.setAttribute("title", label);
+        icon?.classList.toggle("fa-search", !this.keywordSearchActive);
+        icon?.classList.toggle("fa-xmark", Boolean(this.keywordSearchActive));
+    }
+
+    resetKeywordSearchState() {
+        clearTimeout(this.keywordSearchTimer);
+        this.keywordSearchActive = false;
+        this.keywordSearchCamera = null;
+        this.updateKeywordButton();
+    }
+
+    keywordButtonAction() {
+        if (!this.keywordSearchActive) {
+            this.searchKeyword(list_keyword.value);
+            return;
+        }
+        const camera = this.keywordSearchCamera;
+        this.resetKeywordSearchState();
+        list_keyword.value = "";
+        const suggestions = document.getElementById("list_keyword_suggestions");
+        if (suggestions) suggestions.hidden = true;
+        list_keyword.setAttribute("aria-expanded", "false");
+        list_keyword.removeAttribute("aria-activedescendant");
+        if (this.detail) this.clearDatail();
+        this.changeMode("list");
+        listTable.filterKeyword("");
+        geoCont.writePoiCircle();
+        areaSearchController.renderDisplayStatus();
+        if (camera) mapLibre.map.flyTo({ ...camera, essential: true });
     }
 
     // 詳細モーダル表示
@@ -1651,6 +1775,7 @@ class CMapMaker extends IndoorControl {
     // EVENT: カテゴリ変更時のイベント
     eventChangeCategory() {
         list_keyword.value = "";
+        this.resetKeywordSearchState();
         let catname, selcategory = listTable.getSelCategory()
         console.log("eventChange: " + selcategory)
         const listAccordion = document.getElementById("listAccordion")

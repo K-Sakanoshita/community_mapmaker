@@ -4,6 +4,7 @@
             "circle_shadow.png"
         ],
         "tag": {
+            "abutters": { "retail": "shop.png" },
             "*": {
                 "*": "marker-stroked.png"
             },

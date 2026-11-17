@@ -11,6 +11,7 @@
         "aerialway": {
             "pylon": "aerialway pylon"
         },
+        "abutters": { "retail": "Shopping street" },
         "amenity": {
             "animal_shelter": "animal shelter",
             "arts_centre": "arts centre",

@@ -5,7 +5,7 @@ const Stub = class {};
 const button = { disabled: false, setAttribute(name, value) { this[name] = value; } };
 const indicator = {};
 const context = vm.createContext({ console, URL, setTimeout, clearTimeout,
-    window: { APP_LANGUAGE: 'ja' }, winCont: {}, document: { getElementById: id => id === 'editModeButton' ? button : indicator },
+    window: { APP_LANGUAGE: 'ja' }, winCont: {}, document: { getElementById: id => id === 'editModeButton' ? button : id === 'editModeIndicator' ? indicator : null },
     location: { href: 'https://example.test/?category=cafe#map' },
     history: { replaceState(a, b, url) { this.url = url; } },
     list_category: { value: 'cafe' }, list_keyword: { value: 'search' },

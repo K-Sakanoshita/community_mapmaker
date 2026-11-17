@@ -9,6 +9,7 @@ const stub = class {};
 const context = {
     console: { ...console, log() {}, warn() {} },
     URL,
+    setTimeout: callback => { callback(); return 1; },
     location: { href: 'https://example.test/map/' },
     window: { navigator: { language: 'ja' } },
     IndoorControl: stub,
@@ -108,5 +109,19 @@ poiCont.setActlnglat = () => {};
     context.Conf.listTable.allActs = false;
     assert.strictEqual(await cMapMaker.loadActivitiesForView(), true);
     assert.strictEqual(requests.at(-1).searchParams.get('bbox'), bbox, 'viewport mode remains available');
+    cMapMaker.lastActivityBbox = null;
+    let attempts = 0;
+    pending = () => ++attempts === 1
+        ? Promise.reject(new Error('temporary network failure'))
+        : Promise.resolve([{ id: 'recovered', osmid: 'node/1' }]);
+    assert.strictEqual(await cMapMaker.loadActivitiesForView(), true);
+    assert.strictEqual(attempts, 2, 'initial activity failure is retried');
+    assert.strictEqual(poiCont.adata[0].id, 'recovered');
+    cMapMaker.lastActivityBbox = null;
+    attempts = 0;
+    pending = () => { attempts++; return Promise.reject(new Error('network')); };
+    assert.strictEqual(await cMapMaker.loadActivitiesForView(), false);
+    assert.strictEqual(attempts, 3, 'retries are bounded');
+    assert.strictEqual(cMapMaker.lastActivityBbox, null, 'a failed request is not cached');
     console.log('PASS: Activity BBOX, stale responses, coordinate-less imports, allActs full-project loading, pan reuse and explicit refresh');
 })().catch(error => { console.error(error); process.exitCode = 1; });

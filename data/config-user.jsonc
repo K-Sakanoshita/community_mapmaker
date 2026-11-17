@@ -128,6 +128,8 @@
         }
     },
     "poiView": {
+        // 店舗詳細の営業時間を表示する場合はtrue
+        "openingHours": false,
         "poiActLoad": true,
         "poiZoom": {
             "activity": 12,
@@ -410,6 +412,7 @@
         "image": true
     },
     "etc": {
+        "relativePath": "", // 旧Google Spreadsheetの画像ファイル名を解決する基準パス
         "showPersonalMemo": true,
         "editModeSwitch": false,
         "localSave": "",

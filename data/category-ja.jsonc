@@ -11,6 +11,7 @@
         "aerialway": {
             "pylon": "索道支柱"
         },
+        "abutters": { "retail": "商店街" },
         "amenity": {
             "animal_shelter": "動物保護施設",
             "arts_centre": "アートセンター",

@@ -51,8 +51,9 @@
     <!-- 検索 -->
     <div class="col-8 d-flex align-items-center ps-0 pe-0">
         <div class="search-box">
-            <input type="text" class="form-control" id="list_keyword" />
-            <button class="search-btn" onclick="cMapMaker.searchKeyword(list_keyword.value);">
+            <input type="text" class="form-control" id="list_keyword" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="list_keyword_suggestions" />
+            <div id="list_keyword_suggestions" class="keyword-suggestions" role="listbox" hidden></div>
+            <button type="button" class="search-btn" id="list_keyword_button" aria-label="キーワード検索" onclick="cMapMaker.keywordButtonAction();">
                 <i class="fas fa-search" id="list_keyword_search"></i></button>
         </div>
 

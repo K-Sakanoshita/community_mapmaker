@@ -170,6 +170,12 @@ Community Map Makerと、同じコードをもとに開発している各マッ�
 * 2026/11/08 写真・資料の拡大表示を共通画像ビューアに統一し、会場詳細の資料画像プレビューと地図上の画像リンクに対応（[HigayodoStreetMap2026](https://github.com/armd-02/HigayodoStreetMap2026/commit/f1def015a0fd5ad524f46573b88b57791989d02f)から共通コードを取り込み。設定方法は[関連資料の画像プレビュー](docs/community-mapmaker.md#関連資料の画像プレビュー)を参照）
 * 2026/11/12 十三アートフェスマップ2026から共通コードと設定項目を取り込み。日付絞り込み、写真・スタンプマーカー、閲覧／編集切り替え、訪問済み・お気に入りの同期、画像取得と起動を改善。自動販売機3Dモデル2種類を軽量化し、関連9ファイルを合計約7.1MBから約2.0MBへ削減
 
+* 2026/11/12 営業時間表示を `poiView.openingHours` で切り替え可能にし、詳細画面の閉じるアイコンをSVG化して位置を統一（[十三アートフェスマップ2026の修正](https://github.com/armd-02/JusoArtFes2026/commit/0857eb3)から取り込み）
+
+* 2026/11/15 初回の投稿・静的データ取得で一時的な失敗を再試行し、資料画像リンクの表示サイズを改善（[ひがよどアートフェス2026](https://github.com/armd-02/HigayodoStreetMap2026/commit/24868086b270e3473300d8f10ebefbe32592155b)から共通修正を取り込み）
+
+* 2026/11/18 新大阪・三国アートフェスマップ2026から、取得済み施設の運営者名検索、日本語入力対応の候補表示、検索解除と地図位置の復帰、全カテゴリの日付絞り込み、地物選択表示の改善を取り込み（[参照コード](https://github.com/armd-02/ShinMikuArtFes2026/commit/1a2706ec62d911a9399fac367d82f906ea6b928d)）
+
 
 [history-osaka]: https://github.com/armd-02/OsakaMemories#更新履歴
 [history-historyculture]: https://github.com/armd-02/openhc-map#更新履歴

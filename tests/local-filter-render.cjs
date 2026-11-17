@@ -3,9 +3,9 @@ const fs = require('node:fs');
 const vm = require('node:vm');
 const calls = [];
 const stub = class {};
-const context = { console, Date, window: {navigator:{language:'ja'}},
+const context = { console, Date, clearTimeout() {}, window: {navigator:{language:'ja'}},
     Conf: {}, document:{getElementById:()=>null},
-    IndoorControl:stub, Glottologist:stub, Basic:stub, PoiStatusCont:stub,
+    IndoorControl:stub, Glottologist:class{get(key){return key;}}, Basic:stub, PoiStatusCont:stub,
     OverPassControl:stub, Maplibre:stub, GeoCont:stub, PoiCont:stub,
     GoogleSpreadSheet:stub, NewsTicker:stub, HistoricalNewsController:stub,
     ChangeController:stub, AreaFeatureLinker:stub, ListActionButtons:stub,

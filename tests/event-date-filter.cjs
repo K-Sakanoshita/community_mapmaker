@@ -88,3 +88,18 @@ for (const [day, expectedIds] of Object.entries(expected)) {
     assert.deepEqual(activities.filter(a => table.matchesSelectedEventDate(a)).map(a => a.id).sort(), expectedIds.map(id => `WP/${id}`).sort(), `detail schedule for November ${day}`);
 }
 console.log('PASS: optional UI, category/date/keyword filtering, overrides, empty results and all nine schedule dates');
+
+// Wildcard mode also applies structured dates to non-event categories.
+activities.splice(0, activities.length,
+    { id: 'shop', category: 'お店', event_dates: ['2027-01-01'] },
+    { id: 'event', category: 'イベント', event_dates: ['2027-01-02'] },
+    { id: 'undated', category: 'お店' });
+context.Conf.eventDateFilter = { use: true, category: '*', dates: ['2027-01-01', '2027-01-02'] };
+context.list_category.value = 'お店';
+table.eventDate = '2027-01-01'; table.makeList(false);
+assert.equal(table.eventDate, '2027-01-01');
+assert.deepEqual(ids(), ['shop']);
+assert.equal(table.matchesSelectedEventDate(activities[0]), true);
+assert.equal(table.matchesSelectedEventDate(activities[1]), false);
+assert.equal(table.matchesSelectedEventDate(activities[2]), false);
+console.log('PASS: all-category date filtering includes dated shops and excludes undated records');
