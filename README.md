@@ -176,6 +176,8 @@ Community Map Makerと、同じコードをもとに開発している各マッ�
 
 * 2026/11/18 新大阪・三国アートフェスマップ2026から、取得済み施設の運営者名検索、日本語入力対応の候補表示、検索解除と地図位置の復帰、全カテゴリの日付絞り込み、地物選択表示の改善を取り込み（[参照コード](https://github.com/armd-02/ShinMikuArtFes2026/commit/1a2706ec62d911a9399fac367d82f906ea6b928d)）
 
+* 2026/11/18 キーワード検索・候補表示で半角／全角スペースを無視するよう改善（[十三アートフェスマップ2026](https://github.com/armd-02/JusoArtFes2026/commit/306ee56)から追加取り込み）
+
 
 [history-osaka]: https://github.com/armd-02/OsakaMemories#更新履歴
 [history-historyculture]: https://github.com/armd-02/openhc-map#更新履歴

@@ -32,7 +32,7 @@ vm.runInContext(fs.readFileSync('lib/listtable.js','utf8')+'\nthis.table=new Lis
 const table=context.table;table.init();
 
 rows = [
-    ['node/cafe', 'Cafe original', 'Cafe', 'amenity=cafe', ['amenity'], 'cafe.png'],
+    ['node/cafe', 'Cafe Yutte', 'Cafe', 'amenity=cafe', ['amenity'], 'cafe.png'],
     ['node/art', 'A&B Gallery', 'Art', 'tourism=artwork', ['amenity'], 'art.png']
 ];
 context.list_category.value = 'tags,amenity.cafe';
@@ -65,6 +65,12 @@ table.filterKeyword('');
 assert.deepEqual(ids(), ['node/cafe'], 'clearing search restores category, area and personal conditions');
 assert.equal(table.displayMode, 'favorite', 'search does not overwrite the saved display mode');
 assert.equal(table.getFlistCount(), 1);
+table.filterKeyword('CafeYutte');
+assert.deepEqual(ids(), ['node/cafe'], 'search ignores spaces in names');
+table.filterKeyword('cafe　yutte');
+assert.deepEqual(ids(), ['node/cafe'], 'search ignores full-width spaces and case');
+table.filterKeyword('Cafe Yut');
+assert.deepEqual(ids(), ['node/cafe'], 'partial search still works across spaces');
 table.filterKeyword('no match');
 assert.deepEqual(ids(), []);
 assert.equal(table.getFlistCount(), 0);
@@ -81,13 +87,16 @@ for (const keyword of ['スーパーフレスコ', 'ハートフレンド', 'ス
 }
 context.poiCont.getPois = () => ({geojson:[
     {properties:{name:'スーパーフレスコ', operator:'ハートフレンド'}},
+    {properties:{name:'Cafe Yutte'}},
     {properties:{name:'非表示施設'}}
-], targets:[['amenity'], ['hidden']]});
+], targets:[['amenity'], ['amenity'], ['hidden']]});
 context.poiCont.isPoiListVisible = targets => targets.includes('amenity');
 context.poiCont.adata = [{title:'フレスコのイベント'}];
 context.Conf.list.columns.actFields = ['id', '#name', 'title'];
 assert.deepEqual(Array.from(table.keywordSuggestions('フレスコ')), ['スーパーフレスコ', 'フレスコのイベント']);
 assert.deepEqual(Array.from(table.keywordSuggestions('ハート')), ['ハートフレンド']);
+assert.deepEqual(Array.from(table.keywordSuggestions('cafeyutte')), ['Cafe Yutte']);
+assert.deepEqual(Array.from(table.keywordSuggestions('cafe　yutte')), ['Cafe Yutte']);
 assert.deepEqual(Array.from(table.keywordSuggestions('非表示')), []);
 assert.deepEqual(Array.from(table.keywordSuggestions(' ')), []);
 console.log('PASS: global list search bypasses category, area, personal and display filters; refresh, raw text, empty results and clear restore');
